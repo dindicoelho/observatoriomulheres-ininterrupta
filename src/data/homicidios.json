@@ -1,0 +1,330 @@
+{
+  "total": [
+    {
+      "year": 1989,
+      "value": 2344
+    },
+    {
+      "year": 1990,
+      "value": 2588
+    },
+    {
+      "year": 1991,
+      "value": 2728
+    },
+    {
+      "year": 1992,
+      "value": 2399
+    },
+    {
+      "year": 1993,
+      "value": 2623
+    },
+    {
+      "year": 1994,
+      "value": 2840
+    },
+    {
+      "year": 1995,
+      "value": 3326
+    },
+    {
+      "year": 1996,
+      "value": 3683
+    },
+    {
+      "year": 1997,
+      "value": 3588
+    },
+    {
+      "year": 1998,
+      "value": 3504
+    },
+    {
+      "year": 1999,
+      "value": 3536
+    },
+    {
+      "year": 2000,
+      "value": 3744
+    },
+    {
+      "year": 2001,
+      "value": 3851
+    },
+    {
+      "year": 2002,
+      "value": 3868
+    },
+    {
+      "year": 2003,
+      "value": 3941
+    },
+    {
+      "year": 2004,
+      "value": 3831
+    },
+    {
+      "year": 2005,
+      "value": 3887
+    },
+    {
+      "year": 2006,
+      "value": 4030
+    },
+    {
+      "year": 2007,
+      "value": 3778
+    },
+    {
+      "year": 2008,
+      "value": 4029
+    },
+    {
+      "year": 2009,
+      "value": 4265
+    },
+    {
+      "year": 2010,
+      "value": 4477
+    },
+    {
+      "year": 2011,
+      "value": 4522
+    },
+    {
+      "year": 2012,
+      "value": 4729
+    },
+    {
+      "year": 2013,
+      "value": 4769
+    },
+    {
+      "year": 2014,
+      "value": 4836
+    },
+    {
+      "year": 2015,
+      "value": 4621
+    },
+    {
+      "year": 2016,
+      "value": 4645
+    },
+    {
+      "year": 2017,
+      "value": 4936
+    },
+    {
+      "year": 2018,
+      "value": 4519
+    },
+    {
+      "year": 2019,
+      "value": 3737
+    },
+    {
+      "year": 2020,
+      "value": 3833
+    },
+    {
+      "year": 2021,
+      "value": 3858
+    },
+    {
+      "year": 2022,
+      "value": 3806
+    },
+    {
+      "year": 2023,
+      "value": 3903
+    }
+  ],
+  "tesoura": [
+    {
+      "year": 1997,
+      "total": 3588,
+      "negras": 814,
+      "naoNegras": 920
+    },
+    {
+      "year": 1998,
+      "total": 3504,
+      "negras": 1174,
+      "naoNegras": 1345
+    },
+    {
+      "year": 1999,
+      "total": 3536,
+      "negras": 1423,
+      "naoNegras": 1518
+    },
+    {
+      "year": 2000,
+      "total": 3744,
+      "negras": 1648,
+      "naoNegras": 1765
+    },
+    {
+      "year": 2001,
+      "total": 3851,
+      "negras": 1779,
+      "naoNegras": 1720
+    },
+    {
+      "year": 2002,
+      "total": 3868,
+      "negras": 1756,
+      "naoNegras": 1781
+    },
+    {
+      "year": 2003,
+      "total": 3941,
+      "negras": 1866,
+      "naoNegras": 1770
+    },
+    {
+      "year": 2004,
+      "total": 3831,
+      "negras": 1848,
+      "naoNegras": 1706
+    },
+    {
+      "year": 2005,
+      "total": 3887,
+      "negras": 1979,
+      "naoNegras": 1631
+    },
+    {
+      "year": 2006,
+      "total": 4030,
+      "negras": 2133,
+      "naoNegras": 1641
+    },
+    {
+      "year": 2007,
+      "total": 3778,
+      "negras": 2049,
+      "naoNegras": 1518
+    },
+    {
+      "year": 2008,
+      "total": 4029,
+      "negras": 2255,
+      "naoNegras": 1579
+    },
+    {
+      "year": 2009,
+      "total": 4265,
+      "negras": 2419,
+      "naoNegras": 1636
+    },
+    {
+      "year": 2010,
+      "total": 4477,
+      "negras": 2611,
+      "naoNegras": 1626
+    },
+    {
+      "year": 2011,
+      "total": 4522,
+      "negras": 2714,
+      "naoNegras": 1557
+    },
+    {
+      "year": 2012,
+      "total": 4729,
+      "negras": 2917,
+      "naoNegras": 1585
+    },
+    {
+      "year": 2013,
+      "total": 4769,
+      "negras": 2881,
+      "naoNegras": 1641
+    },
+    {
+      "year": 2014,
+      "total": 4836,
+      "negras": 2992,
+      "naoNegras": 1620
+    },
+    {
+      "year": 2015,
+      "total": 4621,
+      "negras": 2902,
+      "naoNegras": 1539
+    },
+    {
+      "year": 2016,
+      "total": 4645,
+      "negras": 3005,
+      "naoNegras": 1488
+    },
+    {
+      "year": 2017,
+      "total": 4936,
+      "negras": 3288,
+      "naoNegras": 1544
+    },
+    {
+      "year": 2018,
+      "total": 4519,
+      "negras": 3070,
+      "naoNegras": 1358
+    },
+    {
+      "year": 2019,
+      "total": 3737,
+      "negras": 2468,
+      "naoNegras": 1196
+    },
+    {
+      "year": 2020,
+      "total": 3833,
+      "negras": 2585,
+      "naoNegras": 1182
+    },
+    {
+      "year": 2021,
+      "total": 3858,
+      "negras": 2601,
+      "naoNegras": 1191
+    },
+    {
+      "year": 2022,
+      "total": 3806,
+      "negras": 2526,
+      "naoNegras": 1227
+    },
+    {
+      "year": 2023,
+      "total": 3903,
+      "negras": 2662,
+      "naoNegras": 1201
+    }
+  ],
+  "lastYear": 2023,
+  "latestTotal": 3903,
+  "latestNegras": 2662,
+  "latestNaoNegras": 1201,
+  "percentNegras": 68.2,
+  "marcos": [
+    {
+      "year": 2006,
+      "label": "Lei Maria da Penha",
+      "description": "Lei nº 11.340/2006"
+    },
+    {
+      "year": 2015,
+      "label": "Lei do Feminicídio",
+      "description": "Lei nº 13.104/2015"
+    },
+    {
+      "year": 2022,
+      "label": "Lei Henry Borel",
+      "description": "Lei nº 14.344/2022"
+    }
+  ]
+}
