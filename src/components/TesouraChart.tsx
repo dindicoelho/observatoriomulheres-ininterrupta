@@ -225,7 +225,7 @@ export default function TesouraChart() {
         .style("font-family", "var(--font-body)")
         .style("font-size", "13px")
         .style("font-weight", "700")
-        .text(`Nao negras: ${lastPoint.naoNegras.toLocaleString("pt-BR")}`)
+        .text(`Não negras: ${lastPoint.naoNegras.toLocaleString("pt-BR")}`)
         .attr("opacity", 0)
         .transition()
         .delay(1200)
@@ -315,7 +315,7 @@ export default function TesouraChart() {
           html += `Total: ${(d.total ?? 0).toLocaleString("pt-BR")}`;
         } else {
           html += `<span style="color:var(--color-blood)">Negras: ${d.negras.toLocaleString("pt-BR")}</span><br/>`;
-          html += `<span style="color:var(--color-text-secondary)">Nao negras: ${d.naoNegras.toLocaleString("pt-BR")}</span>`;
+          html += `<span style="color:var(--color-text-secondary)">Não negras: ${d.naoNegras.toLocaleString("pt-BR")}</span>`;
         }
 
         tooltip
@@ -367,7 +367,7 @@ export default function TesouraChart() {
               <svg ref={svgRef} className="w-full" />
             </div>
             <p className="mt-2 text-xs text-[var(--color-text-tertiary)]">
-              Fonte: Atlas da Violencia (IPEA/FBSP). Series 40, 142, 143.
+              Fonte: Atlas da Violência (IPEA/FBSP). Séries 40, 142, 143.
             </p>
           </div>
 
@@ -377,7 +377,7 @@ export default function TesouraChart() {
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
                   Entre 1997 e 2023, o Brasil registrou mais de{" "}
-                  <strong>100 mil homicidios de mulheres</strong>.
+                  <strong>100 mil homicídios de mulheres</strong>.
                   A curva nunca caiu de verdade.
                 </p>
               </div>
@@ -386,13 +386,13 @@ export default function TesouraChart() {
             <div data-tesoura-step="1" className="min-h-[40vh] flex items-center">
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
-                  Mas quando separamos por raca, a linha se parte em duas.{" "}
+                  Mas quando separamos por raça, a linha se parte em duas.{" "}
                   <span className="font-bold text-[var(--color-blood)]">
                     Mulheres negras
                   </span>{" "}
                   e{" "}
                   <span className="font-bold text-[var(--color-text-secondary)]">
-                    mulheres nao negras
+                    mulheres não negras
                   </span>{" "}
                   vivem realidades opostas.
                 </p>
@@ -403,11 +403,11 @@ export default function TesouraChart() {
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
                   A <span className="font-bold text-[var(--color-blue)]">Lei Maria da Penha</span> (2006) e a{" "}
-                  <span className="font-bold text-[var(--color-blue)]">Lei do Feminicidio</span> (2015)
-                  reduziram os homicidios de mulheres nao negras.
+                  <span className="font-bold text-[var(--color-blue)]">Lei do Feminicídio</span> (2015)
+                  reduziram os homicídios de mulheres não negras.
                 </p>
                 <p className="mt-4 text-lg font-bold leading-relaxed text-[var(--color-blood)]">
-                  Para mulheres negras, os numeros subiram.
+                  Para mulheres negras, os números subiram.
                 </p>
                 <p className="mt-2 text-base text-[var(--color-text-secondary)]">
                   A mesma lei. Resultados opostos.
@@ -429,7 +429,7 @@ export default function TesouraChart() {
             das mulheres assassinadas em 2023 eram negras.
           </p>
           <p className="mt-1 text-base text-[var(--color-text-tertiary)]">
-            Mulheres negras sao 56% da populacao feminina, mas quase 70% das vitimas.
+            Mulheres negras são 56% da população feminina, mas quase 70% das vítimas.
           </p>
         </div>
       </div>

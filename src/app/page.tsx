@@ -15,10 +15,10 @@ export default function Home() {
         <div className="bg-gradient-to-b from-white to-[var(--color-bg-alt)] py-16">
           <div className="mx-auto max-w-2xl px-6 text-center">
             <p className="text-base leading-relaxed text-[var(--color-text-secondary)]">
-              Os dados abaixo vem do{" "}
-              <strong>Atlas da Violencia</strong> (IPEA/FBSP),
-              a fonte mais completa sobre homicidios no Brasil.
-              Sao numeros oficiais, publicos, verificaveis.
+              Os dados abaixo vêm do{" "}
+              <strong>Atlas da Violência</strong> (IPEA/FBSP),
+              a fonte mais completa sobre homicídios no Brasil.
+              São números oficiais, públicos, verificáveis.
             </p>
           </div>
         </div>
@@ -29,8 +29,8 @@ export default function Home() {
         <div className="bg-white py-16">
           <div className="mx-auto max-w-2xl px-6 text-center">
             <p className="text-lg leading-relaxed text-[var(--color-text-secondary)]">
-              Os numeros nacionais escondem realidades locais muito diferentes.
-              O que esta acontecendo no seu municipio?
+              Os números nacionais escondem realidades locais muito diferentes.
+              O que está acontecendo no seu município?
             </p>
           </div>
         </div>

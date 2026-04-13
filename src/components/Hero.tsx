@@ -24,9 +24,9 @@ export default function Hero() {
 
         <div className="mx-auto mt-16 max-w-md">
           <p className="text-base leading-relaxed text-[var(--color-text-tertiary)]">
-            Mas esse numero esconde uma historia
+            Mas esse número esconde uma história
             <br />
-            que quase ninguem conta.
+            que quase ninguém conta.
           </p>
         </div>
       </div>

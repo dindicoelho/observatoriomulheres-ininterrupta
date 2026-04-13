@@ -7,7 +7,7 @@ export default function Footer() {
           className="text-center text-2xl font-bold leading-tight md:text-3xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          O que voce pode fazer
+          O que você pode fazer
         </h2>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -19,7 +19,7 @@ export default function Footer() {
               180
             </span>
             <span className="mt-1 text-sm text-white/70">
-              Central de Atendimento a Mulher. Gratuito, 24h, inclusive de
+              Central de Atendimento à Mulher. Gratuito, 24h, inclusive de
               celular.
             </span>
           </a>
@@ -31,17 +31,17 @@ export default function Footer() {
               190
             </span>
             <span className="mt-1 text-sm text-white/70">
-              Policia Militar. Em caso de risco imediato.
+              Polícia Militar. Em caso de risco imediato.
             </span>
           </a>
         </div>
 
         <div className="mt-8 space-y-2 text-center text-sm text-white/50">
           <p>
-            Delegacias Especializadas de Atendimento a Mulher (DEAMs) atendem em todo o pais.
+            Delegacias Especializadas de Atendimento à Mulher (DEAMs) atendem em todo o país.
           </p>
           <p>
-            Denuncias tambem podem ser feitas online pelo app{" "}
+            Denúncias também podem ser feitas online pelo app{" "}
             <strong className="text-white/70">Direitos Humanos Brasil</strong>.
           </p>
         </div>
@@ -56,25 +56,25 @@ export default function Footer() {
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-white/60">
             <li>
-              <strong className="text-white/80">Atlas da Violencia</strong>{" "}
-              (IPEA/FBSP) — Series 40 (homicidios de mulheres), 142 (mulheres
-              negras), 143 (mulheres nao negras), 52 (taxa por 100 mil por UF e
-              municipio). Dados de 1989 a 2023.
+              <strong className="text-white/80">Atlas da Violência</strong>{" "}
+              (IPEA/FBSP) — Séries 40 (homicídios de mulheres), 142 (mulheres
+              negras), 143 (mulheres não negras), 52 (taxa por 100 mil por UF e
+              município). Dados de 1989 a 2023.
             </li>
             <li>
-              <strong className="text-white/80">Classificacao racial</strong>{" "}
-              — Segue o padrao do IBGE/Atlas: &ldquo;negras&rdquo; inclui pretas + pardas;
-              &ldquo;nao negras&rdquo; inclui brancas + amarelas + indigenas.
+              <strong className="text-white/80">Classificação racial</strong>{" "}
+              — Segue o padrão do IBGE/Atlas: &ldquo;negras&rdquo; inclui pretas + pardas;
+              &ldquo;não negras&rdquo; inclui brancas + amarelas + indígenas.
             </li>
             <li>
               <strong className="text-white/80">Taxa por 100 mil</strong>{" "}
-              — Homicidios de mulheres dividido pela populacao feminina do municipio/estado,
-              multiplicado por 100.000. Populacao: IBGE.
+              — Homicídios de mulheres dividido pela população feminina do município/estado,
+              multiplicado por 100.000. População: IBGE.
             </li>
             <li>
-              <strong className="text-white/80">Limitacoes</strong>{" "}
-              — Dados oficiais representam o piso, nao o teto. Subnotificacao e
-              um problema reconhecido pelo FBSP. Municipios pequenos podem ter
+              <strong className="text-white/80">Limitações</strong>{" "}
+              — Dados oficiais representam o piso, não o teto. Subnotificação é
+              um problema reconhecido pelo FBSP. Municípios pequenos podem ter
               dados incompletos.
             </li>
           </ul>
@@ -83,10 +83,10 @@ export default function Footer() {
         {/* Credits */}
         <div className="mt-12 text-center text-xs text-white/30">
           <p>
-            Dados extraidos das APIs publicas do governo brasileiro via Atlas da Violencia (IPEA/FBSP).
+            Dados extraídos das APIs públicas do governo brasileiro via Atlas da Violência (IPEA/FBSP).
           </p>
           <p className="mt-1">
-            Todas as fontes sao publicas e gratuitas. Nenhum dado pessoal de vitimas e coletado ou exibido.
+            Todas as fontes são públicas e gratuitas. Nenhum dado pessoal de vítimas é coletado ou exibido.
           </p>
         </div>
       </div>

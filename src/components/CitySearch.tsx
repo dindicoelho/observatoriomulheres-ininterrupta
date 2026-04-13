@@ -65,7 +65,7 @@ export default function CitySearch() {
           E na sua cidade?
         </h2>
         <p className="mt-4 text-center text-lg text-[var(--color-text-secondary)]">
-          Digite o nome do seu municipio e veja os dados.
+          Digite o nome do seu município e veja os dados.
         </p>
 
         {/* Search input */}
@@ -97,7 +97,7 @@ export default function CitySearch() {
                     <span className="font-medium">{m.n}</span>
                     {m.h > 0 && (
                       <span className="ml-2 text-sm text-[var(--color-text-tertiary)]">
-                        {m.h} homicidio{m.h > 1 ? "s" : ""} em 2023
+                        {m.h} homicídio{m.h > 1 ? "s" : ""} em 2023
                       </span>
                     )}
                   </button>
@@ -135,8 +135,8 @@ export default function CitySearch() {
                 </p>
                 {selected.h === 0 && (
                   <p className="mt-1 text-sm text-[var(--color-text-tertiary)]">
-                    Nenhum registro no Atlas da Violencia.
-                    Isso pode significar zero ocorrencias ou dados nao reportados.
+                    Nenhum registro no Atlas da Violência.
+                    Isso pode significar zero ocorrências ou dados não reportados.
                   </p>
                 )}
               </div>
@@ -159,7 +159,7 @@ export default function CitySearch() {
                       {selected.t.toFixed(2)}
                     </span>
                     <span className="text-sm text-[var(--color-text-tertiary)]">
-                      media nacional: {avgRate.toFixed(2)}
+                      média nacional: {avgRate.toFixed(2)}
                     </span>
                   </div>
 
@@ -185,7 +185,7 @@ export default function CitySearch() {
                     </div>
                     <div>
                       <div className="flex justify-between text-xs text-[var(--color-text-tertiary)]">
-                        <span>Media nacional</span>
+                        <span>Média nacional</span>
                         <span>{avgRate.toFixed(2)}</span>
                       </div>
                       <div className="h-2 w-full rounded-full bg-gray-100">
@@ -203,8 +203,8 @@ export default function CitySearch() {
             </div>
 
             <p className="mt-6 text-xs text-[var(--color-text-tertiary)]">
-              Fonte: Atlas da Violencia (IPEA/FBSP), series 40 e 52.
-              Dados de 2023 (homicidios) e 2022 (taxa).
+              Fonte: Atlas da Violência (IPEA/FBSP), séries 40 e 52.
+              Dados de 2023 (homicídios) e 2022 (taxa).
             </p>
           </div>
         )}
@@ -213,11 +213,11 @@ export default function CitySearch() {
         {selected && selected.h === 0 && (
           <div className="mx-auto mt-6 max-w-md rounded-xl bg-amber-50 p-5">
             <p className="text-sm leading-relaxed text-amber-900">
-              <strong>Sobre zeros no Atlas:</strong> Municipios menores
-              frequentemente nao reportam dados completos. Zero no Atlas nao
-              significa necessariamente zero violencia — pode significar
-              subnotificacao. O Forum Brasileiro de Seguranca Publica estima que
-              os dados oficiais representam o <strong>piso</strong>, nao o teto.
+              <strong>Sobre zeros no Atlas:</strong> Municípios menores
+              frequentemente não reportam dados completos. Zero no Atlas não
+              significa necessariamente zero violência — pode significar
+              subnotificação. O Fórum Brasileiro de Segurança Pública estima que
+              os dados oficiais representam o <strong>piso</strong>, não o teto.
             </p>
           </div>
         )}
