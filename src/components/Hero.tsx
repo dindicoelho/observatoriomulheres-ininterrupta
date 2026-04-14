@@ -48,11 +48,11 @@ export default function Hero() {
         <div className="w-full max-w-6xl">
           <div className="offset-left">
             <h1
-              className="leading-[0.85] text-[var(--color-blood)]"
+              className="whitespace-nowrap leading-[0.85] text-[var(--color-blood)]"
               style={{
                 fontFamily: "var(--font-display-condensed)",
                 letterSpacing: "-0.05em",
-                fontSize: "clamp(8rem, 24vw, 24rem)",
+                fontSize: "clamp(5rem, 24vw, 24rem)",
               }}
             >
               {digits.map((d, i) => (

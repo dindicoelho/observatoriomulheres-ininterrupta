@@ -29,7 +29,8 @@ const tesoura: TesouraPoint[] = data.tesoura.filter((d) => d.year >= 2001);
 const taxas: TaxaPoint[] = (data.taxas as TaxaPoint[]).filter((d) => d.year >= 2001);
 const marcos = data.marcos;
 
-const MARGIN = { top: 40, right: 120, bottom: 50, left: 55 };
+const MARGIN_DESKTOP = { top: 40, right: 120, bottom: 50, left: 55 };
+const MARGIN_MOBILE = { top: 25, right: 15, bottom: 40, left: 40 };
 
 export default function TesouraChart() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,11 @@ export default function TesouraChart() {
     if (!container) return;
 
     const width = container.clientWidth;
-    const height = Math.min(500, window.innerHeight * 0.6);
+    const isMobile = window.innerWidth < 768;
+    const MARGIN = isMobile ? MARGIN_MOBILE : MARGIN_DESKTOP;
+    const height = isMobile
+      ? Math.min(300, window.innerHeight * 0.38)
+      : Math.min(500, window.innerHeight * 0.6);
 
     svg.attr("width", width).attr("height", height).attr("role", "img");
 
@@ -404,7 +409,7 @@ export default function TesouraChart() {
         </div>
 
         <div className="relative md:flex md:gap-12">
-          <div className="md:sticky md:top-24 md:w-2/3 md:self-start">
+          <div className="sticky top-0 z-10 bg-[var(--color-bg-alt)] pb-4 pt-4 md:top-24 md:w-2/3 md:self-start md:pt-0">
             {/* Mode toggle */}
             <div className="mb-4 flex flex-wrap items-center gap-2">
               <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
@@ -444,7 +449,7 @@ export default function TesouraChart() {
             </p>
           </div>
 
-          <div className="mt-12 space-y-[60vh] md:mt-0 md:w-1/3">
+          <div className="mt-8 space-y-[50vh] md:mt-0 md:w-1/3 md:space-y-[60vh]">
             <div data-tesoura-step="0" className="min-h-[40vh] flex items-center">
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
