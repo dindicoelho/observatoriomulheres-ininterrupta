@@ -568,26 +568,36 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Correlações e exceções
+                O que testamos e não incluímos
               </h3>
               <p className="text-base md:text-lg">
-                A correlação entre rede de proteção institucional (DEAMs
-                + CRAMs + Casas-Abrigo per capita) e taxa de homicídios
-                de mulheres apresentada no observatório é baseada em{" "}
-                <strong>comparação por clusters</strong> (top 3 vs
-                bottom 3 em cobertura), não em regressão linear pura. A
-                correlação de Pearson direta é fraca porque o efeito
-                &ldquo;rede&rdquo; é confundido por outros fatores
-                estruturais (rotas de tráfico, desigualdade, presença
-                de facções criminosas).
+                Durante a construção do observatório testamos algumas
+                hipóteses de correlação entre a taxa de homicídios de
+                mulheres e indicadores estaduais: IDEB (qualidade da
+                educação), gasto per capita em educação, gasto per
+                capita em segurança pública, PIB per capita e
+                equipamentos de proteção institucional (DEAMs, CRAMs,
+                Casas-Abrigo) por 100 mil mulheres. <strong>Nenhum
+                desses fatores, isoladamente, apresenta correlação
+                estatística consistente com a taxa de homicídios por
+                estado.</strong>
               </p>
               <p className="text-base md:text-lg">
-                A exceção mais importante é o <strong>Ceará</strong>,
-                que possui rede de proteção razoável mas taxa de
-                homicídios alta devido à disputa territorial entre
-                facções nas últimas décadas. Esse e outros casos estão
-                mencionados na narrativa. A correlação não deve ser
-                lida como causal sem considerar o contexto local.
+                Por isso, esses cruzamentos não aparecem como conclusão
+                no site. A violência contra mulher no Brasil parece ser
+                um problema estrutural multicausal — não se explica
+                por um único indicador disponível em base pública.
+                Fatores que a literatura aponta como relevantes mas
+                difíceis de quantificar de forma agregada: rotas de
+                tráfico, disputa entre facções criminosas, desigualdade
+                intra-estadual e capilaridade local da rede de
+                proteção (que não necessariamente coincide com o
+                tamanho absoluto da rede no estado).
+              </p>
+              <p className="text-base md:text-lg">
+                Os dados estaduais de rede de proteção continuam
+                disponíveis como referência informativa na seção de
+                consulta municipal, mas sem inferir causalidade.
               </p>
             </div>
 

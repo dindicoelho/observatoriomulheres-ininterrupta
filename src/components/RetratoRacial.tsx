@@ -102,6 +102,9 @@ export default function RetratoRacial() {
     <section className="dark-section px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+            Ato 02 · A Desproporção
+          </p>
           <RevealText
             as="h2"
             text="A desproporção"

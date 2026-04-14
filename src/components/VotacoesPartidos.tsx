@@ -94,7 +94,7 @@ export default function VotacoesPartidos() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            Ato 06 · Como cada partido votou
+            Ato 05 · Como cada partido votou
           </p>
           <RevealText
             as="h2"
