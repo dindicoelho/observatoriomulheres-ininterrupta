@@ -253,7 +253,7 @@ function DeputadoModal({
 }
 
 export default function RankingDeputados() {
-  const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
+  const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("estruturais");
   const [selected, setSelected] = useState<Deputado | null>(null);
   const minPls = 5;
 
@@ -308,16 +308,6 @@ export default function RankingDeputados() {
             </span>
             <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => setSortBy("total")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                  sortBy === "total"
-                    ? "bg-[var(--color-text)] text-white"
-                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-                }`}
-              >
-                Quantidade total
-              </button>
-              <button
                 onClick={() => setSortBy("estruturais")}
                 className={`rounded-full px-3 py-1 text-xs transition-colors ${
                   sortBy === "estruturais"
@@ -336,6 +326,16 @@ export default function RankingDeputados() {
                 }`}
               >
                 % estruturais
+              </button>
+              <button
+                onClick={() => setSortBy("total")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  sortBy === "total"
+                    ? "bg-[var(--color-text)] text-white"
+                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
+                }`}
+              >
+                Quantidade total
               </button>
             </div>
           </div>
