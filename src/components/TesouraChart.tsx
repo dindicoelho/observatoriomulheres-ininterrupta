@@ -417,15 +417,15 @@ export default function TesouraChart() {
             <div data-tesoura-step="2" className="min-h-[40vh] flex items-center">
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
-                  A <span className="font-bold text-[var(--color-blue)]">Lei Maria da Penha</span> (2006) e a{" "}
-                  <span className="font-bold text-[var(--color-blue)]">Lei do Feminicídio</span> (2015)
-                  reduziram os homicídios de mulheres não negras.
+                  A divergência começou por volta de <strong>2001</strong>
+                  {" "}— cinco anos antes da Lei Maria da Penha.
                 </p>
                 <p className="mt-4 text-lg font-bold leading-relaxed text-[var(--color-blood)]">
-                  Para mulheres negras, os números subiram.
+                  Em 20 anos, os homicídios de mulheres negras
+                  quase triplicaram.
                 </p>
                 <p className="mt-2 text-base text-[var(--color-text-secondary)]">
-                  A mesma lei. Resultados opostos.
+                  Os de não negras caíram 30%.
                 </p>
               </div>
             </div>
@@ -435,6 +435,44 @@ export default function TesouraChart() {
           </div>
         </div>
 
+        {/* Editorial note — context about 2017-2019 dip and the real pattern */}
+        <div className="mx-auto mt-20 max-w-3xl space-y-5 text-[var(--color-text-secondary)]">
+          <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+            Nota sobre a leitura do gráfico
+          </p>
+
+          <p className="text-base leading-relaxed md:text-lg">
+            As duas curvas caem entre <strong>2017 e 2019</strong>. É tentador
+            olhar pra essa queda e achar que alguma coisa funcionou. Mas ela
+            atingiu as duas linhas ao mesmo tempo — mulheres negras caíram 24%,
+            não negras caíram 20%. Proporcionalmente parecido.
+          </p>
+
+          <p className="text-base leading-relaxed md:text-lg">
+            Essa queda geral não é só sobre violência contra a mulher. Entre
+            2017 e 2019 o Brasil teve uma redução histórica de homicídios
+            (incluindo homens), por uma combinação de fatores macro: acordos
+            entre facções no Nordeste, reclassificação de mortes violentas nos
+            sistemas de saúde (CID-10) depois da Lei do Feminicídio, e a
+            subnotificação que o Fórum Brasileiro de Segurança Pública
+            reconhece como problema estrutural.
+          </p>
+
+          <p className="text-base leading-relaxed md:text-lg">
+            O que <strong>de fato</strong> separa as duas curvas não é essa
+            queda pontual. É uma trajetória de <strong>20 anos</strong> de
+            divergência, que começou por volta de 2001 — cinco anos antes da
+            Lei Maria da Penha, portanto anterior a qualquer marco legislativo
+            importante sobre o tema.
+          </p>
+
+          <p className="text-base leading-relaxed md:text-lg">
+            A tesoura abriu devagar, durante duas décadas, e permanece aberta.
+            Hoje, para <strong>cada mulher não negra assassinada</strong> no
+            Brasil, <strong className="text-[var(--color-blood)]">
+            2,2 mulheres negras</strong> perdem a vida pela mesma violência.
+          </p>
+        </div>
       </div>
     </section>
   );
