@@ -35,6 +35,12 @@ const CATEGORY_LABELS = {
   estrutural: "Estruturais",
 };
 
+const CATEGORY_LABEL_SINGULAR = {
+  simbólica: "Simbólica",
+  incremental: "Incremental",
+  estrutural: "Estrutural",
+};
+
 const CATEGORY_DESC = {
   simbólica: "Datas comemorativas, homenagens, campanhas de conscientização.",
   incremental: "Alterações pontuais em leis existentes, ajustes de pena, mudanças procedimentais.",
@@ -263,7 +269,7 @@ export default function TimelineLegislativa() {
                       backgroundColor: CATEGORY_COLORS[p.categoria],
                     }}
                   >
-                    {CATEGORY_LABELS[p.categoria].slice(0, -1)}
+                    {CATEGORY_LABEL_SINGULAR[p.categoria]}
                   </span>
                   <div className="flex-1">
                     <p className="font-mono-data text-sm font-bold text-white">

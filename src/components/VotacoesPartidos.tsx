@@ -219,13 +219,28 @@ export default function VotacoesPartidos() {
                       </span>
                     </div>
                   </div>
-                  <span className="mt-1 font-mono-data text-sm text-[var(--color-text-tertiary)]">
-                    {isOpen ? "−" : "+"}
+                  <span
+                    className="mt-1 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[var(--color-text)]/10 font-mono-data text-sm text-[var(--color-text)] transition-all duration-300"
+                    style={{
+                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    }}
+                    aria-hidden="true"
+                  >
+                    +
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-6">
+                <div
+                  className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  style={{
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <div
+                      className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-6 transition-opacity duration-300"
+                      style={{ opacity: isOpen ? 1 : 0 }}
+                    >
                     {/* Sobre o projeto */}
                     <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
                       <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
@@ -289,8 +304,9 @@ export default function VotacoesPartidos() {
                         Ver projeto na Câmara →
                       </a>
                     </div>
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
