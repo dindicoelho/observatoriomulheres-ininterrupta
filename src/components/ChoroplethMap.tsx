@@ -121,7 +121,7 @@ export default function ChoroplethMap() {
       .attr("stroke-width", 0.8)
       .style("cursor", "pointer")
       .style("transition", "fill 0.3s, opacity 0.15s")
-      .on("mouseenter", function (event, d) {
+      .on("pointerenter", function (event, d) {
         const sigla = (d.properties as { sigla: string }).sigla;
         const state = DATA.states[sigla];
         if (!state) return;
@@ -143,13 +143,13 @@ export default function ChoroplethMap() {
           )
           .style("opacity", 1);
       })
-      .on("mousemove", function (event) {
+      .on("pointermove", function (event) {
         const [x, y] = d3.pointer(event, containerRef.current);
         tooltip
           .style("left", `${x + 16}px`)
           .style("top", `${y - 10}px`);
       })
-      .on("mouseleave", function () {
+      .on("pointerleave", function () {
         d3.select(this).attr("stroke", "#fff").attr("stroke-width", 0.8);
         setHoveredUF(null);
         tooltip.style("opacity", 0);

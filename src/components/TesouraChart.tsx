@@ -333,7 +333,10 @@ export default function TesouraChart() {
     const bisect = d3.bisector<TesouraPoint, number>((d) => d.year).left;
 
     svg
-      .on("mousemove", (event: MouseEvent) => {
+      .on("touchstart touchmove", (event: TouchEvent) => {
+        event.preventDefault();
+      })
+      .on("pointermove", (event: PointerEvent) => {
         const [mx] = d3.pointer(event);
         const yearHover = x.invert(mx - MARGIN.left);
         const idx = bisect(tesoura, yearHover, 1);
@@ -360,7 +363,7 @@ export default function TesouraChart() {
           .style("top", `${event.offsetY - 20}px`)
           .style("opacity", 1);
       })
-      .on("mouseleave", () => {
+      .on("pointerleave", () => {
         tooltip.style("opacity", 0);
       });
   }, [phase, mode]);
@@ -411,29 +414,31 @@ export default function TesouraChart() {
         <div className="relative md:flex md:gap-12">
           <div className="sticky top-0 z-10 bg-[var(--color-bg-alt)] pb-4 pt-4 md:top-24 md:w-2/3 md:self-start md:pt-0">
             {/* Mode toggle */}
-            <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
+            <div className="mb-4 flex items-center gap-2 overflow-x-auto">
+              <span className="hidden font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)] sm:inline">
                 Ver como:
               </span>
               <button
                 onClick={() => setMode("absolutos")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                className={`flex-shrink-0 rounded-full px-3 py-1 text-xs transition-colors ${
                   mode === "absolutos"
                     ? "bg-[var(--color-text)] text-white"
                     : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
                 }`}
               >
-                Números absolutos
+                <span className="sm:hidden">Absoluto</span>
+                <span className="hidden sm:inline">Números absolutos</span>
               </button>
               <button
                 onClick={() => setMode("taxa")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                className={`flex-shrink-0 rounded-full px-3 py-1 text-xs transition-colors ${
                   mode === "taxa"
                     ? "bg-[var(--color-blood)] text-white"
                     : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
                 }`}
               >
-                Taxa por 100 mil mulheres
+                <span className="sm:hidden">Taxa / 100 mil</span>
+                <span className="hidden sm:inline">Taxa por 100 mil mulheres</span>
               </button>
             </div>
 
