@@ -1,14 +1,21 @@
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-text)] px-6 py-20 text-white">
-      <div className="mx-auto max-w-2xl">
+    <footer className="bg-[var(--color-dark)] px-6 py-24 text-white">
+      <div className="mx-auto max-w-3xl">
         {/* CTA */}
-        <h2
-          className="text-center text-2xl font-bold leading-tight md:text-3xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          O que você pode fazer
-        </h2>
+        <div className="mb-12 offset-left">
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+            Encerramento
+          </p>
+          <h2
+            className="text-5xl font-black leading-[0.9] md:text-6xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            O que você
+            <br />
+            <span className="text-[var(--color-blood)]">pode fazer.</span>
+          </h2>
+        </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           <a

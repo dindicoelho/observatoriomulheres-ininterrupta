@@ -359,7 +359,22 @@ export default function TesouraChart() {
 
   return (
     <section className="bg-[var(--color-bg-alt)]">
-      <div className="mx-auto max-w-4xl px-6 py-24">
+      <div className="mx-auto max-w-5xl px-6 py-24">
+        {/* Section header */}
+        <div className="mb-16 offset-left">
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+            Ato 01 · A Divergência
+          </p>
+          <h2
+            className="text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            A mesma lei.
+            <br />
+            <span className="text-[var(--color-blood)]">Resultados opostos.</span>
+          </h2>
+        </div>
+
         {/* Sticky chart */}
         <div className="relative md:flex md:gap-12">
           <div className="md:sticky md:top-24 md:w-2/3 md:self-start">
@@ -420,18 +435,6 @@ export default function TesouraChart() {
           </div>
         </div>
 
-        {/* Summary after scroll */}
-        <div className="mx-auto mt-24 max-w-2xl text-center">
-          <p className="text-4xl font-black leading-tight text-[var(--color-blood)]" style={{ fontFamily: 'var(--font-display)' }}>
-            68,2%
-          </p>
-          <p className="mt-3 text-lg text-[var(--color-text-secondary)]">
-            das mulheres assassinadas em 2023 eram negras.
-          </p>
-          <p className="mt-1 text-base text-[var(--color-text-tertiary)]">
-            Mulheres negras são 56% da população feminina, mas quase 70% das vítimas.
-          </p>
-        </div>
       </div>
     </section>
   );

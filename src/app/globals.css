@@ -2,7 +2,8 @@
 @import "tailwindcss";
 
 :root {
-  --color-blood: #791F1F;
+  --color-blood: #B8252F;
+  --color-blood-dark: #791F1F;
   --color-blood-light: #FCEBEB;
   --color-neutral: #B4B2A9;
   --color-blue: #185FA5;
@@ -10,6 +11,8 @@
   --color-teal: #0F6E56;
   --color-bg: #FFFFFF;
   --color-bg-alt: #F8F7F4;
+  --color-dark: #0A0A0A;
+  --color-dark-alt: #141414;
   --color-text: #1A1A1A;
   --color-text-secondary: #5F5E5A;
   --color-text-tertiary: #888780;
@@ -22,12 +25,15 @@
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-text);
-  --color-blood: #791F1F;
+  --color-blood: #B8252F;
+  --color-blood-dark: #791F1F;
   --color-blood-light: #FCEBEB;
   --color-neutral: #B4B2A9;
   --color-blue: #185FA5;
   --color-teal: #0F6E56;
   --color-bg-alt: #F8F7F4;
+  --color-dark: #0A0A0A;
+  --color-dark-alt: #141414;
   --color-text-secondary: #5F5E5A;
   --color-text-tertiary: #888780;
 }
@@ -36,6 +42,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
+  overscroll-behavior: none;
 }
 
 h1, h2, h3 {
@@ -46,7 +53,20 @@ h1, h2, h3 {
   font-family: var(--font-mono);
 }
 
-/* Scroll snap for sections */
+/* Dark section styles */
+.dark-section {
+  background: var(--color-dark);
+  color: #FFFFFF;
+}
+
+.dark-section .text-secondary {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.dark-section .text-tertiary {
+  color: rgba(255, 255, 255, 0.45);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -64,6 +84,14 @@ html {
 
 .domain {
   stroke: #e5e5e5;
+}
+
+.dark-section .tick text {
+  fill: rgba(255, 255, 255, 0.5);
+}
+
+.dark-section .tick line {
+  stroke: rgba(255, 255, 255, 0.1);
 }
 
 /* Scrollbar */
@@ -84,4 +112,56 @@ html {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 40s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes digitReveal {
+  from { opacity: 0; transform: translateY(0.2em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes charReveal {
+  from { opacity: 0; transform: translateY(0.5em) skewY(6deg); }
+  to { opacity: 1; transform: translateY(0) skewY(0); }
+}
+
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  animation: charReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Disable user select on display (brutalist touch) */
+h1, h2, h3, h4 {
+  user-select: none;
+}
+
+[data-selectable],
+p, li, span.selectable {
+  user-select: text;
+}
+
+/* Asymmetric number offset */
+.offset-left {
+  transform: translateX(-8%);
+}
+
+.offset-right {
+  transform: translateX(8%);
+}
+
+@media (max-width: 768px) {
+  .offset-left, .offset-right {
+    transform: none;
+  }
 }

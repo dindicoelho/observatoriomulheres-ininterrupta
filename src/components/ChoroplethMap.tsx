@@ -191,16 +191,23 @@ export default function ChoroplethMap() {
   return (
     <section className="bg-white px-6 py-24">
       <div className="mx-auto max-w-5xl">
-        <h2
-          className="text-center text-3xl font-bold leading-tight text-[var(--color-text)] md:text-4xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          A geografia da violência
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-center text-lg text-[var(--color-text-secondary)]">
-          A probabilidade de uma mulher ser assassinada varia em até{" "}
-          <strong>7 vezes</strong> dependendo do estado onde mora.
-        </p>
+        <div className="mb-12 offset-left">
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+            Ato 03 · Geografia
+          </p>
+          <h2
+            className="text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Onde você mora
+            <br />
+            <span className="text-[var(--color-blood)]">importa.</span>
+          </h2>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-text-secondary)]">
+            A probabilidade de uma mulher ser assassinada varia em até{" "}
+            <strong>7 vezes</strong> dependendo do estado onde mora.
+          </p>
+        </div>
 
         {/* Year selector */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-2">

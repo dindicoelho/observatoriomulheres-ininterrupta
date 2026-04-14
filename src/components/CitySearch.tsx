@@ -57,16 +57,23 @@ export default function CitySearch() {
 
   return (
     <section className="bg-white px-6 py-24">
-      <div className="mx-auto max-w-2xl">
-        <h2
-          className="text-center text-3xl font-bold leading-tight text-[var(--color-text)] md:text-4xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          E na sua cidade?
-        </h2>
-        <p className="mt-4 text-center text-lg text-[var(--color-text-secondary)]">
-          Digite o nome do seu município e veja os dados.
-        </p>
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-12 offset-left">
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+            Ato 05 · Seu território
+          </p>
+          <h2
+            className="text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            E na
+            <br />
+            <span className="text-[var(--color-blood)]">sua cidade?</span>
+          </h2>
+          <p className="mt-6 text-lg text-[var(--color-text-secondary)]">
+            Digite o nome do seu município e veja os dados.
+          </p>
+        </div>
 
         {/* Search input */}
         <div className="relative mx-auto mt-10 max-w-md">
