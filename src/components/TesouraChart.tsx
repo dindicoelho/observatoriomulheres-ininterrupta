@@ -11,7 +11,22 @@ type TesouraPoint = {
   naoNegras: number;
 };
 
-const tesoura: TesouraPoint[] = data.tesoura;
+type TaxaPoint = {
+  year: number;
+  total_abs: number;
+  negras_abs: number;
+  nao_negras_abs: number;
+  taxa_total: number;
+  taxa_negras: number;
+  taxa_nao_negras: number;
+  pop_fem: number;
+};
+
+type Mode = "absolutos" | "taxa";
+
+// Filter to 2001+ where racial classification is consistently reliable
+const tesoura: TesouraPoint[] = data.tesoura.filter((d) => d.year >= 2001);
+const taxas: TaxaPoint[] = (data.taxas as TaxaPoint[]).filter((d) => d.year >= 2001);
 const marcos = data.marcos;
 
 const MARGIN = { top: 40, right: 120, bottom: 50, left: 55 };
@@ -20,9 +35,7 @@ export default function TesouraChart() {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [phase, setPhase] = useState(0);
-  // 0 = total line only
-  // 1 = split into negras + naoNegras
-  // 2 = show marcos legislativos
+  const [mode, setMode] = useState<Mode>("absolutos");
 
   const drawChart = useCallback(() => {
     const svg = d3.select(svgRef.current);
@@ -46,10 +59,32 @@ export default function TesouraChart() {
     // Scales
     const x = d3
       .scaleLinear()
-      .domain([1997, 2023])
+      .domain([2001, 2023])
       .range([0, innerW]);
 
-    const maxVal = d3.max(tesoura, (d) => Math.max(d.negras, d.naoNegras, d.total ?? 0)) ?? 4500;
+    // Select y values based on mode
+    const getYTotal = (d: TesouraPoint, i: number) => {
+      if (mode === "taxa" && taxas[i]) return taxas[i].taxa_total;
+      return d.total ?? d.negras + d.naoNegras;
+    };
+    const getYNegras = (d: TesouraPoint, i: number) => {
+      if (mode === "taxa" && taxas[i]) return taxas[i].taxa_negras;
+      return d.negras;
+    };
+    const getYNaoNegras = (d: TesouraPoint, i: number) => {
+      if (mode === "taxa" && taxas[i]) return taxas[i].taxa_nao_negras;
+      return d.naoNegras;
+    };
+
+    const maxVal =
+      mode === "taxa"
+        ? d3.max(taxas, (d) =>
+            Math.max(d.taxa_negras, d.taxa_nao_negras, d.taxa_total)
+          ) ?? 6
+        : d3.max(tesoura, (d) =>
+            Math.max(d.negras, d.naoNegras, d.total ?? 0)
+          ) ?? 4500;
+
     const y = d3
       .scaleLinear()
       .domain([0, maxVal * 1.1])
@@ -78,11 +113,15 @@ export default function TesouraChart() {
       .call((g) => g.select(".domain").attr("stroke", "#e5e5e5"));
 
     // Y axis
+    const yFormat = mode === "taxa"
+      ? (d: d3.NumberValue) => (d as number).toFixed(1)
+      : (d: d3.NumberValue) => d3.format(",")(d as number);
+
     g.append("g")
       .call(
         d3.axisLeft(y)
           .ticks(5)
-          .tickFormat((d) => d3.format(",")(d as number))
+          .tickFormat(yFormat)
       )
       .call((g) => g.select(".domain").remove());
 
@@ -90,20 +129,25 @@ export default function TesouraChart() {
     const lineTotal = d3
       .line<TesouraPoint>()
       .x((d) => x(d.year))
-      .y((d) => y(d.total ?? d.negras + d.naoNegras))
+      .y((d, i) => y(getYTotal(d, i)))
       .curve(d3.curveMonotoneX);
 
     const lineNegras = d3
       .line<TesouraPoint>()
       .x((d) => x(d.year))
-      .y((d) => y(d.negras))
+      .y((d, i) => y(getYNegras(d, i)))
       .curve(d3.curveMonotoneX);
 
     const lineNaoNegras = d3
       .line<TesouraPoint>()
       .x((d) => x(d.year))
-      .y((d) => y(d.naoNegras))
+      .y((d, i) => y(getYNaoNegras(d, i)))
       .curve(d3.curveMonotoneX);
+
+    const formatVal = (v: number) => {
+      if (mode === "taxa") return v.toFixed(2);
+      return v.toLocaleString("pt-BR");
+    };
 
     if (phase === 0) {
       // Phase 0: single total line
@@ -115,7 +159,6 @@ export default function TesouraChart() {
         .attr("stroke-width", 2.5)
         .attr("d", lineTotal);
 
-      // Animate line drawing
       const totalLength = path.node()?.getTotalLength() ?? 0;
       path
         .attr("stroke-dasharray", totalLength)
@@ -125,11 +168,11 @@ export default function TesouraChart() {
         .ease(d3.easeQuadOut)
         .attr("stroke-dashoffset", 0);
 
-      // Label
-      const last = tesoura[tesoura.length - 1];
+      const lastIdx = tesoura.length - 1;
+      const last = tesoura[lastIdx];
       g.append("text")
         .attr("x", x(last.year) + 8)
-        .attr("y", y(last.total ?? last.negras + last.naoNegras))
+        .attr("y", y(getYTotal(last, lastIdx)))
         .attr("dy", "0.35em")
         .attr("fill", "var(--color-text)")
         .style("font-family", "var(--font-body)")
@@ -143,7 +186,6 @@ export default function TesouraChart() {
         .attr("opacity", 1);
     } else {
       // Phase 1+: split lines
-      // Negras line
       const pathNegras = g
         .append("path")
         .datum(tesoura)
@@ -161,7 +203,6 @@ export default function TesouraChart() {
         .ease(d3.easeQuadOut)
         .attr("stroke-dashoffset", 0);
 
-      // Nao negras line
       const pathNaoNegras = g
         .append("path")
         .datum(tesoura)
@@ -179,12 +220,11 @@ export default function TesouraChart() {
         .ease(d3.easeQuadOut)
         .attr("stroke-dashoffset", 0);
 
-      // Area between the lines (the gap)
       const area = d3
         .area<TesouraPoint>()
         .x((d) => x(d.year))
-        .y0((d) => y(d.naoNegras))
-        .y1((d) => y(d.negras))
+        .y0((d, i) => y(getYNaoNegras(d, i)))
+        .y1((d, i) => y(getYNegras(d, i)))
         .curve(d3.curveMonotoneX);
 
       g.append("path")
@@ -197,55 +237,43 @@ export default function TesouraChart() {
         .duration(800)
         .attr("opacity", 0.08);
 
-      // End labels
-      const lastPoint = tesoura[tesoura.length - 1];
+      const lastIdx = tesoura.length - 1;
+      const lastPoint = tesoura[lastIdx];
 
-      // Negras label
       g.append("text")
         .attr("x", x(lastPoint.year) + 8)
-        .attr("y", y(lastPoint.negras))
+        .attr("y", y(getYNegras(lastPoint, lastIdx)))
         .attr("dy", "0.35em")
         .attr("fill", "var(--color-blood)")
         .style("font-family", "var(--font-body)")
         .style("font-size", "13px")
         .style("font-weight", "700")
-        .text(`Negras: ${lastPoint.negras.toLocaleString("pt-BR")}`)
+        .text(`Negras: ${formatVal(getYNegras(lastPoint, lastIdx))}`)
         .attr("opacity", 0)
         .transition()
         .delay(1200)
         .duration(500)
         .attr("opacity", 1);
 
-      // Nao negras label
       g.append("text")
         .attr("x", x(lastPoint.year) + 8)
-        .attr("y", y(lastPoint.naoNegras))
+        .attr("y", y(getYNaoNegras(lastPoint, lastIdx)))
         .attr("dy", "0.35em")
         .attr("fill", "var(--color-text-secondary)")
         .style("font-family", "var(--font-body)")
         .style("font-size", "13px")
         .style("font-weight", "700")
-        .text(`Não negras: ${lastPoint.naoNegras.toLocaleString("pt-BR")}`)
+        .text(`Não negras: ${formatVal(getYNaoNegras(lastPoint, lastIdx))}`)
         .attr("opacity", 0)
         .transition()
         .delay(1200)
         .duration(500)
         .attr("opacity", 1);
 
-      // Phase 2: marcos legislativos
       if (phase >= 2) {
         marcos.forEach((marco) => {
-          if (marco.year < 1997 || marco.year > 2023) return;
+          if (marco.year < 2001 || marco.year > 2023) return;
 
-          const marcoG = g
-            .append("g")
-            .attr("opacity", 0)
-            .transition()
-            .delay(1500)
-            .duration(500)
-            .attr("opacity", 1);
-
-          // Vertical dashed line
           g.append("line")
             .attr("x1", x(marco.year))
             .attr("x2", x(marco.year))
@@ -260,7 +288,6 @@ export default function TesouraChart() {
             .duration(500)
             .attr("opacity", 0.6);
 
-          // Label
           g.append("text")
             .attr("x", x(marco.year))
             .attr("y", -8)
@@ -308,14 +335,18 @@ export default function TesouraChart() {
         const d0 = tesoura[idx - 1];
         const d1 = tesoura[idx];
         if (!d0 || !d1) return;
-        const d = yearHover - d0.year > d1.year - yearHover ? d1 : d0;
+        const useI = yearHover - d0.year > d1.year - yearHover ? idx : idx - 1;
+        const d = tesoura[useI];
 
         let html = `<strong>${d.year}</strong><br/>`;
         if (phase === 0) {
-          html += `Total: ${(d.total ?? 0).toLocaleString("pt-BR")}`;
+          html += `${mode === "taxa" ? "Taxa total" : "Total"}: ${formatVal(getYTotal(d, useI))}`;
+          if (mode === "taxa") html += " <span style='color:#888'>/ 100 mil</span>";
         } else {
-          html += `<span style="color:var(--color-blood)">Negras: ${d.negras.toLocaleString("pt-BR")}</span><br/>`;
-          html += `<span style="color:var(--color-text-secondary)">Não negras: ${d.naoNegras.toLocaleString("pt-BR")}</span>`;
+          html += `<span style="color:var(--color-blood)">Negras: ${formatVal(getYNegras(d, useI))}</span>`;
+          if (mode === "taxa") html += " <span style='color:#888'>/ 100 mil</span>";
+          html += `<br/><span style="color:var(--color-text-secondary)">Não negras: ${formatVal(getYNaoNegras(d, useI))}</span>`;
+          if (mode === "taxa") html += " <span style='color:#888'>/ 100 mil</span>";
         }
 
         tooltip
@@ -327,9 +358,8 @@ export default function TesouraChart() {
       .on("mouseleave", () => {
         tooltip.style("opacity", 0);
       });
-  }, [phase]);
+  }, [phase, mode]);
 
-  // Redraw on phase change or resize
   useEffect(() => {
     drawChart();
     const handleResize = () => drawChart();
@@ -337,7 +367,6 @@ export default function TesouraChart() {
     return () => window.removeEventListener("resize", handleResize);
   }, [drawChart]);
 
-  // Scroll-triggered phase changes
   useEffect(() => {
     const sections = document.querySelectorAll("[data-tesoura-step]");
     const observer = new IntersectionObserver(
@@ -360,7 +389,6 @@ export default function TesouraChart() {
   return (
     <section className="bg-[var(--color-bg-alt)]">
       <div className="mx-auto max-w-5xl px-6 py-24">
-        {/* Section header */}
         <div className="mb-16 offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
             Ato 01 · A Divergência
@@ -375,25 +403,54 @@ export default function TesouraChart() {
           </h2>
         </div>
 
-        {/* Sticky chart */}
         <div className="relative md:flex md:gap-12">
           <div className="md:sticky md:top-24 md:w-2/3 md:self-start">
+            {/* Mode toggle */}
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                Ver como:
+              </span>
+              <button
+                onClick={() => setMode("absolutos")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  mode === "absolutos"
+                    ? "bg-[var(--color-text)] text-white"
+                    : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
+                }`}
+              >
+                Números absolutos
+              </button>
+              <button
+                onClick={() => setMode("taxa")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  mode === "taxa"
+                    ? "bg-[var(--color-blood)] text-white"
+                    : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
+                }`}
+              >
+                Taxa por 100 mil mulheres
+              </button>
+            </div>
+
             <div ref={containerRef} className="relative">
               <svg ref={svgRef} className="w-full" />
             </div>
             <p className="mt-2 text-xs text-[var(--color-text-tertiary)]">
-              Fonte: Atlas da Violência (IPEA/FBSP). Séries 40, 142, 143.
+              {mode === "absolutos"
+                ? "Número absoluto de homicídios de mulheres por ano."
+                : "Homicídios por 100 mil mulheres (ajustado pela população feminina)."}
+              {" "}Fonte: Atlas da Violência (IPEA/FBSP), séries 40, 142, 143.
+              {mode === "taxa" && " População: IBGE (estimativas) + PNAD Contínua (composição racial)."}
             </p>
           </div>
 
-          {/* Scroll steps */}
           <div className="mt-12 space-y-[60vh] md:mt-0 md:w-1/3">
             <div data-tesoura-step="0" className="min-h-[40vh] flex items-center">
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
-                  Entre 1997 e 2023, o Brasil registrou mais de{" "}
-                  <strong>100 mil homicídios de mulheres</strong>.
-                  A curva nunca caiu de verdade.
+                  Entre 2001 e 2023, o Brasil registrou mais de{" "}
+                  <strong>90 mil homicídios de mulheres</strong>.
+                  A curva do número absoluto nunca caiu de verdade.
                 </p>
               </div>
             </div>
@@ -417,60 +474,79 @@ export default function TesouraChart() {
             <div data-tesoura-step="2" className="min-h-[40vh] flex items-center">
               <div className="rounded-lg bg-white/80 p-6 backdrop-blur-sm">
                 <p className="text-lg leading-relaxed text-[var(--color-text)]">
-                  A divergência começou por volta de <strong>2001</strong>
-                  {" "}— cinco anos antes da Lei Maria da Penha.
+                  Em <strong>taxa por 100 mil mulheres</strong>, o risco de uma
+                  mulher negra ser assassinada passou a ser quase{" "}
+                  <strong className="text-[var(--color-blood)]">2× maior</strong>{" "}
+                  que o de uma não negra.
                 </p>
-                <p className="mt-4 text-lg font-bold leading-relaxed text-[var(--color-blood)]">
-                  Em 20 anos, os homicídios de mulheres negras
-                  quase triplicaram.
-                </p>
-                <p className="mt-2 text-base text-[var(--color-text-secondary)]">
-                  Os de não negras caíram 30%.
+                <p className="mt-4 text-base text-[var(--color-text-secondary)]">
+                  Em 2001, era praticamente igual. Experimente os dois modos
+                  no gráfico.
                 </p>
               </div>
             </div>
 
-            {/* Spacer for scroll */}
             <div className="h-[20vh]" />
           </div>
         </div>
 
-        {/* Editorial note — context about 2017-2019 dip and the real pattern */}
+        {/* Editorial note */}
         <div className="mx-auto mt-20 max-w-3xl space-y-5 text-[var(--color-text-secondary)]">
           <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            Nota sobre a leitura do gráfico
+            Leitura dos dois lados da moeda
           </p>
 
           <p className="text-base leading-relaxed md:text-lg">
-            As duas curvas caem entre <strong>2017 e 2019</strong>. É tentador
-            olhar pra essa queda e achar que alguma coisa funcionou. Mas ela
-            atingiu as duas linhas ao mesmo tempo — mulheres negras caíram 24%,
-            não negras caíram 20%. Proporcionalmente parecido.
+            <strong className="text-[var(--color-text)]">
+              Nos números absolutos,
+            </strong>{" "}
+            o Brasil mata quase o mesmo número de mulheres por ano há duas
+            décadas — entre 3,5 mil e 4,9 mil. A curva oscila, mas não cai
+            estruturalmente.
           </p>
 
           <p className="text-base leading-relaxed md:text-lg">
-            Essa queda geral não é só sobre violência contra a mulher. Entre
-            2017 e 2019 o Brasil teve uma redução histórica de homicídios
-            (incluindo homens), por uma combinação de fatores macro: acordos
-            entre facções no Nordeste, reclassificação de mortes violentas nos
-            sistemas de saúde (CID-10) depois da Lei do Feminicídio, e a
-            subnotificação que o Fórum Brasileiro de Segurança Pública
-            reconhece como problema estrutural.
+            <strong className="text-[var(--color-text)]">
+              Em taxa por 100 mil mulheres,
+            </strong>{" "}
+            o cenário tem mais de uma camada. A taxa total do país caiu de
+            4,3 (2001) para 3,5 (2023) — redução modesta, ajudada pelo
+            crescimento populacional. Mas a tesoura racial{" "}
+            <strong className="text-[var(--color-blood)]">
+              abriu, e muito.
+            </strong>
           </p>
 
           <p className="text-base leading-relaxed md:text-lg">
-            O que <strong>de fato</strong> separa as duas curvas não é essa
-            queda pontual. É uma trajetória de <strong>20 anos</strong> de
-            divergência, que começou por volta de 2001 — cinco anos antes da
-            Lei Maria da Penha, portanto anterior a qualquer marco legislativo
-            importante sobre o tema.
+            Em 2001, uma mulher negra tinha risco de assassinato{" "}
+            <strong className="text-[var(--color-text)]">
+              praticamente igual
+            </strong>{" "}
+            ao de uma mulher não negra. Hoje, esse risco é{" "}
+            <strong className="text-[var(--color-blood)]">
+              1,76× maior
+            </strong>
+            . A desigualdade racial na mortalidade feminina cresceu 56% em 22
+            anos.
           </p>
 
           <p className="text-base leading-relaxed md:text-lg">
-            A tesoura abriu devagar, durante duas décadas, e permanece aberta.
-            Hoje, para <strong>cada mulher não negra assassinada</strong> no
-            Brasil, <strong className="text-[var(--color-blood)]">
-            2,2 mulheres negras</strong> perdem a vida pela mesma violência.
+            Essa diferença entre os dois modos é importante. Quem olha só
+            o número absoluto vê estagnação. Quem olha só a taxa total vê
+            uma leve melhora. Quem olha{" "}
+            <strong className="text-[var(--color-text)]">a taxa por raça</strong>{" "}
+            vê o que está realmente acontecendo: o Brasil reduziu um pouco
+            de risco para umas, e aumentou muito o risco para outras. A
+            tesoura não é só uma metáfora — é o que os dados mostram,
+            de duas maneiras diferentes de contar a mesma coisa.
+          </p>
+
+          <p className="text-base leading-relaxed md:text-lg">
+            A queda aparente de 2017-2019 foi um fenômeno macro da segurança
+            pública brasileira — acordos entre facções no Nordeste,
+            reclassificação CID-10 após a Lei do Feminicídio, e
+            subnotificação reconhecida pelo FBSP. Atingiu as duas curvas em
+            proporção parecida. Não quebrou a tesoura.
           </p>
         </div>
       </div>
