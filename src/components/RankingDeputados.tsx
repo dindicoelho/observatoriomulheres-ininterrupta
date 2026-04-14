@@ -294,8 +294,9 @@ export default function RankingDeputados() {
           </div>
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
-            Dos {DATA.totalDeputados} deputados que propuseram proposições sobre
-            violência contra a mulher desde 2019, alguns se repetem muito. Mas{" "}
+            Na atual legislatura (2023-2026), <strong>{DATA.totalDeputados} deputados</strong>{" "}
+            propuseram proposições sobre violência contra a mulher.
+            Alguns se repetem muito. Mas{" "}
             <strong>quantidade não é qualidade</strong>. Clique em um deputado
             para ver os projetos.
           </p>
@@ -476,8 +477,8 @@ export default function RankingDeputados() {
 
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
             Fonte: API de Dados Abertos da Câmara dos Deputados. Autoria
-            principal de cada proposição. Deputados com 5+ PLs sobre o tema
-            entre 2019 e 2026.
+            principal de cada proposição. 57ª legislatura: janeiro de 2023
+            a dezembro de 2026. Deputados com 5+ PLs sobre o tema.
           </p>
         </div>
       </section>
