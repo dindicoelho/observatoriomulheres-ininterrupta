@@ -23,7 +23,7 @@ export default function Home() {
         <div className="bg-[var(--color-bg-alt)] py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              Introdução
+              [ INTRODUÇÃO ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
               Os dados abaixo vêm do Atlas da Violência (IPEA/FBSP),
@@ -56,7 +56,7 @@ export default function Home() {
         <div className="bg-white py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              Interlúdio
+              [ INTERLÚDIO ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
               A violência também tem geografia.
@@ -88,7 +88,7 @@ export default function Home() {
         <div className="bg-[var(--color-bg-alt)] py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-blood)]">
-              Ano de eleição · 2026
+              [ ANO DE ELEIÇÃO / 2026 ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
               Mas quem, especificamente, está propondo o quê?
@@ -105,7 +105,7 @@ export default function Home() {
         <div className="bg-white py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              Último ato
+              [ ÚLTIMO ATO ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
               Os números nacionais escondem realidades locais muito diferentes.

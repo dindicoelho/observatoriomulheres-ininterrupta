@@ -11,7 +11,7 @@ export default function TriggerWarning() {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-6 backdrop-blur-sm">
       <div className="max-w-md border border-white/10 bg-[var(--color-dark)] p-10 text-left shadow-2xl">
         <p className="font-mono-data text-xs uppercase tracking-[0.3em] text-white/50">
-          Aviso de conteúdo
+          [ AVISO DE CONTEÚDO ]
         </p>
 
         <h2

@@ -7,7 +7,7 @@ export default function Footer() {
         {/* CTA */}
         <div className="mb-12 offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-            Encerramento
+            [ ENCERRAMENTO ]
           </p>
           <h2
             className="text-5xl font-black leading-[0.9] md:text-6xl"
@@ -60,8 +60,8 @@ export default function Footer() {
 
         {/* Fontes */}
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-white/50">
-            Fontes e metodologia
+          <h3 className="font-mono-data text-xs font-bold uppercase tracking-[0.2em] text-white/50">
+            [ FONTES E METODOLOGIA ]
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-white/60">
             <li>

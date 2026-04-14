@@ -1,23 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
+  /* Warm, editorial palette (inspired by Dan Highbrown + newspaper aesthetic) */
   --color-blood: #B8252F;
   --color-blood-dark: #791F1F;
-  --color-blood-light: #FCEBEB;
+  --color-blood-light: #F5E6E3;
   --color-neutral: #B4B2A9;
   --color-blue: #185FA5;
   --color-blue-light: #E6F1FB;
   --color-teal: #0F6E56;
-  --color-bg: #FFFFFF;
-  --color-bg-alt: #F8F7F4;
-  --color-dark: #0A0A0A;
-  --color-dark-alt: #141414;
-  --color-text: #1A1A1A;
-  --color-text-secondary: #5F5E5A;
-  --color-text-tertiary: #888780;
+
+  /* Warm cream instead of pure white */
+  --color-bg: #F8F4EE;
+  --color-bg-alt: #EFE9DE;
+
+  /* Warm black instead of pure black */
+  --color-dark: #141312;
+  --color-dark-alt: #1D1B19;
+
+  /* Warm text grays */
+  --color-text: #191817;
+  --color-text-secondary: #6B635A;
+  --color-text-tertiary: #9A9388;
 
   --font-display: 'Playfair Display', Georgia, serif;
+  --font-display-condensed: 'Archivo Black', 'Archivo', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -27,15 +35,15 @@
   --color-foreground: var(--color-text);
   --color-blood: #B8252F;
   --color-blood-dark: #791F1F;
-  --color-blood-light: #FCEBEB;
+  --color-blood-light: #F5E6E3;
   --color-neutral: #B4B2A9;
   --color-blue: #185FA5;
   --color-teal: #0F6E56;
-  --color-bg-alt: #F8F7F4;
-  --color-dark: #0A0A0A;
-  --color-dark-alt: #141414;
-  --color-text-secondary: #5F5E5A;
-  --color-text-tertiary: #888780;
+  --color-bg-alt: #EFE9DE;
+  --color-dark: #141312;
+  --color-dark-alt: #1D1B19;
+  --color-text-secondary: #6B635A;
+  --color-text-tertiary: #9A9388;
 }
 
 body {
@@ -53,18 +61,31 @@ h1, h2, h3 {
   font-family: var(--font-mono);
 }
 
+.font-display-condensed {
+  font-family: var(--font-display-condensed);
+  letter-spacing: -0.04em;
+  font-weight: 900;
+}
+
+/* Monumental numbers — condensed gothic, tight tracking */
+.display-number {
+  font-family: var(--font-display-condensed);
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+}
+
 /* Dark section styles */
 .dark-section {
   background: var(--color-dark);
-  color: #FFFFFF;
+  color: var(--color-bg);
 }
 
 .dark-section .text-secondary {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(248, 244, 238, 0.65);
 }
 
 .dark-section .text-tertiary {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(248, 244, 238, 0.45);
 }
 
 html {
@@ -79,19 +100,19 @@ html {
 }
 
 .tick line {
-  stroke: #e5e5e5;
+  stroke: rgba(25, 24, 23, 0.08);
 }
 
 .domain {
-  stroke: #e5e5e5;
+  stroke: rgba(25, 24, 23, 0.08);
 }
 
 .dark-section .tick text {
-  fill: rgba(255, 255, 255, 0.5);
+  fill: rgba(248, 244, 238, 0.5);
 }
 
 .dark-section .tick line {
-  stroke: rgba(255, 255, 255, 0.1);
+  stroke: rgba(248, 244, 238, 0.1);
 }
 
 /* Scrollbar */
@@ -141,7 +162,6 @@ html {
   animation: charReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Disable user select on display (brutalist touch) */
 h1, h2, h3, h4 {
   user-select: none;
 }
@@ -151,7 +171,6 @@ p, li, span.selectable {
   user-select: text;
 }
 
-/* Asymmetric number offset */
 .offset-left {
   transform: translateX(-8%);
 }
@@ -164,4 +183,20 @@ p, li, span.selectable {
   .offset-left, .offset-right {
     transform: none;
   }
+}
+
+/* Bracket label style */
+.bracket-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.bracket-label::before {
+  content: "[ ";
+}
+
+.bracket-label::after {
+  content: " ]";
 }

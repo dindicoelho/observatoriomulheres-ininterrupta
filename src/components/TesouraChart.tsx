@@ -391,7 +391,7 @@ export default function TesouraChart() {
       <div className="mx-auto max-w-5xl px-6 py-24">
         <div className="mb-16 offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            Ato 01 · A Divergência
+            [ ATO 01 / A DIVERGÊNCIA ]
           </p>
           <h2
             className="text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"

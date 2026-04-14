@@ -153,10 +153,11 @@ export default function TimelineLegislativa() {
         <div className="mt-24 border-y border-white/10 py-16">
           <div className="offset-right">
             <p
-              className="font-black leading-none"
+              className="leading-none"
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(5rem, 14vw, 14rem)",
+                fontFamily: "var(--font-display-condensed)",
+                letterSpacing: "-0.05em",
+                fontSize: "clamp(5rem, 16vw, 16rem)",
                 color: CATEGORY_COLORS.incremental,
               }}
             >

@@ -36,10 +36,10 @@ export default function Hero() {
       {/* Top meta bar */}
       <div className="flex items-center justify-between px-6 pt-8 md:px-12">
         <span className="font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-          Brasil / 2023
+          [ Brasil / 2023 ]
         </span>
         <span className="font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-          Fonte: Atlas da Violência
+          [ Fonte: Atlas da Violência ]
         </span>
       </div>
 
@@ -48,10 +48,11 @@ export default function Hero() {
         <div className="w-full max-w-6xl">
           <div className="offset-left">
             <h1
-              className="font-black leading-[0.85] tracking-tight text-[var(--color-blood)]"
+              className="leading-[0.85] text-[var(--color-blood)]"
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(8rem, 22vw, 22rem)",
+                fontFamily: "var(--font-display-condensed)",
+                letterSpacing: "-0.05em",
+                fontSize: "clamp(8rem, 24vw, 24rem)",
               }}
             >
               {digits.map((d, i) => (
@@ -70,7 +71,7 @@ export default function Hero() {
             <p
               className="mt-3 font-mono-data text-sm uppercase tracking-wider text-white/60"
             >
-              Uma a cada 2 horas e 15 minutos.
+              [ uma a cada 2 horas e 15 minutos ]
             </p>
           </div>
         </div>
@@ -114,7 +115,7 @@ export default function Hero() {
           </p>
           <div className="flex items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-widest text-white/50">
-              Scroll
+              [ scroll ]
             </span>
             <div className="h-8 w-px animate-pulse bg-white/40" />
           </div>

@@ -103,7 +103,7 @@ export default function RetratoRacial() {
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-            Ato 02 · A Desproporção
+            [ ATO 02 / A DESPROPORÇÃO ]
           </p>
           <RevealText
             as="h2"
@@ -152,10 +152,11 @@ export default function RetratoRacial() {
               </div>
               <div className="mt-8 md:mt-0 md:w-2/3 offset-right">
                 <p
-                  className="font-black leading-none text-[var(--color-blood)]"
+                  className="leading-none text-[var(--color-blood)]"
                   style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(8rem, 18vw, 18rem)",
+                    fontFamily: "var(--font-display-condensed)",
+                    letterSpacing: "-0.05em",
+                    fontSize: "clamp(8rem, 20vw, 20rem)",
                   }}
                 >
                   +{gap.toFixed(1)}
