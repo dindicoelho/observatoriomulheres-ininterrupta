@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import votacoesData from "../data/votacoes.json";
 import RevealText from "./RevealText";
 
@@ -28,6 +28,16 @@ type Votacao = {
 };
 
 type VotacoesJSON = { votacoes: Votacao[] };
+
+type GrupoPL = {
+  pl_ref: string;
+  pl_id: number;
+  projeto_sobre: string;
+  pl_ementa: string;
+  principal: Votacao;
+  outras: Votacao[];
+  temMerito: boolean;
+};
 
 const DATA = votacoesData as VotacoesJSON;
 
@@ -79,15 +89,48 @@ function PartyRow({
 
 export default function VotacoesPartidos() {
   const [expanded, setExpanded] = useState<number | null>(0);
-  const [filter, setFilter] = useState<"all" | "mérito" | "procedural">("all");
 
-  const filteredVotacoes =
-    filter === "all"
-      ? DATA.votacoes
-      : DATA.votacoes.filter((v) => v.tipo === filter);
+  // Group votações by PL
+  const grupos = useMemo<GrupoPL[]>(() => {
+    const map = new Map<string, Votacao[]>();
+    DATA.votacoes.forEach((v) => {
+      const arr = map.get(v.pl_ref) ?? [];
+      arr.push(v);
+      map.set(v.pl_ref, arr);
+    });
 
-  const meritoCount = DATA.votacoes.filter((v) => v.tipo === "mérito").length;
-  const procedCount = DATA.votacoes.filter((v) => v.tipo === "procedural").length;
+    const groups: GrupoPL[] = [];
+    map.forEach((vots, pl_ref) => {
+      // Primary: prefer mérito. Within each type, most recent.
+      const sorted = [...vots].sort((a, b) => {
+        // mérito first
+        if (a.tipo === "mérito" && b.tipo !== "mérito") return -1;
+        if (b.tipo === "mérito" && a.tipo !== "mérito") return 1;
+        // then by date desc
+        return b.data.localeCompare(a.data);
+      });
+      const principal = sorted[0];
+      const outras = sorted.slice(1);
+      groups.push({
+        pl_ref,
+        pl_id: principal.pl_id,
+        projeto_sobre: principal.projeto_sobre,
+        pl_ementa: principal.pl_ementa,
+        principal,
+        outras,
+        temMerito: vots.some((v) => v.tipo === "mérito"),
+      });
+    });
+
+    // Sort groups: mérito first, then by principal date desc
+    return groups.sort((a, b) => {
+      if (a.temMerito && !b.temMerito) return -1;
+      if (b.temMerito && !a.temMerito) return 1;
+      return b.principal.data.localeCompare(a.principal.data);
+    });
+  }, []);
+
+  const totalVotacoes = DATA.votacoes.length;
 
   return (
     <section className="bg-[var(--color-bg-alt)] px-6 py-24">
@@ -113,64 +156,28 @@ export default function VotacoesPartidos() {
 
         <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
           <p>
-            As {DATA.votacoes.length} votações mais disputadas da atual
-            legislatura (2023-2026) sobre violência contra a mulher. Cada card
-            explica em detalhe o que foi votado, o que significa cada lado e
-            como cada partido se posicionou.
+            Na atual legislatura (2023-2026),{" "}
+            <strong>{grupos.length} proposições</strong> sobre violência
+            contra a mulher foram a votação nominal no plenário da Câmara,
+            totalizando {totalVotacoes} votações entre decisões de mérito
+            e procedurais (requerimentos, destaques, recursos).
           </p>
           <p className="text-base">
-            <strong className="text-[var(--color-text)]">Importante:</strong>{" "}
-            nem toda votação é sobre o mérito da proposta. Muitas são votações
-            procedurais (requerimentos, destaques) que dizem respeito ao{" "}
-            <em>rito</em> da tramitação, não ao conteúdo em si. Use o filtro
-            abaixo para separar.
+            Cada card consolida o projeto, a votação principal e os
+            procedimentos relacionados. Clique para expandir.
           </p>
         </div>
 
-        {/* Filter */}
-        <div className="mt-8 flex flex-wrap gap-2">
-          <button
-            onClick={() => setFilter("all")}
-            className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-              filter === "all"
-                ? "bg-[var(--color-text)] text-white"
-                : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
-            }`}
-          >
-            Todas ({DATA.votacoes.length})
-          </button>
-          <button
-            onClick={() => setFilter("mérito")}
-            className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-              filter === "mérito"
-                ? "bg-[var(--color-teal)] text-white"
-                : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
-            }`}
-          >
-            De mérito ({meritoCount})
-          </button>
-          <button
-            onClick={() => setFilter("procedural")}
-            className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-              filter === "procedural"
-                ? "bg-[var(--color-neutral)] text-white"
-                : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
-            }`}
-          >
-            Procedurais ({procedCount})
-          </button>
-        </div>
-
-        <div className="mt-8 space-y-4">
-          {filteredVotacoes.map((v, idx) => {
+        <div className="mt-10 space-y-4">
+          {grupos.map((grupo, idx) => {
             const isOpen = expanded === idx;
+            const v = grupo.principal;
             const parties = Object.entries(v.partidos).filter(
               ([, p]) => p.total >= 3
             );
-            const isMerito = v.tipo === "mérito";
             return (
               <div
-                key={v.id}
+                key={grupo.pl_ref}
                 className="overflow-hidden rounded-xl border border-gray-200 bg-white"
               >
                 <button
@@ -180,29 +187,33 @@ export default function VotacoesPartidos() {
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                        {v.pl_ref}
+                        {grupo.pl_ref}
                       </span>
-                      <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
-                        · {v.data}
-                      </span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-widest ${
-                          isMerito
-                            ? "bg-[var(--color-teal)] text-white"
-                            : "bg-[var(--color-neutral)] text-white"
-                        }`}
-                      >
-                        {isMerito ? "Mérito" : "Procedural"}
-                      </span>
+                      {grupo.temMerito && (
+                        <span className="rounded-full bg-[var(--color-teal)] px-2 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-widest text-white">
+                          Votação de mérito
+                        </span>
+                      )}
+                      {grupo.outras.length > 0 && (
+                        <span className="rounded-full border border-[var(--color-text-tertiary)]/30 px-2 py-0.5 font-mono-data text-[9px] font-medium uppercase tracking-widest text-[var(--color-text-tertiary)]">
+                          +{grupo.outras.length} procedurais
+                        </span>
+                      )}
                     </div>
+
                     <h3
-                      className="mt-2 text-xl font-bold leading-tight text-[var(--color-text)] md:text-2xl"
+                      className="mt-3 text-xl font-bold leading-tight text-[var(--color-text)] md:text-2xl"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
-                      {v.o_que_foi_votado}
+                      {grupo.projeto_sobre.length > 140
+                        ? grupo.projeto_sobre.slice(0, 140) + "…"
+                        : grupo.projeto_sobre}
                     </h3>
 
                     <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
+                        {v.data}
+                      </span>
                       <span className="flex items-center gap-1.5 text-sm">
                         <span className="h-3 w-3 rounded-sm bg-[var(--color-teal)]" />
                         <span className="font-mono-data font-bold text-[var(--color-teal)]">
@@ -241,69 +252,114 @@ export default function VotacoesPartidos() {
                       className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-6 transition-opacity duration-300"
                       style={{ opacity: isOpen ? 1 : 0 }}
                     >
-                    {/* Sobre o projeto */}
-                    <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
-                      <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
-                        Sobre o projeto de lei
-                      </p>
-                      <p className="mt-2 text-base leading-relaxed text-[var(--color-text)]">
-                        {v.projeto_sobre}
-                      </p>
-                    </div>
-
-                    {/* Resultado */}
-                    <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
-                      <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                        Resultado
-                      </p>
-                      <p className="mt-2 text-base leading-relaxed text-[var(--color-text)]">
-                        {v.resultado}
-                      </p>
-                    </div>
-
-                    {/* Interpretações Sim/Não */}
-                    <div className="mb-6 grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-lg border-l-4 border-[var(--color-teal)] bg-white p-5">
-                        <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-teal)]">
-                          Votar SIM significa
-                        </p>
-                        <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
-                          {v.interpretacao_sim}
-                        </p>
-                      </div>
-                      <div className="rounded-lg border-l-4 border-[var(--color-blood)] bg-white p-5">
+                      {/* Sobre o projeto */}
+                      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
                         <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
-                          Votar NÃO significa
+                          [ Sobre o projeto de lei ]
                         </p>
-                        <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
-                          {v.interpretacao_nao}
+                        <p className="mt-2 text-base leading-relaxed text-[var(--color-text)]">
+                          {grupo.projeto_sobre}
                         </p>
                       </div>
-                    </div>
 
-                    {/* Votos por partido */}
-                    <p className="mb-3 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                      Votos por partido (mínimo 3 votantes)
-                    </p>
-                    <div>
-                      {parties.map(([party, data]) => (
-                        <PartyRow key={party} party={party} data={data} />
-                      ))}
-                    </div>
+                      {/* Votação principal */}
+                      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-teal)]">
+                            [ Votação principal · {v.data} ]
+                          </p>
+                          <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                            {v.tipo === "mérito" ? "Mérito" : "Procedural"}
+                          </span>
+                        </div>
+                        <p className="mt-3 text-base font-bold leading-tight text-[var(--color-text)]">
+                          {v.o_que_foi_votado}
+                        </p>
+                        <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                          {v.resultado}
+                        </p>
 
-                    <div className="mt-6 flex flex-wrap items-center justify-between gap-2 text-[10px] text-[var(--color-text-tertiary)]">
-                      <span className="font-mono-data">
-                        % = quanto do partido votou SIM
-                      </span>
-                      <a
-                        href={`https://www.camara.leg.br/propostas-legislativas/${v.pl_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-mono-data hover:text-[var(--color-blood)]"
-                      >
-                        Ver projeto na Câmara →
-                      </a>
-                    </div>
+                        {/* Interpretações Sim/Não */}
+                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-lg border-l-4 border-[var(--color-teal)] bg-[var(--color-bg-alt)] p-4">
+                            <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-teal)]">
+                              Votar SIM significa
+                            </p>
+                            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
+                              {v.interpretacao_sim}
+                            </p>
+                          </div>
+                          <div className="rounded-lg border-l-4 border-[var(--color-blood)] bg-[var(--color-bg-alt)] p-4">
+                            <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
+                              Votar NÃO significa
+                            </p>
+                            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
+                              {v.interpretacao_nao}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Partidos */}
+                        <p className="mb-3 mt-6 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                          [ Votos por partido · mínimo 3 votantes ]
+                        </p>
+                        <div>
+                          {parties.map(([party, data]) => (
+                            <PartyRow key={party} party={party} data={data} />
+                          ))}
+                        </div>
+
+                        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] text-[var(--color-text-tertiary)]">
+                          <span className="font-mono-data">
+                            % = quanto do partido votou SIM
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Outras votações (procedurais) */}
+                      {grupo.outras.length > 0 && (
+                        <div className="rounded-lg border border-gray-200 bg-white p-5">
+                          <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                            [ Outras votações desta proposição · {grupo.outras.length} ]
+                          </p>
+                          <ul className="mt-3 space-y-3">
+                            {grupo.outras.map((o) => (
+                              <li
+                                key={o.id}
+                                className="border-l-2 border-gray-200 pl-4 text-sm"
+                              >
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
+                                    {o.data}
+                                  </span>
+                                  <span className="rounded bg-[var(--color-bg-alt)] px-2 py-0.5 font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-secondary)]">
+                                    {o.tipo === "mérito" ? "Mérito" : "Procedural"}
+                                  </span>
+                                  <span className="font-mono-data text-xs">
+                                    <span className="text-[var(--color-teal)] font-bold">{o.totalSim}</span>
+                                    <span className="text-[var(--color-text-tertiary)]">×</span>
+                                    <span className="text-[var(--color-blood)] font-bold">{o.totalNao}</span>
+                                  </span>
+                                </div>
+                                <p className="mt-1 leading-relaxed text-[var(--color-text-secondary)]">
+                                  {o.o_que_foi_votado}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      <div className="mt-6 text-right">
+                        <a
+                          href={`https://www.camara.leg.br/propostas-legislativas/${grupo.pl_id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono-data text-xs text-[var(--color-blood)] hover:underline"
+                        >
+                          Ver projeto completo na Câmara →
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -316,6 +372,8 @@ export default function VotacoesPartidos() {
           Fonte: API de Dados Abertos da Câmara dos Deputados. Votações
           nominais em plenário entre 2023 e 2026 sobre proposições de
           violência contra a mulher com mais de 50 votos contestados.
+          Agrupadas por proposição — votações procedurais de cada PL
+          estão listadas dentro do card.
         </p>
       </div>
     </section>
