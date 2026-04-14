@@ -59,7 +59,7 @@ export default function TimelineLegislativa() {
   const filteredProps = (filter === "all"
     ? DATA.proposicoes
     : DATA.proposicoes.filter((p) => p.categoria === filter)
-  ).slice(0, 6);
+  ).slice(0, 20);
 
   return (
     <section className="dark-section px-6 py-24">
@@ -230,7 +230,7 @@ export default function TimelineLegislativa() {
         <div className="mt-20">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-              Exemplos recentes
+              20 proposições mais recentes
             </p>
             <div className="flex flex-wrap gap-2">
               {(["all", "simbólica", "incremental", "estrutural"] as const).map((f) => (

@@ -1,8 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import autoriaData from "../data/autoria.json";
 import RevealText from "./RevealText";
+
+type PL = {
+  id: number;
+  tipo: string;
+  numero: number;
+  ano: number;
+  ementa: string;
+  data: string;
+  categoria: "simbólica" | "incremental" | "estrutural";
+};
 
 type Deputado = {
   id: number;
@@ -15,13 +25,7 @@ type Deputado = {
   simbolicas: number;
   incrementais: number;
   estruturais: number;
-  pls: Array<{
-    id: number;
-    tipo: string;
-    numero: number;
-    ano: number;
-    categoria: string;
-  }>;
+  pls: PL[];
 };
 
 type AutoriaJSON = {
@@ -37,240 +41,450 @@ type AutoriaJSON = {
 const DATA = autoriaData as AutoriaJSON;
 
 const CATEGORY_COLORS = {
-  simbolica: "#6B6B64",
+  simbólica: "#6B6B64",
   incremental: "#3B82D4",
   estrutural: "#1DB389",
 };
 
+const CATEGORY_LABELS = {
+  simbólica: "Simbólica",
+  incremental: "Incremental",
+  estrutural: "Estrutural",
+};
+
+function DeputadoModal({
+  deputado,
+  onClose,
+}: {
+  deputado: Deputado;
+  onClose: () => void;
+}) {
+  const [filter, setFilter] = useState<"all" | "simbólica" | "incremental" | "estrutural">("all");
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleEsc);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  const filteredPLs =
+    filter === "all"
+      ? deputado.pls
+      : deputado.pls.filter((p) => p.categoria === filter);
+
+  const pctEstr =
+    deputado.total > 0
+      ? (deputado.estruturais / deputado.total) * 100
+      : 0;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-start gap-4 border-b border-gray-100 p-6">
+          {deputado.foto && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={deputado.foto}
+              alt=""
+              className="h-16 w-16 flex-shrink-0 rounded-full object-cover"
+            />
+          )}
+          <div className="flex-1">
+            <h3
+              className="text-2xl font-bold text-[var(--color-text)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {deputado.nome}
+            </h3>
+            <p className="font-mono-data text-sm text-[var(--color-text-tertiary)]">
+              {deputado.partido} · {deputado.uf}
+              {deputado.situacao !== "Exercício" && ` · ${deputado.situacao}`}
+            </p>
+
+            {/* Stats */}
+            <div className="mt-3 flex flex-wrap gap-4 text-sm">
+              <span>
+                <strong
+                  className="font-mono-data"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {deputado.total}
+                </strong>{" "}
+                <span className="text-[var(--color-text-secondary)]">
+                  proposições
+                </span>
+              </span>
+              <span>
+                <strong
+                  className="font-mono-data"
+                  style={{ color: CATEGORY_COLORS.estrutural }}
+                >
+                  {deputado.estruturais}
+                </strong>{" "}
+                <span className="text-[var(--color-text-secondary)]">
+                  estruturais ({pctEstr.toFixed(0)}%)
+                </span>
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="flex-shrink-0 rounded-full bg-[var(--color-bg-alt)] p-2 transition-colors hover:bg-gray-200"
+            aria-label="Fechar"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M5 5l10 10M15 5L5 15"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Filter */}
+        <div className="flex flex-wrap gap-2 border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-3">
+          <button
+            onClick={() => setFilter("all")}
+            className={`rounded-full px-3 py-1 text-xs transition-colors ${
+              filter === "all"
+                ? "bg-[var(--color-text)] text-white"
+                : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
+            }`}
+          >
+            Todas ({deputado.total})
+          </button>
+          {(["estrutural", "incremental", "simbólica"] as const).map((cat) => {
+            const count =
+              cat === "estrutural"
+                ? deputado.estruturais
+                : cat === "incremental"
+                ? deputado.incrementais
+                : deputado.simbolicas;
+            if (count === 0) return null;
+            return (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                  filter === cat ? "text-white" : "bg-white hover:bg-gray-100"
+                }`}
+                style={
+                  filter === cat
+                    ? { backgroundColor: CATEGORY_COLORS[cat] }
+                    : { color: CATEGORY_COLORS[cat] }
+                }
+              >
+                {CATEGORY_LABELS[cat]}s ({count})
+              </button>
+            );
+          })}
+        </div>
+
+        {/* PLs list */}
+        <div className="flex-1 overflow-y-auto">
+          <ul className="divide-y divide-gray-100">
+            {filteredPLs.map((pl) => (
+              <li key={pl.id} className="p-5 hover:bg-[var(--color-bg-alt)]">
+                <div className="flex items-start gap-3">
+                  <span
+                    className="flex-shrink-0 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white"
+                    style={{ backgroundColor: CATEGORY_COLORS[pl.categoria] }}
+                  >
+                    {CATEGORY_LABELS[pl.categoria]}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline gap-3">
+                      <span className="font-mono-data text-sm font-bold text-[var(--color-text)]">
+                        {pl.tipo} {pl.numero}/{pl.ano}
+                      </span>
+                      <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
+                        {pl.data}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                      {pl.ementa.length > 280
+                        ? pl.ementa.slice(0, 280) + "…"
+                        : pl.ementa}
+                    </p>
+                    <a
+                      href={`https://www.camara.leg.br/propostas-legislativas/${pl.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-block font-mono-data text-xs text-[var(--color-blue)] hover:underline"
+                    >
+                      Ver completo na Câmara →
+                    </a>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-4 text-center">
+          <a
+            href={`https://www.camara.leg.br/deputados/${deputado.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-blood)] hover:underline"
+          >
+            Perfil completo do deputado na Câmara →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
-  const [minPls, setMinPls] = useState(5);
+  const [selected, setSelected] = useState<Deputado | null>(null);
+  const minPls = 5;
 
   const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "total") return b.total - a.total;
     if (sortBy === "estruturais") return b.estruturais - a.estruturais;
-    // pct_estrutural
     const pa = a.total > 0 ? a.estruturais / a.total : 0;
     const pb = b.total > 0 ? b.estruturais / b.total : 0;
     return pb - pa;
   });
 
   const top = sorted.slice(0, 20);
-
   const maxTotal = Math.max(...top.map((d) => d.total));
 
   return (
-    <section className="bg-white px-6 py-24">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-12 offset-left">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            Ato 05 · Eleições 2026
-          </p>
-          <RevealText
-            as="h2"
-            text="Quem propõe"
-            stagger={40}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
-          />
-          <RevealText
-            as="h2"
-            text="o quê?"
-            stagger={40}
-            delay={400}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-blood)] md:text-7xl"
-          />
-        </div>
-
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
-          Dos {DATA.totalDeputados} deputados que propuseram proposições sobre
-          violência contra a mulher desde 2019, alguns se repetem muito. Mas{" "}
-          <strong>quantidade não é qualidade</strong>. Nem todo projeto é
-          estrutural.
-        </p>
-
-        {/* Sort controls */}
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
-            Ordenar por:
-          </span>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setSortBy("total")}
-              className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                sortBy === "total"
-                  ? "bg-[var(--color-text)] text-white"
-                  : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-              }`}
-            >
-              Quantidade total
-            </button>
-            <button
-              onClick={() => setSortBy("estruturais")}
-              className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                sortBy === "estruturais"
-                  ? "bg-[var(--color-teal)] text-white"
-                  : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-              }`}
-            >
-              Nº de estruturais
-            </button>
-            <button
-              onClick={() => setSortBy("pct_estrutural")}
-              className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                sortBy === "pct_estrutural"
-                  ? "bg-[var(--color-teal)] text-white"
-                  : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-              }`}
-            >
-              % estruturais
-            </button>
+    <>
+      <section className="bg-white px-6 py-24">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12 offset-left">
+            <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              Ato 05 · Eleições 2026
+            </p>
+            <RevealText
+              as="h2"
+              text="Quem propõe"
+              stagger={40}
+              className="block text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
+            />
+            <RevealText
+              as="h2"
+              text="o quê?"
+              stagger={40}
+              delay={400}
+              className="block text-5xl font-black leading-[0.9] text-[var(--color-blood)] md:text-7xl"
+            />
           </div>
-        </div>
 
-        {/* Ranking */}
-        <div className="mt-10 space-y-2">
-          {top.map((d, i) => {
-            const pct = (d.total / maxTotal) * 100;
-            const pctEstr = d.total > 0 ? (d.estruturais / d.total) * 100 : 0;
-            return (
-              <div
-                key={d.id}
-                className="rounded-lg border border-gray-100 bg-white p-4 transition-colors hover:bg-[var(--color-bg-alt)]"
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
+            Dos {DATA.totalDeputados} deputados que propuseram proposições sobre
+            violência contra a mulher desde 2019, alguns se repetem muito. Mas{" "}
+            <strong>quantidade não é qualidade</strong>. Clique em um deputado
+            para ver os projetos.
+          </p>
+
+          {/* Sort controls */}
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
+              Ordenar por:
+            </span>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setSortBy("total")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  sortBy === "total"
+                    ? "bg-[var(--color-text)] text-white"
+                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
+                }`}
               >
-                <div className="flex items-start gap-4">
-                  {/* Rank */}
-                  <span
-                    className="w-8 flex-shrink-0 pt-1 font-mono-data text-sm text-[var(--color-text-tertiary)]"
-                  >
-                    {i + 1}
-                  </span>
+                Quantidade total
+              </button>
+              <button
+                onClick={() => setSortBy("estruturais")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  sortBy === "estruturais"
+                    ? "bg-[var(--color-teal)] text-white"
+                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
+                }`}
+              >
+                Nº de estruturais
+              </button>
+              <button
+                onClick={() => setSortBy("pct_estrutural")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  sortBy === "pct_estrutural"
+                    ? "bg-[var(--color-teal)] text-white"
+                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
+                }`}
+              >
+                % estruturais
+              </button>
+            </div>
+          </div>
 
-                  {/* Foto */}
-                  {d.foto && (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={d.foto}
-                      alt=""
-                      loading="lazy"
-                      className="h-12 w-12 flex-shrink-0 rounded-full object-cover"
-                    />
-                  )}
+          {/* Ranking */}
+          <div className="mt-10 space-y-2">
+            {top.map((d, i) => {
+              const pct = (d.total / maxTotal) * 100;
+              const pctEstr = d.total > 0 ? (d.estruturais / d.total) * 100 : 0;
+              return (
+                <button
+                  key={d.id}
+                  onClick={() => setSelected(d)}
+                  className="w-full rounded-lg border border-gray-100 bg-white p-4 text-left transition-all hover:border-[var(--color-blood)] hover:shadow-md"
+                >
+                  <div className="flex items-start gap-4">
+                    <span className="w-8 flex-shrink-0 pt-1 font-mono-data text-sm text-[var(--color-text-tertiary)]">
+                      {i + 1}
+                    </span>
 
-                  {/* Info */}
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-baseline gap-x-3">
-                      <span className="font-bold text-[var(--color-text)]">
-                        {d.nome}
-                      </span>
-                      <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
-                        {d.partido}·{d.uf}
-                      </span>
-                      {d.situacao !== "Exercício" && (
-                        <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                          {d.situacao}
-                        </span>
-                      )}
-                    </div>
+                    {d.foto && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={d.foto}
+                        alt=""
+                        loading="lazy"
+                        className="h-12 w-12 flex-shrink-0 rounded-full object-cover"
+                      />
+                    )}
 
-                    {/* Stacked bar */}
-                    <div className="mt-2 flex h-3 overflow-hidden rounded" style={{ width: `${pct}%`, minWidth: "80px" }}>
-                      {d.incrementais > 0 && (
-                        <div
-                          style={{
-                            width: `${(d.incrementais / d.total) * 100}%`,
-                            backgroundColor: CATEGORY_COLORS.incremental,
-                          }}
-                          title={`${d.incrementais} incrementais`}
-                        />
-                      )}
-                      {d.estruturais > 0 && (
-                        <div
-                          style={{
-                            width: `${(d.estruturais / d.total) * 100}%`,
-                            backgroundColor: CATEGORY_COLORS.estrutural,
-                          }}
-                          title={`${d.estruturais} estruturais`}
-                        />
-                      )}
-                      {d.simbolicas > 0 && (
-                        <div
-                          style={{
-                            width: `${(d.simbolicas / d.total) * 100}%`,
-                            backgroundColor: CATEGORY_COLORS.simbolica,
-                          }}
-                          title={`${d.simbolicas} simbólicas`}
-                        />
-                      )}
-                    </div>
-
-                    {/* Stats */}
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono-data text-xs text-[var(--color-text-secondary)]">
-                      <span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-baseline gap-x-3">
                         <span className="font-bold text-[var(--color-text)]">
-                          {d.total}
-                        </span>{" "}
-                        total
-                      </span>
-                      <span>
-                        <span
-                          className="font-bold"
-                          style={{ color: CATEGORY_COLORS.estrutural }}
-                        >
-                          {d.estruturais}
-                        </span>{" "}
-                        estruturais
-                      </span>
-                      <span>
-                        <span
-                          className="font-bold"
-                          style={{ color: CATEGORY_COLORS.incremental }}
-                        >
-                          {d.incrementais}
-                        </span>{" "}
-                        incrementais
-                      </span>
-                      {d.simbolicas > 0 && (
+                          {d.nome}
+                        </span>
+                        <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
+                          {d.partido}·{d.uf}
+                        </span>
+                        {d.situacao !== "Exercício" && (
+                          <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                            {d.situacao}
+                          </span>
+                        )}
+                      </div>
+
+                      <div
+                        className="mt-2 flex h-3 overflow-hidden rounded"
+                        style={{ width: `${pct}%`, minWidth: "80px" }}
+                      >
+                        {d.incrementais > 0 && (
+                          <div
+                            style={{
+                              width: `${(d.incrementais / d.total) * 100}%`,
+                              backgroundColor: CATEGORY_COLORS.incremental,
+                            }}
+                          />
+                        )}
+                        {d.estruturais > 0 && (
+                          <div
+                            style={{
+                              width: `${(d.estruturais / d.total) * 100}%`,
+                              backgroundColor: CATEGORY_COLORS.estrutural,
+                            }}
+                          />
+                        )}
+                        {d.simbolicas > 0 && (
+                          <div
+                            style={{
+                              width: `${(d.simbolicas / d.total) * 100}%`,
+                              backgroundColor: CATEGORY_COLORS.simbólica,
+                            }}
+                          />
+                        )}
+                      </div>
+
+                      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono-data text-xs text-[var(--color-text-secondary)]">
+                        <span>
+                          <span className="font-bold text-[var(--color-text)]">
+                            {d.total}
+                          </span>{" "}
+                          total
+                        </span>
                         <span>
                           <span
                             className="font-bold"
-                            style={{ color: CATEGORY_COLORS.simbolica }}
+                            style={{ color: CATEGORY_COLORS.estrutural }}
                           >
-                            {d.simbolicas}
+                            {d.estruturais}
                           </span>{" "}
-                          simbólicas
+                          estruturais
                         </span>
-                      )}
-                      <span className="text-[var(--color-text-tertiary)]">
-                        · {pctEstr.toFixed(0)}% estruturais
-                      </span>
+                        <span>
+                          <span
+                            className="font-bold"
+                            style={{ color: CATEGORY_COLORS.incremental }}
+                          >
+                            {d.incrementais}
+                          </span>{" "}
+                          incrementais
+                        </span>
+                        {d.simbolicas > 0 && (
+                          <span>
+                            <span
+                              className="font-bold"
+                              style={{ color: CATEGORY_COLORS.simbólica }}
+                            >
+                              {d.simbolicas}
+                            </span>{" "}
+                            simbólicas
+                          </span>
+                        )}
+                        <span className="text-[var(--color-text-tertiary)]">
+                          · {pctEstr.toFixed(0)}% estruturais
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* Context */}
-        <div className="mx-auto mt-16 max-w-2xl rounded-xl bg-[var(--color-bg-alt)] p-6">
-          <p className="leading-relaxed text-[var(--color-text-secondary)]">
-            <strong className="text-[var(--color-text)]">Como interpretar:</strong>{" "}
-            um deputado com muitas PLs simbólicas ou incrementais está
-            produzindo barulho, não política estrutural. A barra verde mede o
-            que <em>muda a estrutura</em> — criação de programas, fundos,
-            serviços novos. Use esse ranking como uma referência, não como um
-            veredito. O contexto de cada PL importa.
+                    <span className="self-center font-mono-data text-xs text-[var(--color-text-tertiary)]">
+                      ver ↗
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mx-auto mt-16 max-w-2xl rounded-xl bg-[var(--color-bg-alt)] p-6">
+            <p className="leading-relaxed text-[var(--color-text-secondary)]">
+              <strong className="text-[var(--color-text)]">
+                Como interpretar:
+              </strong>{" "}
+              um deputado com muitas PLs simbólicas ou incrementais está
+              produzindo barulho, não política estrutural. A barra verde mede o
+              que <em>muda a estrutura</em> — criação de programas, fundos,
+              serviços novos. Use esse ranking como referência, não veredito.
+              O contexto de cada PL importa.
+            </p>
+          </div>
+
+          <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
+            Fonte: API de Dados Abertos da Câmara dos Deputados. Autoria
+            principal de cada proposição. Deputados com 5+ PLs sobre o tema
+            entre 2019 e 2026.
           </p>
         </div>
+      </section>
 
-        <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
-          Fonte: API de Dados Abertos da Câmara dos Deputados. Autoria
-          principal (proponente nº 1) de cada proposição. Deputados com {minPls}+
-          PLs sobre o tema entre 2019 e 2026.
-        </p>
-      </div>
-    </section>
+      {selected && (
+        <DeputadoModal deputado={selected} onClose={() => setSelected(null)} />
+      )}
+    </>
   );
 }

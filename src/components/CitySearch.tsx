@@ -1,22 +1,35 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
-import municipiosData from "../data/municipios.json";
+import estadosData from "../data/estados.json";
 
 type Municipio = {
-  n: string; // nome
-  c: string; // cod
-  h: number; // homicidios 2023
-  t: number | null; // taxa per 100k 2022
+  n: string;
+  c: string;
+  uf: string;
+  uf_name: string;
+  r: string; // região
+  pop: number | null;
+  sh: (number | null)[]; // series homicides 2019-2023
+  st: (number | null)[]; // series taxa 2019-2023 (last is null)
+  t_2023: number | null;
 };
 
-const municipios: Municipio[] = municipiosData as Municipio[];
+type MunicipiosJSON = {
+  years: number[];
+  municipios: Municipio[];
+};
 
-// Pre-compute national average rate
-const withRate = municipios.filter((m) => m.t !== null && m.t > 0);
-const avgRate =
-  withRate.reduce((sum, m) => sum + (m.t ?? 0), 0) / withRate.length;
-const totalHomicidios = municipios.reduce((sum, m) => sum + m.h, 0);
+type StatesJSON = {
+  years: number[];
+  states: Record<string, {
+    name: string;
+    values: Record<string, number>;
+    absolutos: Record<string, number>;
+  }>;
+};
+
+const ESTADOS = estadosData as StatesJSON;
 
 function normalize(str: string): string {
   return str
@@ -25,19 +38,83 @@ function normalize(str: string): string {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+function Sparkline({
+  values,
+  max,
+  color = "var(--color-blood)",
+}: {
+  values: (number | null)[];
+  max: number;
+  color?: string;
+}) {
+  const validVals = values.filter((v): v is number => v !== null);
+  if (validVals.length < 2) return null;
+
+  const width = 120;
+  const height = 40;
+  const step = width / (values.length - 1);
+
+  const points = values
+    .map((v, i) => {
+      if (v === null) return null;
+      const x = i * step;
+      const y = height - (v / max) * height;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .filter(Boolean);
+
+  const pathD = "M" + points.join(" L");
+  const last = values[values.length - 1];
+  const first = validVals[0];
+  const trend = last !== null ? ((last - first) / first) * 100 : 0;
+
+  return (
+    <div className="flex items-center gap-3">
+      <svg width={width} height={height}>
+        <path d={pathD} fill="none" stroke={color} strokeWidth="2" />
+        {values.map((v, i) => {
+          if (v === null) return null;
+          const x = i * step;
+          const y = height - (v / max) * height;
+          return <circle key={i} cx={x} cy={y} r="2.5" fill={color} />;
+        })}
+      </svg>
+      {last !== null && (
+        <span
+          className={`font-mono-data text-xs ${
+            trend > 0
+              ? "text-[var(--color-blood)]"
+              : "text-[var(--color-teal)]"
+          }`}
+        >
+          {trend > 0 ? "↑" : "↓"} {Math.abs(trend).toFixed(0)}%
+        </span>
+      )}
+    </div>
+  );
+}
+
 export default function CitySearch() {
+  const [data, setData] = useState<MunicipiosJSON | null>(null);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Municipio | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    fetch("/municipios.json")
+      .then((r) => r.json())
+      .then(setData)
+      .catch(console.error);
+  }, []);
+
   const suggestions = useMemo(() => {
-    if (query.length < 2) return [];
+    if (!data || query.length < 2) return [];
     const q = normalize(query);
-    return municipios
+    return data.municipios
       .filter((m) => normalize(m.n).includes(q))
       .slice(0, 8);
-  }, [query]);
+  }, [data, query]);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -54,6 +131,21 @@ export default function CitySearch() {
     setQuery(m.n);
     setShowSuggestions(false);
   };
+
+  // Compute comparisons
+  const stateInfo = selected ? ESTADOS.states[selected.uf] : null;
+  const stateRate = stateInfo ? stateInfo.values["2022"] : null;
+  const allStateRates = Object.values(ESTADOS.states)
+    .map((s) => s.values["2022"])
+    .filter((v): v is number => typeof v === "number");
+  const nationalAvgRate = allStateRates.length
+    ? allStateRates.reduce((a, b) => a + b, 0) / allStateRates.length
+    : 0;
+
+  // Maxima for sparkline scaling
+  const maxHomicides = selected
+    ? Math.max(...selected.sh.filter((v): v is number => v !== null), 1)
+    : 1;
 
   return (
     <section className="bg-white px-6 py-24">
@@ -76,7 +168,7 @@ export default function CitySearch() {
         </div>
 
         {/* Search input */}
-        <div className="relative mx-auto mt-10 max-w-md">
+        <div className="relative mx-auto max-w-md">
           <input
             ref={inputRef}
             type="text"
@@ -87,12 +179,12 @@ export default function CitySearch() {
               setShowSuggestions(true);
             }}
             onFocus={() => setShowSuggestions(true)}
-            placeholder="Ex: Recife, Salvador, Manaus..."
-            className="w-full rounded-xl border border-gray-200 bg-[var(--color-bg-alt)] px-5 py-4 text-lg outline-none transition-all focus:border-[var(--color-blood)] focus:ring-2 focus:ring-[var(--color-blood-light)]"
+            placeholder={data ? "Ex: Recife, Salvador, Manaus..." : "Carregando..."}
+            disabled={!data}
+            className="w-full rounded-xl border border-gray-200 bg-[var(--color-bg-alt)] px-5 py-4 text-lg outline-none transition-all focus:border-[var(--color-blood)] focus:ring-2 focus:ring-[var(--color-blood-light)] disabled:opacity-50"
             style={{ fontFamily: "var(--font-body)" }}
           />
 
-          {/* Suggestions dropdown */}
           {showSuggestions && suggestions.length > 0 && !selected && (
             <ul className="absolute left-0 right-0 top-full z-20 mt-1 max-h-64 overflow-auto rounded-xl border border-gray-200 bg-white shadow-lg">
               {suggestions.map((m) => (
@@ -102,11 +194,9 @@ export default function CitySearch() {
                     className="w-full px-5 py-3 text-left text-base transition-colors hover:bg-[var(--color-bg-alt)]"
                   >
                     <span className="font-medium">{m.n}</span>
-                    {m.h > 0 && (
-                      <span className="ml-2 text-sm text-[var(--color-text-tertiary)]">
-                        {m.h} homicídio{m.h > 1 ? "s" : ""} em 2023
-                      </span>
-                    )}
+                    <span className="ml-2 font-mono-data text-xs text-[var(--color-text-tertiary)]">
+                      {m.uf}
+                    </span>
                   </button>
                 </li>
               ))}
@@ -116,90 +206,117 @@ export default function CitySearch() {
 
         {/* Result card */}
         {selected && (
-          <div className="mx-auto mt-8 max-w-md animate-[fadeIn_0.5s_ease-out] rounded-2xl border border-gray-100 bg-[var(--color-bg-alt)] p-8">
-            <h3
-              className="text-2xl font-bold text-[var(--color-text)]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {selected.n}
-            </h3>
+          <div className="mx-auto mt-8 animate-[fadeIn_0.5s_ease-out] overflow-hidden rounded-2xl border border-gray-100 bg-[var(--color-bg-alt)]">
+            {/* Header */}
+            <div className="border-b border-gray-200/60 p-8">
+              <p className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-tertiary)]">
+                {selected.uf_name} · Região {selected.r}
+              </p>
+              <h3
+                className="mt-2 text-4xl font-black text-[var(--color-text)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {selected.n}
+              </h3>
+              {selected.pop && (
+                <p className="mt-2 font-mono-data text-sm text-[var(--color-text-secondary)]">
+                  {selected.pop.toLocaleString("pt-BR")} habitantes
+                </p>
+              )}
+            </div>
 
-            <div className="mt-6 space-y-5">
-              {/* Homicidios */}
-              <div>
-                <p className="text-sm uppercase tracking-wider text-[var(--color-text-tertiary)]">
+            <div className="grid gap-4 p-6 sm:grid-cols-2">
+              {/* Homicídios 2023 */}
+              <div className="rounded-xl bg-white p-5">
+                <p className="font-mono-data text-[10px] uppercase tracking-widest text-[var(--color-text-tertiary)]">
                   Mulheres assassinadas em 2023
                 </p>
                 <p
-                  className={`mt-1 text-4xl font-black ${
-                    selected.h > 0
+                  className={`mt-2 text-5xl font-black ${
+                    selected.sh[4] && selected.sh[4] > 0
                       ? "text-[var(--color-blood)]"
                       : "text-[var(--color-teal)]"
                   }`}
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
-                  {selected.h}
+                  {selected.sh[4] ?? 0}
                 </p>
-                {selected.h === 0 && (
-                  <p className="mt-1 text-sm text-[var(--color-text-tertiary)]">
-                    Nenhum registro no Atlas da Violência.
-                    Isso pode significar zero ocorrências ou dados não reportados.
+                {selected.t_2023 !== null && (
+                  <p className="mt-1 font-mono-data text-xs text-[var(--color-text-secondary)]">
+                    {selected.t_2023} por 100 mil mulheres
                   </p>
                 )}
               </div>
 
               {/* Taxa */}
-              {selected.t !== null && selected.t > 0 && (
-                <div>
-                  <p className="text-sm uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                    Taxa por 100 mil mulheres (2022)
+              {selected.t_2023 !== null && (
+                <div className="rounded-xl bg-white p-5">
+                  <p className="font-mono-data text-[10px] uppercase tracking-widest text-[var(--color-text-tertiary)]">
+                    Comparação
                   </p>
-                  <div className="mt-1 flex items-baseline gap-3">
-                    <span
-                      className={`text-3xl font-black ${
-                        selected.t > avgRate
-                          ? "text-[var(--color-blood)]"
-                          : "text-[var(--color-teal)]"
-                      }`}
-                      style={{ fontFamily: "var(--font-mono)" }}
-                    >
-                      {selected.t.toFixed(2)}
-                    </span>
-                    <span className="text-sm text-[var(--color-text-tertiary)]">
-                      média nacional: {avgRate.toFixed(2)}
-                    </span>
-                  </div>
-
-                  {/* Bar comparison */}
-                  <div className="mt-3 space-y-2">
+                  <div className="mt-2 space-y-2">
                     <div>
-                      <div className="flex justify-between text-xs text-[var(--color-text-tertiary)]">
-                        <span>{selected.n}</span>
-                        <span>{selected.t.toFixed(2)}</span>
+                      <div className="flex items-center justify-between font-mono-data text-xs">
+                        <span className="text-[var(--color-text-secondary)]">
+                          {selected.n}
+                        </span>
+                        <span
+                          className={`font-bold ${
+                            selected.t_2023 > nationalAvgRate
+                              ? "text-[var(--color-blood)]"
+                              : "text-[var(--color-teal)]"
+                          }`}
+                        >
+                          {selected.t_2023}
+                        </span>
                       </div>
-                      <div className="h-2 w-full rounded-full bg-gray-100">
+                      <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-gray-100">
                         <div
-                          className="h-2 rounded-full transition-all duration-700"
+                          className="h-2 rounded-full transition-all"
                           style={{
-                            width: `${Math.min((selected.t / 12) * 100, 100)}%`,
+                            width: `${Math.min((selected.t_2023 / 12) * 100, 100)}%`,
                             backgroundColor:
-                              selected.t > avgRate
+                              selected.t_2023 > nationalAvgRate
                                 ? "var(--color-blood)"
                                 : "var(--color-teal)",
                           }}
                         />
                       </div>
                     </div>
-                    <div>
-                      <div className="flex justify-between text-xs text-[var(--color-text-tertiary)]">
-                        <span>Média nacional</span>
-                        <span>{avgRate.toFixed(2)}</span>
+                    {stateRate !== null && stateRate !== undefined && (
+                      <div>
+                        <div className="flex items-center justify-between font-mono-data text-xs">
+                          <span className="text-[var(--color-text-secondary)]">
+                            Estado ({selected.uf})
+                          </span>
+                          <span className="font-bold text-[var(--color-text-secondary)]">
+                            {stateRate.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                          <div
+                            className="h-2 rounded-full bg-[var(--color-neutral)] transition-all"
+                            style={{
+                              width: `${Math.min((stateRate / 12) * 100, 100)}%`,
+                            }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-2 w-full rounded-full bg-gray-100">
+                    )}
+                    <div>
+                      <div className="flex items-center justify-between font-mono-data text-xs">
+                        <span className="text-[var(--color-text-secondary)]">
+                          Média nacional
+                        </span>
+                        <span className="font-bold text-[var(--color-text-tertiary)]">
+                          {nationalAvgRate.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-gray-100">
                         <div
-                          className="h-2 rounded-full bg-[var(--color-neutral)] transition-all duration-700"
+                          className="h-2 rounded-full bg-[var(--color-text-tertiary)] transition-all"
                           style={{
-                            width: `${Math.min((avgRate / 12) * 100, 100)}%`,
+                            width: `${Math.min((nationalAvgRate / 12) * 100, 100)}%`,
                           }}
                         />
                       </div>
@@ -207,25 +324,55 @@ export default function CitySearch() {
                   </div>
                 </div>
               )}
+
+              {/* Série temporal */}
+              <div className="rounded-xl bg-white p-5 sm:col-span-2">
+                <p className="font-mono-data text-[10px] uppercase tracking-widest text-[var(--color-text-tertiary)]">
+                  Evolução 2019 → 2023
+                </p>
+                <div className="mt-3 flex items-start justify-between gap-4">
+                  <div className="grid flex-1 grid-cols-5 gap-2">
+                    {selected.sh.map((v, i) => (
+                      <div key={i} className="text-center">
+                        <p className="font-mono-data text-[10px] text-[var(--color-text-tertiary)]">
+                          {2019 + i}
+                        </p>
+                        <p
+                          className={`mt-1 font-mono-data text-lg font-bold ${
+                            v && v > 0
+                              ? "text-[var(--color-text)]"
+                              : "text-[var(--color-text-tertiary)]"
+                          }`}
+                        >
+                          {v ?? "—"}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <Sparkline values={selected.sh} max={maxHomicides} />
+                </div>
+              </div>
             </div>
 
-            <p className="mt-6 text-xs text-[var(--color-text-tertiary)]">
-              Fonte: Atlas da Violência (IPEA/FBSP), séries 40 e 52.
-              Dados de 2023 (homicídios) e 2022 (taxa).
-            </p>
-          </div>
-        )}
+            {/* Note */}
+            {selected.sh[4] === 0 && (
+              <div className="border-t border-gray-200/60 bg-amber-50 p-5">
+                <p className="text-sm leading-relaxed text-amber-900">
+                  <strong>Sobre zeros no Atlas:</strong> municípios menores
+                  frequentemente não reportam dados completos. Zero no Atlas não
+                  significa necessariamente zero violência — pode significar
+                  subnotificação. O Fórum Brasileiro de Segurança Pública
+                  estima que os dados oficiais representam o{" "}
+                  <strong>piso</strong>, não o teto.
+                </p>
+              </div>
+            )}
 
-        {/* Context after search */}
-        {selected && selected.h === 0 && (
-          <div className="mx-auto mt-6 max-w-md rounded-xl bg-amber-50 p-5">
-            <p className="text-sm leading-relaxed text-amber-900">
-              <strong>Sobre zeros no Atlas:</strong> Municípios menores
-              frequentemente não reportam dados completos. Zero no Atlas não
-              significa necessariamente zero violência — pode significar
-              subnotificação. O Fórum Brasileiro de Segurança Pública estima que
-              os dados oficiais representam o <strong>piso</strong>, não o teto.
-            </p>
+            <div className="flex items-center justify-between border-t border-gray-200/60 bg-white p-4">
+              <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                Atlas da Violência · IBGE · Código IBGE: {selected.c}
+              </p>
+            </div>
           </div>
         )}
       </div>
