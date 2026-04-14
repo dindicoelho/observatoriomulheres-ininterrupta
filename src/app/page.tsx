@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import TesouraChart from "@/components/TesouraChart";
 import RetratoRacial from "@/components/RetratoRacial";
 import ChoroplethMap from "@/components/ChoroplethMap";
+import RedeProtecao from "@/components/RedeProtecao";
 import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
@@ -66,6 +67,8 @@ export default function Home() {
         </div>
 
         <ChoroplethMap />
+
+        <RedeProtecao />
 
         {/* Marquee — estados com maior taxa */}
         <div className="bg-[var(--color-bg-alt)] py-8">
