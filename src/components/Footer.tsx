@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-[var(--color-dark)] px-6 py-24 text-white">
@@ -85,6 +87,16 @@ export default function Footer() {
               dados incompletos.
             </li>
           </ul>
+        </div>
+
+        {/* Link para metodologia */}
+        <div className="mt-8 text-center">
+          <Link
+            href="/metodologia"
+            className="inline-block border border-white/20 px-6 py-3 font-mono-data text-xs uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white hover:text-white"
+          >
+            Ler a metodologia completa →
+          </Link>
         </div>
 
         {/* Credits */}
