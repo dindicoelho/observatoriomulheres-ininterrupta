@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import estadosData from "../data/estados.json";
+import redeData from "../data/rede_protecao.json";
 
 type Municipio = {
   n: string;
@@ -30,6 +31,20 @@ type StatesJSON = {
 };
 
 const ESTADOS = estadosData as StatesJSON;
+const REDE = redeData as {
+  ano: number;
+  estados: Record<string, {
+    taxa: number;
+    deams: number;
+    abrigos: number;
+    crams: number;
+    pop_fem: number;
+    deams_per_100k: number;
+    abrigos_per_100k: number;
+    crams_per_100k: number;
+    total_per_100k: number;
+  }>;
+};
 
 function normalize(str: string): string {
   return str
@@ -352,6 +367,64 @@ export default function CitySearch() {
                   <Sparkline values={selected.sh} max={maxHomicides} />
                 </div>
               </div>
+
+              {/* Rede de proteção estadual */}
+              {REDE.estados[selected.uf] && (
+                <div className="rounded-xl bg-white p-5 sm:col-span-2">
+                  <p className="font-mono-data text-[10px] uppercase tracking-widest text-[var(--color-text-tertiary)]">
+                    Rede de proteção no estado de {selected.uf}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--color-text-tertiary)]">
+                    Infraestrutura pública disponível em todo o estado
+                  </p>
+                  <div className="mt-4 grid grid-cols-3 gap-3">
+                    <div className="rounded-lg bg-[var(--color-bg-alt)] p-3 text-center">
+                      <p
+                        className="font-mono-data text-3xl font-black text-[var(--color-text)]"
+                      >
+                        {REDE.estados[selected.uf].deams}
+                      </p>
+                      <p className="mt-1 font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                        Delegacias da Mulher (DEAMs)
+                      </p>
+                    </div>
+                    <div className="rounded-lg bg-[var(--color-bg-alt)] p-3 text-center">
+                      <p
+                        className="font-mono-data text-3xl font-black text-[var(--color-text)]"
+                      >
+                        {REDE.estados[selected.uf].crams}
+                      </p>
+                      <p className="mt-1 font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                        Centros de Referência (CRAMs)
+                      </p>
+                    </div>
+                    <div className="rounded-lg bg-[var(--color-bg-alt)] p-3 text-center">
+                      <p
+                        className="font-mono-data text-3xl font-black text-[var(--color-text)]"
+                      >
+                        {REDE.estados[selected.uf].abrigos}
+                      </p>
+                      <p className="mt-1 font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                        Casas-Abrigo sigilosas
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-xs leading-relaxed text-[var(--color-text-secondary)]">
+                    Para saber se <strong>{selected.n}</strong> tem um
+                    desses equipamentos específicos,{" "}
+                    <a
+                      href="https://www.gov.br/mulheres/pt-br/central-de-conteudos/publicacoes/publicacoes/2024/ligue-180-onde-denunciar-violencia-contra-a-mulher.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--color-blood)] underline hover:opacity-80"
+                    >
+                      consulte o guia do Ligue 180
+                    </a>{" "}
+                    ou ligue <strong className="font-mono-data">180</strong>{" "}
+                    (gratuito, 24h).
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Note */}
