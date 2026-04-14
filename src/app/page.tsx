@@ -3,6 +3,8 @@ import TesouraChart from "@/components/TesouraChart";
 import RetratoRacial from "@/components/RetratoRacial";
 import ChoroplethMap from "@/components/ChoroplethMap";
 import TimelineLegislativa from "@/components/TimelineLegislativa";
+import RankingDeputados from "@/components/RankingDeputados";
+import VotacoesPartidos from "@/components/VotacoesPartidos";
 import CitySearch from "@/components/CitySearch";
 import Footer from "@/components/Footer";
 import TriggerWarning from "@/components/TriggerWarning";
@@ -81,6 +83,23 @@ export default function Home() {
         </div>
 
         <TimelineLegislativa />
+
+        {/* Transition — Eleição */}
+        <div className="bg-[var(--color-bg-alt)] py-20">
+          <div className="mx-auto max-w-3xl px-6">
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-blood)]">
+              Ano de eleição · 2026
+            </p>
+            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
+              Mas quem, especificamente, está propondo o quê?
+              <span className="text-[var(--color-text-tertiary)]"> E como seu partido vota quando o tema vai a plenário?</span>
+            </p>
+          </div>
+        </div>
+
+        <RankingDeputados />
+
+        <VotacoesPartidos />
 
         {/* Transition */}
         <div className="bg-white py-20">
