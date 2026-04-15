@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import legislativoData from "../data/legislativo.json";
 import RevealText from "./RevealText";
 
@@ -59,8 +59,66 @@ const CATEGORY_DESC = {
   estrutural: "Criação de programas nacionais, fundos, políticas de Estado, pensões.",
 };
 
+// Animated big number component
+function BigNumber({ value }: { value: number }) {
+  const [display, setDisplay] = useState(value);
+  const prev = useRef(value);
+
+  useEffect(() => {
+    const start = prev.current;
+    const end = value;
+    if (start === end) return;
+    const duration = 800;
+    const t0 = performance.now();
+    let raf: number;
+    const step = (now: number) => {
+      const p = Math.min((now - t0) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(Math.round(start + (end - start) * eased));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    prev.current = value;
+    return () => cancelAnimationFrame(raf);
+  }, [value]);
+
+  return (
+    <span
+      className="block leading-[0.85]"
+      style={{
+        fontFamily: "var(--font-display-condensed)",
+        letterSpacing: "-0.05em",
+        fontSize: "clamp(6rem, 22vw, 22rem)",
+      }}
+    >
+      {display.toLocaleString("pt-BR")}
+    </span>
+  );
+}
+
 export default function TimelineLegislativa() {
   const [filter, setFilter] = useState<"all" | "simbólica" | "incremental" | "estrutural">("all");
+  const [phase, setPhase] = useState(0);
+
+  // Scroll-triggered phases
+  useEffect(() => {
+    const steps = document.querySelectorAll("[data-timeline-step]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const step = parseInt(
+              (entry.target as HTMLElement).dataset.timelineStep ?? "0"
+            );
+            setPhase(step);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+    steps.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   const years = Object.keys(DATA.porAno).map(Number).sort();
   const maxYearTotal = Math.max(
@@ -101,100 +159,134 @@ export default function TimelineLegislativa() {
           />
         </div>
 
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/70 md:text-xl">
-          Em 7 anos, <strong className="text-white">{DATA.total.toLocaleString("pt-BR")}</strong> proposições
-          sobre violência contra a mulher chegaram ao Congresso Nacional.
-          Mas o que elas realmente propõem?
-        </p>
+        {/* Scrollytelling big funnel */}
+        {(() => {
+          const total = DATA.destino_stats?.total ?? DATA.total;
+          const incrementais = DATA.resumo.incremental;
+          const estruturais = DATA.resumo.estrutural;
+          const viraramLei = DATA.destino_stats?.por_categoria.aprovada ?? 13;
 
-        {/* Big bar of all */}
-        <div className="mt-16">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-            Classificação de {DATA.total.toLocaleString("pt-BR")} proposições
-          </p>
-          <div className="flex h-20 w-full overflow-hidden rounded-sm">
-            <div
-              className="flex items-center justify-center text-sm font-bold text-white"
-              style={{
-                width: `${percentIncremental}%`,
-                backgroundColor: CATEGORY_COLORS.incremental,
-              }}
-            >
-              {percentIncremental.toFixed(1)}%
-            </div>
-            <div
-              className="flex items-center justify-center text-xs font-bold text-white"
-              style={{
-                width: `${percentEstrutural}%`,
-                backgroundColor: CATEGORY_COLORS.estrutural,
-              }}
-            >
-              {percentEstrutural.toFixed(1)}%
-            </div>
-            <div
-              className="flex items-center justify-center text-xs font-bold text-white"
-              style={{
-                width: `${percentSimbolica}%`,
-                backgroundColor: CATEGORY_COLORS.simbólica,
-              }}
-            >
-              {percentSimbolica > 2 ? `${percentSimbolica.toFixed(1)}%` : ""}
-            </div>
-          </div>
+          const phases = [
+            {
+              value: total,
+              label: "proposições",
+              title: "sobre violência contra a mulher chegaram ao Congresso nos últimos 7 anos.",
+              color: "#ffffff",
+              pctTotal: 100,
+            },
+            {
+              value: incrementais,
+              label: "incrementais",
+              title: "são apenas alterações pontuais em leis que já existem.",
+              color: CATEGORY_COLORS.incremental,
+              pctTotal: (incrementais / DATA.total) * 100,
+            },
+            {
+              value: estruturais,
+              label: "estruturais",
+              title: "criam programas, fundos ou políticas novas.",
+              color: CATEGORY_COLORS.estrutural,
+              pctTotal: (estruturais / DATA.total) * 100,
+            },
+            {
+              value: viraramLei,
+              label: "viraram lei",
+              title: `da amostra na atual legislatura (2023-2026). Em 3 anos, menos de ${((viraramLei / (DATA.destino_stats?.total ?? 568)) * 100).toFixed(1)}% das proposições se transformaram em norma.`,
+              color: "#1DB389",
+              pctTotal: (viraramLei / (DATA.destino_stats?.total ?? 568)) * 100,
+            },
+          ];
 
-          {/* Legend */}
-          <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
-            {(["incremental", "estrutural", "simbólica"] as const).map((cat) => (
-              <div
-                key={cat}
-                className="rounded border border-white/10 bg-white/[0.03] p-4"
-              >
-                <div className="flex items-center gap-2">
-                  <span
-                    className="h-3 w-3 rounded-sm"
-                    style={{ backgroundColor: CATEGORY_COLORS[cat] }}
-                  />
-                  <span className="font-bold text-white">{CATEGORY_LABELS[cat]}</span>
-                  <span
-                    className="ml-auto font-bold text-white"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {DATA.resumo[cat]}
-                  </span>
+          const current = phases[Math.min(phase, phases.length - 1)];
+
+          return (
+            <div className="relative mt-12 md:mt-0 md:flex md:gap-12">
+              {/* Sticky big number */}
+              <div className="sticky top-0 z-10 bg-[var(--color-dark)] pb-4 pt-4 md:top-24 md:w-1/2 md:self-start md:pt-0">
+                <div className="transition-colors duration-700 offset-left" style={{ color: current.color }}>
+                  <BigNumber value={current.value} />
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-white/60">
-                  {CATEGORY_DESC[cat]}
+                <p className="mt-2 font-mono-data text-sm uppercase tracking-widest text-white/50">
+                  [ {current.label} ]
+                </p>
+
+                {/* Visual: bar showing proportion */}
+                <div className="mt-6 h-4 w-full overflow-hidden rounded bg-white/10">
+                  <div
+                    className="h-4 transition-all duration-700 ease-out"
+                    style={{
+                      width: `${Math.max(current.pctTotal, 0.5)}%`,
+                      backgroundColor: current.color,
+                    }}
+                  />
+                </div>
+                <p className="mt-2 font-mono-data text-xs text-white/40">
+                  {current.pctTotal.toFixed(1)}% do total
                 </p>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Insight — brutalist huge statement */}
-        <div className="mt-24 border-y border-white/10 py-16">
-          <div className="offset-right">
-            <p
-              className="leading-none"
-              style={{
-                fontFamily: "var(--font-display-condensed)",
-                letterSpacing: "-0.05em",
-                fontSize: "clamp(5rem, 16vw, 16rem)",
-                color: CATEGORY_COLORS.incremental,
-              }}
+              {/* Scroll steps */}
+              <div className="mt-8 space-y-[50vh] md:mt-0 md:w-1/2 md:space-y-[60vh]">
+                {phases.map((p, i) => (
+                  <div
+                    key={i}
+                    data-timeline-step={i}
+                    className="flex min-h-[40vh] items-center"
+                  >
+                    <div className="rounded-lg bg-white/5 p-6 backdrop-blur-sm">
+                      <p className="text-sm font-mono-data uppercase tracking-widest" style={{ color: p.color }}>
+                        [ {String(i + 1).padStart(2, "0")} / 04 ]
+                      </p>
+                      <p className="mt-3 text-xl leading-relaxed text-white md:text-2xl">
+                        <strong
+                          style={{
+                            color: p.color,
+                            fontFamily: "var(--font-mono)",
+                          }}
+                        >
+                          {p.value.toLocaleString("pt-BR")}
+                        </strong>{" "}
+                        {i === 0
+                          ? p.title
+                          : i === 3
+                          ? p.title
+                          : `(${((p.value / DATA.total) * 100).toFixed(1)}%) ${p.title}`}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="h-[30vh]" />
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Legend */}
+        <div className="mt-16 grid gap-3 text-sm sm:grid-cols-3">
+          {(["incremental", "estrutural", "simbólica"] as const).map((cat) => (
+            <div
+              key={cat}
+              className="rounded border border-white/10 bg-white/[0.03] p-4"
             >
-              {percentIncremental.toFixed(0)}%
-            </p>
-          </div>
-          <p className="mt-6 max-w-2xl text-xl font-medium leading-relaxed text-white md:text-2xl">
-            são alterações pontuais em leis que já existem.
-          </p>
-          <p className="mt-4 max-w-2xl text-lg text-white/60">
-            Apenas{" "}
-            <strong style={{ color: CATEGORY_COLORS.estrutural }}>
-              {percentEstrutural.toFixed(0)}%
-            </strong>{" "}
-            criam programas, fundos ou políticas novas.
-          </p>
+              <div className="flex items-center gap-2">
+                <span
+                  className="h-3 w-3 rounded-sm"
+                  style={{ backgroundColor: CATEGORY_COLORS[cat] }}
+                />
+                <span className="font-bold text-white">{CATEGORY_LABELS[cat]}</span>
+                <span
+                  className="ml-auto font-bold text-white"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {DATA.resumo[cat]}
+                </span>
+              </div>
+              <p className="mt-2 text-xs leading-relaxed text-white/60">
+                {CATEGORY_DESC[cat]}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Destino das propostas */}
@@ -215,37 +307,26 @@ export default function TimelineLegislativa() {
           return (
             <div className="mt-24 border-t border-white/10 pt-16">
               <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-                [ Destino das {total} proposições ]
+                [ E onde param as outras {total - aprovadas} ]
               </p>
               <h3
                 className="max-w-2xl text-3xl font-bold leading-tight text-white md:text-4xl"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Muita proposição, pouca lei.
+                {d.sem_relator} nunca saíram do zero.
               </h3>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/70">
-                Em 3 anos de legislatura, apenas{" "}
-                <strong
-                  className="text-[#1DB389]"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {aprovadas}
-                </strong>{" "}
-                (
-                <strong
-                  className="text-[#1DB389]"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {pctAprovadas.toFixed(1)}%
-                </strong>
-                ) das proposições se transformaram em lei. Outras{" "}
+                Das {total} proposições da atual legislatura,{" "}
                 <strong
                   className="text-[var(--color-blood)]"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {d.sem_relator} ({pctSemRelator.toFixed(1)}%)
                 </strong>{" "}
-                nunca saíram do zero — ainda aguardam a designação de um relator.
+                ainda aguardam a designação de um relator —
+                são propostas que nunca começaram a ser analisadas. Outras
+                tantas estão paradas em comissões ou prontas para pauta que
+                não chega.
               </p>
 
               {/* Stacked bar */}

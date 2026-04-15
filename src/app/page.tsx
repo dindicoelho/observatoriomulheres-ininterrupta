@@ -1,7 +1,4 @@
 import Hero from "@/components/Hero";
-import TesouraChart from "@/components/TesouraChart";
-import RetratoRacial from "@/components/RetratoRacial";
-import ChoroplethMap from "@/components/ChoroplethMap";
 import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
@@ -78,7 +75,7 @@ export default function Home() {
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
               Por trás das votações de maior atenção,
-              <span className="text-[var(--color-text-tertiary)]"> existe um universo de centenas de proposições. Qual é o tipo dominante?</span>
+              <span className="text-[var(--color-text-tertiary)]"> existe um universo de centenas de proposições. Qual é o tipo dominante? E quantas viram lei?</span>
             </p>
           </div>
         </div>
@@ -86,69 +83,20 @@ export default function Home() {
         {/* ATO 03 — Timeline legislativa */}
         <TimelineLegislativa />
 
-        {/* Transition — geografia */}
-        <div className="bg-white py-20">
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ INTERLÚDIO ]
-            </p>
-            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              A violência também tem geografia.
-              <span className="text-[var(--color-text-tertiary)]"> Viver em um estado ou outro muda drasticamente a probabilidade de uma mulher ser assassinada.</span>
-            </p>
-          </div>
-        </div>
-
-        {/* ATO 04 — Mapa */}
-        <ChoroplethMap />
-
-        {/* Marquee — estados com maior taxa */}
-        <div className="bg-[var(--color-bg-alt)] py-8">
-          <MarqueeTicker
-            duration={50}
-            items={[
-              <span key="1" className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-secondary)]">RR · 10,38 / 100 mil</span>,
-              <span key="2" className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-secondary)]">RO · 7,15</span>,
-              <span key="3" className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-secondary)]">MT · 6,21</span>,
-              <span key="4" className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-secondary)]">CE · 5,73</span>,
-              <span key="5" className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-secondary)]">AM · 5,62</span>,
-              <span key="6" className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-tertiary)]">SP · 1,53</span>,
-            ]}
-          />
-        </div>
-
-        {/* Transition — racial */}
-        <div className="bg-white py-20">
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ INTERLÚDIO ]
-            </p>
-            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              E ainda existe uma camada que atravessa tudo isso.
-              <span className="text-[var(--color-text-tertiary)]"> O risco muda drasticamente dependendo de quem é a mulher.</span>
-            </p>
-          </div>
-        </div>
-
-        {/* ATO 05 — Tesoura + Retrato racial */}
-        <TesouraChart />
-
-        <RetratoRacial />
-
-        {/* Transition to city search */}
+        {/* Transition para cidade */}
         <div className="bg-white py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
               [ ÚLTIMO ATO ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              Os números nacionais escondem realidades locais muito diferentes.
-              <span className="text-[var(--color-text-tertiary)]"> O que está acontecendo no seu município?</span>
+              E na ponta, onde a política encontra o território,
+              <span className="text-[var(--color-text-tertiary)]"> o que está acontecendo no seu município?</span>
             </p>
           </div>
         </div>
 
-        {/* ATO 06 — Busca municipal */}
+        {/* ATO 04 — Busca municipal */}
         <CitySearch />
       </main>
       <Footer />
