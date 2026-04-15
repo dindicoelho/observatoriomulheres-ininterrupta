@@ -19,21 +19,21 @@ export default function Home() {
       <main>
         <Hero />
 
-        {/* Transition light */}
+        {/* Transition — do número para política */}
         <div className="bg-[var(--color-bg-alt)] py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
               [ INTRODUÇÃO ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              Os dados abaixo vêm do Atlas da Violência (IPEA/FBSP),
-              a fonte mais completa sobre homicídios no Brasil.
-              <span className="text-[var(--color-text-tertiary)]"> São números oficiais, públicos, verificáveis.</span>
+              Esse número está na imprensa todo ano.
+              <span className="text-[var(--color-text-tertiary)]"> O que quase ninguém conta é quem está decidindo o que fazer com ele.</span>
             </p>
           </div>
         </div>
 
-        <TesouraChart />
+        {/* ATO 01 — Quem propõe */}
+        <RankingDeputados />
 
         {/* Marquee — marcos legislativos */}
         <div className="bg-[var(--color-dark)] py-8">
@@ -50,9 +50,39 @@ export default function Home() {
           />
         </div>
 
-        <RetratoRacial />
+        {/* Transition — propor × votar */}
+        <div className="bg-white py-20">
+          <div className="mx-auto max-w-3xl px-6">
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ INTERLÚDIO ]
+            </p>
+            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
+              Propor é uma coisa. Votar é outra.
+              <span className="text-[var(--color-text-tertiary)]"> Quando o projeto chega ao plenário, o jogo muda.</span>
+            </p>
+          </div>
+        </div>
 
-        {/* Transition */}
+        {/* ATO 02 — Como se vota */}
+        <VotacoesPartidos />
+
+        {/* Transition — volume de política */}
+        <div className="bg-white py-20">
+          <div className="mx-auto max-w-3xl px-6">
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ INTERLÚDIO ]
+            </p>
+            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
+              Por trás das votações de maior atenção,
+              <span className="text-[var(--color-text-tertiary)]"> existe um universo de centenas de proposições. Qual é o tipo dominante?</span>
+            </p>
+          </div>
+        </div>
+
+        {/* ATO 03 — Timeline legislativa */}
+        <TimelineLegislativa />
+
+        {/* Transition — geografia */}
         <div className="bg-white py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
@@ -65,6 +95,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ATO 04 — Mapa */}
         <ChoroplethMap />
 
         {/* Marquee — estados com maior taxa */}
@@ -82,26 +113,25 @@ export default function Home() {
           />
         </div>
 
-        <TimelineLegislativa />
-
-        {/* Transition — Eleição */}
-        <div className="bg-[var(--color-bg-alt)] py-20">
+        {/* Transition — racial */}
+        <div className="bg-white py-20">
           <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-blood)]">
-              [ ANO DE ELEIÇÃO / 2026 ]
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ INTERLÚDIO ]
             </p>
             <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              Mas quem, especificamente, está propondo o quê?
-              <span className="text-[var(--color-text-tertiary)]"> E como seu partido vota quando o tema vai a plenário?</span>
+              E ainda existe uma camada que atravessa tudo isso.
+              <span className="text-[var(--color-text-tertiary)]"> O risco muda drasticamente dependendo de quem é a mulher.</span>
             </p>
           </div>
         </div>
 
-        <RankingDeputados />
+        {/* ATO 05 — Tesoura + Retrato racial */}
+        <TesouraChart />
 
-        <VotacoesPartidos />
+        <RetratoRacial />
 
-        {/* Transition */}
+        {/* Transition to city search */}
         <div className="bg-white py-20">
           <div className="mx-auto max-w-3xl px-6">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
@@ -114,6 +144,7 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ATO 06 — Busca municipal */}
         <CitySearch />
       </main>
       <Footer />

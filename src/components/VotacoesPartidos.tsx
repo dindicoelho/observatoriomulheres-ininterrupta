@@ -25,6 +25,10 @@ type Votacao = {
     string,
     { sim: number; nao: number; outros: number; total: number; pctSim: number }
   >;
+  genero?: {
+    F: { sim: number; nao: number; outros: number; total: number; pctSim: number };
+    M: { sim: number; nao: number; outros: number; total: number; pctSim: number };
+  };
 };
 
 type VotacoesJSON = { votacoes: Votacao[] };
@@ -137,7 +141,7 @@ export default function VotacoesPartidos() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            [ ATO 05 / DISCURSO E VOTO ]
+            [ ATO 02 / DISCURSO E VOTO ]
           </p>
           <RevealText
             as="h2"
@@ -298,6 +302,91 @@ export default function VotacoesPartidos() {
                             </p>
                           </div>
                         </div>
+
+                        {/* Gender breakdown */}
+                        {v.genero && v.genero.F.total > 0 && v.genero.M.total > 0 && (() => {
+                          const f = v.genero.F;
+                          const m = v.genero.M;
+                          const gap = Math.abs(f.pctSim - m.pctSim);
+                          return (
+                            <div className="mt-6 rounded-lg border border-[var(--color-blood)]/20 bg-[var(--color-blood-light)] p-5">
+                              <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
+                                [ Mulheres × Homens ]
+                              </p>
+                              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                                <div>
+                                  <div className="flex items-baseline justify-between">
+                                    <span className="text-sm font-bold text-[var(--color-text)]">
+                                      Deputadas
+                                    </span>
+                                    <span className="font-mono-data text-xs text-[var(--color-text-secondary)]">
+                                      {f.total} votos
+                                    </span>
+                                  </div>
+                                  <div className="mt-1 flex h-7 overflow-hidden rounded">
+                                    {f.sim > 0 && (
+                                      <div
+                                        className="flex items-center justify-end bg-[var(--color-teal)] px-2 text-xs font-bold text-white"
+                                        style={{ width: `${f.pctSim}%` }}
+                                      >
+                                        {f.pctSim >= 20 ? `${f.sim}` : ""}
+                                      </div>
+                                    )}
+                                    {f.nao > 0 && (
+                                      <div
+                                        className="flex items-center justify-start bg-[var(--color-blood)] px-2 text-xs font-bold text-white"
+                                        style={{ width: `${(f.nao / f.total) * 100}%` }}
+                                      >
+                                        {(f.nao / f.total) * 100 >= 20 ? `${f.nao}` : ""}
+                                      </div>
+                                    )}
+                                  </div>
+                                  <p className="mt-1 font-mono-data text-xs text-[var(--color-text-secondary)]">
+                                    <strong className="text-[var(--color-teal)]">{f.pctSim}%</strong> votaram SIM
+                                  </p>
+                                </div>
+                                <div>
+                                  <div className="flex items-baseline justify-between">
+                                    <span className="text-sm font-bold text-[var(--color-text)]">
+                                      Deputados homens
+                                    </span>
+                                    <span className="font-mono-data text-xs text-[var(--color-text-secondary)]">
+                                      {m.total} votos
+                                    </span>
+                                  </div>
+                                  <div className="mt-1 flex h-7 overflow-hidden rounded">
+                                    {m.sim > 0 && (
+                                      <div
+                                        className="flex items-center justify-end bg-[var(--color-teal)] px-2 text-xs font-bold text-white"
+                                        style={{ width: `${m.pctSim}%` }}
+                                      >
+                                        {m.pctSim >= 20 ? `${m.sim}` : ""}
+                                      </div>
+                                    )}
+                                    {m.nao > 0 && (
+                                      <div
+                                        className="flex items-center justify-start bg-[var(--color-blood)] px-2 text-xs font-bold text-white"
+                                        style={{ width: `${(m.nao / m.total) * 100}%` }}
+                                      >
+                                        {(m.nao / m.total) * 100 >= 20 ? `${m.nao}` : ""}
+                                      </div>
+                                    )}
+                                  </div>
+                                  <p className="mt-1 font-mono-data text-xs text-[var(--color-text-secondary)]">
+                                    <strong className="text-[var(--color-teal)]">{m.pctSim}%</strong> votaram SIM
+                                  </p>
+                                </div>
+                              </div>
+                              {gap >= 5 && (
+                                <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                                  Diferença de <strong className="text-[var(--color-blood)]">
+                                  {gap.toFixed(1)} pontos percentuais</strong> entre o apoio
+                                  de deputadas e deputados.
+                                </p>
+                              )}
+                            </div>
+                          );
+                        })()}
 
                         {/* Partidos */}
                         <p className="mb-3 mt-6 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">

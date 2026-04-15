@@ -103,7 +103,7 @@ export default function RetratoRacial() {
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-            [ ATO 02 / A DESPROPORÇÃO ]
+            [ ATO 05 · PARTE 2 / A DESPROPORÇÃO ]
           </p>
           <RevealText
             as="h2"

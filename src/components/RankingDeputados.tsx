@@ -21,6 +21,7 @@ type Deputado = {
   uf: string;
   foto: string;
   situacao: string;
+  sexo?: "F" | "M" | null;
   total: number;
   simbolicas: number;
   incrementais: number;
@@ -36,6 +37,10 @@ type AutoriaJSON = {
   >;
   totalPls: number;
   totalDeputados: number;
+  gender_stats?: {
+    F: { total: number; estruturais: number; incrementais: number; simbolicas: number; deputados: number };
+    M: { total: number; estruturais: number; incrementais: number; simbolicas: number; deputados: number };
+  };
 };
 
 const DATA = autoriaData as AutoriaJSON;
@@ -276,7 +281,7 @@ export default function RankingDeputados() {
         <div className="mx-auto max-w-5xl">
           <div className="mb-12 offset-left">
             <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ ATO 04 / ELEIÇÕES 2026 ]
+              [ ATO 01 / QUEM FAZ AS LEIS ]
             </p>
             <RevealText
               as="h2"
@@ -295,11 +300,102 @@ export default function RankingDeputados() {
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
             Na atual legislatura (2023-2026), <strong>{DATA.totalDeputados} deputados</strong>{" "}
-            propuseram proposições sobre violência contra a mulher.
-            Alguns se repetem muito. Mas{" "}
-            <strong>quantidade não é qualidade</strong>. Clique em um deputado
-            para ver os projetos.
+            propuseram {DATA.totalPls} proposições sobre violência contra a mulher.
+            Quem são? Como se dividem?
           </p>
+
+          {/* Gender gap block */}
+          {DATA.gender_stats && (() => {
+            const f = DATA.gender_stats.F;
+            const m = DATA.gender_stats.M;
+            const fDepPct = f.deputados / (f.deputados + m.deputados) * 100;
+            const mDepPct = m.deputados / (f.deputados + m.deputados) * 100;
+            const fPlPct = f.total / (f.total + m.total) * 100;
+            const mPlPct = m.total / (f.total + m.total) * 100;
+            // Per-deputy productivity
+            const fPerDep = f.total / f.deputados;
+            const mPerDep = m.total / m.deputados;
+            return (
+              <div className="mt-12 grid gap-6 rounded-2xl border border-gray-200 bg-[var(--color-bg-alt)] p-8 md:grid-cols-2">
+                <div>
+                  <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                    [ Composição dos autores ]
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                    Das {DATA.totalDeputados} pessoas que propuseram PLs sobre
+                    violência contra a mulher na atual legislatura:
+                  </p>
+
+                  <div className="mt-5 space-y-3">
+                    <div>
+                      <div className="flex items-baseline justify-between font-mono-data text-xs">
+                        <span><strong className="text-[var(--color-blood)]">{f.deputados} mulheres</strong> ({fDepPct.toFixed(0)}%)</span>
+                        <span>{f.total} PLs</span>
+                      </div>
+                      <div className="mt-1 h-6 w-full overflow-hidden rounded bg-white">
+                        <div
+                          className="h-6 bg-[var(--color-blood)]"
+                          style={{ width: `${fDepPct}%` }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-baseline justify-between font-mono-data text-xs">
+                        <span><strong>{m.deputados} homens</strong> ({mDepPct.toFixed(0)}%)</span>
+                        <span>{m.total} PLs</span>
+                      </div>
+                      <div className="mt-1 h-6 w-full overflow-hidden rounded bg-white">
+                        <div
+                          className="h-6 bg-[var(--color-text)]"
+                          style={{ width: `${mDepPct}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                    [ Proporção em contexto ]
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                    Na Câmara inteira, <strong>mulheres são 17%</strong> dos
+                    513 deputados. Mas, sobre violência contra mulher:
+                  </p>
+
+                  <div className="mt-5 space-y-4">
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono-data text-4xl font-black text-[var(--color-blood)]">
+                          {fPlPct.toFixed(0)}%
+                        </span>
+                        <span className="text-sm text-[var(--color-text-secondary)]">
+                          das PLs são de autoria feminina
+                        </span>
+                      </div>
+                    </div>
+                    <div className="border-t border-gray-200 pt-4">
+                      <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                        Cada mulher propôs em média{" "}
+                        <strong className="font-mono-data text-[var(--color-blood)]">
+                          {fPerDep.toFixed(1)}
+                        </strong>{" "}
+                        PLs. Cada homem,{" "}
+                        <strong className="font-mono-data">
+                          {mPerDep.toFixed(1)}
+                        </strong>
+                        . Mulheres propõem{" "}
+                        <strong className="text-[var(--color-blood)]">
+                          {(fPerDep / mPerDep).toFixed(1)}×
+                        </strong>{" "}
+                        mais por pessoa.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Sort controls */}
           <div className="mt-10 flex flex-wrap items-center gap-3">

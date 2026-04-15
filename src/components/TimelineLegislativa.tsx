@@ -71,6 +71,9 @@ export default function TimelineLegislativa() {
     <section className="dark-section px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+            [ ATO 03 / O TIPO DE LEI ]
+          </p>
           <RevealText
             as="h2"
             text="O Congresso"
