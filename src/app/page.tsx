@@ -3,7 +3,6 @@ import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
 import CoerenciaDeputados from "@/components/CoerenciaDeputados";
-import CitySearch from "@/components/CitySearch";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -80,22 +79,6 @@ export default function Home() {
 
         {/* ATO 03 — Timeline legislativa */}
         <TimelineLegislativa />
-
-        {/* Transition para cidade */}
-        <div className="bg-white py-20">
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ ÚLTIMO ATO ]
-            </p>
-            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              E na ponta, onde a política encontra o território,
-              <span className="text-[var(--color-text-tertiary)]"> o que está acontecendo no seu município?</span>
-            </p>
-          </div>
-        </div>
-
-        {/* ATO 04 — Busca municipal */}
-        <CitySearch />
       </main>
       <Footer />
     </>
