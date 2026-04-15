@@ -48,45 +48,72 @@ const DATA = votacoesData as VotacoesJSON;
 function PartyRow({
   party,
   data,
+  maxTotal,
 }: {
   party: string;
   data: { sim: number; nao: number; outros: number; total: number; pctSim: number };
+  maxTotal: number;
 }) {
   const pctSim = data.pctSim;
   const pctNao = data.total > 0 ? (data.nao / data.total) * 100 : 0;
+  // Width proportional to # voters vs largest party
+  const barWidth = (data.total / maxTotal) * 100;
 
   return (
     <div className="flex items-center gap-3 py-2">
       <span className="w-20 flex-shrink-0 font-mono-data text-xs font-bold text-[var(--color-text)]">
         {party}
       </span>
-      <div className="flex h-6 flex-1 overflow-hidden rounded border border-gray-100">
-        {pctSim > 0 && (
-          <div
-            className="flex items-center justify-end bg-[var(--color-teal)] px-2 text-[10px] font-bold text-white"
-            style={{ width: `${pctSim}%` }}
-          >
-            {pctSim > 15 ? `${data.sim}` : ""}
-          </div>
-        )}
-        {pctNao > 0 && (
-          <div
-            className="flex items-center justify-start bg-[var(--color-blood)] px-2 text-[10px] font-bold text-white"
-            style={{ width: `${pctNao}%` }}
-          >
-            {pctNao > 15 ? `${data.nao}` : ""}
-          </div>
-        )}
-        {data.outros > 0 && (
-          <div
-            className="bg-gray-300"
-            style={{ width: `${(data.outros / data.total) * 100}%` }}
-          />
-        )}
+      <div className="flex-1">
+        <div
+          className="flex h-6 overflow-hidden rounded border border-gray-100"
+          style={{ width: `${barWidth}%`, minWidth: "48px" }}
+        >
+          {pctSim > 0 && (
+            <div
+              className="flex items-center justify-end bg-[var(--color-teal)] px-2 text-[10px] font-bold text-white"
+              style={{ width: `${pctSim}%` }}
+            >
+              {pctSim > 15 ? `${data.sim}` : ""}
+            </div>
+          )}
+          {pctNao > 0 && (
+            <div
+              className="flex items-center justify-start bg-[var(--color-blood)] px-2 text-[10px] font-bold text-white"
+              style={{ width: `${pctNao}%` }}
+            >
+              {pctNao > 15 ? `${data.nao}` : ""}
+            </div>
+          )}
+          {data.outros > 0 && (
+            <div
+              className="bg-gray-300"
+              style={{ width: `${(data.outros / data.total) * 100}%` }}
+            />
+          )}
+        </div>
+        <p className="mt-1 font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+          {data.total} votantes
+        </p>
       </div>
-      <span className="w-12 flex-shrink-0 text-right font-mono-data text-xs text-[var(--color-text-tertiary)]">
-        {pctSim.toFixed(0)}%
-      </span>
+      <div className="w-14 flex-shrink-0 text-right">
+        <span
+          className="font-mono-data text-sm font-bold"
+          style={{
+            color:
+              pctSim >= 66
+                ? "var(--color-teal)"
+                : pctSim >= 34
+                ? "var(--color-text)"
+                : "var(--color-blood)",
+          }}
+        >
+          {pctSim.toFixed(0)}%
+        </span>
+        <p className="font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+          votou sim
+        </p>
+      </div>
     </div>
   );
 }
@@ -176,9 +203,10 @@ export default function VotacoesPartidos() {
           {grupos.map((grupo, idx) => {
             const isOpen = expanded === idx;
             const v = grupo.principal;
-            const parties = Object.entries(v.partidos).filter(
-              ([, p]) => p.total >= 3
-            );
+            const parties = Object.entries(v.partidos)
+              .filter(([, p]) => p.total >= 3)
+              .sort((a, b) => b[1].total - a[1].total);
+            const maxPartyTotal = parties[0]?.[1].total ?? 1;
             return (
               <div
                 key={grupo.pl_ref}
@@ -389,20 +417,18 @@ export default function VotacoesPartidos() {
                         })()}
 
                         {/* Partidos */}
-                        <p className="mb-3 mt-6 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                          [ Votos por partido · mínimo 3 votantes ]
+                        <p className="mb-1 mt-6 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                          [ Votos por partido ]
+                        </p>
+                        <p className="mb-3 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                          largura da barra proporcional ao tamanho do partido
                         </p>
                         <div>
                           {parties.map(([party, data]) => (
-                            <PartyRow key={party} party={party} data={data} />
+                            <PartyRow key={party} party={party} data={data} maxTotal={maxPartyTotal} />
                           ))}
                         </div>
 
-                        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] text-[var(--color-text-tertiary)]">
-                          <span className="font-mono-data">
-                            % = quanto do partido votou SIM
-                          </span>
-                        </div>
                       </div>
 
                       {/* Outras votações (procedurais) */}
