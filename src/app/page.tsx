@@ -5,6 +5,7 @@ import ChoroplethMap from "@/components/ChoroplethMap";
 import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
+import CoerenciaDeputados from "@/components/CoerenciaDeputados";
 import CitySearch from "@/components/CitySearch";
 import Footer from "@/components/Footer";
 import TriggerWarning from "@/components/TriggerWarning";
@@ -65,6 +66,9 @@ export default function Home() {
 
         {/* ATO 02 — Como se vota */}
         <VotacoesPartidos />
+
+        {/* Guia eleitoral: coerência */}
+        <CoerenciaDeputados />
 
         {/* Transition — volume de política */}
         <div className="bg-white py-20">

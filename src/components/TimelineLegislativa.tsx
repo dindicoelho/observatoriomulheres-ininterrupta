@@ -19,6 +19,18 @@ type LegislativoJSON = {
   resumo: { simbólica: number; incremental: number; estrutural: number };
   porAno: Record<string, { simbólica: number; incremental: number; estrutural: number }>;
   proposicoes: Proposicao[];
+  destino_stats?: {
+    total: number;
+    por_categoria: {
+      aprovada: number;
+      no_senado: number;
+      pronta: number;
+      sem_relator: number;
+      tramitando: number;
+      arquivada: number;
+    };
+    categorias_labels: Record<string, string>;
+  };
 };
 
 const DATA = legislativoData as LegislativoJSON;
@@ -184,6 +196,111 @@ export default function TimelineLegislativa() {
             criam programas, fundos ou políticas novas.
           </p>
         </div>
+
+        {/* Destino das propostas */}
+        {DATA.destino_stats && (() => {
+          const d = DATA.destino_stats.por_categoria;
+          const total = DATA.destino_stats.total;
+          const aprovadas = d.aprovada;
+          const pctAprovadas = (aprovadas / total) * 100;
+          const pctSemRelator = (d.sem_relator / total) * 100;
+          const destinos = [
+            { key: "aprovada", label: "Viraram lei", count: d.aprovada, color: "#1DB389" },
+            { key: "no_senado", label: "Aprovadas na Câmara, tramitando no Senado", count: d.no_senado, color: "#5FBDAA" },
+            { key: "pronta", label: "Prontas para pauta, ainda sem votação", count: d.pronta, color: "#D4A960" },
+            { key: "tramitando", label: "Em tramitação nas comissões", count: d.tramitando, color: "#6B6B64" },
+            { key: "sem_relator", label: "Aguardando relator, nunca saíram do zero", count: d.sem_relator, color: "#B8252F" },
+            { key: "arquivada", label: "Arquivadas, retiradas ou devolvidas", count: d.arquivada, color: "#4a2020" },
+          ];
+          return (
+            <div className="mt-24 border-t border-white/10 pt-16">
+              <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+                [ Destino das {total} proposições ]
+              </p>
+              <h3
+                className="max-w-2xl text-3xl font-bold leading-tight text-white md:text-4xl"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Muita proposição, pouca lei.
+              </h3>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/70">
+                Em 3 anos de legislatura, apenas{" "}
+                <strong
+                  className="text-[#1DB389]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {aprovadas}
+                </strong>{" "}
+                (
+                <strong
+                  className="text-[#1DB389]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {pctAprovadas.toFixed(1)}%
+                </strong>
+                ) das proposições se transformaram em lei. Outras{" "}
+                <strong
+                  className="text-[var(--color-blood)]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  {d.sem_relator} ({pctSemRelator.toFixed(1)}%)
+                </strong>{" "}
+                nunca saíram do zero — ainda aguardam a designação de um relator.
+              </p>
+
+              {/* Stacked bar */}
+              <div className="mt-10 flex h-16 w-full overflow-hidden rounded-sm">
+                {destinos.map((dest) => {
+                  const pct = (dest.count / total) * 100;
+                  if (pct < 0.3) return null;
+                  return (
+                    <div
+                      key={dest.key}
+                      className="flex items-center justify-center text-[10px] font-bold text-white"
+                      style={{
+                        width: `${pct}%`,
+                        backgroundColor: dest.color,
+                      }}
+                      title={`${dest.label}: ${dest.count}`}
+                    >
+                      {pct > 6 ? `${pct.toFixed(1)}%` : ""}
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {destinos.map((dest) => (
+                  <div
+                    key={dest.key}
+                    className="flex items-start gap-3 rounded border border-white/10 bg-white/[0.03] p-3"
+                  >
+                    <span
+                      className="mt-1 inline-block h-3 w-3 flex-shrink-0 rounded-sm"
+                      style={{ backgroundColor: dest.color }}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <span className="text-sm text-white">{dest.label}</span>
+                        <span
+                          className="font-bold text-white"
+                          style={{ fontFamily: "var(--font-mono)" }}
+                        >
+                          {dest.count}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-6 font-mono-data text-xs leading-relaxed text-white/50">
+                Fonte: API da Câmara dos Deputados, endpoint /proposicoes/&#123;id&#125;.
+                Dados de {new Date().toLocaleDateString("pt-BR")}.
+              </p>
+            </div>
+          );
+        })()}
 
         {/* Timeline by year */}
         <div className="mt-20">

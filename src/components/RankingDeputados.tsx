@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import autoriaData from "../data/autoria.json";
+import coerenciaData from "../data/coerencia.json";
+import relatoriaData from "../data/relatoria.json";
 import RevealText from "./RevealText";
 
 type PL = {
@@ -28,6 +30,48 @@ type Deputado = {
   estruturais: number;
   pls: PL[];
 };
+
+type CoerenciaDeputado = {
+  id: number;
+  nome: string;
+  partido: string;
+  uf: string;
+  foto: string;
+  sexo?: string | null;
+  sim: number;
+  nao: number;
+  ausencias: number;
+  participacoes: number;
+  score: number;
+  votes_by_id: Record<string, string>;
+};
+
+type CoerenciaJSON = {
+  merito_vote_ids: string[];
+  deputados: CoerenciaDeputado[];
+};
+
+const COERENCIA = coerenciaData as CoerenciaJSON;
+
+type RelatoriaJSON = {
+  total_designacoes: number;
+  por_sexo: Record<string, number>;
+  pls_tipo_relatoria: Record<string, number>;
+  top_relatores: Array<{ nome: string; designacoes: number; sexo: string | null }>;
+};
+const RELATORIA = relatoriaData as RelatoriaJSON;
+const COERENCIA_MAP = new Map(COERENCIA.deputados.map((d) => [d.id, d]));
+
+// PL labels for the 4 mérito votes (human-readable)
+const MERITO_LABELS: Record<string, string> = {
+  "2462009-79": "PL 3880/2024 — Violência vicária",
+  "2596663-47": "PL 6415/2025 — Assistência jurídica",
+  "2593881-57": "PL 2942/2024 — Monitoramento eletrônico",
+  "2413257-126": "PL 6020/2023 — Substitutivo",
+};
+
+// Get the actual vote ids used
+const MERITO_IDS = COERENCIA.merito_vote_ids;
 
 type AutoriaJSON = {
   deputados: Deputado[];
@@ -160,6 +204,63 @@ function DeputadoModal({
             </svg>
           </button>
         </div>
+
+        {/* Coerência nas votações de mérito */}
+        {(() => {
+          const coer = COERENCIA_MAP.get(deputado.id);
+          if (!coer) return null;
+          return (
+            <div className="border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                  [ Como votou nas 4 PLs-chave ]
+                </p>
+                <span
+                  className="font-mono-data text-sm font-bold"
+                  style={{
+                    color:
+                      coer.score >= 75
+                        ? "var(--color-teal)"
+                        : coer.score >= 50
+                        ? "var(--color-text)"
+                        : "var(--color-blood)",
+                  }}
+                >
+                  {coer.score.toFixed(0)}% pró-proteção
+                </span>
+              </div>
+              <ul className="mt-3 space-y-1.5">
+                {MERITO_IDS.map((vid) => {
+                  const voto = coer.votes_by_id[vid] || "Ausente";
+                  const label = MERITO_LABELS[vid] || vid;
+                  const isSim = voto === "Sim";
+                  const isNao = voto === "Não";
+                  return (
+                    <li key={vid} className="flex items-center gap-3 text-xs">
+                      <span
+                        className={`inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full font-mono-data text-[10px] font-bold ${
+                          isSim
+                            ? "bg-[var(--color-teal)] text-white"
+                            : isNao
+                            ? "bg-[var(--color-blood)] text-white"
+                            : "bg-gray-200 text-[var(--color-text-tertiary)]"
+                        }`}
+                      >
+                        {isSim ? "✓" : isNao ? "✗" : "—"}
+                      </span>
+                      <span className="flex-1 text-[var(--color-text-secondary)]">
+                        {label}
+                      </span>
+                      <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                        {voto}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })()}
 
         {/* Filter */}
         <div className="flex flex-wrap gap-2 border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-3">
@@ -316,7 +417,7 @@ export default function RankingDeputados() {
             const fPerDep = f.total / f.deputados;
             const mPerDep = m.total / m.deputados;
             return (
-              <div className="mt-12 grid gap-6 rounded-2xl border border-gray-200 bg-[var(--color-bg-alt)] p-8 md:grid-cols-2">
+              <div className="mt-12 grid gap-6 rounded-2xl border border-gray-200 bg-[var(--color-bg-alt)] p-8 md:grid-cols-3">
                 <div>
                   <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
                     [ Composição dos autores ]
@@ -389,6 +490,35 @@ export default function RankingDeputados() {
                           {(fPerDep / mPerDep).toFixed(1)}×
                         </strong>{" "}
                         mais por pessoa.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                    [ E quem relata as PLs? ]
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                    Das {RELATORIA.total_designacoes} designações de relatoria
+                    analisadas nas {Object.values(RELATORIA.pls_tipo_relatoria).reduce((a, b) => a + b, 0)} PLs com relator designado:
+                  </p>
+
+                  <div className="mt-5 space-y-4">
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono-data text-4xl font-black text-[var(--color-blood)]">
+                          {((RELATORIA.por_sexo.F || 0) / RELATORIA.total_designacoes * 100).toFixed(0)}%
+                        </span>
+                        <span className="text-sm text-[var(--color-text-secondary)]">
+                          das relatorias são de mulheres
+                        </span>
+                      </div>
+                    </div>
+                    <div className="border-t border-gray-200 pt-4">
+                      <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                        <strong className="text-[var(--color-blood)]">{RELATORIA.pls_tipo_relatoria["só mulher"]}</strong> PLs tiveram apenas mulheres como relatoras.
+                        Apenas <strong>{RELATORIA.pls_tipo_relatoria["só homem"]}</strong> tiveram relatoria exclusivamente masculina.
                       </p>
                     </div>
                   </div>
