@@ -119,7 +119,7 @@ function PartyRow({
 }
 
 export default function VotacoesPartidos() {
-  const [expanded, setExpanded] = useState<number | null>(0);
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   // Group votações by PL
   const grupos = useMemo<GrupoPL[]>(() => {
