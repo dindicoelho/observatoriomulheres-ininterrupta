@@ -5,14 +5,12 @@ import VotacoesPartidos from "@/components/VotacoesPartidos";
 import CoerenciaDeputados from "@/components/CoerenciaDeputados";
 import CitySearch from "@/components/CitySearch";
 import Footer from "@/components/Footer";
-import TriggerWarning from "@/components/TriggerWarning";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
 
 export default function Home() {
   return (
     <>
-      <TriggerWarning />
       <ProgressBar />
       <main>
         <Hero />

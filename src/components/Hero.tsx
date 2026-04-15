@@ -107,12 +107,7 @@ export default function Hero() {
 
       {/* Prompt to scroll */}
       <div className="border-t border-white/10 px-6 py-6 md:px-12">
-        <div className="flex items-center justify-between">
-          <p className="max-w-md text-base leading-relaxed text-white/70 md:text-lg">
-            Mas esse número esconde uma história
-            <br className="hidden md:block" />
-            <span className="md:font-bold md:text-white"> que quase ninguém conta.</span>
-          </p>
+        <div className="flex items-center justify-end">
           <div className="flex items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-widest text-white/50">
               [ scroll ]

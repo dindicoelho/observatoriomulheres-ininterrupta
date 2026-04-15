@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Metodologia — Mapa da Violência contra a Mulher no Brasil",
+  title: "Metodologia — Observatório Político da Violência contra a Mulher",
   description:
-    "Fontes, limitações e metodologia do observatório. Todos os dados são públicos e extraídos diretamente das APIs governamentais brasileiras.",
+    "Fontes, métodos e limitações do observatório político. Todos os dados são públicos, extraídos diretamente das APIs da Câmara dos Deputados e do Atlas da Violência.",
 };
 
 export default function MetodologiaPage() {
@@ -25,8 +25,9 @@ export default function MetodologiaPage() {
             Metodologia
           </h1>
           <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-            Fontes, métodos e limitações dos dados apresentados neste
-            observatório.
+            Como este observatório foi construído, de onde vêm os dados
+            políticos, o que foi classificado editorialmente e quais são
+            as limitações.
           </p>
         </div>
       </header>
@@ -39,7 +40,7 @@ export default function MetodologiaPage() {
               className="text-3xl font-black text-[var(--color-text)]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Sobre este projeto
+              Sobre este observatório
             </h2>
 
             <p className="text-base md:text-lg">
@@ -54,14 +55,28 @@ export default function MetodologiaPage() {
                 @ininterrupta.sys
               </a>
               ), uma publicação independente de inteligência cultural. O
-              projeto não tem fins lucrativos e não recebe financiamento de
-              nenhuma instituição pública ou privada.
+              projeto não tem fins lucrativos e não recebe financiamento
+              de nenhuma instituição pública ou privada.
             </p>
 
             <p className="text-base md:text-lg">
-              Todos os dados apresentados aqui são públicos e foram
-              extraídos diretamente de APIs governamentais brasileiras por
-              meio do{" "}
+              A premissa é simples:{" "}
+              <strong>
+                os números da violência contra a mulher no Brasil já são
+                conhecidos.
+              </strong>{" "}
+              O que quase ninguém mostra é a camada política que decide o
+              que fazer com esses números — quem propõe leis sobre o tema,
+              quem vota a favor, quem vota contra, quem engaveta e quem
+              realmente transforma proposta em lei. Este observatório
+              cruza seis anos de dados da Câmara dos Deputados com a
+              composição demográfica do parlamento para revelar essa
+              camada.
+            </p>
+
+            <p className="text-base md:text-lg">
+              Os dados vêm diretamente das APIs de Dados Abertos da
+              Câmara, intermediadas pelo{" "}
               <a
                 href="https://github.com/jxnxts/mcp-brasil"
                 target="_blank"
@@ -70,31 +85,24 @@ export default function MetodologiaPage() {
               >
                 mcp-brasil
               </a>
-              , um servidor de protocolo aberto que conecta mais de 40
-              fontes oficiais: Atlas da Violência (IPEA), DataJud (CNJ),
-              Câmara dos Deputados, Senado Federal, Fórum Brasileiro de
-              Segurança Pública, IBGE, Diários Oficiais de mais de 5.000
-              municípios, entre outras.
+              , um servidor aberto de protocolo que conecta APIs públicas
+              brasileiras em uma interface unificada. Nenhum dado foi
+              modelado, estimado ou projetado — os números aparecem no
+              observatório como estão publicados pelos órgãos públicos.
             </p>
 
             <p className="text-base md:text-lg">
-              Nenhum dado foi estimado, projetado ou modelado. Os números
-              que aparecem nas visualizações são os mesmos que os órgãos
-              públicos brasileiros disponibilizam em suas bases oficiais.
-              As únicas transformações aplicadas são o cruzamento entre
-              fontes, o cálculo de taxas per capita a partir de dados
-              demográficos do IBGE e a classificação editorial das
-              proposições legislativas. Todas essas transformações estão
-              descritas abaixo.
-            </p>
-
-            <p className="text-base md:text-lg">
-              O código do projeto é aberto. A metodologia completa está
-              descrita a seguir.
+              Apenas três camadas de trabalho editorial foram aplicadas:
+              a <strong>classificação</strong> das proposições em
+              simbólicas, incrementais e estruturais; a{" "}
+              <strong>interpretação</strong> do que significa votar SIM ou
+              NÃO em cada votação nominal; e a{" "}
+              <strong>agregação</strong> de métricas por gênero (autoria,
+              relatoria, votos). Tudo isso está detalhado abaixo.
             </p>
           </section>
 
-          {/* Fontes de dados */}
+          {/* Fontes */}
           <section className="space-y-5">
             <h2
               className="text-3xl font-black text-[var(--color-text)]"
@@ -103,60 +111,8 @@ export default function MetodologiaPage() {
               Fontes de dados
             </h2>
 
-            {/* Atlas da Violência */}
+            {/* Câmara */}
             <div className="space-y-4">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Atlas da Violência (IPEA/FBSP)
-              </h3>
-              <p className="text-base md:text-lg">
-                O Atlas da Violência é mantido pelo Instituto de Pesquisa
-                Econômica Aplicada em parceria com o Fórum Brasileiro de
-                Segurança Pública. A base de dados primária é o Sistema de
-                Informações sobre Mortalidade (SIM) do Ministério da Saúde,
-                que registra todas as mortes ocorridas no país a partir de
-                declarações de óbito emitidas por médicos.
-              </p>
-              <p className="text-base md:text-lg">
-                Neste observatório utilizamos quatro séries temporais
-                específicas do tema &ldquo;Violência por Gênero&rdquo;:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
-                <li>
-                  <strong className="font-mono-data text-[var(--color-text)]">Série 40</strong>{" "}
-                  — Homicídios de mulheres (total, 1989–2023), em números
-                  absolutos, nos níveis país, estado e município.
-                </li>
-                <li>
-                  <strong className="font-mono-data text-[var(--color-text)]">Série 142</strong>{" "}
-                  — Homicídios de mulheres negras (1996–2023), números
-                  absolutos.
-                </li>
-                <li>
-                  <strong className="font-mono-data text-[var(--color-text)]">Série 143</strong>{" "}
-                  — Homicídios de mulheres não negras (1996–2023), números
-                  absolutos.
-                </li>
-                <li>
-                  <strong className="font-mono-data text-[var(--color-text)]">Série 52</strong>{" "}
-                  — Taxa de homicídios de mulheres por 100 mil, por unidade
-                  da federação e município, 1980–2022.
-                </li>
-              </ul>
-              <p className="text-base md:text-lg">
-                A classificação de homicídios segue os códigos{" "}
-                <strong>X85 a Y09</strong> da Classificação Internacional de
-                Doenças (CID-10), que correspondem a mortes por agressão. A
-                categoria &ldquo;mulheres negras&rdquo; agrega pessoas
-                classificadas como pretas ou pardas nas declarações de
-                óbito, seguindo a convenção do IBGE.
-              </p>
-            </div>
-
-            {/* Câmara dos Deputados */}
-            <div className="space-y-4 pt-6">
               <h3
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -164,257 +120,112 @@ export default function MetodologiaPage() {
                 Câmara dos Deputados
               </h3>
               <p className="text-base md:text-lg">
-                Os dados legislativos vêm da{" "}
+                A{" "}
                 <a
                   href="https://dadosabertos.camara.leg.br"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--color-blood)] hover:underline"
                 >
-                  API de Dados Abertos da Câmara dos Deputados
-                </a>
-                . Buscamos todas as proposições (PLs, PECs, PLPs, MSC, MPV,
-                RCP, EMS e outras) apresentadas entre{" "}
-                <strong>janeiro de 2019 e março de 2026</strong> contendo
-                qualquer dos seguintes termos em ementa ou palavras-chave:
-                &ldquo;feminicídio&rdquo;, &ldquo;violência contra
-                mulher&rdquo;, &ldquo;Maria da Penha&rdquo; ou
-                &ldquo;violência doméstica&rdquo;.
-              </p>
-              <p className="text-base md:text-lg">
-                Para cada proposição coletamos: identificador, tipo
-                (sigla), número, ano, ementa, data de apresentação, autoria
-                principal (primeiro proponente), situação na tramitação e,
-                quando disponível, resultado de votações nominais com o
-                voto individual de cada parlamentar. O total da base é de
-                1.007 proposições, das quais 805 foram apresentadas na
-                legislatura atual (janeiro de 2023 a dezembro de 2026).
-              </p>
-              <p className="text-base md:text-lg">
-                As proposições são classificadas editorialmente em três
-                categorias:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
-                <li>
-                  <strong style={{ color: "#6B6B64" }}>Simbólicas</strong>{" "}
-                  — Criação de dias nacionais, homenagens, denominações,
-                  campanhas de conscientização, inclusão em calendário
-                  oficial.
-                </li>
-                <li>
-                  <strong style={{ color: "#3B82D4" }}>Incrementais</strong>{" "}
-                  — Alterações pontuais em leis existentes, ajustes em tipos
-                  penais, mudanças procedimentais, aumentos de pena.
-                </li>
-                <li>
-                  <strong style={{ color: "#1DB389" }}>Estruturais</strong>{" "}
-                  — Criação de programas nacionais, fundos, políticas de
-                  Estado, pensões, casas-abrigo, delegacias especializadas,
-                  patrulhas Maria da Penha, monitoramento eletrônico,
-                  botões do pânico, centros de referência.
-                </li>
-              </ul>
-              <p className="text-base md:text-lg">
-                A classificação é feita por análise automática das ementas
-                com padrões regulares de correspondência. Por exemplo,
-                qualquer ementa contendo &ldquo;institui o dia&rdquo; ou
-                &ldquo;inclui no calendário&rdquo; é classificada como
-                simbólica; &ldquo;cria o programa nacional&rdquo; ou
-                &ldquo;institui o fundo&rdquo; é estrutural; demais são
-                incrementais. Essa classificação é editorial e pode
-                conter aproximações — o contexto completo de cada
-                proposição não é considerado.
-              </p>
-            </div>
-
-            {/* Votações */}
-            <div className="space-y-4 pt-6">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Votações nominais
-              </h3>
-              <p className="text-base md:text-lg">
-                Para cada proposição, buscamos as votações registradas no
-                endpoint{" "}
-                <code className="font-mono-data text-sm">
-                  /proposicoes/&#123;id&#125;/votacoes
-                </code>
-                . Filtramos as votações com placar registrado (Sim + Não
-                &gt; 50 votantes) para destacar apenas votações
-                contestadas. Para cada uma, coletamos os votos individuais
-                e agregamos por partido no endpoint{" "}
-                <code className="font-mono-data text-sm">
-                  /votacoes/&#123;id&#125;/votos
-                </code>
-                .
-              </p>
-              <p className="text-base md:text-lg">
-                As votações são classificadas em{" "}
-                <strong>&ldquo;de mérito&rdquo;</strong> (quando decidem o
-                conteúdo substantivo da proposta — por exemplo, &ldquo;
-                Mantido o texto&rdquo;, &ldquo;Aprovada a Medida
-                Provisória&rdquo;) ou{" "}
-                <strong>&ldquo;procedurais&rdquo;</strong> (quando decidem
-                aspectos do rito — &ldquo;Rejeitado o Requerimento&rdquo;,
-                &ldquo;Rejeitada a Preferência&rdquo;, &ldquo;Rejeitado o
-                Recurso&rdquo;). Essa distinção é editorial e está explícita
-                em cada card, com descrição do que cada tipo de votação
-                significa na prática.
-              </p>
-              <p className="text-base md:text-lg">
-                O recorte temporal das votações apresentadas é{" "}
-                <strong>2023–2026</strong> (legislatura atual). A
-                interpretação de &ldquo;votar SIM&rdquo; e &ldquo;votar
-                NÃO&rdquo; é escrita manualmente para cada votação, com
-                base na ementa da PL, no descritivo da votação e no tipo
-                regimental. O objetivo é traduzir o jargão parlamentar
-                em linguagem acessível, mantendo fidelidade ao conteúdo
-                votado.
-              </p>
-            </div>
-
-            {/* IBGE */}
-            <div className="space-y-4 pt-6">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                IBGE
-              </h3>
-              <p className="text-base md:text-lg">
-                Os dados demográficos do IBGE são usados para calcular as
-                taxas per capita que aparecem no observatório. Três fontes
-                específicas:
+                  API de Dados Abertos da Câmara
+                </a>{" "}
+                é a fonte primária do observatório. Dela vêm:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    Estimativas populacionais anuais
+                    1.007 proposições
                   </strong>{" "}
-                  (tabela 6579 do SIDRA) — população total do Brasil e por
-                  unidade da federação, de 2001 a 2024.
+                  apresentadas entre janeiro de 2019 e março de 2026
+                  contendo as palavras-chave &ldquo;feminicídio&rdquo;,
+                  &ldquo;violência contra mulher&rdquo;, &ldquo;Maria da
+                  Penha&rdquo; ou &ldquo;violência doméstica&rdquo; em
+                  ementa. Para cada PL: identificador, tipo, número, ano,
+                  ementa, data de apresentação, autoria principal e
+                  status atual de tramitação.
                 </li>
                 <li>
-                  <strong className="text-[var(--color-text)]">Censo 2022</strong>{" "}
-                  — população por município (5.570 municípios), usada
-                  para calcular a taxa municipal.
+                  <strong className="text-[var(--color-text)]">
+                    447 deputados autores
+                  </strong>{" "}
+                  (285 na atual legislatura) das PLs acima, com dados
+                  completos: nome, partido, UF, foto, situação e sexo.
                 </li>
                 <li>
-                  <strong className="text-[var(--color-text)]">PNAD Contínua</strong>{" "}
-                  — proporção de pessoas autodeclaradas pretas ou pardas
-                  na população brasileira ano a ano, de 2012 a 2023. Para
-                  anos anteriores (2001–2011), utilizamos interpolação
-                  linear entre o Censo 2000 e os dados da PNAD.
+                  <strong className="text-[var(--color-text)]">
+                    17 votações nominais contestadas
+                  </strong>{" "}
+                  (com mais de 50 votantes registrados) em plenário
+                  entre 2023 e 2026 sobre essas proposições. Para cada
+                  votação: descrição, placar, voto individual de cada
+                  parlamentar e tramitação associada.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Tramitações completas
+                  </strong>{" "}
+                  das 568 PLs apresentadas de 2023 em diante. Nesses
+                  dados identificamos: data de designação de relator,
+                  nome do relator, apresentação de pareceres e situação
+                  atual.
                 </li>
               </ul>
-              <p className="text-base md:text-lg">
-                Quando apresentamos &ldquo;taxa de homicídios por 100 mil
-                mulheres&rdquo;, o numerador vem do Atlas da Violência e
-                o denominador vem do IBGE (população do mesmo ano e
-                recorte geográfico, aplicando a proporção feminina
-                nacional de 51,3%).
-              </p>
             </div>
 
-            {/* FBSP Anuário */}
+            {/* IBGE e contexto */}
             <div className="space-y-4 pt-6">
               <h3
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Fórum Brasileiro de Segurança Pública
+                IBGE e composição do Congresso
               </h3>
               <p className="text-base md:text-lg">
-                O FBSP mantém um repositório público com mais de 236
-                publicações sobre segurança pública no Brasil. Neste
-                observatório utilizamos especificamente o{" "}
-                <strong>18º Anuário Brasileiro de Segurança Pública (2024)</strong>{" "}
-                como fonte primária dos dados sobre rede de proteção
-                institucional: número de Delegacias Especializadas de
-                Atendimento à Mulher (DEAMs), Centros de Referência da
-                Mulher (CRAMs) e Casas-Abrigo por unidade da federação,
-                com data de referência 31 de dezembro de 2023.
-              </p>
-              <p className="text-base md:text-lg">
-                Publicações temáticas do FBSP (como o &ldquo;Retrato dos
-                feminicídios no Brasil&rdquo; e relatórios sobre a
-                pandemia) são usadas para contextualização editorial. Os
-                dados quantitativos das visualizações vêm do Atlas da
-                Violência e das APIs governamentais — não dos relatórios
-                do FBSP.
-              </p>
-            </div>
-
-            {/* Ministério das Mulheres */}
-            <div className="space-y-4 pt-6">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Ministério das Mulheres
-              </h3>
-              <p className="text-base md:text-lg">
-                O Ministério das Mulheres mantém o diretório oficial do
-                Ligue 180 com os equipamentos públicos de atendimento à
-                mulher. Esse material é citado no observatório como
-                referência para que a pessoa que consulta sua cidade
-                possa verificar individualmente a existência de
-                equipamentos locais. O observatório não armazena cópia
-                desse diretório nem o substitui como fonte de consulta
-                prática.
-              </p>
-            </div>
-
-            {/* Fontes previstas */}
-            <div className="space-y-4 pt-6">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Fontes integradas parcialmente ou previstas
-              </h3>
-              <p className="text-base md:text-lg">
-                Três fontes de dados estão disponíveis no{" "}
-                <em>mcp-brasil</em> mas ainda não são usadas de forma
-                quantitativa no observatório:
+                Para contextualizar proporções de gênero, utilizamos:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
-                  <strong className="text-[var(--color-text)]">DataJud (CNJ)</strong>{" "}
-                  — dados de Medidas Protetivas de Urgência (MPU) da Lei
-                  Maria da Penha e da Lei Henry Borel. Serão integrados
-                  numa próxima seção do observatório sobre o
-                  escalonamento da violência (denúncia → medida protetiva
-                  → descumprimento → feminicídio).
+                  <strong className="text-[var(--color-text)]">
+                    Composição da Câmara 57ª legislatura
+                  </strong>{" "}
+                  (2023–2026): 513 deputados, dos quais 91 são mulheres
+                  (17,7%). Fonte: Secretaria da Mulher da Câmara dos
+                  Deputados.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    Querido Diário (Open Knowledge Brasil)
+                    IBGE — Estimativas populacionais
                   </strong>{" "}
-                  — indexação de diários oficiais de mais de 5.000
-                  municípios. Útil para mapear ações municipais (criação
-                  de DEAMs, casas-abrigo, coordenadorias) via
-                  palavras-chave em texto completo. Previsto para
-                  enriquecer a busca municipal.
-                </li>
-                <li>
-                  <strong className="text-[var(--color-text)]">
-                    SINESP/Ministério da Justiça
-                  </strong>{" "}
-                  — datasets complementares sobre ocorrências criminais.
-                  Uso futuro como fonte secundária quando a cobertura do
-                  Atlas apresentar defasagem temporal.
-                </li>
-                <li>
-                  <strong className="text-[var(--color-text)]">Senado Federal</strong>{" "}
-                  — o observatório até o momento rastreia apenas
-                  proposições da Câmara dos Deputados. A integração com
-                  o Senado está prevista para mostrar o caminho
-                  completo de tramitação de cada proposta.
+                  e <strong className="text-[var(--color-text)]">Censo 2022</strong>{" "}
+                  para dados populacionais usados na busca municipal.
                 </li>
               </ul>
+            </div>
+
+            {/* Atlas (agora secundário) */}
+            <div className="space-y-4 pt-6">
+              <h3
+                className="text-xl font-bold text-[var(--color-text)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Atlas da Violência (IPEA/FBSP)
+              </h3>
+              <p className="text-base md:text-lg">
+                Usado como fonte contextual. O número do Hero
+                (3.903 mulheres assassinadas em 2023) vem da série 40 do
+                Atlas, que por sua vez se alimenta do Sistema de
+                Informações sobre Mortalidade (SIM) do Ministério da
+                Saúde. O Atlas também é citado na busca municipal
+                (Ato 04) para a taxa de homicídios por 100 mil mulheres
+                de cada cidade.
+              </p>
+              <p className="text-base md:text-lg">
+                O observatório{" "}
+                <strong>não discute a demografia da violência</strong>{" "}
+                (raça, geografia, escalonamento) porque esses dados já são
+                amplamente conhecidos e cobertos em outros lugares. O
+                foco aqui é o gap entre o problema e a resposta política.
+              </p>
             </div>
           </section>
 
@@ -424,7 +235,7 @@ export default function MetodologiaPage() {
               className="text-3xl font-black text-[var(--color-text)]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Metodologia
+              Métodos
             </h2>
 
             <div className="space-y-4">
@@ -432,34 +243,42 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Cálculo de taxas
+                Classificação das proposições
               </h3>
               <p className="text-base md:text-lg">
-                Todas as taxas apresentadas seguem a fórmula padrão:{" "}
-                <strong>
-                  (número de ocorrências ÷ população do recorte) × 100.000
-                </strong>
-                . A população utilizada é a estimativa mais recente do
-                IBGE para o mesmo ano e nível geográfico do numerador.
-                Quando a estimativa do IBGE não está disponível para um
-                ano específico (por exemplo, anos entre censos),
-                utilizamos interpolação linear entre os dois pontos mais
-                próximos.
+                As 1.007 proposições foram classificadas editorialmente
+                em três categorias:
               </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  <strong style={{ color: "#6B6B64" }}>Simbólicas</strong>{" "}
+                  — Criação de dias nacionais, homenagens, denominações
+                  de prédios e pontes, inclusão em calendário oficial,
+                  campanhas de conscientização.
+                </li>
+                <li>
+                  <strong style={{ color: "#3B82D4" }}>Incrementais</strong>{" "}
+                  — Alterações pontuais em leis existentes (principalmente
+                  na Lei Maria da Penha), ajustes em tipos penais,
+                  aumentos de pena, mudanças procedimentais.
+                </li>
+                <li>
+                  <strong style={{ color: "#1DB389" }}>Estruturais</strong>{" "}
+                  — Criação de programas nacionais, fundos, políticas de
+                  Estado, pensões, casas-abrigo, delegacias
+                  especializadas, patrulhas Maria da Penha, monitoramento
+                  eletrônico obrigatório, centros de referência.
+                </li>
+              </ul>
               <p className="text-base md:text-lg">
-                Para calcular a taxa de homicídios de{" "}
-                <strong>mulheres negras</strong>, dividimos o número de
-                homicídios de mulheres negras (série 142) pela população
-                feminina negra estimada (população total × 51,3% mulheres
-                × proporção de pretas e pardas naquele ano, conforme
-                PNAD Contínua). Idem para mulheres não negras.
-              </p>
-              <p className="text-base md:text-lg">
-                Na busca municipal, a taxa de 2023 é calculada com a
-                população do Censo 2022 (o Censo 2022 tem dados por
-                município, mas a proporção feminina é estimada pela
-                média nacional de 51,3% — o IBGE não publica proporção
-                por sexo para todos os 5.570 municípios individualmente).
+                A classificação é automática, por correspondência de
+                padrões regulares sobre a ementa de cada PL. Palavras
+                como &ldquo;institui o dia&rdquo; ou &ldquo;inclui no
+                calendário&rdquo; disparam simbólica; &ldquo;cria o
+                programa nacional&rdquo; ou &ldquo;institui o fundo&rdquo;
+                disparam estrutural; as demais caem em incremental. É um
+                trabalho de filtro, não de análise jurídica — o contexto
+                completo de cada proposição não é considerado.
               </p>
             </div>
 
@@ -468,28 +287,39 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Recorte racial
+                Interpretação das votações
               </h3>
               <p className="text-base md:text-lg">
-                A classificação racial segue o padrão do IBGE:{" "}
-                <strong>&ldquo;negras&rdquo;</strong> agrega as categorias
-                <strong> pretas e pardas</strong>;{" "}
-                <strong>&ldquo;não negras&rdquo;</strong> agrega{" "}
-                <strong>brancas, amarelas e indígenas</strong>. Essa
-                agregação é a mesma adotada pelo Atlas da Violência e
-                pelo FBSP.
+                Para cada uma das 17 votações nominais apresentadas,
+                escrevemos manualmente:
               </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  Um parágrafo explicando <strong>o projeto de lei</strong>{" "}
+                  em linguagem acessível.
+                </li>
+                <li>
+                  Uma frase sobre{" "}
+                  <strong>o que exatamente foi votado</strong> (se é o
+                  texto original, um destaque, um recurso ou um
+                  requerimento).
+                </li>
+                <li>
+                  Uma frase sobre{" "}
+                  <strong>o resultado e suas consequências</strong>.
+                </li>
+                <li>
+                  Duas frases interpretando{" "}
+                  <strong>o que significa votar SIM</strong> e{" "}
+                  <strong>o que significa votar NÃO</strong>.
+                </li>
+              </ul>
               <p className="text-base md:text-lg">
-                A classificação racial nos dados de homicídio provém das
-                declarações de óbito preenchidas por profissionais de
-                saúde (médicos que atestam o óbito). Isso está sujeito a
-                <strong> heteroidentificação</strong> — é o profissional
-                de saúde, e não a pessoa morta, quem classifica a raça —
-                o que é uma limitação conhecida da base. Em geral, a
-                heteroidentificação tende a subnotificar pessoas negras
-                de pele mais clara (classificadas como brancas), o que
-                pode fazer com que a desigualdade racial mostrada seja
-                inferior à real.
+                Cada votação também é classificada em{" "}
+                <strong>mérito</strong> (quando decide conteúdo
+                substantivo) ou <strong>procedural</strong> (quando
+                decide rito: destaques, requerimentos, recursos). Essa
+                distinção aparece como selo em cada card.
               </p>
             </div>
 
@@ -498,26 +328,33 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Recorte temporal
+                Índice de coerência por deputado
               </h3>
               <p className="text-base md:text-lg">
-                As séries temporais raciais (142 e 143) começam em 1996,
-                mas o ano de 1996 registra apenas 24 mulheres negras
-                assassinadas em todo o país — um número implausivelmente
-                baixo que indica{" "}
-                <strong>subnotificação massiva de raça</strong> nos
-                primeiros anos do registro. Os anos 1997–2000 apresentam
-                crescimento artificial à medida que o preenchimento do
-                campo &ldquo;cor ou raça&rdquo; nas declarações de óbito
-                se consolida.
+                Apenas as 4 votações classificadas como <strong>de mérito</strong>{" "}
+                são usadas no cálculo do índice de coerência. Para cada
+                deputado que participou de ao menos uma dessas 4
+                votações, calculamos:
+              </p>
+              <p className="pl-6 font-mono-data text-sm text-[var(--color-text)]">
+                score = (votos SIM ÷ participações) × 100
               </p>
               <p className="text-base md:text-lg">
-                Por isso, a narrativa principal do observatório utiliza
-                o corte <strong>2001 em diante</strong>, quando a
-                classificação racial se tornou consistente o suficiente
-                para comparações válidas. Dados de 1989–2000 ainda são
-                apresentados no modo de números absolutos totais (série
-                40), pois essa série não depende de classificação racial.
+                Nas 4 votações de mérito analisadas, votar SIM equivale a
+                apoiar a ampliação de proteção às mulheres (inclusão da
+                violência vicária na Maria da Penha, política nacional
+                de assistência jurídica, monitoramento eletrônico
+                obrigatório, criminalização do descumprimento de medida
+                protetiva mesmo com consentimento). Essa equivalência{" "}
+                <strong>é uma escolha editorial</strong> — um leitor pode
+                discordar do sentido de alguma das votações. O índice
+                deve ser lido como amostra, não como juízo final.
+              </p>
+              <p className="text-base md:text-lg">
+                Para ser incluído na listagem &ldquo;100% pró-proteção&rdquo;,
+                o deputado precisa ter votado SIM em pelo menos 3 das 4
+                votações, sem nenhuma recusa. O critério de 3 mínimo
+                evita distorções por participações pontuais.
               </p>
             </div>
 
@@ -526,40 +363,19 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Limitações dos dados
+                Agregação por gênero
               </h3>
               <p className="text-base md:text-lg">
-                A <strong>subnotificação</strong> é o principal problema
-                estrutural. Os números apresentados representam o{" "}
-                <strong>piso</strong> da violência real, nunca o teto.
-                Feminicídios podem ser registrados como suicídios,
-                acidentes, mortes por causa indeterminada ou outros
-                códigos CID que mascaram a natureza violenta.
-              </p>
-              <p className="text-base md:text-lg">
-                O FBSP estima que as <strong>Mortes Violentas por
-                Causa Indeterminada (MVCI)</strong> podem conter uma
-                parcela relevante de homicídios não classificados
-                corretamente. O Atlas da Violência inclui uma série
-                específica para MVCI, mas este observatório{" "}
-                <strong>não redistribui</strong> esses óbitos entre as
-                categorias de homicídio — apresentamos apenas os
-                registros com classificação clara.
-              </p>
-              <p className="text-base md:text-lg">
-                Outra limitação importante é a <strong>defasagem
-                temporal</strong>. Os dados do SIM/Ministério da Saúde,
-                que alimentam o Atlas, levam de 1 a 2 anos para
-                consolidação após o fim do ano de referência. O dado
-                mais recente disponível em abril de 2026 é referente ao
-                ano de 2023.
-              </p>
-              <p className="text-base md:text-lg">
-                Na busca municipal, municípios pequenos frequentemente
-                apresentam dados incompletos — zero homicídios no Atlas
-                pode significar ausência real de ocorrências ou apenas
-                subnotificação local. Esse aviso aparece explicitamente
-                em cada consulta que retorna zero.
+                Para cada um dos 447 deputados autores e dos ~535
+                deputados que participaram de alguma votação,
+                consultamos a API{" "}
+                <code className="font-mono-data text-sm">/deputados/&#123;id&#125;</code>{" "}
+                para obter o campo <strong>sexo</strong> (M ou F). Esse
+                dado vem declarado pela própria Casa no registro de cada
+                parlamentar. Cruzamos com as métricas de autoria,
+                relatoria e votação para gerar os contrastes que
+                aparecem no site: 17% da composição vs 41% da autoria,
+                79% das relatorias, 2,1× de produtividade per capita.
               </p>
             </div>
 
@@ -568,36 +384,23 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                O que testamos e não incluímos
+                Identificação de relatores
               </h3>
               <p className="text-base md:text-lg">
-                Durante a construção do observatório testamos algumas
-                hipóteses de correlação entre a taxa de homicídios de
-                mulheres e indicadores estaduais: IDEB (qualidade da
-                educação), gasto per capita em educação, gasto per
-                capita em segurança pública, PIB per capita e
-                equipamentos de proteção institucional (DEAMs, CRAMs,
-                Casas-Abrigo) por 100 mil mulheres. <strong>Nenhum
-                desses fatores, isoladamente, apresenta correlação
-                estatística consistente com a taxa de homicídios por
-                estado.</strong>
+                Para cada uma das 568 PLs da atual legislatura,
+                buscamos todas as tramitações registradas e extraímos
+                eventos cujo despacho começa com &ldquo;Designad[o|a]
+                Relator&rdquo;. O nome do relator e seu partido/UF são
+                parseados por expressão regular. Em seguida, cruzamos
+                com a base de deputados para identificar o sexo.
               </p>
               <p className="text-base md:text-lg">
-                Por isso, esses cruzamentos não aparecem como conclusão
-                no site. A violência contra mulher no Brasil parece ser
-                um problema estrutural multicausal — não se explica
-                por um único indicador disponível em base pública.
-                Fatores que a literatura aponta como relevantes mas
-                difíceis de quantificar de forma agregada: rotas de
-                tráfico, disputa entre facções criminosas, desigualdade
-                intra-estadual e capilaridade local da rede de
-                proteção (que não necessariamente coincide com o
-                tamanho absoluto da rede no estado).
-              </p>
-              <p className="text-base md:text-lg">
-                Os dados estaduais de rede de proteção continuam
-                disponíveis como referência informativa na seção de
-                consulta municipal, mas sem inferir causalidade.
+                Foram identificadas{" "}
+                <strong>537 designações de relatoria em 314 PLs</strong>{" "}
+                (algumas PLs passam por múltiplas comissões, então têm
+                relatores diferentes em cada uma). As demais 254 PLs
+                ainda não tinham relator designado quando os dados foram
+                coletados.
               </p>
             </div>
 
@@ -606,58 +409,130 @@ export default function MetodologiaPage() {
                 className="text-xl font-bold text-[var(--color-text)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Atualização
+                Taxa de aprovação
               </h3>
               <p className="text-base md:text-lg">
-                Os dados históricos (Atlas da Violência até 2023, séries
-                encerradas) são coletados uma vez e permanecem estáveis.
-                Os dados dinâmicos (proposições legislativas, votações)
-                podem ser atualizados periodicamente via consulta
-                automática às APIs governamentais pelo{" "}
-                <em>mcp-brasil</em>. A última atualização de cada
-                conjunto aparece no rodapé das seções correspondentes.
-              </p>
-            </div>
-
-            <div className="space-y-4 pt-4">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Infraestrutura técnica
-              </h3>
-              <p className="text-base md:text-lg">
-                O{" "}
-                <a
-                  href="https://github.com/jxnxts/mcp-brasil"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-blood)] hover:underline"
-                >
-                  mcp-brasil
-                </a>{" "}
-                é um servidor de Model Context Protocol que conecta mais
-                de 40 APIs de dados públicos brasileiros em uma
-                interface unificada. As APIs incluem fontes do IPEA,
-                CNJ, Câmara dos Deputados, Senado, IBGE, INPE, ANA,
-                FBSP, Querido Diário, Portal da Transparência, TSE e
-                Tribunais de Contas estaduais. Todas as consultas são
-                feitas diretamente aos endpoints oficiais dos órgãos
-                públicos. O mcp-brasil funciona como uma camada de
-                acesso e <strong>não armazena dados</strong>.
-              </p>
-              <p className="text-base md:text-lg">
-                O site em si é gerado estaticamente (Next.js com geração
-                estática no build), hospedado gratuitamente na Vercel.
-                As visualizações interativas usam D3.js e React. Nenhum
-                dado pessoal é coletado de quem visita o site — não há
-                cookies de rastreamento, pixels de redes sociais ou
-                formulários de coleta.
+                Para cada PL da atual legislatura, consultamos o campo{" "}
+                <code className="font-mono-data text-sm">
+                  statusProposicao.descricaoSituacao
+                </code>
+                . Categorizamos em 6 destinos: (1) transformou-se em lei;
+                (2) aprovada na Câmara, tramitando no Senado; (3) pronta
+                para pauta; (4) em tramitação com relator ou parecer;
+                (5) aguardando relator; (6) arquivada, retirada ou
+                devolvida. A categorização é feita por correspondência de
+                padrões sobre a descrição da situação.
               </p>
             </div>
           </section>
 
-          {/* Closing */}
+          {/* Limitações */}
+          <section className="space-y-5">
+            <h2
+              className="text-3xl font-black text-[var(--color-text)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Limitações
+            </h2>
+
+            <ul className="ml-6 list-disc space-y-3 text-base text-[var(--color-text-secondary)] md:text-lg">
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  O observatório cobre apenas a Câmara dos Deputados.
+                </strong>{" "}
+                Proposições que nasceram no Senado ou medidas provisórias
+                só aparecem se também tramitaram na Câmara. A integração
+                com o Senado está prevista para versão futura.
+              </li>
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  A classificação das PLs é automática.
+                </strong>{" "}
+                Uma proposta pode cair em &ldquo;incremental&rdquo;
+                quando, no contexto mais amplo, teria efeitos estruturais
+                — ou o contrário. A classificação deve ser lida como
+                filtro agregado, não como juízo sobre cada PL
+                individualmente.
+              </li>
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  A interpretação SIM/NÃO é editorial.
+                </strong>{" "}
+                Nas votações de &ldquo;Mantido o texto&rdquo;, um voto
+                NÃO pode significar tanto &ldquo;quero enfraquecer
+                proteção&rdquo; quanto &ldquo;quero uma proteção ainda
+                mais forte que foi rejeitada&rdquo;. Onde essa ambiguidade
+                existe, ela é mencionada explicitamente no card da
+                votação.
+              </li>
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  O índice de coerência não cobre todo o histórico
+                  parlamentar
+                </strong>
+                . São apenas 4 votações, escolhidas por serem as mais
+                contestadas em plenário sobre o tema na atual
+                legislatura. Um deputado pode ter votado consistentemente
+                em comissões (dados não exibidos aqui) de forma
+                diferente do que aparece em plenário.
+              </li>
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  Binariedade de gênero.
+                </strong>{" "}
+                A API da Câmara registra sexo apenas como M ou F. Não há
+                dado sobre identidade de gênero auto-declarada. O
+                observatório herda essa limitação.
+              </li>
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  Relatorias invisíveis.
+                </strong>{" "}
+                PLs apensadas a outras ou que tramitam em conjunto podem
+                ter relatoria que não aparece diretamente nos dados de
+                tramitação da PL original. O número de relatorias
+                identificadas é um piso, não um teto.
+              </li>
+              <li>
+                <strong className="text-[var(--color-text)]">
+                  Subnotificação do Atlas.
+                </strong>{" "}
+                O número do Hero (3.903) é o piso reconhecido por IPEA e
+                FBSP. Mortes violentas por causa indeterminada e casos
+                classificados erroneamente como suicídio ou acidente
+                podem conter feminicídios que não aparecem aqui.
+              </li>
+            </ul>
+          </section>
+
+          {/* Atualização */}
+          <section className="space-y-5">
+            <h2
+              className="text-3xl font-black text-[var(--color-text)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Atualização e infraestrutura
+            </h2>
+
+            <p className="text-base md:text-lg">
+              Os dados legislativos (proposições, votações, relatorias,
+              status) podem ser atualizados diariamente via nova consulta
+              às APIs. Os dados demográficos e do Atlas da Violência são
+              estáticos e refletem a última publicação oficial. A data
+              da última coleta aparece no rodapé de cada seção quando
+              relevante.
+            </p>
+
+            <p className="text-base md:text-lg">
+              O site é gerado estaticamente (Next.js com SSG), hospedado
+              gratuitamente na Vercel. As visualizações usam D3.js e
+              React. Nenhum dado pessoal é coletado de quem visita —
+              não há cookies de rastreamento, pixels de redes sociais ou
+              formulários de coleta. O código é aberto.
+            </p>
+          </section>
+
+          {/* Assinatura */}
           <section className="border-t border-gray-200 pt-10">
             <p className="text-sm text-[var(--color-text-secondary)]">
               <strong className="text-[var(--color-text)]">Ininterrupta</strong>{" "}
