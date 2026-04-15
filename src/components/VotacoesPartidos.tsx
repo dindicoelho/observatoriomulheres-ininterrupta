@@ -181,7 +181,7 @@ export default function VotacoesPartidos() {
             text="e voto."
             stagger={50}
             delay={400}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-blood)] md:text-7xl"
+            className="block text-5xl font-black leading-[0.9] text-[var(--color-blue)] md:text-7xl"
           />
         </div>
 

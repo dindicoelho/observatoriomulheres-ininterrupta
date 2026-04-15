@@ -1,60 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Archivo+Black&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* Warm, editorial palette (inspired by Dan Highbrown + newspaper aesthetic) */
-  --color-blood: #B8252F;
-  --color-blood-dark: #791F1F;
-  --color-blood-light: #F5E6E3;
-  --color-neutral: #B4B2A9;
-  --color-blue: #185FA5;
-  --color-blue-light: #E6F1FB;
-  --color-teal: #0F6E56;
+  /* Wacomet-inspired palette: electric blue + neon yellow + black + white */
+  --color-blue: #005FFF;
+  --color-blue-dark: #0047CC;
+  --color-blue-light: #E6EEFF;
+  --color-neon: #DCFF00;
+  --color-neon-dim: #B8D900;
 
-  /* Warm cream instead of pure white */
-  --color-bg: #F8F4EE;
-  --color-bg-alt: #EFE9DE;
+  /* Backgrounds */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F5F7FA;
 
-  /* Warm black instead of pure black */
-  --color-dark: #141312;
-  --color-dark-alt: #1D1B19;
+  /* Warm dark kept for accent moments */
+  --color-dark: #0A0A0A;
+  --color-dark-alt: #111111;
 
-  /* Warm text grays */
-  --color-text: #191817;
-  --color-text-secondary: #6B635A;
-  --color-text-tertiary: #9A9388;
+  /* Text */
+  --color-text: #0A0A0A;
+  --color-text-secondary: #4A5568;
+  --color-text-tertiary: #A0AEC0;
 
-  --font-display: 'Playfair Display', Georgia, serif;
+  /* Critical red, sparingly */
+  --color-blood: #D63143;
+  --color-blood-light: #FFE8EB;
+
+  /* Functional */
+  --color-teal: #00C896;
+  --color-neutral: #CBD5E0;
+
+  --font-display: 'Archivo', system-ui, sans-serif;
   --font-display-condensed: 'Archivo Black', 'Archivo', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'Archivo', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-text);
-  --color-blood: #B8252F;
-  --color-blood-dark: #791F1F;
-  --color-blood-light: #F5E6E3;
-  --color-neutral: #B4B2A9;
-  --color-blue: #185FA5;
-  --color-teal: #0F6E56;
-  --color-bg-alt: #EFE9DE;
-  --color-dark: #141312;
-  --color-dark-alt: #1D1B19;
-  --color-text-secondary: #6B635A;
-  --color-text-tertiary: #9A9388;
+  --color-blue: #005FFF;
+  --color-blue-dark: #0047CC;
+  --color-blue-light: #E6EEFF;
+  --color-neon: #DCFF00;
+  --color-blood: #D63143;
+  --color-blood-dark: #A8202D;
+  --color-blood-light: #FFE8EB;
+  --color-neutral: #CBD5E0;
+  --color-teal: #00C896;
+  --color-bg-alt: #F5F7FA;
+  --color-dark: #0A0A0A;
+  --color-dark-alt: #111111;
+  --color-text-secondary: #4A5568;
+  --color-text-tertiary: #A0AEC0;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
+  font-weight: 400;
   overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3 {
   font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .font-mono-data {
@@ -67,32 +81,33 @@ h1, h2, h3 {
   font-weight: 900;
 }
 
-/* Monumental numbers — condensed gothic, tight tracking */
+/* Monumental numbers */
 .display-number {
   font-family: var(--font-display-condensed);
   letter-spacing: -0.05em;
   line-height: 0.85;
 }
 
-/* Dark section styles */
+/* Section variants */
 .dark-section {
   background: var(--color-dark);
-  color: var(--color-bg);
+  color: #FFFFFF;
 }
+.dark-section .text-secondary { color: rgba(255, 255, 255, 0.70); }
+.dark-section .text-tertiary { color: rgba(255, 255, 255, 0.45); }
 
-.dark-section .text-secondary {
-  color: rgba(248, 244, 238, 0.65);
+.blue-section {
+  background: var(--color-blue);
+  color: #FFFFFF;
 }
-
-.dark-section .text-tertiary {
-  color: rgba(248, 244, 238, 0.45);
-}
+.blue-section .text-secondary { color: rgba(255, 255, 255, 0.80); }
+.blue-section .text-tertiary { color: rgba(255, 255, 255, 0.55); }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* Chart styles */
+/* D3 chart styles on light */
 .tick text {
   font-family: var(--font-body);
   font-size: 12px;
@@ -100,32 +115,26 @@ html {
 }
 
 .tick line {
-  stroke: rgba(25, 24, 23, 0.08);
+  stroke: rgba(10, 10, 10, 0.08);
 }
 
 .domain {
-  stroke: rgba(25, 24, 23, 0.08);
+  stroke: rgba(10, 10, 10, 0.08);
 }
 
-.dark-section .tick text {
-  fill: rgba(248, 244, 238, 0.5);
+.dark-section .tick text, .blue-section .tick text {
+  fill: rgba(255, 255, 255, 0.6);
 }
 
-.dark-section .tick line {
-  stroke: rgba(248, 244, 238, 0.1);
+.dark-section .tick line, .blue-section .tick line {
+  stroke: rgba(255, 255, 255, 0.15);
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-neutral);
+  background: var(--color-text-tertiary);
   border-radius: 2px;
 }
 
@@ -146,14 +155,9 @@ html {
   white-space: nowrap;
 }
 
-@keyframes digitReveal {
-  from { opacity: 0; transform: translateY(0.2em); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes charReveal {
-  from { opacity: 0; transform: translateY(0.5em) skewY(6deg); }
-  to { opacity: 1; transform: translateY(0) skewY(0); }
+  from { opacity: 0; transform: translateY(0.5em); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .reveal-char {
@@ -172,11 +176,11 @@ p, li, span.selectable {
 }
 
 .offset-left {
-  transform: translateX(-8%);
+  transform: translateX(-6%);
 }
 
 .offset-right {
-  transform: translateX(8%);
+  transform: translateX(6%);
 }
 
 @media (max-width: 768px) {
@@ -193,10 +197,5 @@ p, li, span.selectable {
   text-transform: uppercase;
 }
 
-.bracket-label::before {
-  content: "[ ";
-}
-
-.bracket-label::after {
-  content: " ]";
-}
+.bracket-label::before { content: "[ "; }
+.bracket-label::after { content: " ]"; }

@@ -36,9 +36,9 @@ type LegislativoJSON = {
 const DATA = legislativoData as LegislativoJSON;
 
 const CATEGORY_COLORS = {
-  simbólica: "#6B6B64",
-  incremental: "#3B82D4",
-  estrutural: "#1DB389",
+  simbólica: "#7A7A7A",
+  incremental: "#005FFF",
+  estrutural: "#DCFF00",
 };
 
 const CATEGORY_LABELS = {
@@ -155,7 +155,7 @@ export default function TimelineLegislativa() {
             text="está agindo?"
             stagger={50}
             delay={500}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-blood)] md:text-7xl"
+            className="block text-5xl font-black leading-[0.9] text-[var(--color-neon)] md:text-7xl"
           />
         </div>
 
@@ -297,12 +297,12 @@ export default function TimelineLegislativa() {
           const pctAprovadas = (aprovadas / total) * 100;
           const pctSemRelator = (d.sem_relator / total) * 100;
           const destinos = [
-            { key: "aprovada", label: "Viraram lei", count: d.aprovada, color: "#1DB389" },
-            { key: "no_senado", label: "Aprovadas na Câmara, tramitando no Senado", count: d.no_senado, color: "#5FBDAA" },
-            { key: "pronta", label: "Prontas para pauta, ainda sem votação", count: d.pronta, color: "#D4A960" },
-            { key: "tramitando", label: "Em tramitação nas comissões", count: d.tramitando, color: "#6B6B64" },
-            { key: "sem_relator", label: "Aguardando relator, nunca saíram do zero", count: d.sem_relator, color: "#B8252F" },
-            { key: "arquivada", label: "Arquivadas, retiradas ou devolvidas", count: d.arquivada, color: "#4a2020" },
+            { key: "aprovada", label: "Viraram lei", count: d.aprovada, color: "#DCFF00" },
+            { key: "no_senado", label: "Aprovadas na Câmara, tramitando no Senado", count: d.no_senado, color: "#A3C500" },
+            { key: "pronta", label: "Prontas para pauta, ainda sem votação", count: d.pronta, color: "#7DA4FF" },
+            { key: "tramitando", label: "Em tramitação nas comissões", count: d.tramitando, color: "#4A75CC" },
+            { key: "sem_relator", label: "Aguardando relator, nunca saíram do zero", count: d.sem_relator, color: "#D63143" },
+            { key: "arquivada", label: "Arquivadas, retiradas ou devolvidas", count: d.arquivada, color: "#6B1D24" },
           ];
           return (
             <div className="mt-24 border-t border-white/10 pt-16">

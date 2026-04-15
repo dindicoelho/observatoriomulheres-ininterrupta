@@ -15,7 +15,7 @@ export default function Footer() {
           >
             E você,
             <br />
-            <span className="text-[var(--color-blood)]">o que faz com isso?</span>
+            <span className="text-[var(--color-neon)]">o que faz com isso?</span>
           </h2>
         </div>
 
@@ -27,7 +27,7 @@ export default function Footer() {
 
         <div className="mt-10 space-y-5">
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
-            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blood-light)]">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
               [ 01 · ANTES DE OUTUBRO ]
             </p>
             <p
@@ -45,7 +45,7 @@ export default function Footer() {
           </div>
 
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
-            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blood-light)]">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
               [ 02 · DURANTE A CAMPANHA ]
             </p>
             <p
@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
 
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
-            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blood-light)]">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
               [ 03 · NA HORA DE VOTAR ]
             </p>
             <p

@@ -48,7 +48,7 @@ export default function Hero() {
         <div className="w-full max-w-6xl">
           <div className="offset-left">
             <h1
-              className="whitespace-nowrap leading-[0.85] text-[var(--color-blood)]"
+              className="whitespace-nowrap leading-[0.85] text-[var(--color-neon)]"
               style={{
                 fontFamily: "var(--font-display-condensed)",
                 letterSpacing: "-0.05em",
