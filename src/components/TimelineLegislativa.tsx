@@ -173,7 +173,7 @@ export default function TimelineLegislativa() {
             {
               value: total,
               label: "proposições",
-              title: "sobre violência contra a mulher foram apresentadas na atual legislatura (2023-2026).",
+              title: "proposições sobre violência contra a mulher foram apresentadas na atual legislatura (2023-2026).",
               color: "#ffffff",
               pctTotal: 100,
             },
@@ -464,9 +464,10 @@ export default function TimelineLegislativa() {
               >
                 <div className="flex items-start gap-3">
                   <span
-                    className="flex-shrink-0 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white"
+                    className="flex-shrink-0 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
                     style={{
                       backgroundColor: CATEGORY_COLORS[p.categoria],
+                      color: p.categoria === "estrutural" ? "#0A0A0A" : "#FFFFFF",
                     }}
                   >
                     {CATEGORY_LABEL_SINGULAR[p.categoria]}
