@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""
+Classifica cada PL em autoria.json pela *postura* em relação aos direitos da mulher:
+
+- protetivo: amplia direitos / cria política / melhora atendimento / protege vítima
+- punitivista: foca em pena ao agressor, sem melhorar proteção material
+- regressivo: restringe direitos, controla/pune a vítima, criminaliza aborto,
+  sustação de resoluções protetivas, armamentismo, anti-direitos trans
+
+Não é neutro. Reflete a premissa do site: "quem está fazendo algo pra melhorar
+a vida das mulheres no Brasil". Evidência: punitivismo não reduz violência
+(literatura empírica ampla); criminalização do aborto aumenta morte materna.
+
+Conservador: na dúvida, protetivo. Assim evita acusação de filtro arbitrário.
+"""
+
+import json
+import re
+from pathlib import Path
+from collections import defaultdict
+
+DATA_DIR = Path(__file__).parent.parent / "src" / "data"
+
+
+def normalize(s: str) -> str:
+    repl = str.maketrans(
+        "áàâãäéèêëíìîïóòôõöúùûüçÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇ",
+        "aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC",
+    )
+    return s.translate(repl).lower()
+
+
+# ----------------------------------------------------------------------------
+# REGRESSIVO — restringe direitos, controla/pune a vítima, armamentismo, anti-trans
+# CONSERVADOR: só marca quando o padrão é inequívoco. Na dúvida, protetivo.
+# ----------------------------------------------------------------------------
+REGRESSIVO_PATTERNS = [
+    # Criminalização / dificultação do aborto legal (sem contexto de "para assegurar direito a")
+    r"aumenta.*pena.*(\baborto\b|interrup[cç]ao da gravidez)",
+    r"aumento.*pena.*(\baborto\b|interrup[cç]ao da gravidez)",
+    r"majora[cç]ao.*pena.*(\baborto\b|interrup[cç]ao da gravidez)",
+    r"aumentar.*penas.*crimes de aborto",
+    # Obrigatoriedade de notificação à polícia em caso de aborto (controle sobre vítima de estupro)
+    r"obrigatoriedade.*notifica[cç]ao.*polici.*(\baborto\b|interrup[cç]ao.*gesta|interrup[cç]ao.*gravid)",
+    r"notifica[cç]ao.*autoridade policial.*(\baborto\b|interrup[cç]ao.*gesta|interrup[cç]ao.*gravid)",
+    # Veto a recursos públicos para pautas de direito reprodutivo
+    r"(veda|vedar|proibir).*(incentivo|recurso|verba|rouanet|subven).*\baborto\b",
+    r"proibe.*publica[cç]ao.*\baborto\b",
+    # Sustação de resoluções protetivas (só Conanda 258 explícita por enquanto)
+    r"susta.*resolu[cç]ao.*conanda.*258",
+    r"susta.*resolu[cç]ao conanda n.*258",
+    # Anti direitos trans
+    r"proibe.*bloqueio puberal",
+    r"proibe.*terapia hormonal.*(crianca|adolescente)",
+    r"proibe.*(transicao|redesignacao).*(crianca|adolescente|menor)",
+    # Armamentismo como "solução" à vítima de violência
+    r"direito.*porte.*arma.*(v[ií]tima|mulher.*viol|mulher.*domest)",
+    r"autoriza.*porte.*arma.*(v[ií]tima|mulher.*viol)",
+    # Controle sobre a vítima (criminaliza reaproximação com consentimento)
+    r"aproxima[cç]ao volunt[aá]ria.*consentimento.*configur",
+    r"consentimento expresso.*v[ií]tima.*configur.*crime",
+    # Moção de repúdio contra parlamentar (quando cabível)
+    r"repudio.*indica[cç]ao.*erika hilton",
+    r"repudio.*(erika hilton|marielle franco) à presid",
+]
+
+# ----------------------------------------------------------------------------
+# PUNITIVISTA — foco em aumentar pena sem melhorar proteção material
+# ----------------------------------------------------------------------------
+PUNITIVISTA_PATTERNS = [
+    r"castra[cç]ao (qu[ií]mica|cirurgica)",
+    r"aumenta.*pena.*feminic[ií]dio",
+    r"aumento.*pena.*feminic[ií]dio",
+    r"aumento.*pena.*(viol[eê]ncia dom[eé]stica|viol[eê]ncia contra.*mulher)",
+    r"aumenta.*pena.*(estupro|assedio|import)",
+    r"aumento.*pena.*(estupro|assedio|import)",
+    r"torna.*hediondo",
+    r"crime hediondo",
+    r"majora[cç]ao da pena",
+    r"pena m[ií]nima.*aumenta",
+    r"perda.*cargo|perda.*mandato|perda.*fun[cç]ao.*publica",
+    r"pris[aã]o preventiva.*obrigatoria",
+    r"regime fechado.*obrigatorio",
+    r"proibe.*visita.*intima.*(preso|condenado)",
+    r"banco.*dados.*condenados",
+    r"cadastro.*condenados",
+    r"cadastro.*agressor",
+]
+
+# Nome curto pro destino / categoria (mapear ementa -> stance)
+def classify_stance(ementa: str) -> str:
+    e = normalize(ementa or "")
+
+    # Regressivo tem prioridade (mais específico)
+    for pat in REGRESSIVO_PATTERNS:
+        if re.search(pat, e):
+            return "regressivo"
+
+    for pat in PUNITIVISTA_PATTERNS:
+        if re.search(pat, e):
+            return "punitivista"
+
+    return "protetivo"
+
+
+def main():
+    autoria = json.loads((DATA_DIR / "autoria.json").read_text(encoding="utf-8"))
+    deps = autoria["deputados"]
+
+    total_counts = defaultdict(int)
+    flagged_examples = defaultdict(list)
+
+    for d in deps:
+        stance_counts = defaultdict(int)
+        for pl in d["pls"]:
+            st = classify_stance(pl["ementa"])
+            pl["stance"] = st
+            stance_counts[st] += 1
+            total_counts[st] += 1
+            if st != "protetivo" and len(flagged_examples[st]) < 12:
+                flagged_examples[st].append(
+                    f"{d['nome']} ({d['partido']}/{d['uf']}) — {pl['tipo']} {pl['numero']}/{pl['ano']}: {pl['ementa'][:130]}"
+                )
+        d["protetivos"] = stance_counts["protetivo"]
+        d["punitivistas"] = stance_counts["punitivista"]
+        d["regressivos"] = stance_counts["regressivo"]
+
+    # Recalcular total/estruturais/incrementais CONSIDERANDO SÓ PROTETIVOS E PUNITIVISTAS
+    # (regressivos não contam como produção em prol da mulher)
+    # Score final = estruturais_prot × 2 + incrementais_prot × 1 - regressivos × 2
+    for d in deps:
+        pls_prot = [p for p in d["pls"] if p["stance"] != "regressivo"]
+        d["total"] = len(pls_prot)
+        d["estruturais"] = sum(1 for p in pls_prot if p["categoria"] == "estrutural")
+        d["incrementais"] = sum(1 for p in pls_prot if p["categoria"] == "incremental")
+        d["simbolicas"] = sum(1 for p in pls_prot if p["categoria"] == "simbólica")
+
+    # Re-sort por score (estr*2 + incr - regressivos*2)
+    def score(d):
+        return d["estruturais"] * 2 + d["incrementais"] - d["regressivos"] * 2
+
+    deps.sort(key=score, reverse=True)
+
+    # Recalcular totalPls (únicos protetivos + punitivistas — regressivos removidos)
+    total_pls_set = set()
+    for d in deps:
+        for pl in d["pls"]:
+            if pl["stance"] != "regressivo":
+                total_pls_set.add(pl["id"])
+    autoria["totalPls"] = len(total_pls_set)
+    autoria["totalDeputados"] = len(deps)
+
+    # Gender stats recalculada com valores filtrados
+    gender = {
+        "F": {"total": 0, "estruturais": 0, "incrementais": 0, "simbolicas": 0, "deputados": 0},
+        "M": {"total": 0, "estruturais": 0, "incrementais": 0, "simbolicas": 0, "deputados": 0},
+    }
+    for d in deps:
+        s = d.get("sexo")
+        if s in gender:
+            gender[s]["total"] += d["total"]
+            gender[s]["estruturais"] += d["estruturais"]
+            gender[s]["incrementais"] += d["incrementais"]
+            gender[s]["simbolicas"] += d["simbolicas"]
+            if d["total"] + d["regressivos"] > 0:  # contagem só se tem alguma PL
+                gender[s]["deputados"] += 1
+    autoria["gender_stats"] = gender
+
+    (DATA_DIR / "autoria.json").write_text(
+        json.dumps(autoria, ensure_ascii=False), encoding="utf-8"
+    )
+
+    print(f">>> Classificação de stance concluída:")
+    print(f"    protetivos: {total_counts['protetivo']}")
+    print(f"    punitivistas: {total_counts['punitivista']}")
+    print(f"    regressivos: {total_counts['regressivo']}")
+    print(f"    total PLs únicos (sem regressivos): {autoria['totalPls']}")
+
+    print("\n>>> Exemplos de REGRESSIVOS flagrados:")
+    for ex in flagged_examples["regressivo"]:
+        print(f"    {ex}")
+
+    print("\n>>> Exemplos de PUNITIVISTAS flagrados:")
+    for ex in flagged_examples["punitivista"]:
+        print(f"    {ex}")
+
+    # Top 20 after reclassification
+    print("\n>>> NOVO TOP 20 (estr*2 + incr - regressivos*2):")
+    for i, d in enumerate(deps[:20], 1):
+        s = score(d)
+        print(
+            f"  {i:2d}. [{d.get('sexo','?')}] {d['nome']:<35} ({d['partido']}/{d['uf']:<2}) "
+            f"prot={d['total']:2d} (estr={d['estruturais']:2d} incr={d['incrementais']:2d}) "
+            f"punit={d['punitivistas']:2d} regr={d['regressivos']:2d} score={s}"
+        )
+
+
+if __name__ == "__main__":
+    main()

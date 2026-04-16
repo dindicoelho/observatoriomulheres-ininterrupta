@@ -49,12 +49,6 @@ const CATEGORY_LABELS = {
   estrutural: "Estruturais",
 };
 
-const CATEGORY_LABEL_SINGULAR = {
-  simbólica: "Simbólica",
-  incremental: "Incremental",
-  estrutural: "Estrutural",
-};
-
 const CATEGORY_DESC = {
   simbólica: "Datas comemorativas, homenagens, campanhas de conscientização.",
   incremental: "Alterações pontuais em leis existentes, ajustes de pena, mudanças procedimentais.",
@@ -99,7 +93,6 @@ function BigNumber({ value }: { value: number }) {
 }
 
 export default function TimelineLegislativa() {
-  const [filter, setFilter] = useState<"all" | "simbólica" | "incremental" | "estrutural">("all");
   const [phase, setPhase] = useState(0);
 
   // Scroll-triggered phases
@@ -134,10 +127,6 @@ export default function TimelineLegislativa() {
   const percentIncremental = (DATA.resumo.incremental / DATA.total) * 100;
   const percentEstrutural = (DATA.resumo.estrutural / DATA.total) * 100;
 
-  const filteredProps = (filter === "all"
-    ? DATA.proposicoes
-    : DATA.proposicoes.filter((p) => p.categoria === filter)
-  ).slice(0, 20);
 
   return (
     <section className="dark-section px-6 py-24">
@@ -433,65 +422,111 @@ export default function TimelineLegislativa() {
           </div>
         </div>
 
-        {/* Proposal list */}
+        {/* Curiosidades — quadro editorial */}
         <div className="mt-20">
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-              20 proposições mais recentes
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {(["all", "simbólica", "incremental", "estrutural"] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                    filter === f
-                      ? "bg-white text-[var(--color-dark)]"
-                      : "bg-white/5 text-white/60 hover:bg-white/10"
-                  }`}
-                >
-                  {f === "all" ? "Todas" : CATEGORY_LABELS[f]}
-                </button>
-              ))}
-            </div>
-          </div>
+          <p className="mb-2 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+            [ Curiosidades do legislativo ]
+          </p>
+          <ScrollFloat
+            as="h3"
+            text="O que passa despercebido"
+            stagger={30}
+            className="block text-2xl font-black leading-[0.95] text-white md:text-4xl"
+          />
 
-          <ul className="space-y-2">
-            {filteredProps.map((p) => (
-              <li
-                key={p.id}
-                className="rounded border border-white/10 bg-white/[0.02] p-4 transition-colors hover:bg-white/[0.05]"
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {[
+              {
+                selo: "Decisão mais apertada",
+                pl: "PL 6415/2025",
+                titulo:
+                  "Política Nacional de Assistência Jurídica às Vítimas",
+                dado: "213 × 152",
+                texto:
+                  "A votação mais disputada de proposições sobre proteção à mulher na 57ª legislatura. Foi aprovada por 61 votos de diferença em 11 de março de 2026. O texto agora tramita no Senado.",
+                link: "https://www.camara.leg.br/propostas-legislativas/2596663",
+              },
+              {
+                selo: "Tema em ascensão",
+                pl: "4 PLs em abril/2026",
+                titulo: "Climatério e menopausa viram política pública",
+                dado: "2 semanas",
+                texto:
+                  "Em duas semanas, 4 proposições foram apresentadas estabelecendo diretrizes de atenção à saúde da mulher no climatério e menopausa — pauta até então quase ausente das estatísticas legislativas.",
+                link: "https://www.camara.leg.br/propostas-legislativas/2617029",
+              },
+              {
+                selo: "Lei in memoriam",
+                pl: "PL 827/2025",
+                titulo:
+                  "Dia Nacional do Enfrentamento ao Transfeminicídio",
+                dado: "15/fev",
+                texto:
+                  "Proposição da dep. Erika Hilton instituindo um dia nacional in memoriam à travesti Dandara dos Santos, brutalmente assassinada em Fortaleza em 2017. O caso chocou o Brasil e tornou-se marco na discussão sobre transfeminicídio.",
+                link: "https://www.camara.leg.br/propostas-legislativas/2453894",
+              },
+              {
+                selo: "Novo conceito legal",
+                pl: "PL 3880/2024",
+                titulo: "Violência vicária entra na Maria da Penha",
+                dado: "232 × 151",
+                texto:
+                  "Pela primeira vez, o Brasil reconhece legalmente a violência vicária — quando o agressor atinge a mulher através de seus filhos. A proposta foi aprovada e segue para o Senado.",
+                link: "https://www.camara.leg.br/propostas-legislativas/2462009",
+              },
+              {
+                selo: "Fenômeno recente",
+                pl: "PL 1870/2026",
+                titulo:
+                  "Programa Nacional de Proteção a Órfãos de Feminicídio",
+                dado: "1/4 dos casos",
+                texto:
+                  "Apresentada em abril de 2026, propõe proteção integral a crianças cujas mães foram mortas em feminicídio. Segundo o FBSP, 1 em cada 4 feminicídios deixa filhos órfãos — hoje sem política específica.",
+                link: "https://www.camara.leg.br/propostas-legislativas/2615283",
+              },
+              {
+                selo: "Campanha batizada",
+                pl: "PL 3397/2024",
+                titulo: "Setembro Neon — violência política de gênero",
+                dado: "Nova cor, nova pauta",
+                texto:
+                  "Proposição da dep. Sâmia Bomfim institui campanha nacional contra a violência política de gênero e raça contra a mulher. Batizada de “Setembro Neon”, a iniciativa reconhece uma forma de violência ainda tratada como residual.",
+                link: "https://www.camara.leg.br/propostas-legislativas/2452147",
+              },
+            ].map((c, i) => (
+              <a
+                key={i}
+                href={c.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-xl border border-white/10 bg-white/[0.02] p-6 transition-colors hover:border-[var(--color-neon)]/40 hover:bg-white/[0.04]"
               >
-                <div className="flex items-start gap-3">
-                  <span
-                    className="flex-shrink-0 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
-                    style={{
-                      backgroundColor: CATEGORY_COLORS[p.categoria],
-                      color: p.categoria === "estrutural" ? "#0A0A0A" : "#FFFFFF",
-                    }}
-                  >
-                    {CATEGORY_LABEL_SINGULAR[p.categoria]}
+                <div className="flex items-center justify-between">
+                  <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
+                    [ {c.selo} ]
+                  </p>
+                  <span className="font-mono-data text-[10px] text-white/40 group-hover:text-white">
+                    {c.pl} →
                   </span>
-                  <div className="flex-1">
-                    <p className="font-mono-data text-sm font-bold text-white">
-                      {p.tipo} {p.numero}/{p.ano}
-                    </p>
-                    <p className="mt-1 text-sm leading-relaxed text-white/70">
-                      {p.ementa.length > 220 ? p.ementa.slice(0, 220) + "…" : p.ementa}
-                    </p>
-                    <a
-                      href={`https://www.camara.leg.br/propostas-legislativas/${p.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-block font-mono-data text-xs text-white/50 hover:text-white"
-                    >
-                      Ver na Câmara →
-                    </a>
-                  </div>
                 </div>
-              </li>
+                <p
+                  className="mt-4 text-3xl font-black leading-[0.95] text-white md:text-4xl"
+                  style={{
+                    fontFamily: "var(--font-display-condensed)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {c.dado}
+                </p>
+                <p className="mt-2 text-base font-semibold text-white">
+                  {c.titulo}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                  {c.texto}
+                </p>
+              </a>
             ))}
-          </ul>
+          </div>
         </div>
 
         <p className="mt-12 font-mono-data text-xs text-white/40">

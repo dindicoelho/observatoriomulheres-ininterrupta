@@ -31,6 +31,13 @@ type Votacao = {
     F: { sim: number; nao: number; outros: number; total: number; pctSim: number };
     M: { sim: number; nao: number; outros: number; total: number; pctSim: number };
   };
+  autor?: { nome: string; tipo?: string; uri?: string } | null;
+  relator?: {
+    nome: string;
+    partido_uf?: string;
+    orgao?: string;
+    data?: string;
+  } | null;
 };
 
 type VotacoesJSON = { votacoes: Votacao[] };
@@ -295,6 +302,37 @@ export default function VotacoesPartidos() {
                         <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)]">
                           {grupo.projeto_sobre}
                         </p>
+
+                        {/* Autor + Relator */}
+                        {(v.autor || v.relator) && (
+                          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 border-t border-gray-100 pt-3">
+                            {v.autor && (
+                              <div>
+                                <p className="font-mono-data text-[9px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                                  Autoria
+                                </p>
+                                <p className="mt-0.5 text-sm font-semibold text-[var(--color-text)]">
+                                  {v.autor.nome}
+                                </p>
+                              </div>
+                            )}
+                            {v.relator && (
+                              <div>
+                                <p className="font-mono-data text-[9px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                                  Relatoria{v.relator.orgao ? ` · ${v.relator.orgao}` : ""}
+                                </p>
+                                <p className="mt-0.5 text-sm font-semibold text-[var(--color-text)]">
+                                  {v.relator.nome}
+                                  {v.relator.partido_uf && (
+                                    <span className="ml-1.5 font-mono-data text-[10px] font-normal text-[var(--color-text-tertiary)]">
+                                      {v.relator.partido_uf}
+                                    </span>
+                                  )}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {/* 2. O QUE FOI VOTADO — nesta sessão */}

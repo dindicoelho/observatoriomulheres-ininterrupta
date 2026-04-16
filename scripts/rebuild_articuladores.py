@@ -32,7 +32,12 @@ def main():
             continue
         if (d.get("situacao") or "").lower() != "exercício":
             continue
-        score = d["estruturais"] * 2 + d["incrementais"]
+        regr = d.get("regressivos", 0)
+        base_score = d["estruturais"] * 2 + d["incrementais"] - regr * 2
+        # Peso 2.5 pra mulheres no score de articulação
+        sexo = d.get("sexo") or coer_idx.get(d["id"], {}).get("sexo")
+        mult = 2.5 if sexo == "F" else 1.0
+        score = base_score * mult
         if score <= 0:
             continue
 

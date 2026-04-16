@@ -16,6 +16,7 @@ type PL = {
   ementa: string;
   data: string;
   categoria: "simbólica" | "incremental" | "estrutural";
+  stance?: "protetivo" | "punitivista" | "regressivo";
 };
 
 type Deputado = {
@@ -30,6 +31,9 @@ type Deputado = {
   simbolicas: number;
   incrementais: number;
   estruturais: number;
+  protetivos?: number;
+  punitivistas?: number;
+  regressivos?: number;
   pls: PL[];
 };
 
@@ -190,6 +194,29 @@ function DeputadoModal({
                 </span>
               </span>
             </div>
+
+            {/* Stance breakdown — proteção vs punitivismo vs retrocesso */}
+            {(deputado.protetivos !== undefined ||
+              deputado.punitivistas !== undefined ||
+              deputado.regressivos !== undefined) && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {(deputado.protetivos ?? 0) - (deputado.punitivistas ?? 0) > 0 && (
+                  <span className="rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider bg-[#1DB389]/10 text-[#0F8B6B]">
+                    {(deputado.protetivos ?? 0) - (deputado.punitivistas ?? 0)} protetivos
+                  </span>
+                )}
+                {(deputado.punitivistas ?? 0) > 0 && (
+                  <span className="rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-700">
+                    {deputado.punitivistas} punitivistas
+                  </span>
+                )}
+                {(deputado.regressivos ?? 0) > 0 && (
+                  <span className="rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider bg-red-600/15 text-red-700">
+                    {deputado.regressivos} regressivos
+                  </span>
+                )}
+              </div>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -306,13 +333,23 @@ function DeputadoModal({
                     {CATEGORY_LABELS[pl.categoria]}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline gap-3">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                       <span className="font-mono-data text-sm font-bold text-[var(--color-text)]">
                         {pl.tipo} {pl.numero}/{pl.ano}
                       </span>
                       <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
                         {pl.data}
                       </span>
+                      {pl.stance === "punitivista" && (
+                        <span className="rounded bg-amber-500/15 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-amber-700">
+                          punitivista
+                        </span>
+                      )}
+                      {pl.stance === "regressivo" && (
+                        <span className="rounded bg-red-600/15 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-red-700">
+                          regressivo
+                        </span>
+                      )}
                     </div>
                     <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">
                       {pl.ementa.length > 280

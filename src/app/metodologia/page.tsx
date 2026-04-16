@@ -134,22 +134,25 @@ export default function MetodologiaPage() {
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    1.007 proposições
+                    1.142 proposições
                   </strong>{" "}
-                  apresentadas entre janeiro de 2019 e março de 2026
-                  contendo as palavras-chave &ldquo;feminicídio&rdquo;,
-                  &ldquo;violência contra mulher&rdquo;, &ldquo;Maria da
-                  Penha&rdquo; ou &ldquo;violência doméstica&rdquo; em
-                  ementa. Para cada PL: identificador, tipo, número, ano,
-                  ementa, data de apresentação, autoria principal e
-                  status atual de tramitação.
+                  apresentadas na 57ª legislatura (2023–2026) contendo
+                  no mínimo uma de ~80 palavras-chave ligadas a direitos
+                  das mulheres — violência contra a mulher, violência
+                  sexual, violência doméstica, Maria da Penha,
+                  feminicídio, transfeminicídio, aborto, assédio,
+                  violência política de gênero, saúde da mulher, mães
+                  solo, entre outras. Para cada PL: identificador, tipo,
+                  número, ano, ementa, data, autoria, postura (protetiva,
+                  punitivista ou regressiva) e status de tramitação.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    447 deputados autores
+                    389 deputados autores
                   </strong>{" "}
-                  (285 na atual legislatura) das PLs acima, com dados
-                  completos: nome, partido, UF, foto, situação e sexo.
+                  dessas PLs, em exercício na atual legislatura, com
+                  dados completos: nome, partido, UF, foto, situação e
+                  sexo.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
@@ -162,10 +165,9 @@ export default function MetodologiaPage() {
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    Tramitações completas
+                    Tramitação de cada PL
                   </strong>{" "}
-                  das 568 PLs apresentadas de 2023 em diante. Nesses
-                  dados identificamos: data de designação de relator,
+                  das 1.142 proposições: data de designação de relator,
                   nome do relator, apresentação de pareceres e situação
                   atual.
                 </li>
@@ -246,8 +248,13 @@ export default function MetodologiaPage() {
                 Classificação das proposições
               </h3>
               <p className="text-base md:text-lg">
-                As 1.007 proposições foram classificadas editorialmente
-                em três categorias:
+                As 1.142 proposições foram classificadas editorialmente
+                em duas dimensões: <strong>forma</strong> (simbólica,
+                incremental, estrutural) e <strong>postura</strong>{" "}
+                (protetiva, punitivista, regressiva).
+              </p>
+              <p className="text-base md:text-lg font-semibold text-[var(--color-text)]">
+                Forma:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
@@ -270,15 +277,41 @@ export default function MetodologiaPage() {
                   eletrônico obrigatório, centros de referência.
                 </li>
               </ul>
+
+              <p className="text-base md:text-lg font-semibold text-[var(--color-text)]">
+                Postura:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  <strong className="text-emerald-700">Protetiva</strong>{" "}
+                  — Amplia direitos, cria política pública, melhora
+                  atendimento, protege a vítima. É o padrão na ausência
+                  de sinais contrários.
+                </li>
+                <li>
+                  <strong className="text-amber-700">Punitivista</strong>{" "}
+                  — Foca em aumentar pena, ampliar rigor penal, criar
+                  cadastros de condenados. Não melhora necessariamente
+                  a proteção material; é uma resposta pela via do
+                  Direito Penal.
+                </li>
+                <li>
+                  <strong className="text-red-700">Regressiva</strong>{" "}
+                  — Restringe direitos conquistados, controla ou pune a
+                  vítima, criminaliza aborto legal, susta resoluções
+                  protetivas. Mesmo mencionando &ldquo;mulher&rdquo; na
+                  ementa, atua contra direitos reprodutivos e de gênero.
+                </li>
+              </ul>
               <p className="text-base md:text-lg">
                 A classificação é automática, por correspondência de
-                padrões regulares sobre a ementa de cada PL. Palavras
-                como &ldquo;institui o dia&rdquo; ou &ldquo;inclui no
-                calendário&rdquo; disparam simbólica; &ldquo;cria o
-                programa nacional&rdquo; ou &ldquo;institui o fundo&rdquo;
-                disparam estrutural; as demais caem em incremental. É um
-                trabalho de filtro, não de análise jurídica — o contexto
-                completo de cada proposição não é considerado.
+                padrões regulares sobre a ementa de cada PL. É uma
+                primeira camada de filtro — o contexto específico de
+                cada proposição não é analisado juridicamente. PLs
+                classificados como regressivos são{" "}
+                <strong>removidos dos rankings</strong>; punitivistas
+                contam como produção mas recebem selo específico. Na
+                dúvida, a postura padrão é protetiva.
               </p>
             </div>
 
@@ -366,7 +399,7 @@ export default function MetodologiaPage() {
                 Agregação por gênero
               </h3>
               <p className="text-base md:text-lg">
-                Para cada um dos 447 deputados autores e dos ~535
+                Para cada um dos 389 deputados autores e dos ~535
                 deputados que participaram de alguma votação,
                 consultamos a API{" "}
                 <code className="font-mono-data text-sm">/deputados/&#123;id&#125;</code>{" "}
@@ -387,7 +420,7 @@ export default function MetodologiaPage() {
                 Identificação de relatores
               </h3>
               <p className="text-base md:text-lg">
-                Para cada uma das 568 PLs da atual legislatura,
+                Para cada uma das 1.142 PLs da atual legislatura,
                 buscamos todas as tramitações registradas e extraímos
                 eventos cujo despacho começa com &ldquo;Designad[o|a]
                 Relator&rdquo;. O nome do relator e seu partido/UF são
