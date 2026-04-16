@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import coerenciaData from "../data/coerencia.json";
 import votacoesData from "../data/votacoes.json";
 import ScrollFloat from "./ScrollFloat";
+import ScrollReveal from "./ScrollReveal";
 
 type CoerenciaDeputado = {
   id: number;
@@ -284,12 +285,11 @@ export default function CoerenciaDeputados() {
             />
           </div>
 
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
-            Cruzando os votos individuais das 4 votações de mérito, é
-            possível ver quais deputados votaram NÃO em todas as
-            votações em que participaram. Clique em cada um para ver
-            exatamente o que rejeitaram.
-          </p>
+          <ScrollReveal
+            as="p"
+            className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl"
+            text="Cruzando os votos individuais das 4 votações de mérito, é possível ver quais deputados votaram NÃO em todas as votações em que participaram. Clique em cada um para ver exatamente o que rejeitaram."
+          />
 
           {/* Nuance disclaimer — ANTES da lista */}
           <div className="mt-6 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-[var(--color-bg-alt)] p-5">

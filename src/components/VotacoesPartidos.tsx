@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import votacoesData from "../data/votacoes.json";
 import ScrollFloat from "./ScrollFloat";
+import ScrollReveal from "./ScrollReveal";
 
 type Votacao = {
   id: string;
@@ -187,14 +188,11 @@ export default function VotacoesPartidos() {
         </div>
 
         <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
-          <p>
-            Na atual legislatura (2023-2026),{" "}
-            <strong>{grupos.length} proposições</strong> sobre violência
-            contra a mulher foram a votação nominal no plenário da Câmara,
-            totalizando {totalVotacoes} votações entre decisões de mérito
-            e procedurais (requerimentos, destaques, recursos).
-          </p>
-          <p className="text-base">
+          <ScrollReveal
+            as="p"
+            text={`Na atual legislatura (2023-2026), ${grupos.length} proposições sobre violência contra a mulher foram a votação nominal no plenário da Câmara, totalizando ${totalVotacoes} votações entre decisões de mérito e procedurais (requerimentos, destaques, recursos).`}
+          />
+          <p className="text-base text-[var(--color-text-tertiary)]">
             Cada card consolida o projeto, a votação principal e os
             procedimentos relacionados. Clique para expandir.
           </p>

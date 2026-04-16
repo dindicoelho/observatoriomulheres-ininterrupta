@@ -6,6 +6,7 @@ import coerenciaData from "../data/coerencia.json";
 import relatoriaData from "../data/relatoria.json";
 import ScrollFloat from "./ScrollFloat";
 import Counter from "./Counter";
+import AnimatedList from "./AnimatedList";
 
 type PL = {
   id: number;
@@ -673,7 +674,7 @@ export default function RankingDeputados() {
           </div>
 
           {/* Ranking */}
-          <div className="mt-10 space-y-2">
+          <AnimatedList as="div" className="mt-10 space-y-2" stagger={50}>
             {top.map((d, i) => {
               const pct = (d.total / maxTotal) * 100;
               const pctEstr = d.total > 0 ? (d.estruturais / d.total) * 100 : 0;
@@ -792,7 +793,7 @@ export default function RankingDeputados() {
                 </button>
               );
             })}
-          </div>
+          </AnimatedList>
 
 
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">

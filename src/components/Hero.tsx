@@ -6,11 +6,11 @@ export default function Hero() {
   return (
     <section className="dark-section relative flex min-h-screen flex-col overflow-hidden">
       {/* Top meta bar */}
-      <div className="flex items-center justify-between px-6 pt-8 md:px-12">
-        <span className="font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-6 pt-8 md:px-12">
+        <span className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-white/50 md:text-xs">
           [ Ininterrupta ]
         </span>
-        <span className="font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+        <span className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-white/50 md:text-xs">
           [ Atualizado via APIs públicas ]
         </span>
       </div>

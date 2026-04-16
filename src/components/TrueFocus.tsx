@@ -4,23 +4,20 @@ import { useEffect, useRef, useState, CSSProperties } from "react";
 
 type Props = {
   words: string[];
-  sentenceBefore?: string;
-  sentenceAfter?: string;
   intervalMs?: number;
-  blurAmount?: number;
-  dimOpacity?: number;
   focusColor?: string;
   className?: string;
   style?: CSSProperties;
 };
 
+/**
+ * Cycles through words, showing one at a time with a smooth transition.
+ * Only the active word is visible (others fade out). Uses longest word
+ * as invisible placeholder to reserve width.
+ */
 export default function TrueFocus({
   words,
-  sentenceBefore = "",
-  sentenceAfter = "",
-  intervalMs = 2200,
-  blurAmount = 4,
-  dimOpacity = 0.25,
+  intervalMs = 2400,
   focusColor = "var(--color-neon)",
   className = "",
   style,
@@ -34,7 +31,7 @@ export default function TrueFocus({
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -48,28 +45,39 @@ export default function TrueFocus({
     return () => clearInterval(id);
   }, [inView, intervalMs, words.length]);
 
+  const longest = words.reduce((a, b) => (a.length >= b.length ? a : b), "");
+
   return (
-    <span ref={ref} className={className} style={style}>
-      {sentenceBefore}
+    <span
+      ref={ref}
+      className={`relative inline-block align-baseline ${className}`}
+      style={style}
+    >
+      {/* Placeholder to reserve the space of the longest word */}
+      <span aria-hidden="true" className="invisible whitespace-nowrap">
+        {longest}
+      </span>
       {words.map((w, i) => {
         const active = i === activeIdx;
         return (
           <span
             key={i}
-            className="inline-block transition-all duration-700"
+            className="absolute left-0 top-0 whitespace-nowrap transition-all duration-700"
             style={{
-              color: active ? focusColor : "inherit",
-              opacity: active ? 1 : dimOpacity,
-              filter: active ? "blur(0px)" : `blur(${blurAmount}px)`,
+              color: focusColor,
+              opacity: active ? 1 : 0,
+              transform: active
+                ? "translateY(0)"
+                : activeIdx > i
+                ? "translateY(-30%)"
+                : "translateY(30%)",
               transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
             {w}
-            {i < words.length - 1 ? " " : ""}
           </span>
         );
       })}
-      {sentenceAfter}
     </span>
   );
 }
