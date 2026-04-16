@@ -3,6 +3,7 @@ import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
 import ArticuladoresMap from "@/components/ArticuladoresMap";
+import ProducaoRegressiva from "@/components/ProducaoRegressiva";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -46,6 +47,11 @@ export default function Home() {
 
         {/* ATO 03 — Timeline legislativa */}
         <TimelineLegislativa />
+
+        {/* ATO 04 — Quem atua contra */}
+        <div id="ato-04">
+          <ProducaoRegressiva />
+        </div>
       </main>
       <Footer />
     </>

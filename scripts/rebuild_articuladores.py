@@ -73,6 +73,29 @@ def main():
             "top3": lst[:3],
         }
 
+    # Composição da Câmara por UF — conta deputadas na legislatura 57ª
+    comp_uf = {}
+    for cd in coer.get("deputados", []):
+        uf = cd.get("uf")
+        if not uf:
+            continue
+        if uf not in comp_uf:
+            comp_uf[uf] = {"F": 0, "M": 0, "total": 0}
+        s = cd.get("sexo")
+        if s == "F":
+            comp_uf[uf]["F"] += 1
+        elif s == "M":
+            comp_uf[uf]["M"] += 1
+        comp_uf[uf]["total"] += 1
+
+    # Anotar zero_mulheres por UF
+    for uf, data in ufs_out.items():
+        camara = comp_uf.get(uf, {"F": 0, "M": 0, "total": 0})
+        data["camara_F"] = camara["F"]
+        data["camara_M"] = camara["M"]
+        data["camara_total"] = camara["total"]
+        data["zero_mulheres"] = camara["F"] == 0
+
     total_deputados = sum(len(v) for v in por_uf.values())
     out = {"ufs": ufs_out, "total_deputados": total_deputados}
 

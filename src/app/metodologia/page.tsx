@@ -92,14 +92,43 @@ export default function MetodologiaPage() {
             </p>
 
             <p className="text-base md:text-lg">
-              Apenas três camadas de trabalho editorial foram aplicadas:
-              a <strong>classificação</strong> das proposições em
-              simbólicas, incrementais e estruturais; a{" "}
+              Quatro camadas de trabalho editorial foram aplicadas:
+              a <strong>classificação por forma</strong> (simbólica,
+              incremental, estrutural); a{" "}
+              <strong>classificação por postura</strong> (protetiva,
+              punitivista, regressiva); a{" "}
               <strong>interpretação</strong> do que significa votar SIM ou
               NÃO em cada votação nominal; e a{" "}
               <strong>agregação</strong> de métricas por gênero (autoria,
               relatoria, votos). Tudo isso está detalhado abaixo.
             </p>
+
+            <div className="mt-6 rounded-2xl border border-[var(--color-blood)]/20 bg-[var(--color-blood)]/5 p-6">
+              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blood)]">
+                [ Aviso editorial ]
+              </p>
+              <p className="mt-3 text-base leading-relaxed text-[var(--color-text)]">
+                Este observatório parte de uma premissa explícita: a
+                violência contra a mulher é um problema estrutural que
+                deve ser enfrentado com políticas públicas protetivas,
+                não com punitivismo ou retrocesso em direitos
+                reprodutivos. Por isso, PLs classificadas como{" "}
+                <strong>regressivas</strong> (criminalização do aborto
+                legal, notificação compulsória à polícia de vítimas de
+                estupro que fazem aborto, sustação de resoluções
+                protetivas, armamentismo como resposta à violência
+                doméstica, controle sobre a vítima) são{" "}
+                <strong>removidas do ranking</strong>. PLs{" "}
+                <strong>punitivistas</strong> (aumento de pena sem
+                proteção material adicional) contam como produção, mas
+                recebem selo específico. A classificação é transparente
+                e revisável — os padrões estão publicados em{" "}
+                <code className="font-mono-data text-sm">
+                  scripts/classify_stance.py
+                </code>
+                .
+              </p>
+            </div>
           </section>
 
           {/* Fontes */}
@@ -428,12 +457,12 @@ export default function MetodologiaPage() {
                 com a base de deputados para identificar o sexo.
               </p>
               <p className="text-base md:text-lg">
-                Foram identificadas{" "}
-                <strong>537 designações de relatoria em 314 PLs</strong>{" "}
-                (algumas PLs passam por múltiplas comissões, então têm
-                relatores diferentes em cada uma). As demais 254 PLs
-                ainda não tinham relator designado quando os dados foram
-                coletados.
+                Foram identificadas designações de relatoria em mais de
+                300 PLs (algumas passam por múltiplas comissões, então
+                têm relatores diferentes em cada uma). Nos cards de
+                votação, aparece o relator mais recente associado à PL.
+                As demais ainda não tinham relator designado quando os
+                dados foram coletados.
               </p>
             </div>
 
@@ -456,6 +485,91 @@ export default function MetodologiaPage() {
                 devolvida. A categorização é feita por correspondência de
                 padrões sobre a descrição da situação.
               </p>
+            </div>
+
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold text-[var(--color-text)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Score &ldquo;articulador&rdquo; do mapa por estado
+              </h3>
+              <p className="text-base md:text-lg">
+                No mapa &ldquo;quem representa no seu estado&rdquo;, o
+                top 3 de cada UF é calculado por:
+              </p>
+              <p className="pl-6 font-mono-data text-sm text-[var(--color-text)]">
+                score = [(estruturais × 2) + incrementais −
+                (regressivos × 2)] × peso_sexo
+              </p>
+              <p className="pl-6 font-mono-data text-sm text-[var(--color-text)]">
+                peso_sexo = 2,5 se F · 1,0 se M
+              </p>
+              <p className="text-base md:text-lg">
+                O peso 2,5 para deputadas mulheres é uma escolha
+                editorial <strong>declarada</strong> para compensar a
+                sub-representação feminina no Congresso (17% da
+                composição). Ela reconhece que uma deputada que chega à
+                Câmara encontra mais barreiras institucionais para
+                apresentar e aprovar PLs do que um deputado homem com o
+                mesmo perfil. Sem essa compensação, o mapa ficaria
+                dominado por quem tem mais acesso, não por quem tem
+                mais atuação relativa. Se o leitor discorda, pode
+                recalcular os ranks com peso 1 em{" "}
+                <code className="font-mono-data text-sm">
+                  scripts/rebuild_articuladores.py
+                </code>
+                .
+              </p>
+            </div>
+
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold text-[var(--color-text)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Pipeline de regeração
+              </h3>
+              <p className="text-base md:text-lg">
+                Todos os dados são reprodutíveis a partir de scripts
+                Python em{" "}
+                <code className="font-mono-data text-sm">scripts/</code>:
+              </p>
+              <ul className="ml-6 list-disc space-y-1.5 text-sm md:text-base text-[var(--color-text-secondary)]">
+                <li>
+                  <code className="font-mono-data">rebuild_autoria.py</code>{" "}
+                  — busca todas as proposições de 2023–2026, filtra por
+                  keywords e classifica por forma.
+                </li>
+                <li>
+                  <code className="font-mono-data">enrich_autoria.py</code>{" "}
+                  — adiciona sexo por deputado, gender_stats,
+                  totalPls.
+                </li>
+                <li>
+                  <code className="font-mono-data">classify_stance.py</code>{" "}
+                  — classifica cada PL em protetiva, punitivista ou
+                  regressiva. Remove regressivas dos totais.
+                </li>
+                <li>
+                  <code className="font-mono-data">
+                    rebuild_articuladores.py
+                  </code>{" "}
+                  — agrega top 3 por UF com peso F × 2,5.
+                </li>
+                <li>
+                  <code className="font-mono-data">
+                    rebuild_legislativo.py
+                  </code>{" "}
+                  — regera o JSON da seção &ldquo;O tipo de lei&rdquo;
+                  com tramitação individual de cada PL.
+                </li>
+                <li>
+                  <code className="font-mono-data">enrich_votacoes.py</code>{" "}
+                  — adiciona autor principal e relator mais recente a
+                  cada votação de plenário.
+                </li>
+              </ul>
             </div>
           </section>
 

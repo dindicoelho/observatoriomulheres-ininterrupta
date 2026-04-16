@@ -28,6 +28,10 @@ type Articulador = {
 type UFData = {
   total_deps: number;
   top3: Articulador[];
+  camara_F?: number;
+  camara_M?: number;
+  camara_total?: number;
+  zero_mulheres?: boolean;
 };
 
 type ArticuladoresJSON = {
@@ -92,6 +96,29 @@ export default function ArticuladoresMap() {
     const projection = d3.geoMercator().fitSize([width, height], geoData);
     const path = d3.geoPath(projection);
 
+    // Padrão hachurado (diagonais vermelhas) pra marcar UFs sem deputada
+    const defs = svg.append("defs");
+    const pattern = defs
+      .append("pattern")
+      .attr("id", "no-women-pattern")
+      .attr("patternUnits", "userSpaceOnUse")
+      .attr("width", 8)
+      .attr("height", 8)
+      .attr("patternTransform", "rotate(45)");
+    pattern
+      .append("rect")
+      .attr("width", 8)
+      .attr("height", 8)
+      .attr("fill", "#FFE4E4");
+    pattern
+      .append("line")
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", 0)
+      .attr("y2", 8)
+      .attr("stroke", "#D43F3F")
+      .attr("stroke-width", 2);
+
     const g = svg.append("g");
 
     g.selectAll<SVGPathElement, Feature>("path")
@@ -101,6 +128,7 @@ export default function ArticuladoresMap() {
       .attr("fill", (d) => {
         const sigla = (d.properties as { sigla: string }).sigla;
         const uf = DATA.ufs[sigla];
+        if (uf?.zero_mulheres) return "url(#no-women-pattern)";
         const score = uf?.top3[0]?.score_articulador ?? 0;
         return score > 0 ? colorScale(score) : "#E6EEFF";
       })
@@ -198,8 +226,14 @@ export default function ArticuladoresMap() {
             [ Sobre este ranking ]
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Score = (PLs estruturais × 2) + (PLs incrementais × 1).
-            Considera apenas deputados em{" "}
+            Score = <strong>[(PLs estruturais × 2) + (PLs incrementais
+            × 1) − (PLs regressivas × 2)] × peso_sexo</strong>. O{" "}
+            <strong>peso_sexo</strong> é <strong>2,5 para mulheres</strong>{" "}
+            e 1,0 para homens — uma compensação editorial explícita pela
+            sub-representação feminina na Câmara (só 17% da composição).
+            Sem esse peso, o mapa ficaria dominado por quem tem mais
+            acesso institucional, não por quem tem mais atuação relativa
+            no tema. Considera apenas deputados em{" "}
             <strong>exercício na atual legislatura</strong>. Quando o
             TSE publicar a lista oficial de candidatos a 2026, a seção
             será filtrada automaticamente para mostrar só quem
@@ -213,7 +247,7 @@ export default function ArticuladoresMap() {
             <div ref={containerRef} className="relative">
               <svg ref={svgRef} className="w-full" />
             </div>
-            <div className="mt-4 flex items-center justify-between text-xs text-[var(--color-text-tertiary)]">
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--color-text-tertiary)]">
               <span className="font-mono-data uppercase tracking-wider">
                 Produção legislativa por estado
               </span>
@@ -229,6 +263,18 @@ export default function ArticuladoresMap() {
                 <span>alta</span>
               </div>
             </div>
+            <div className="mt-3 flex items-center gap-2 text-xs text-[var(--color-text-tertiary)]">
+              <div
+                className="h-4 w-6 rounded border border-[#D43F3F]/40"
+                style={{
+                  background:
+                    "repeating-linear-gradient(45deg, #FFE4E4, #FFE4E4 3px, #D43F3F 3px, #D43F3F 5px)",
+                }}
+              />
+              <span className="font-mono-data uppercase tracking-wider">
+                Sem nenhuma deputada eleita (57ª leg.)
+              </span>
+            </div>
           </div>
 
           {/* Top 3 panel */}
@@ -241,6 +287,28 @@ export default function ArticuladoresMap() {
                 ? `Dentre ${displayData.total_deps} deputados em exercício`
                 : "Selecione um estado"}
             </p>
+
+            {/* Selo de zero mulheres */}
+            {displayData?.zero_mulheres && (
+              <div className="mt-4 rounded-lg border-l-4 border-[#D43F3F] bg-[#FFE4E4]/60 p-3">
+                <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[#B02525]">
+                  [ ⚠ Zero deputadas eleitas ]
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-[var(--color-text)]">
+                  <strong>
+                    {UF_NAMES[displayUf] || displayUf}
+                  </strong>{" "}
+                  tem{" "}
+                  <strong>
+                    {displayData.camara_total ?? 0} deputados na atual
+                    legislatura — nenhuma mulher.
+                  </strong>{" "}
+                  Quem atua em pautas da mulher nesse estado são
+                  homens, por ausência de representação feminina
+                  eleita.
+                </p>
+              </div>
+            )}
 
             {displayData && (
               <ul className="mt-6 space-y-4">
