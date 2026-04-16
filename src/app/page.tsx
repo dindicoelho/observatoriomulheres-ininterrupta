@@ -3,6 +3,7 @@ import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
 import CoerenciaDeputados from "@/components/CoerenciaDeputados";
+import ArticuladoresMap from "@/components/ArticuladoresMap";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -37,6 +38,11 @@ export default function Home() {
         {/* ATO 02 — Como se vota */}
         <div id="ato-02">
           <VotacoesPartidos />
+        </div>
+
+        {/* Guia eleitoral por estado */}
+        <div id="guia-estados">
+          <ArticuladoresMap />
         </div>
 
         {/* Guia eleitoral: coerência */}
