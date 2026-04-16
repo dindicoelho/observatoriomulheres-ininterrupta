@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import coerenciaData from "../data/coerencia.json";
 import votacoesData from "../data/votacoes.json";
-import RevealText from "./RevealText";
+import ScrollFloat from "./ScrollFloat";
 
 type CoerenciaDeputado = {
   id: number;
@@ -269,13 +269,13 @@ export default function CoerenciaDeputados() {
             <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
               [ GUIA ELEITORAL ]
             </p>
-            <RevealText
+            <ScrollFloat
               as="h2"
               text="Quem votou"
               stagger={40}
               className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
             />
-            <RevealText
+            <ScrollFloat
               as="h2"
               text="contra?"
               stagger={40}

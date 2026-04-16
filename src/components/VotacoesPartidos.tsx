@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import votacoesData from "../data/votacoes.json";
-import RevealText from "./RevealText";
+import ScrollFloat from "./ScrollFloat";
 
 type Votacao = {
   id: string;
@@ -170,13 +170,13 @@ export default function VotacoesPartidos() {
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
             [ ATO 02 / DISCURSO E VOTO ]
           </p>
-          <RevealText
+          <ScrollFloat
             as="h2"
             text="Discurso"
             stagger={50}
             className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
           />
-          <RevealText
+          <ScrollFloat
             as="h2"
             text="e voto."
             stagger={50}

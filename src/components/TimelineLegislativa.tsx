@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import legislativoData from "../data/legislativo.json";
-import RevealText from "./RevealText";
+import ScrollFloat from "./ScrollFloat";
 
 type Proposicao = {
   id: number;
@@ -146,13 +146,13 @@ export default function TimelineLegislativa() {
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
             [ ATO 03 / O TIPO DE LEI ]
           </p>
-          <RevealText
+          <ScrollFloat
             as="h2"
             text="O Congresso"
             stagger={50}
             className="block text-3xl font-black leading-[0.9] md:text-5xl text-white lg:text-7xl"
           />
-          <RevealText
+          <ScrollFloat
             as="h2"
             text="está agindo?"
             stagger={50}

@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import autoriaData from "../data/autoria.json";
 import coerenciaData from "../data/coerencia.json";
 import relatoriaData from "../data/relatoria.json";
-import RevealText from "./RevealText";
+import ScrollFloat from "./ScrollFloat";
+import Counter from "./Counter";
 
 type PL = {
   id: number;
@@ -384,13 +385,13 @@ export default function RankingDeputados() {
             <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
               [ ATO 01 / QUEM FAZ AS LEIS ]
             </p>
-            <RevealText
+            <ScrollFloat
               as="h2"
               text="Quem propõe"
               stagger={40}
               className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
             />
-            <RevealText
+            <ScrollFloat
               as="h2"
               text="o quê?"
               stagger={40}
@@ -496,7 +497,7 @@ export default function RankingDeputados() {
                         letterSpacing: "-0.04em",
                       }}
                     >
-                      {fPlPct.toFixed(0)}%
+                      <Counter to={fPlPct} decimals={0} suffix="%" duration={1800} />
                     </p>
                     <p
                       className="mt-4 text-xl leading-snug text-white md:text-2xl"
@@ -518,7 +519,7 @@ export default function RankingDeputados() {
                         letterSpacing: "-0.04em",
                       }}
                     >
-                      {pctFRelatoria.toFixed(0)}%
+                      <Counter to={pctFRelatoria} decimals={0} suffix="%" duration={1800} />
                     </p>
                     <p
                       className="mt-4 text-xl leading-snug text-white md:text-2xl"
@@ -544,7 +545,7 @@ export default function RankingDeputados() {
                           letterSpacing: "-0.03em",
                         }}
                       >
-                        {(fPerDep / mPerDep).toFixed(1)}×
+                        <Counter to={fPerDep / mPerDep} decimals={1} suffix="×" duration={1500} />
                       </p>
                       <p className="text-base leading-snug text-white/90">
                         mais PLs por pessoa nas deputadas
@@ -565,7 +566,7 @@ export default function RankingDeputados() {
                           letterSpacing: "-0.03em",
                         }}
                       >
-                        {top20F}<span className="text-white/40">/20</span>
+                        <Counter to={top20F} duration={1500} /><span className="text-white/40">/20</span>
                       </p>
                       <p className="text-base leading-snug text-white/90">
                         do top 20 em produção legislativa são mulheres

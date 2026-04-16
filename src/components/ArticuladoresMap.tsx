@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import * as d3 from "d3";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 import articuladoresData from "../data/articuladores_uf.json";
-import RevealText from "./RevealText";
+import ScrollFloat from "./ScrollFloat";
 
 type Articulador = {
   id: number;
@@ -170,13 +170,13 @@ export default function ArticuladoresMap() {
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
             [ GUIA ELEITORAL POR ESTADO ]
           </p>
-          <RevealText
+          <ScrollFloat
             as="h2"
             text="Quem representa"
             stagger={40}
             className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
           />
-          <RevealText
+          <ScrollFloat
             as="h2"
             text="o seu estado?"
             stagger={40}
