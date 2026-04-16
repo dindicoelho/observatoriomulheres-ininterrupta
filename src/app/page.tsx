@@ -14,21 +14,10 @@ export default function Home() {
       <main>
         <Hero />
 
-        {/* Transition — do número para política */}
-        <div className="bg-[var(--color-bg-alt)] py-20">
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ INTRODUÇÃO ]
-            </p>
-            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              Esse número está na imprensa todo ano.
-              <span className="text-[var(--color-text-tertiary)]"> O que quase ninguém conta é quem está decidindo o que fazer com ele.</span>
-            </p>
-          </div>
-        </div>
-
         {/* ATO 01 — Quem propõe */}
-        <RankingDeputados />
+        <div id="ato-01">
+          <RankingDeputados />
+        </div>
 
         {/* Marquee — marcos legislativos */}
         <div className="bg-[var(--color-dark)] py-8">
@@ -45,36 +34,14 @@ export default function Home() {
           />
         </div>
 
-        {/* Transition — propor × votar */}
-        <div className="bg-white py-20">
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ INTERLÚDIO ]
-            </p>
-            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              Propor é uma coisa. Votar é outra.
-              <span className="text-[var(--color-text-tertiary)]"> Quando o projeto chega ao plenário, o jogo muda.</span>
-            </p>
-          </div>
+        {/* ATO 02 — Como se vota */}
+        <div id="ato-02">
+          <VotacoesPartidos />
         </div>
 
-        {/* ATO 02 — Como se vota */}
-        <VotacoesPartidos />
-
         {/* Guia eleitoral: coerência */}
-        <CoerenciaDeputados />
-
-        {/* Transition — volume de política */}
-        <div className="bg-white py-20">
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ INTERLÚDIO ]
-            </p>
-            <p className="mt-4 text-2xl font-medium leading-tight text-[var(--color-text)] md:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
-              Por trás das votações de maior atenção,
-              <span className="text-[var(--color-text-tertiary)]"> existe um universo de centenas de proposições. Qual é o tipo dominante? E quantas viram lei?</span>
-            </p>
-          </div>
+        <div id="guia">
+          <CoerenciaDeputados />
         </div>
 
         {/* ATO 03 — Timeline legislativa */}

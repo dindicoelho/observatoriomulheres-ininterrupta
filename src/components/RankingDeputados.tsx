@@ -405,6 +405,40 @@ export default function RankingDeputados() {
             Quem são?
           </p>
 
+          {/* Contexto pra leigo */}
+          <div className="mt-8 rounded-xl border border-[var(--color-blue)]/20 bg-[var(--color-blue-light)] p-6">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
+              [ Como funciona o processo legislativo ]
+            </p>
+            <div className="mt-3 space-y-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              <p>
+                <strong className="text-[var(--color-text)]">Proposição (PL)</strong>{" "}
+                é qualquer projeto de lei apresentado por um deputado.
+                Pode ser uma ideia de 2 linhas ou uma proposta estrutural
+                complexa. O número bruto de PLs não diz muito — o que
+                importa é se a proposta muda a estrutura ou só faz
+                barulho.
+              </p>
+              <p>
+                <strong className="text-[var(--color-text)]">Relatoria</strong>{" "}
+                é quando um deputado é designado para analisar a proposta
+                e emitir parecer. É o trabalho pesado — sem relator, a
+                PL morre na gaveta. Quem relata decide o destino.
+              </p>
+              <p>
+                Nós classificamos cada proposição em três tipos:{" "}
+                <strong style={{ color: "#7A7A7A" }}>simbólicas</strong>{" "}
+                (datas, homenagens),{" "}
+                <strong style={{ color: "#005FFF" }}>incrementais</strong>{" "}
+                (ajustes em leis existentes) e{" "}
+                <strong style={{ color: "#DCFF00", backgroundColor: "#0A0A0A", padding: "0 4px", borderRadius: 2 }}>
+                  estruturais
+                </strong>{" "}
+                (criam programas, fundos ou políticas novas).
+              </p>
+            </div>
+          </div>
+
           {/* Gender gap block — destacado */}
           {DATA.gender_stats && (() => {
             const f = DATA.gender_stats.F;
@@ -525,6 +559,21 @@ export default function RankingDeputados() {
               </div>
             );
           })()}
+
+          {/* How to interpret */}
+          <div className="mt-10 max-w-2xl rounded-xl bg-[var(--color-bg-alt)] p-6">
+            <p className="leading-relaxed text-[var(--color-text-secondary)]">
+              <strong className="text-[var(--color-text)]">
+                Como interpretar o ranking abaixo:
+              </strong>{" "}
+              um deputado com muitas PLs simbólicas ou incrementais está
+              produzindo barulho, não política estrutural. A barra{" "}
+              <strong style={{ color: "#DCFF00", backgroundColor: "#0A0A0A", padding: "0 4px", borderRadius: 2 }}>verde</strong>{" "}
+              mede o que <em>muda a estrutura</em> — criação de programas,
+              fundos, serviços novos. Use esse ranking como referência,
+              não veredito. O contexto de cada PL importa.
+            </p>
+          </div>
 
           {/* Sort controls */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -687,18 +736,6 @@ export default function RankingDeputados() {
             })}
           </div>
 
-          <div className="mx-auto mt-16 max-w-2xl rounded-xl bg-[var(--color-bg-alt)] p-6">
-            <p className="leading-relaxed text-[var(--color-text-secondary)]">
-              <strong className="text-[var(--color-text)]">
-                Como interpretar:
-              </strong>{" "}
-              um deputado com muitas PLs simbólicas ou incrementais está
-              produzindo barulho, não política estrutural. A barra verde mede o
-              que <em>muda a estrutura</em> — criação de programas, fundos,
-              serviços novos. Use esse ranking como referência, não veredito.
-              O contexto de cada PL importa.
-            </p>
-          </div>
 
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
             Fonte: API de Dados Abertos da Câmara dos Deputados. Autoria

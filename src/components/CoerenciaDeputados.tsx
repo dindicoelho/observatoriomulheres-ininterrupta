@@ -286,11 +286,29 @@ export default function CoerenciaDeputados() {
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
             Cruzando os votos individuais das 4 votações de mérito, é
-            possível saber quais deputados votaram contra a ampliação
-            de proteção às mulheres em todas as votações em que
-            participaram. Clique em cada um para ver exatamente o que
-            rejeitaram.
+            possível ver quais deputados votaram NÃO em todas as
+            votações em que participaram. Clique em cada um para ver
+            exatamente o que rejeitaram.
           </p>
+
+          {/* Nuance disclaimer — ANTES da lista */}
+          <div className="mt-6 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-[var(--color-bg-alt)] p-5">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ Nota importante de leitura ]
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              <strong className="text-[var(--color-text)]">
+                Votar NÃO nem sempre significa ser contra a proteção de
+                mulheres.
+              </strong>{" "}
+              Em votações do tipo &ldquo;Mantido o texto&rdquo;, votar
+              NÃO pode significar que o deputado queria uma versão{" "}
+              <em>mais forte</em> da proposta — não necessariamente que
+              era contra ela. O contexto de cada votação aparece dentro
+              do card de cada deputado. Use esta lista como ponto de
+              partida para investigar, não como veredito.
+            </p>
+          </div>
 
           {/* Stats */}
           <div className="mt-10 grid gap-4 md:grid-cols-2">
