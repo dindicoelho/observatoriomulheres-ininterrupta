@@ -405,8 +405,19 @@ export default function RankingDeputados() {
             Quem são?
           </p>
 
+          {/* Ponte narrativa */}
+          <div className="mt-10 max-w-2xl">
+            <p
+              className="text-xl leading-snug text-[var(--color-text)] md:text-2xl"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Mas antes de mergulhar nos nomes, vale esclarecer
+              rapidinho como esse processo funciona.
+            </p>
+          </div>
+
           {/* Contexto pra leigo */}
-          <div className="mt-8 rounded-xl border border-[var(--color-blue)]/20 bg-[var(--color-blue-light)] p-6">
+          <div className="mt-6 rounded-xl border border-[var(--color-blue)]/20 bg-[var(--color-blue-light)] p-6">
             <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
               [ Como funciona o processo legislativo ]
             </p>
@@ -454,108 +465,132 @@ export default function RankingDeputados() {
             const top20F = sorted.slice(0, 20).filter((d) => d.sexo === "F").length;
 
             return (
-              <div className="mt-12 rounded-2xl bg-[var(--color-blue)] p-8 text-white">
-                <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
-                  [ Quem carrega o trabalho ]
-                </p>
-                <h3
-                  className="mt-4 text-3xl font-bold leading-tight text-white md:text-4xl"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Mulheres são <span className="text-white/60">17% da Câmara</span>, mas fazem <span className="text-[var(--color-neon)]">quase todo o trabalho</span> sobre violência contra mulher.
-                </h3>
+              <div className="mt-12 overflow-hidden rounded-3xl bg-[var(--color-blue)] text-white">
+                {/* Header section */}
+                <div className="px-8 pb-2 pt-10 md:px-12 md:pt-14">
+                  <p className="font-mono-data text-[10px] uppercase tracking-[0.3em] text-[var(--color-neon)]">
+                    [ Quem carrega o trabalho ]
+                  </p>
+                  <h3
+                    className="mt-6 text-[clamp(1.75rem,3.5vw,3rem)] font-medium leading-[1.15] tracking-tight text-white"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    Mulheres são <span className="border-b-2 border-white/30">17% da Câmara</span>.
+                    <br />
+                    Mas fazem{" "}
+                    <span className="text-[var(--color-neon)]">
+                      quase todo o trabalho
+                    </span>{" "}
+                    sobre violência contra mulher.
+                  </h3>
+                </div>
 
-                {/* 4 grandes stats */}
-                <div className="mt-10 grid gap-6 md:grid-cols-4">
-                  <div>
+                {/* Big 2 stats — destaque editorial */}
+                <div className="mt-10 grid md:grid-cols-2">
+                  <div className="border-t border-white/15 px-8 py-10 md:px-12 md:py-14 md:border-r">
                     <p
-                      className="leading-none text-[var(--color-neon)]"
+                      className="leading-[0.85] text-[var(--color-neon)]"
                       style={{
                         fontFamily: "var(--font-display-condensed)",
-                        fontSize: "clamp(3rem, 6vw, 5rem)",
-                        letterSpacing: "-0.03em",
+                        fontSize: "clamp(5rem, 10vw, 9rem)",
+                        letterSpacing: "-0.04em",
                       }}
                     >
                       {fPlPct.toFixed(0)}%
                     </p>
-                    <p className="mt-2 text-sm leading-snug text-white">
-                      <strong>das PLs</strong> sobre o tema são propostas por mulheres
+                    <p
+                      className="mt-4 text-xl leading-snug text-white md:text-2xl"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      das PLs sobre o tema são de autoria feminina.
                     </p>
-                    <p className="mt-1 font-mono-data text-[10px] uppercase tracking-wider text-white/60">
-                      {sobreAutoria > 0 ? `+${sobreAutoria.toFixed(0)}%` : `${sobreAutoria.toFixed(0)}%`} acima do esperado pela representação (17%)
+                    <p className="mt-3 font-mono-data text-xs uppercase tracking-wider text-[var(--color-neon)]/80">
+                      {sobreAutoria > 0 ? `+${sobreAutoria.toFixed(0)}%` : `${sobreAutoria.toFixed(0)}%`} acima do esperado pela representação
                     </p>
                   </div>
 
-                  <div>
+                  <div className="border-t border-white/15 px-8 py-10 md:px-12 md:py-14">
                     <p
-                      className="leading-none text-[var(--color-neon)]"
+                      className="leading-[0.85] text-[var(--color-neon)]"
                       style={{
                         fontFamily: "var(--font-display-condensed)",
-                        fontSize: "clamp(3rem, 6vw, 5rem)",
-                        letterSpacing: "-0.03em",
+                        fontSize: "clamp(5rem, 10vw, 9rem)",
+                        letterSpacing: "-0.04em",
                       }}
                     >
                       {pctFRelatoria.toFixed(0)}%
                     </p>
-                    <p className="mt-2 text-sm leading-snug text-white">
-                      <strong>das relatorias</strong> dessas PLs são atribuídas a mulheres
+                    <p
+                      className="mt-4 text-xl leading-snug text-white md:text-2xl"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      das relatorias dessas PLs são atribuídas a mulheres.
                     </p>
-                    <p className="mt-1 font-mono-data text-[10px] uppercase tracking-wider text-white/60">
-                      {RELATORIA.pls_tipo_relatoria["só mulher"]} PLs só com relatoras mulheres, {RELATORIA.pls_tipo_relatoria["só homem"]} só com homens
+                    <p className="mt-3 font-mono-data text-xs uppercase tracking-wider text-[var(--color-neon)]/80">
+                      {RELATORIA.pls_tipo_relatoria["só mulher"]} PLs só com relatoras · {RELATORIA.pls_tipo_relatoria["só homem"]} só com homens
+                    </p>
+                  </div>
+                </div>
+
+                {/* Stats menores */}
+                <div className="grid md:grid-cols-2">
+                  <div className="border-t border-white/15 px-8 py-8 md:px-12 md:border-r">
+                    <div className="flex items-baseline gap-3">
+                      <p
+                        className="leading-none text-white"
+                        style={{
+                          fontFamily: "var(--font-display-condensed)",
+                          fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                          letterSpacing: "-0.03em",
+                        }}
+                      >
+                        {(fPerDep / mPerDep).toFixed(1)}×
+                      </p>
+                      <p className="text-base leading-snug text-white/90">
+                        mais PLs por pessoa nas deputadas
+                      </p>
+                    </div>
+                    <p className="mt-2 font-mono-data text-[10px] uppercase tracking-wider text-white/55">
+                      {fPerDep.toFixed(1)} por mulher · {mPerDep.toFixed(1)} por homem
                     </p>
                   </div>
 
-                  <div>
-                    <p
-                      className="leading-none text-[var(--color-neon)]"
-                      style={{
-                        fontFamily: "var(--font-display-condensed)",
-                        fontSize: "clamp(3rem, 6vw, 5rem)",
-                        letterSpacing: "-0.03em",
-                      }}
-                    >
-                      {(fPerDep / mPerDep).toFixed(1)}×
-                    </p>
-                    <p className="mt-2 text-sm leading-snug text-white">
-                      <strong>mais PLs por pessoa</strong> nas deputadas que nos deputados
-                    </p>
-                    <p className="mt-1 font-mono-data text-[10px] uppercase tracking-wider text-white/60">
-                      {fPerDep.toFixed(1)} PLs por mulher · {mPerDep.toFixed(1)} por homem
-                    </p>
-                  </div>
-
-                  <div>
-                    <p
-                      className="leading-none text-[var(--color-neon)]"
-                      style={{
-                        fontFamily: "var(--font-display-condensed)",
-                        fontSize: "clamp(3rem, 6vw, 5rem)",
-                        letterSpacing: "-0.03em",
-                      }}
-                    >
-                      {top20F}/20
-                    </p>
-                    <p className="mt-2 text-sm leading-snug text-white">
-                      <strong>do top 20</strong> em produção legislativa sobre o tema são mulheres
-                    </p>
-                    <p className="mt-1 font-mono-data text-[10px] uppercase tracking-wider text-white/60">
+                  <div className="border-t border-white/15 px-8 py-8 md:px-12">
+                    <div className="flex items-baseline gap-3">
+                      <p
+                        className="leading-none text-white"
+                        style={{
+                          fontFamily: "var(--font-display-condensed)",
+                          fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                          letterSpacing: "-0.03em",
+                        }}
+                      >
+                        {top20F}<span className="text-white/40">/20</span>
+                      </p>
+                      <p className="text-base leading-snug text-white/90">
+                        do top 20 em produção legislativa são mulheres
+                      </p>
+                    </div>
+                    <p className="mt-2 font-mono-data text-[10px] uppercase tracking-wider text-white/55">
                       {((top20F / 20) * 100).toFixed(0)}% do ranking abaixo
                     </p>
                   </div>
                 </div>
 
-                <p className="mt-8 max-w-3xl text-sm leading-relaxed text-white/80">
-                  Se a produção legislativa fosse proporcional à composição da
-                  Câmara, esperaríamos 17% de autoria feminina. Na prática,
-                  mulheres propõem <strong className="text-white">{fPlPct.toFixed(0)}%</strong> das
-                  PLs sobre o tema e relatam <strong className="text-white">{pctFRelatoria.toFixed(0)}%</strong>
-                  delas. A política de enfrentamento à violência contra a
-                  mulher é sustentada, em larga medida,{" "}
-                  <strong className="text-[var(--color-neon)]">
-                    pelas próprias mulheres do parlamento
-                  </strong>
-                  .
-                </p>
+                {/* Conclusão editorial */}
+                <div className="border-t border-white/15 bg-black/20 px-8 py-10 md:px-12">
+                  <p
+                    className="max-w-3xl text-lg leading-relaxed text-white/95 md:text-xl"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    A política de enfrentamento à violência contra a
+                    mulher no Brasil é sustentada, em larga medida,{" "}
+                    <strong className="text-[var(--color-neon)]">
+                      pelas próprias mulheres do parlamento
+                    </strong>
+                    .
+                  </p>
+                </div>
               </div>
             );
           })()}
