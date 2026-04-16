@@ -2,7 +2,6 @@ import Hero from "@/components/Hero";
 import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
-import CoerenciaDeputados from "@/components/CoerenciaDeputados";
 import ArticuladoresMap from "@/components/ArticuladoresMap";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
@@ -43,11 +42,6 @@ export default function Home() {
         {/* Guia eleitoral por estado */}
         <div id="guia-estados">
           <ArticuladoresMap />
-        </div>
-
-        {/* Guia eleitoral: coerência */}
-        <div id="guia">
-          <CoerenciaDeputados />
         </div>
 
         {/* ATO 03 — Timeline legislativa */}

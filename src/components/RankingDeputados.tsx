@@ -66,10 +66,10 @@ const COERENCIA_MAP = new Map(COERENCIA.deputados.map((d) => [d.id, d]));
 
 // PL labels for the 4 mérito votes (human-readable)
 const MERITO_LABELS: Record<string, string> = {
-  "2462009-79": "PL 3880/2024 — Violência vicária",
-  "2596663-47": "PL 6415/2025 — Assistência jurídica",
-  "2593881-57": "PL 2942/2024 — Monitoramento eletrônico",
-  "2413257-126": "PL 6020/2023 — Substitutivo",
+  "2462009-79": "PL 3880/2024 — Violência vicária na Lei Maria da Penha",
+  "2596663-47": "PL 6415/2025 — Política Nacional de Assistência Jurídica",
+  "2449741-72": "PL 2942/2024 — Monitoramento eletrônico obrigatório",
+  "2413257-116": "PL 6020/2023 — Crime mesmo com consentimento da vítima",
 };
 
 // Get the actual vote ids used
@@ -213,24 +213,14 @@ function DeputadoModal({
           if (!coer) return null;
           return (
             <div className="border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-4">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-                  [ Como votou nas 4 PLs-chave ]
-                </p>
-                <span
-                  className="font-mono-data text-sm font-bold"
-                  style={{
-                    color:
-                      coer.score >= 75
-                        ? "var(--color-teal)"
-                        : coer.score >= 50
-                        ? "var(--color-text)"
-                        : "var(--color-blood)",
-                  }}
-                >
-                  {coer.score.toFixed(0)}% pró-proteção
-                </span>
-              </div>
+              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                [ Voto nas 4 votações de mérito do plenário ]
+              </p>
+              <p className="mt-1 text-[11px] text-[var(--color-text-tertiary)]">
+                O voto aqui listado não equivale a posição contra ou a
+                favor de mulheres — o contexto específico de cada PL
+                importa. Veja detalhes no Ato 02.
+              </p>
               <ul className="mt-3 space-y-1.5">
                 {MERITO_IDS.map((vid) => {
                   const voto = coer.votes_by_id[vid] || "Ausente";

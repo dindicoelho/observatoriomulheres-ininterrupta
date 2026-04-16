@@ -281,21 +281,27 @@ export default function VotacoesPartidos() {
                       className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-6 transition-opacity duration-300"
                       style={{ opacity: isOpen ? 1 : 0 }}
                     >
-                      {/* Sobre o projeto */}
-                      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
-                        <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
-                          [ Sobre o projeto de lei ]
+                      {/* 1. O QUE É O PROJETO — em destaque */}
+                      <div className="mb-4 rounded-xl border-l-4 border-[var(--color-blue)] bg-white p-6">
+                        <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
+                          [ 01 · O que é o projeto ]
                         </p>
-                        <p className="mt-2 text-base leading-relaxed text-[var(--color-text)]">
+                        <h4
+                          className="mt-3 text-lg font-bold leading-tight text-[var(--color-text)] md:text-xl"
+                          style={{ fontFamily: "var(--font-display)" }}
+                        >
+                          {v.titulo_curto || grupo.pl_ref}
+                        </h4>
+                        <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)]">
                           {grupo.projeto_sobre}
                         </p>
                       </div>
 
-                      {/* Votação principal */}
-                      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-5">
+                      {/* 2. O QUE FOI VOTADO — nesta sessão */}
+                      <div className="mb-4 rounded-xl border-l-4 border-[var(--color-text)] bg-white p-6">
                         <div className="flex items-center justify-between gap-2">
-                          <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-teal)]">
-                            [ Votação principal · {v.data} ]
+                          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text)]">
+                            [ 02 · O que foi votado · {v.data} ]
                           </p>
                           <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
                             {v.tipo === "mérito" ? "Mérito" : "Procedural"}
@@ -309,24 +315,33 @@ export default function VotacoesPartidos() {
                         </p>
 
                         {/* Interpretações Sim/Não */}
-                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                          <div className="rounded-lg border-l-4 border-[var(--color-teal)] bg-[var(--color-bg-alt)] p-4">
+                        <p className="mt-5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                          [ Significado neutro de cada voto ]
+                        </p>
+                        <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-lg border-l-2 border-[var(--color-teal)] bg-[var(--color-bg-alt)] p-4">
                             <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-teal)]">
-                              Votar SIM significa
+                              Quem votou SIM
                             </p>
                             <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
                               {v.interpretacao_sim}
                             </p>
                           </div>
-                          <div className="rounded-lg border-l-4 border-[var(--color-blood)] bg-[var(--color-bg-alt)] p-4">
+                          <div className="rounded-lg border-l-2 border-[var(--color-blood)] bg-[var(--color-bg-alt)] p-4">
                             <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
-                              Votar NÃO significa
+                              Quem votou NÃO
                             </p>
                             <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
                               {v.interpretacao_nao}
                             </p>
                           </div>
                         </div>
+                        <p className="mt-3 text-xs italic leading-relaxed text-[var(--color-text-tertiary)]">
+                          O voto não equivale diretamente a ser a favor
+                          ou contra mulheres. Pode refletir disputa sobre
+                          a forma do texto, emendas, estratégia política
+                          ou autoria. Leia o contexto antes de concluir.
+                        </p>
 
                         {/* Gender breakdown */}
                         {v.genero && v.genero.F.total > 0 && v.genero.M.total > 0 && (() => {

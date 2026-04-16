@@ -293,23 +293,12 @@ export default function ArticuladoresMap() {
                               <strong>{d.estruturais}</strong> estruturais
                             </span>
                           )}
-                          {d.coerencia_participacoes > 0 && (
-                            <span
-                              className="text-[var(--color-text-secondary)]"
-                            >
-                              coerência{" "}
-                              <strong
-                                style={{
-                                  color:
-                                    (d.coerencia_score ?? 0) >= 75
-                                      ? "var(--color-teal)"
-                                      : (d.coerencia_score ?? 0) >= 50
-                                      ? "var(--color-text)"
-                                      : "var(--color-blood)",
-                                }}
-                              >
-                                {d.coerencia_score?.toFixed(0)}%
-                              </strong>
+                          {d.incrementais > 0 && (
+                            <span className="text-[var(--color-text-secondary)]">
+                              <strong className="text-[var(--color-text)]">
+                                {d.incrementais}
+                              </strong>{" "}
+                              incrementais
                             </span>
                           )}
                         </div>
