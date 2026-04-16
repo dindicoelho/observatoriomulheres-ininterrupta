@@ -142,7 +142,7 @@ export default function ProducaoRegressiva() {
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[#D43F3F]">
-            [ ATO 04 / QUEM ATUA CONTRA ]
+            [ ATO 03 / QUEM ATUA CONTRA ]
           </p>
           <ScrollFloat
             as="h2"

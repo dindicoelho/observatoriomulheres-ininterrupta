@@ -40,18 +40,18 @@ export default function Home() {
           <VotacoesPartidos />
         </div>
 
+        {/* ATO 03 — Quem atua contra */}
+        <div id="ato-03">
+          <ProducaoRegressiva />
+        </div>
+
         {/* Guia eleitoral por estado */}
         <div id="guia-estados">
           <ArticuladoresMap />
         </div>
 
-        {/* ATO 03 — Timeline legislativa */}
+        {/* ATO 04 — Timeline legislativa */}
         <TimelineLegislativa />
-
-        {/* ATO 04 — Quem atua contra */}
-        <div id="ato-04">
-          <ProducaoRegressiva />
-        </div>
       </main>
       <Footer />
     </>
