@@ -10,7 +10,7 @@ export default function Footer() {
             [ ENCERRAMENTO ]
           </p>
           <h2
-            className="text-5xl font-black leading-[0.9] md:text-6xl"
+            className="text-3xl font-black leading-[0.9] md:text-5xl lg:text-6xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
             E você,

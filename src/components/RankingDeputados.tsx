@@ -388,14 +388,14 @@ export default function RankingDeputados() {
               as="h2"
               text="Quem propõe"
               stagger={40}
-              className="block text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
+              className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
             />
             <RevealText
               as="h2"
               text="o quê?"
               stagger={40}
               delay={400}
-              className="block text-5xl font-black leading-[0.9] text-[var(--color-blue)] md:text-7xl"
+              className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-blue)] lg:text-7xl"
             />
           </div>
 

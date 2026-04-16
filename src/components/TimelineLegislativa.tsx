@@ -150,14 +150,14 @@ export default function TimelineLegislativa() {
             as="h2"
             text="O Congresso"
             stagger={50}
-            className="block text-5xl font-black leading-[0.9] text-white md:text-7xl"
+            className="block text-3xl font-black leading-[0.9] md:text-5xl text-white lg:text-7xl"
           />
           <RevealText
             as="h2"
             text="está agindo?"
             stagger={50}
             delay={500}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-neon)] md:text-7xl"
+            className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-neon)] lg:text-7xl"
           />
         </div>
 

@@ -174,14 +174,14 @@ export default function VotacoesPartidos() {
             as="h2"
             text="Discurso"
             stagger={50}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-text)] md:text-7xl"
+            className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
           />
           <RevealText
             as="h2"
             text="e voto."
             stagger={50}
             delay={400}
-            className="block text-5xl font-black leading-[0.9] text-[var(--color-blue)] md:text-7xl"
+            className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-blue)] lg:text-7xl"
           />
         </div>
 
