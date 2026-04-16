@@ -16,7 +16,9 @@ type Proposicao = {
 
 type LegislativoJSON = {
   total: number;
+  total_atual?: number;
   resumo: { simbólica: number; incremental: number; estrutural: number };
+  resumo_atual?: { simbólica: number; incremental: number; estrutural: number };
   porAno: Record<string, { simbólica: number; incremental: number; estrutural: number }>;
   proposicoes: Proposicao[];
   destino_stats?: {
@@ -161,39 +163,40 @@ export default function TimelineLegislativa() {
 
         {/* Scrollytelling big funnel */}
         {(() => {
-          const total = DATA.destino_stats?.total ?? DATA.total;
-          const incrementais = DATA.resumo.incremental;
-          const estruturais = DATA.resumo.estrutural;
+          // Base: legislatura atual (2023-2026)
+          const total = DATA.total_atual ?? DATA.destino_stats?.total ?? 568;
+          const incrementais = DATA.resumo_atual?.incremental ?? 494;
+          const estruturais = DATA.resumo_atual?.estrutural ?? 71;
           const viraramLei = DATA.destino_stats?.por_categoria.aprovada ?? 13;
 
           const phases = [
             {
               value: total,
               label: "proposições",
-              title: "sobre violência contra a mulher chegaram ao Congresso nos últimos 7 anos.",
+              title: "sobre violência contra a mulher foram apresentadas na atual legislatura (2023-2026).",
               color: "#ffffff",
               pctTotal: 100,
             },
             {
               value: incrementais,
               label: "incrementais",
-              title: "são apenas alterações pontuais em leis que já existem.",
+              title: `(${((incrementais / total) * 100).toFixed(0)}%) são apenas alterações pontuais em leis que já existem.`,
               color: CATEGORY_COLORS.incremental,
-              pctTotal: (incrementais / DATA.total) * 100,
+              pctTotal: (incrementais / total) * 100,
             },
             {
               value: estruturais,
               label: "estruturais",
-              title: "criam programas, fundos ou políticas novas.",
+              title: `(${((estruturais / total) * 100).toFixed(0)}%) criam programas, fundos ou políticas novas.`,
               color: CATEGORY_COLORS.estrutural,
-              pctTotal: (estruturais / DATA.total) * 100,
+              pctTotal: (estruturais / total) * 100,
             },
             {
               value: viraramLei,
               label: "viraram lei",
-              title: `da amostra na atual legislatura (2023-2026). Em 3 anos, menos de ${((viraramLei / (DATA.destino_stats?.total ?? 568)) * 100).toFixed(1)}% das proposições se transformaram em norma.`,
-              color: "#1DB389",
-              pctTotal: (viraramLei / (DATA.destino_stats?.total ?? 568)) * 100,
+              title: `(${((viraramLei / total) * 100).toFixed(1)}%) se transformaram em norma em 3 anos.`,
+              color: "#DCFF00",
+              pctTotal: (viraramLei / total) * 100,
             },
           ];
 
@@ -246,11 +249,7 @@ export default function TimelineLegislativa() {
                         >
                           {p.value.toLocaleString("pt-BR")}
                         </strong>{" "}
-                        {i === 0
-                          ? p.title
-                          : i === 3
-                          ? p.title
-                          : `(${((p.value / DATA.total) * 100).toFixed(1)}%) ${p.title}`}
+                        {p.title}
                       </p>
                     </div>
                   </div>
