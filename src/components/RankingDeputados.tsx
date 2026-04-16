@@ -433,7 +433,7 @@ function GlossarioPLs() {
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
-  const minPls = 5;
+  const minPls = 3;
 
   const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
