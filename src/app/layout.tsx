@@ -2,21 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mapa da Violência contra a Mulher no Brasil",
+  metadataBase: new URL("https://mapa-violencia-mulher.vercel.app"),
+  title: "Quem está fazendo algo? — Observatório Político da Violência contra a Mulher",
   description:
-    "A Lei Maria da Penha protegeu metade das mulheres. Dados reais do Atlas da Violência revelam a divergência racial nos homicídios de mulheres no Brasil.",
+    "Todo mundo sabe que violência contra mulher é grave. Esse observatório rastreia quem propõe leis, quem vota, quem relata e quem atua contra. 389 deputados · 1.142 PLs · 62 parlamentares com proposições regressivas.",
   openGraph: {
-    title: "Mapa da Violência contra a Mulher no Brasil",
+    title: "Quem está fazendo algo?",
     description:
-      "3.903 mulheres assassinadas em 2023. 68,2% eram negras. A mesma lei, resultados opostos.",
+      "Observatório político da 57ª legislatura. 389 deputados, 1.142 PLs, 15 mulheres no top 20 de produção. Pra votar consciente em 2026.",
     type: "website",
     locale: "pt_BR",
+    siteName: "Observatório · Ininterrupta",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mapa da Violência contra a Mulher no Brasil",
+    title: "Quem está fazendo algo?",
     description:
-      "3.903 mulheres assassinadas em 2023. 68,2% eram negras. A mesma lei, resultados opostos.",
+      "Observatório político da 57ª legislatura. 389 deputados, 1.142 PLs, 62 com proposições regressivas.",
   },
 };
 
