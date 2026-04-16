@@ -18,6 +18,7 @@ type Votacao = {
   interpretacao_sim: string;
   interpretacao_nao: string;
   descricao_camara: string;
+  titulo_curto?: string;
   totalSim: number;
   totalNao: number;
   resultado_placar: string;
@@ -237,9 +238,7 @@ export default function VotacoesPartidos() {
                       className="mt-3 text-xl font-bold leading-tight text-[var(--color-text)] md:text-2xl"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
-                      {grupo.projeto_sobre.length > 140
-                        ? grupo.projeto_sobre.slice(0, 140) + "…"
-                        : grupo.projeto_sobre}
+                      {v.titulo_curto || grupo.pl_ref}
                     </h3>
 
                     <div className="mt-4 flex flex-wrap items-center gap-3">

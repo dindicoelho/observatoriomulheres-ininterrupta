@@ -359,6 +359,86 @@ function DeputadoModal({
   );
 }
 
+function GlossarioPLs() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-10 max-w-2xl overflow-hidden rounded-xl border border-[var(--color-blue)]/20 bg-[var(--color-blue-light)]">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between gap-3 px-6 py-4 text-left transition-colors hover:bg-[var(--color-blue)]/10"
+      >
+        <div>
+          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
+            [ Antes de mergulhar nos nomes ]
+          </p>
+          <p className="mt-1 text-sm font-medium text-[var(--color-text)]">
+            Como funciona o processo legislativo? Entenda em 1 minuto.
+          </p>
+        </div>
+        <span
+          className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[var(--color-blue)]/30 font-mono-data text-sm text-[var(--color-blue)] transition-all duration-300"
+          style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
+          aria-hidden="true"
+        >
+          +
+        </span>
+      </button>
+
+      <div
+        className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+      >
+        <div className="overflow-hidden">
+          <div
+            className="border-t border-[var(--color-blue)]/20 px-6 py-5 transition-opacity duration-300"
+            style={{ opacity: open ? 1 : 0 }}
+          >
+            <div className="space-y-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              <p>
+                <strong className="text-[var(--color-text)]">
+                  Proposição (PL)
+                </strong>{" "}
+                é qualquer projeto de lei apresentado por um deputado.
+                Pode ser uma ideia de 2 linhas ou uma proposta
+                estrutural complexa. O número bruto de PLs não diz
+                muito — o que importa é se a proposta muda a estrutura
+                ou só faz barulho.
+              </p>
+              <p>
+                <strong className="text-[var(--color-text)]">
+                  Relatoria
+                </strong>{" "}
+                é quando um deputado é designado para analisar a
+                proposta e emitir parecer. É o trabalho pesado — sem
+                relator, a PL morre na gaveta. Quem relata decide o
+                destino.
+              </p>
+              <p>
+                Nós classificamos cada proposição em três tipos:{" "}
+                <strong style={{ color: "#7A7A7A" }}>simbólicas</strong>{" "}
+                (datas, homenagens),{" "}
+                <strong style={{ color: "#005FFF" }}>incrementais</strong>{" "}
+                (ajustes em leis existentes) e{" "}
+                <strong
+                  style={{
+                    color: "#DCFF00",
+                    backgroundColor: "#0A0A0A",
+                    padding: "0 4px",
+                    borderRadius: 2,
+                  }}
+                >
+                  estruturais
+                </strong>{" "}
+                (criam programas, fundos ou políticas novas).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
@@ -406,50 +486,7 @@ export default function RankingDeputados() {
             Quem são?
           </p>
 
-          {/* Ponte narrativa */}
-          <div className="mt-10 max-w-2xl">
-            <p
-              className="text-xl leading-snug text-[var(--color-text)] md:text-2xl"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Mas antes de mergulhar nos nomes, vale esclarecer
-              rapidinho como esse processo funciona.
-            </p>
-          </div>
-
-          {/* Contexto pra leigo */}
-          <div className="mt-6 rounded-xl border border-[var(--color-blue)]/20 bg-[var(--color-blue-light)] p-6">
-            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
-              [ Como funciona o processo legislativo ]
-            </p>
-            <div className="mt-3 space-y-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-              <p>
-                <strong className="text-[var(--color-text)]">Proposição (PL)</strong>{" "}
-                é qualquer projeto de lei apresentado por um deputado.
-                Pode ser uma ideia de 2 linhas ou uma proposta estrutural
-                complexa. O número bruto de PLs não diz muito — o que
-                importa é se a proposta muda a estrutura ou só faz
-                barulho.
-              </p>
-              <p>
-                <strong className="text-[var(--color-text)]">Relatoria</strong>{" "}
-                é quando um deputado é designado para analisar a proposta
-                e emitir parecer. É o trabalho pesado — sem relator, a
-                PL morre na gaveta. Quem relata decide o destino.
-              </p>
-              <p>
-                Nós classificamos cada proposição em três tipos:{" "}
-                <strong style={{ color: "#7A7A7A" }}>simbólicas</strong>{" "}
-                (datas, homenagens),{" "}
-                <strong style={{ color: "#005FFF" }}>incrementais</strong>{" "}
-                (ajustes em leis existentes) e{" "}
-                <strong style={{ color: "#DCFF00", backgroundColor: "#0A0A0A", padding: "0 4px", borderRadius: 2 }}>
-                  estruturais
-                </strong>{" "}
-                (criam programas, fundos ou políticas novas).
-              </p>
-            </div>
-          </div>
+          <GlossarioPLs />
 
           {/* Gender gap block — destacado */}
           {DATA.gender_stats && (() => {
