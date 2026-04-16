@@ -198,8 +198,8 @@ export default function ArticuladoresMap() {
             [ Sobre este ranking ]
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Score = (PLs estruturais × 5) + (incrementais × 1) + (votos
-            SIM × 2) − (votos NÃO × 3). Considera apenas deputados em{" "}
+            Score = (PLs estruturais × 2) + (PLs incrementais × 1).
+            Considera apenas deputados em{" "}
             <strong>exercício na atual legislatura</strong>. Quando o
             TSE publicar a lista oficial de candidatos a 2026, a seção
             será filtrada automaticamente para mostrar só quem

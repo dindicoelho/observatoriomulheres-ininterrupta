@@ -359,7 +359,7 @@ function DeputadoModal({
 }
 
 export default function RankingDeputados() {
-  const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("estruturais");
+  const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
   const minPls = 5;
 
@@ -595,27 +595,22 @@ export default function RankingDeputados() {
             );
           })()}
 
-          {/* How to interpret */}
-          <div className="mt-10 max-w-2xl rounded-xl bg-[var(--color-bg-alt)] p-6">
-            <p className="leading-relaxed text-[var(--color-text-secondary)]">
-              <strong className="text-[var(--color-text)]">
-                Como interpretar o ranking abaixo:
-              </strong>{" "}
-              um deputado com muitas PLs simbólicas ou incrementais está
-              produzindo barulho, não política estrutural. A barra{" "}
-              <strong style={{ color: "#DCFF00", backgroundColor: "#0A0A0A", padding: "0 4px", borderRadius: 2 }}>verde</strong>{" "}
-              mede o que <em>muda a estrutura</em> — criação de programas,
-              fundos, serviços novos. Use esse ranking como referência,
-              não veredito. O contexto de cada PL importa.
-            </p>
-          </div>
-
           {/* Sort controls */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
               Ordenar por:
             </span>
             <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setSortBy("total")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  sortBy === "total"
+                    ? "bg-[var(--color-text)] text-white"
+                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
+                }`}
+              >
+                Quantidade total
+              </button>
               <button
                 onClick={() => setSortBy("estruturais")}
                 className={`rounded-full px-3 py-1 text-xs transition-colors ${
@@ -635,16 +630,6 @@ export default function RankingDeputados() {
                 }`}
               >
                 % estruturais
-              </button>
-              <button
-                onClick={() => setSortBy("total")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                  sortBy === "total"
-                    ? "bg-[var(--color-text)] text-white"
-                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-                }`}
-              >
-                Quantidade total
               </button>
             </div>
           </div>
