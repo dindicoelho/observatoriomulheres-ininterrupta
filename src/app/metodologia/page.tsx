@@ -107,15 +107,7 @@ export default function MetodologiaPage() {
                 score do autor. Proposições{" "}
                 <strong className="text-amber-700">punitivistas</strong>{" "}
                 contam como produção mas recebem selo. A classificação é
-                transparente e auditável — regex em{" "}
-                <code className="font-mono-data text-sm">
-                  scripts/classify_stance.py
-                </code>
-                , LLM em{" "}
-                <code className="font-mono-data text-sm">
-                  scripts/classify_stance_llm.py
-                </code>
-                .
+                transparente — os critérios estão detalhados abaixo.
               </p>
             </div>
           </section>
@@ -216,11 +208,7 @@ export default function MetodologiaPage() {
                 violência sexual, Maria da Penha, feminicídio,
                 transfeminicídio, aborto, assédio, violência política de
                 gênero, saúde da mulher, mãe solo, mulher trans, mulher
-                indígena, entre outras. A lista completa está em{" "}
-                <code className="font-mono-data text-sm">
-                  scripts/rebuild_autoria.py
-                </code>
-                .
+                indígena, entre outras.
               </p>
             </div>
 
@@ -384,12 +372,7 @@ export default function MetodologiaPage() {
                 pra compensar que mulheres são 17% da Câmara e enfrentam
                 mais barreiras pra apresentar e aprovar PLs. Sem a
                 compensação, o mapa refletiria acesso institucional, não
-                atuação relativa. Quem discordar pode recalcular com peso
-                1 em{" "}
-                <code className="font-mono-data text-sm">
-                  scripts/rebuild_articuladores.py
-                </code>
-                .
+                atuação relativa.
               </p>
             </div>
 
@@ -442,9 +425,7 @@ export default function MetodologiaPage() {
               execução.
             </p>
             <p className="text-base md:text-lg">
-              Todo o código é reprodutível. Os scripts estão em{" "}
-              <code className="font-mono-data text-sm">scripts/</code>{" "}
-              no repositório.
+              Todo o processo é reprodutível e auditável internamente.
             </p>
           </section>
 
@@ -505,7 +486,7 @@ export default function MetodologiaPage() {
                   O peso 2,5 pra mulheres é uma escolha.
                 </strong>{" "}
                 Existe pra compensar sub-representação. Nem todo leitor
-                vai concordar. O código permite mudar.
+                vai concordar.
               </li>
             </ul>
           </section>
