@@ -642,19 +642,23 @@ export default function TimelineLegislativa() {
                     {c.pl} →
                   </span>
                 </div>
+                <h4
+                  className="mt-4 text-xl font-bold leading-tight text-white md:text-2xl"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {c.titulo}
+                </h4>
                 <p
-                  className="mt-4 text-3xl font-black leading-[0.95] text-white md:text-4xl"
+                  className="mt-3 leading-none text-[var(--color-neon)]"
                   style={{
                     fontFamily: "var(--font-display-condensed)",
+                    fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
                     letterSpacing: "-0.02em",
                   }}
                 >
                   {c.dado}
                 </p>
-                <p className="mt-2 text-base font-semibold text-white">
-                  {c.titulo}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">
+                <p className="mt-3 text-sm leading-relaxed text-white/70">
                   {c.texto}
                 </p>
               </a>
