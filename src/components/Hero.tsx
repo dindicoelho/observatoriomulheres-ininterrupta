@@ -32,7 +32,7 @@ export default function Hero() {
               intervalMs={2200}
               className="inline"
             />{" "}
-            contra mulher é um problema grave no Brasil.
+            contra mulher é crime e um problema social grave no Brasil.
           </h1>
 
           <h2
