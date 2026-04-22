@@ -5,35 +5,35 @@ import ScrollFloat from "./ScrollFloat";
 const STEPS = [
   {
     numero: "01",
-    titulo: "Encontre seu estado",
+    titulo: "Quem propõe as leis",
     texto:
-      "No mapa acima, clique no seu estado e veja quem são os 3 deputados que mais atuam em políticas de proteção à mulher na sua região.",
-    ancora: "#guia-estados",
-    cta: "Ir pro mapa",
+      "Ranking dos deputados que mais apresentam projetos sobre violência contra a mulher — separando o que é proteção real do que é punitivismo ou retrocesso.",
+    ancora: "#ato-01",
+    cta: "Ir pro ranking ↓",
   },
   {
     numero: "02",
-    titulo: "Confira quem propõe",
+    titulo: "Como cada partido vota",
     texto:
-      "No ranking do Ato 01, veja quem tem mais projetos estruturais — e clique pra ver se são protetivos, punitivistas ou regressivos.",
-    ancora: "#ato-01",
-    cta: "Ver ranking",
+      "As votações de mérito no plenário: o que foi decidido, qual foi o placar por partido, e o que significa cada voto. Tudo em linguagem acessível.",
+    ancora: "#ato-02",
+    cta: "Ir pras votações ↓",
   },
   {
     numero: "03",
-    titulo: "Veja como votam",
+    titulo: "Quem atua contra",
     texto:
-      "No Ato 02, entenda as votações de mérito e veja o placar por partido. O voto nominal é público — confira o do seu deputado.",
-    ancora: "#ato-02",
-    cta: "Ver votações",
+      "Os parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo como resposta, sustação de resoluções que protegem crianças.",
+    ancora: "#ato-03",
+    cta: "Ver regressivas ↓",
   },
   {
     numero: "04",
-    titulo: "Saiba quem atua contra",
+    titulo: "Quem representa seu estado",
     texto:
-      "No Ato 03, descubra os 62 parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo, sustação de resoluções protetivas.",
-    ancora: "#ato-03",
-    cta: "Ver regressivas",
+      "Mapa do Brasil com os 3 deputados que mais se destacam em cada estado. 5 UFs não elegeram nenhuma mulher pra Câmara nesta legislatura.",
+    ancora: "#guia-estados",
+    cta: "Ir pro mapa ↓",
   },
 ];
 
@@ -43,17 +43,17 @@ export default function ComoVotar() {
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
           <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            [ GUIA DE VOTO · OUTUBRO 2026 ]
+            [ COMO USAR ESTE SITE ]
           </p>
           <ScrollFloat
             as="h2"
-            text="O que fazer"
+            text="Antes de"
             stagger={40}
             className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-text)] lg:text-7xl"
           />
           <ScrollFloat
             as="h2"
-            text="com essa informação."
+            text="continuar."
             stagger={40}
             delay={400}
             className="block text-3xl font-black leading-[0.9] md:text-5xl text-[var(--color-blue)] lg:text-7xl"
@@ -61,10 +61,11 @@ export default function ComoVotar() {
         </div>
 
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
-          Este observatório existe pra você chegar na urna sabendo quem
-          fez o quê. Não é sobre esquerda ou direita — é sobre quem
-          propôs lei que protege e quem assinou lei que retira direitos.
-          4 passos pra usar antes de votar:
+          Abaixo você vai encontrar dados reais sobre quem propõe leis
+          de proteção à mulher, como cada partido vota, quem atua contra
+          e quem representa o seu estado. Tudo extraído direto da API da
+          Câmara dos Deputados. Aqui está um guia rápido do que você vai
+          ver:
         </p>
 
         <div className="mt-12 grid gap-4 md:grid-cols-2">
