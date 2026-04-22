@@ -194,7 +194,7 @@ export default function TimelineLegislativa() {
           return (
             <div className="relative mt-12 md:mt-0 md:flex md:gap-12">
               {/* Sticky big number */}
-              <div className="sticky top-0 z-10 bg-[var(--color-dark)] pb-4 pt-4 md:top-24 md:w-1/2 md:self-start md:pt-0">
+              <div className="pb-4 pt-4 md:sticky md:top-24 md:z-10 md:w-1/2 md:self-start md:bg-[var(--color-dark)] md:pt-0">
                 <div className="transition-colors duration-700 offset-left" style={{ color: current.color }}>
                   <BigNumber value={current.value} />
                 </div>
