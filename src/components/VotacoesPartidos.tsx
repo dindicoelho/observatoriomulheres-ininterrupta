@@ -162,15 +162,18 @@ export default function VotacoesPartidos() {
       });
     });
 
-    // Sort groups: mérito first, then by principal date desc
-    return groups.sort((a, b) => {
-      if (a.temMerito && !b.temMerito) return -1;
-      if (b.temMerito && !a.temMerito) return 1;
-      return b.principal.data.localeCompare(a.principal.data);
-    });
+    // Sort groups: mérito first, then by principal date desc. Top 10 only.
+    return groups
+      .sort((a, b) => {
+        if (a.temMerito && !b.temMerito) return -1;
+        if (b.temMerito && !a.temMerito) return 1;
+        return b.principal.data.localeCompare(a.principal.data);
+      })
+      .slice(0, 10);
   }, []);
 
   const totalVotacoes = DATA.votacoes.length;
+  const totalPLs = new Set(DATA.votacoes.map((v) => v.pl_ref)).size;
 
   return (
     <section className="bg-[var(--color-bg-alt)] px-6 py-24">
@@ -197,12 +200,8 @@ export default function VotacoesPartidos() {
         <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
           <ScrollReveal
             as="p"
-            text={`Na atual legislatura (2023-2026), ${grupos.length} proposições sobre violência contra a mulher foram a votação nominal no plenário da Câmara, totalizando ${totalVotacoes} votações entre decisões de mérito e procedurais (requerimentos, destaques, recursos).`}
+            text={`Das mais de mil proposições sobre a mulher na atual legislatura, ${totalPLs} chegaram a votação nominal no plenário da Câmara — totalizando ${totalVotacoes} votações. Estas são as ${grupos.length} mais recentes. Clique para entender exatamente o que foi votado.`}
           />
-          <p className="text-base text-[var(--color-text-tertiary)]">
-            Cada card consolida o projeto, a votação principal e os
-            procedimentos relacionados. Clique para expandir.
-          </p>
         </div>
 
         <div className="mt-10 space-y-4">
