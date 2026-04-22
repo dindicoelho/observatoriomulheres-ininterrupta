@@ -7,20 +7,48 @@ export default function Footer() {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
-    const url = "https://mapa-violencia-mulher.vercel.app";
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "Observatório Político da Violência contra a Mulher",
-          url,
-        });
-      } else {
+    const url = typeof window !== "undefined"
+      ? window.location.origin
+      : "https://mapa-violencia-mulher.vercel.app";
+    const title = "Observatório Político da Violência contra a Mulher";
+
+    // 1. Tentar Web Share API (mobile + navegadores que suportam)
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title, url });
+        return;
+      } catch {
+        // Usuário cancelou ou falhou — segue pro fallback
+      }
+    }
+
+    // 2. Tentar clipboard
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      try {
         await navigator.clipboard.writeText(url);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        setTimeout(() => setCopied(false), 2500);
+        return;
+      } catch {
+        // Sem permissão — segue pro fallback
       }
+    }
+
+    // 3. Fallback: execCommand (funciona em mais contextos)
+    try {
+      const input = document.createElement("input");
+      input.value = url;
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
     } catch {
-      // User cancelled or unsupported
+      // Último recurso: abrir prompt
+      window.prompt("Copie o link:", url);
     }
   };
 
