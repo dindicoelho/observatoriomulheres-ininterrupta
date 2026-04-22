@@ -4,6 +4,7 @@ import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
 import ArticuladoresMap from "@/components/ArticuladoresMap";
 import ProducaoRegressiva from "@/components/ProducaoRegressiva";
+import ComoVotar from "@/components/ComoVotar";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -52,6 +53,9 @@ export default function Home() {
 
         {/* ATO 04 — Timeline legislativa */}
         <TimelineLegislativa />
+
+        {/* Guia de voto */}
+        <ComoVotar />
       </main>
       <Footer />
     </>
