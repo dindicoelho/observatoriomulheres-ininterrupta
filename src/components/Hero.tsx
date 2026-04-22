@@ -50,10 +50,9 @@ export default function Hero() {
       <div className="border-t border-white/10 px-6 py-8 md:px-12">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <p className="max-w-xl text-sm leading-relaxed text-white/60 md:text-base">
-            Este observatório rastreia automaticamente o que a Câmara
-            dos Deputados produz sobre o tema. O objetivo é te dar o que
-            precisa{" "}
-            <strong className="text-white">antes de votar em outubro</strong>.
+            Dados públicos da Câmara dos Deputados, atualizados
+            automaticamente.{" "}
+            <strong className="text-white">1.059 proposições. 389 deputados. 171 regressivas expostas.</strong>
           </p>
           <div className="flex items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-widest text-white/50">

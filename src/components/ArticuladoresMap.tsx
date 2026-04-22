@@ -395,10 +395,10 @@ export default function ArticuladoresMap() {
         </div>
 
         <p className="mt-10 font-mono-data text-xs text-[var(--color-text-tertiary)]">
-          Fontes: autoria de PLs e votações da API da Câmara dos Deputados
-          · Considera {DATA.total_deputados} deputados ativos na
-          57ª legislatura. Atualização automática quando TSE publicar
-          candidatos 2026.
+          Fonte: API de Dados Abertos da Câmara dos Deputados ·
+          {DATA.total_deputados} deputados · Legislatura 2023-2026 ·
+          Score: (estr×2 + incr) × peso_sexo · Atualização automática
+          diária. Filtro de candidatos 2026 ativa quando TSE publicar.
         </p>
       </div>
     </section>

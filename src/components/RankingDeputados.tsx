@@ -882,9 +882,9 @@ export default function RankingDeputados() {
 
 
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
-            Fonte: API de Dados Abertos da Câmara dos Deputados. Autoria
-            principal de cada proposição. 57ª legislatura: janeiro de 2023
-            a dezembro de 2026. Deputados com 5+ PLs sobre o tema.
+            Fonte: API de Dados Abertos da Câmara dos Deputados ·
+            Autoria principal · Legislatura 2023-2026 · Deputados com 3+ PLs ·
+            Atualização automática diária.
           </p>
         </div>
       </section>

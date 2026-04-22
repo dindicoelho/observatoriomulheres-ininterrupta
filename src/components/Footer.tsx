@@ -64,18 +64,18 @@ export default function Footer() {
             className="text-3xl font-medium leading-[1.1] md:text-5xl lg:text-6xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Volte aqui sempre que precisar.
+            Agora você sabe.
             <br />
             <span className="text-[var(--color-neon)]">
-              Compartilhe. Vote conscientemente.
+              O que vai fazer com isso?
             </span>
           </h2>
         </div>
 
         <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
-          Este observatório será atualizado sempre que houver nova
-          movimentação no Congresso. Salve nos favoritos — volte antes
-          de votar em outubro.
+          Este site é atualizado automaticamente toda vez que a Câmara
+          publica algo novo. Salve nos favoritos — e mande pra quem
+          precisa ver antes de outubro.
         </p>
 
         {/* Actions */}

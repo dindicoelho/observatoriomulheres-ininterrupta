@@ -533,11 +533,9 @@ export default function VotacoesPartidos() {
         </div>
 
         <p className="mt-10 font-mono-data text-xs text-[var(--color-text-tertiary)]">
-          Fonte: API de Dados Abertos da Câmara dos Deputados. Votações
-          nominais em plenário entre 2023 e 2026 sobre proposições de
-          violência contra a mulher com mais de 50 votos contestados.
-          Agrupadas por proposição — votações procedurais de cada PL
-          estão listadas dentro do card.
+          Fonte: API de Dados Abertos da Câmara dos Deputados ·
+          Votações nominais em plenário · Legislatura 2023-2026 ·
+          Interpretações editoriais. Atualização automática diária.
         </p>
       </div>
     </section>

@@ -667,10 +667,10 @@ export default function TimelineLegislativa() {
         </div>
 
         <p className="mt-12 font-mono-data text-xs text-white/40">
-          Fonte: API de Dados Abertos da Câmara dos Deputados. Busca por
-          &ldquo;feminicídio&rdquo;, &ldquo;Maria da Penha&rdquo;,
-          &ldquo;violência contra mulher&rdquo; e &ldquo;violência doméstica&rdquo;
-          entre 2019 e 2026. Classificação automática por análise de ementa.
+          Fonte: API de Dados Abertos da Câmara dos Deputados ·
+          ~80 palavras-chave sobre direitos da mulher ·
+          Classificação por forma + postura (regex + LLM) ·
+          Atualização automática diária.
         </p>
       </div>
     </section>
