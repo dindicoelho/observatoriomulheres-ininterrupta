@@ -77,7 +77,8 @@ def main():
         partidos[p]["deputados"] += 1
 
         for pl in d["pls"]:
-            total_pls_set.add(pl["id"])
+            if pl.get("stance") != "regressivo":
+                total_pls_set.add(pl["id"])
 
     autoria["totalDeputados"] = len(deps)
     autoria["totalPls"] = len(total_pls_set)
