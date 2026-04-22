@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import autoriaData from "../data/autoria.json";
 import coerenciaData from "../data/coerencia.json";
 import relatoriaData from "../data/relatoria.json";
+import candidatosData from "../data/candidatos_2026.json";
 import ScrollFloat from "./ScrollFloat";
 import Counter from "./Counter";
 import AnimatedList from "./AnimatedList";
@@ -493,12 +494,20 @@ function GlossarioPLs() {
   );
 }
 
+const CANDIDATOS = new Set(
+  (candidatosData as { candidatos_ids: number[] }).candidatos_ids
+);
+const TSE_DISPONIVEL = CANDIDATOS.size > 0;
+
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
+  const [soCandidatos, setSoCandidatos] = useState(false);
   const minPls = 3;
 
-  const filtered = DATA.deputados.filter((d) => d.total >= minPls);
+  const filtered = DATA.deputados.filter(
+    (d) => d.total >= minPls && (!soCandidatos || CANDIDATOS.has(d.id))
+  );
 
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "total") return b.total - a.total;
@@ -687,7 +696,7 @@ export default function RankingDeputados() {
             );
           })()}
 
-          {/* Sort controls */}
+          {/* Sort controls + filtro candidatos */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
               Ordenar por:
@@ -724,6 +733,29 @@ export default function RankingDeputados() {
                 % estruturais
               </button>
             </div>
+
+            {/* Toggle candidatos 2026 */}
+            <button
+              onClick={() => TSE_DISPONIVEL && setSoCandidatos(!soCandidatos)}
+              className={`ml-auto rounded-full px-4 py-1.5 text-xs transition-colors ${
+                !TSE_DISPONIVEL
+                  ? "cursor-not-allowed border border-dashed border-[var(--color-text-tertiary)]/30 text-[var(--color-text-tertiary)]"
+                  : soCandidatos
+                    ? "bg-[var(--color-blue)] text-white"
+                    : "border border-[var(--color-blue)]/30 text-[var(--color-blue)] hover:bg-[var(--color-blue)]/10"
+              }`}
+              title={
+                TSE_DISPONIVEL
+                  ? "Filtrar só candidatos à reeleição em 2026"
+                  : "Aguardando publicação do TSE (previsto jun-ago 2026)"
+              }
+            >
+              {TSE_DISPONIVEL
+                ? soCandidatos
+                  ? "✓ Só candidatos 2026"
+                  : "Filtrar candidatos 2026"
+                : "Candidatos 2026 · aguardando TSE"}
+            </button>
           </div>
 
           {/* Ranking */}
