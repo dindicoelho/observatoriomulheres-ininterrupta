@@ -12,6 +12,12 @@ type Proposicao = {
   ementa: string;
   data: string;
   categoria: "simbólica" | "incremental" | "estrutural";
+  destino?: {
+    categoria: string;
+    situacao?: string | null;
+    orgao?: string;
+    data_hora?: string;
+  };
 };
 
 type LegislativoJSON = {
@@ -92,8 +98,97 @@ function BigNumber({ value }: { value: number }) {
   );
 }
 
+function DestinoModal({
+  label,
+  color,
+  proposicoes,
+  onClose,
+}: {
+  label: string;
+  color: string;
+  proposicoes: Proposicao[];
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", h); document.body.style.overflow = ""; };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/80 backdrop-blur-sm md:items-center md:px-4"
+      onClick={onClose}
+    >
+      <div
+        className="flex h-full w-full flex-col overflow-hidden bg-[#0A0A0A] shadow-2xl md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-3 border-b border-white/10 p-6">
+          <span
+            className="inline-block h-4 w-4 flex-shrink-0 rounded-sm"
+            style={{ backgroundColor: color }}
+          />
+          <div className="flex-1">
+            <h3
+              className="text-xl font-bold text-white"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {label}
+            </h3>
+            <p className="font-mono-data text-xs text-white/50">
+              {proposicoes.length} proposições
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="flex-shrink-0 rounded-full bg-white/5 p-2 hover:bg-white/10"
+            aria-label="Fechar"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M5 5l10 10M15 5L5 15" stroke="white" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          <ul className="divide-y divide-white/5">
+            {proposicoes.slice(0, 50).map((p) => (
+              <li key={p.id} className="p-4 hover:bg-white/[0.03]">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono-data text-sm font-bold text-white">
+                    {p.tipo} {p.numero}/{p.ano}
+                  </span>
+                  <span className="font-mono-data text-xs text-white/40">{p.data}</span>
+                </div>
+                <p className="mt-1 text-sm leading-relaxed text-white/70">
+                  {p.ementa.length > 250 ? p.ementa.slice(0, 250) + "…" : p.ementa}
+                </p>
+                <a
+                  href={`https://www.camara.leg.br/propostas-legislativas/${p.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 inline-block font-mono-data text-xs text-white/40 hover:text-white"
+                >
+                  Ver na Câmara →
+                </a>
+              </li>
+            ))}
+            {proposicoes.length > 50 && (
+              <li className="p-4 text-center font-mono-data text-xs text-white/40">
+                Mostrando 50 de {proposicoes.length}. Consulte a API pra lista completa.
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TimelineLegislativa() {
   const [phase, setPhase] = useState(0);
+  const [destinoModal, setDestinoModal] = useState<{ label: string; color: string; key: string } | null>(null);
 
   // Scroll-triggered phases
   useEffect(() => {
@@ -128,7 +223,23 @@ export default function TimelineLegislativa() {
   const percentEstrutural = (DATA.resumo.estrutural / DATA.total) * 100;
 
 
+  // PLs filtradas por destino pro modal
+  const destinoProposicoes = destinoModal
+    ? DATA.proposicoes.filter(
+        (p) => p.destino?.categoria === destinoModal.key
+      )
+    : [];
+
   return (
+    <>
+      {destinoModal && (
+        <DestinoModal
+          label={destinoModal.label}
+          color={destinoModal.color}
+          proposicoes={destinoProposicoes}
+          onClose={() => setDestinoModal(null)}
+        />
+      )}
     <section className="dark-section px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
@@ -297,24 +408,39 @@ export default function TimelineLegislativa() {
               <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
                 [ E onde param as outras {total - aprovadas} ]
               </p>
-              <h3
-                className="max-w-2xl text-3xl font-bold leading-tight text-white md:text-4xl"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {d.sem_relator} nunca saíram do zero.
-              </h3>
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/70">
+              <div className="flex items-baseline gap-4">
+                <p
+                  className="leading-none text-[var(--color-blood)]"
+                  style={{
+                    fontFamily: "var(--font-display-condensed)",
+                    fontSize: "clamp(4rem, 12vw, 10rem)",
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  {((d.tramitando / total) * 100).toFixed(0)}%
+                </p>
+                <h3
+                  className="max-w-md text-2xl font-bold leading-tight text-white md:text-3xl"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  estão paradas em comissões.
+                </h3>
+              </div>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
                 Das {total} proposições da atual legislatura,{" "}
+                <strong className="text-white">{d.tramitando}</strong>{" "}
+                ainda tramitam em comissões sem previsão de votação. Outras{" "}
                 <strong
                   className="text-[var(--color-blood)]"
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
-                  {d.sem_relator} ({pctSemRelator.toFixed(1)}%)
+                  {d.sem_relator}
                 </strong>{" "}
-                ainda aguardam a designação de um relator —
-                são propostas que nunca começaram a ser analisadas. Outras
-                tantas estão paradas em comissões ou prontas para pauta que
-                não chega.
+                nunca receberam relator — propostas que nunca começaram a
+                ser analisadas. Só{" "}
+                <strong className="text-[var(--color-neon)]">{aprovadas}</strong>{" "}
+                viraram lei em 3 anos.
+                {" "}Clique em cada categoria pra ver as proposições.
               </p>
 
               {/* Stacked bar */}
@@ -340,9 +466,16 @@ export default function TimelineLegislativa() {
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {destinos.map((dest) => (
-                  <div
+                  <button
                     key={dest.key}
-                    className="flex items-start gap-3 rounded border border-white/10 bg-white/[0.03] p-3"
+                    onClick={() =>
+                      setDestinoModal({
+                        label: dest.label,
+                        color: dest.color,
+                        key: dest.key,
+                      })
+                    }
+                    className="flex w-full items-start gap-3 rounded border border-white/10 bg-white/[0.03] p-3 text-left transition-colors hover:border-white/25 hover:bg-white/[0.06]"
                   >
                     <span
                       className="mt-1 inline-block h-3 w-3 flex-shrink-0 rounded-sm"
@@ -359,7 +492,7 @@ export default function TimelineLegislativa() {
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
 
@@ -537,5 +670,6 @@ export default function TimelineLegislativa() {
         </p>
       </div>
     </section>
+    </>
   );
 }
