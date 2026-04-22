@@ -16,6 +16,9 @@ export default function Home() {
       <main>
         <Hero />
 
+        {/* Guia de voto — logo após o hero */}
+        <ComoVotar />
+
         {/* ATO 01 — Quem propõe */}
         <div id="ato-01">
           <RankingDeputados />
@@ -53,9 +56,6 @@ export default function Home() {
 
         {/* ATO 04 — Timeline legislativa */}
         <TimelineLegislativa />
-
-        {/* Guia de voto */}
-        <ComoVotar />
       </main>
       <Footer />
     </>
