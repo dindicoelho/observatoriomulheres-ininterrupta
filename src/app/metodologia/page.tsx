@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Metodologia — Observatório Político da Violência contra a Mulher",
   description:
-    "Fontes, métodos e limitações do observatório político. Todos os dados são públicos, extraídos diretamente das APIs da Câmara dos Deputados e do Atlas da Violência.",
+    "Fontes, métodos, classificação e limitações. Dados públicos da Câmara dos Deputados, classificados por forma e postura com regex + LLM. Atualização automática diária.",
 };
 
 export default function MetodologiaPage() {
@@ -14,7 +14,7 @@ export default function MetodologiaPage() {
         <div className="mx-auto max-w-3xl">
           <Link
             href="/"
-            className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-tertiary)] hover:text-[var(--color-blood)]"
+            className="font-mono-data text-xs uppercase tracking-widest text-[var(--color-text-tertiary)] hover:text-[var(--color-blue)]"
           >
             ← Voltar ao observatório
           </Link>
@@ -25,106 +25,95 @@ export default function MetodologiaPage() {
             Metodologia
           </h1>
           <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-            Como este observatório foi construído, de onde vêm os dados
-            políticos, o que foi classificado editorialmente e quais são
-            as limitações.
+            De onde vêm os dados, como são classificados, quais são as
+            escolhas editoriais e o que não está coberto.
           </p>
         </div>
       </header>
 
       <main className="px-6 py-16">
         <article className="mx-auto max-w-3xl space-y-14 leading-relaxed text-[var(--color-text)]">
-          {/* Sobre o projeto */}
+          {/* Sobre */}
           <section className="space-y-5">
             <h2
-              className="text-3xl font-black text-[var(--color-text)]"
+              className="text-3xl font-black"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Sobre este observatório
+              O que é este site
             </h2>
 
             <p className="text-base md:text-lg">
-              Este observatório foi criado por Dindi Coelho como parte da{" "}
-              <strong>Ininterrupta</strong> (
+              Este observatório foi criado por{" "}
+              <strong>Dindi Coelho</strong> como parte da{" "}
               <a
                 href="https://instagram.com/ininterrupta.sys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-blood)] hover:underline"
+                className="text-[var(--color-blue)] hover:underline"
               >
-                @ininterrupta.sys
+                Ininterrupta
               </a>
-              ), uma publicação independente de inteligência cultural. O
-              projeto não tem fins lucrativos e não recebe financiamento
-              de nenhuma instituição pública ou privada.
+              , uma publicação independente. Não tem fins lucrativos e não
+              recebe financiamento de nenhuma instituição.
             </p>
 
             <p className="text-base md:text-lg">
-              A premissa é simples:{" "}
+              A premissa:{" "}
               <strong>
-                os números da violência contra a mulher no Brasil já são
-                conhecidos.
+                todo mundo já sabe que violência contra mulher é crime.
               </strong>{" "}
-              O que quase ninguém mostra é a camada política que decide o
-              que fazer com esses números — quem propõe leis sobre o tema,
-              quem vota a favor, quem vota contra, quem engaveta e quem
-              realmente transforma proposta em lei. Este observatório
-              cruza seis anos de dados da Câmara dos Deputados com a
-              composição demográfica do parlamento para revelar essa
-              camada.
+              Quase ninguém sabe o que a Câmara dos Deputados faz — ou
+              deixa de fazer — sobre isso. Este site cruza dados da
+              legislatura 2023-2026 pra mostrar quem propõe, quem vota,
+              quem engaveta, quem protege e quem retrocede.
             </p>
 
             <p className="text-base md:text-lg">
-              Os dados vêm diretamente das APIs de Dados Abertos da
-              Câmara, intermediadas pelo{" "}
+              Todos os dados vêm diretamente da{" "}
               <a
-                href="https://github.com/jxnxts/mcp-brasil"
+                href="https://dadosabertos.camara.leg.br"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-blood)] hover:underline"
+                className="text-[var(--color-blue)] hover:underline"
               >
-                mcp-brasil
+                API de Dados Abertos da Câmara
               </a>
-              , um servidor aberto de protocolo que conecta APIs públicas
-              brasileiras em uma interface unificada. Nenhum dado foi
-              modelado, estimado ou projetado — os números aparecem no
-              observatório como estão publicados pelos órgãos públicos.
+              . Nenhum dado foi modelado, estimado ou projetado. Os
+              números aparecem como publicados pelo órgão — o trabalho
+              editorial está na <strong>classificação</strong> e na{" "}
+              <strong>interpretação</strong>, detalhadas abaixo.
             </p>
+          </section>
 
-            <p className="text-base md:text-lg">
-              Quatro camadas de trabalho editorial foram aplicadas:
-              a <strong>classificação por forma</strong> (simbólica,
-              incremental, estrutural); a{" "}
-              <strong>classificação por postura</strong> (protetiva,
-              punitivista, regressiva); a{" "}
-              <strong>interpretação</strong> do que significa votar SIM ou
-              NÃO em cada votação nominal; e a{" "}
-              <strong>agregação</strong> de métricas por gênero (autoria,
-              relatoria, votos). Tudo isso está detalhado abaixo.
-            </p>
-
-            <div className="mt-6 rounded-2xl border border-[var(--color-blood)]/20 bg-[var(--color-blood)]/5 p-6">
-              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blood)]">
-                [ Aviso editorial ]
+          {/* Postura editorial */}
+          <section className="space-y-5">
+            <div className="rounded-2xl border border-[var(--color-blue)]/20 bg-[var(--color-blue)]/5 p-6">
+              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
+                [ Postura editorial ]
               </p>
-              <p className="mt-3 text-base leading-relaxed text-[var(--color-text)]">
-                Este observatório parte de uma premissa explícita: a
-                violência contra a mulher é um problema estrutural que
-                deve ser enfrentado com políticas públicas protetivas,
-                não com punitivismo ou retrocesso em direitos
-                reprodutivos. Por isso, PLs classificadas como{" "}
-                <strong>regressivas</strong> (criminalização do aborto
-                legal, notificação compulsória à polícia de vítimas de
-                estupro que fazem aborto, sustação de resoluções
-                protetivas, armamentismo como resposta à violência
-                doméstica, controle sobre a vítima) são{" "}
-                <strong>removidas do ranking</strong>. PLs{" "}
-                <strong>punitivistas</strong> (aumento de pena sem
-                proteção material adicional) contam como produção, mas
-                recebem selo específico. A classificação é transparente
-                e revisável — os padrões estão publicados em{" "}
+              <p className="mt-3 text-base leading-relaxed">
+                Este observatório parte de uma premissa explícita:{" "}
+                <strong>
+                  violência contra a mulher é um problema estrutural que
+                  deve ser enfrentado com políticas públicas protetivas.
+                </strong>{" "}
+                Punitivismo (aumentar pena sem proteger mais) e retrocesso
+                em direitos reprodutivos não são tratados como avanço.
+              </p>
+              <p className="mt-3 text-base leading-relaxed">
+                Na prática: proposições classificadas como{" "}
+                <strong className="text-red-700">regressivas</strong> são{" "}
+                <strong>removidas do ranking e subtraem pontos</strong> do
+                score do autor. Proposições{" "}
+                <strong className="text-amber-700">punitivistas</strong>{" "}
+                contam como produção mas recebem selo. A classificação é
+                transparente e auditável — regex em{" "}
                 <code className="font-mono-data text-sm">
                   scripts/classify_stance.py
+                </code>
+                , LLM em{" "}
+                <code className="font-mono-data text-sm">
+                  scripts/classify_stance_llm.py
                 </code>
                 .
               </p>
@@ -134,388 +123,269 @@ export default function MetodologiaPage() {
           {/* Fontes */}
           <section className="space-y-5">
             <h2
-              className="text-3xl font-black text-[var(--color-text)]"
+              className="text-3xl font-black"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Fontes de dados
+              De onde vêm os dados
             </h2>
 
-            {/* Câmara */}
             <div className="space-y-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Câmara dos Deputados
               </h3>
               <p className="text-base md:text-lg">
-                A{" "}
-                <a
-                  href="https://dadosabertos.camara.leg.br"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-blood)] hover:underline"
-                >
-                  API de Dados Abertos da Câmara
-                </a>{" "}
-                é a fonte primária do observatório. Dela vêm:
+                Fonte primária e única fonte de dados legislativos.
+                Consultamos diariamente:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    1.142 proposições
+                    ~21.000 proposições brutas
                   </strong>{" "}
-                  apresentadas na 57ª legislatura (2023–2026) contendo
-                  no mínimo uma de ~80 palavras-chave ligadas a direitos
-                  das mulheres — violência contra a mulher, violência
-                  sexual, violência doméstica, Maria da Penha,
-                  feminicídio, transfeminicídio, aborto, assédio,
-                  violência política de gênero, saúde da mulher, mães
-                  solo, entre outras. Para cada PL: identificador, tipo,
-                  número, ano, ementa, data, autoria, postura (protetiva,
-                  punitivista ou regressiva) e status de tramitação.
+                  da 57ª legislatura (2023-2026), filtradas por ~80
+                  palavras-chave ligadas a direitos das mulheres. Após
+                  filtro:{" "}
+                  <strong className="text-[var(--color-text)]">
+                    ~1.060 proposições protetivas e punitivistas
+                  </strong>{" "}
+                  + ~170 regressivas removidas do ranking.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
                     389 deputados autores
                   </strong>{" "}
-                  dessas PLs, em exercício na atual legislatura, com
-                  dados completos: nome, partido, UF, foto, situação e
-                  sexo.
+                  — com nome, partido, UF, foto, sexo e situação.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    17 votações nominais contestadas
+                    17 votações nominais de plenário
                   </strong>{" "}
-                  (com mais de 50 votantes registrados) em plenário
-                  entre 2023 e 2026 sobre essas proposições. Para cada
-                  votação: descrição, placar, voto individual de cada
-                  parlamentar e tramitação associada.
+                  sobre 6 PLs, com voto individual, placar por partido e
+                  por gênero, autor e relator de cada proposição.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    Tramitação de cada PL
+                    Tramitação individual
                   </strong>{" "}
-                  das 1.142 proposições: data de designação de relator,
-                  nome do relator, apresentação de pareceres e situação
-                  atual.
+                  de cada PL — se virou lei, se está em comissão, se nunca
+                  recebeu relator.
                 </li>
               </ul>
             </div>
 
-            {/* IBGE e contexto */}
-            <div className="space-y-4 pt-6">
+            <div className="space-y-4 pt-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                IBGE e composição do Congresso
+                Composição da Câmara
               </h3>
               <p className="text-base md:text-lg">
-                Para contextualizar proporções de gênero, utilizamos:
-              </p>
-              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
-                <li>
-                  <strong className="text-[var(--color-text)]">
-                    Composição da Câmara 57ª legislatura
-                  </strong>{" "}
-                  (2023–2026): 513 deputados, dos quais 91 são mulheres
-                  (17,7%). Fonte: Secretaria da Mulher da Câmara dos
-                  Deputados.
-                </li>
-                <li>
-                  <strong className="text-[var(--color-text)]">
-                    IBGE — Estimativas populacionais
-                  </strong>{" "}
-                  e <strong className="text-[var(--color-text)]">Censo 2022</strong>{" "}
-                  para dados populacionais usados na busca municipal.
-                </li>
-              </ul>
-            </div>
-
-            {/* Atlas (agora secundário) */}
-            <div className="space-y-4 pt-6">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Atlas da Violência (IPEA/FBSP)
-              </h3>
-              <p className="text-base md:text-lg">
-                Usado como fonte contextual. O número do Hero
-                (3.903 mulheres assassinadas em 2023) vem da série 40 do
-                Atlas, que por sua vez se alimenta do Sistema de
-                Informações sobre Mortalidade (SIM) do Ministério da
-                Saúde. O Atlas também é citado na busca municipal
-                (Ato 04) para a taxa de homicídios por 100 mil mulheres
-                de cada cidade.
-              </p>
-              <p className="text-base md:text-lg">
-                O observatório{" "}
-                <strong>não discute a demografia da violência</strong>{" "}
-                (raça, geografia, escalonamento) porque esses dados já são
-                amplamente conhecidos e cobertos em outros lugares. O
-                foco aqui é o gap entre o problema e a resposta política.
+                A Câmara tem 513 deputados na 57ª legislatura; 91 são
+                mulheres (17,7%). Esse dado — da Secretaria da Mulher da
+                Câmara — é a base dos contrastes de gênero do site.
+                Cinco estados (AL, AM, PB, PI, TO) não elegeram nenhuma
+                deputada.
               </p>
             </div>
           </section>
 
-          {/* Metodologia */}
+          {/* Métodos */}
           <section className="space-y-5">
             <h2
-              className="text-3xl font-black text-[var(--color-text)]"
+              className="text-3xl font-black"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Métodos
+              Como os dados são tratados
             </h2>
 
+            {/* Keywords */}
             <div className="space-y-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Classificação das proposições
+                1. Filtragem por palavras-chave
               </h3>
               <p className="text-base md:text-lg">
-                As 1.142 proposições foram classificadas editorialmente
-                em duas dimensões: <strong>forma</strong> (simbólica,
-                incremental, estrutural) e <strong>postura</strong>{" "}
-                (protetiva, punitivista, regressiva).
+                Buscamos na ementa de cada proposição ao menos uma de ~80
+                expressões: violência contra a mulher, violência doméstica,
+                violência sexual, Maria da Penha, feminicídio,
+                transfeminicídio, aborto, assédio, violência política de
+                gênero, saúde da mulher, mãe solo, mulher trans, mulher
+                indígena, entre outras. A lista completa está em{" "}
+                <code className="font-mono-data text-sm">
+                  scripts/rebuild_autoria.py
+                </code>
+                .
               </p>
-              <p className="text-base md:text-lg font-semibold text-[var(--color-text)]">
-                Forma:
+            </div>
+
+            {/* Forma */}
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                2. Classificação por forma
+              </h3>
+              <p className="text-base md:text-lg">
+                Cada proposição é classificada automaticamente (regex
+                sobre a ementa) em:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
-                  <strong style={{ color: "#6B6B64" }}>Simbólicas</strong>{" "}
-                  — Criação de dias nacionais, homenagens, denominações
-                  de prédios e pontes, inclusão em calendário oficial,
-                  campanhas de conscientização.
+                  <strong style={{ color: "#6B6B64" }}>Simbólica</strong>{" "}
+                  — dias nacionais, homenagens, denominações, campanhas.
                 </li>
                 <li>
-                  <strong style={{ color: "#3B82D4" }}>Incrementais</strong>{" "}
-                  — Alterações pontuais em leis existentes (principalmente
-                  na Lei Maria da Penha), ajustes em tipos penais,
-                  aumentos de pena, mudanças procedimentais.
+                  <strong style={{ color: "#3B82D4" }}>Incremental</strong>{" "}
+                  — altera lei existente: ajuste de pena, mudança
+                  procedimental, inclusão de artigo.
                 </li>
                 <li>
-                  <strong style={{ color: "#1DB389" }}>Estruturais</strong>{" "}
-                  — Criação de programas nacionais, fundos, políticas de
-                  Estado, pensões, casas-abrigo, delegacias
-                  especializadas, patrulhas Maria da Penha, monitoramento
-                  eletrônico obrigatório, centros de referência.
+                  <strong style={{ color: "#1DB389" }}>Estrutural</strong>{" "}
+                  — cria programa nacional, fundo, política de Estado,
+                  pensão, sistema.
                 </li>
               </ul>
+            </div>
 
-              <p className="text-base md:text-lg font-semibold text-[var(--color-text)]">
-                Postura:
+            {/* Postura */}
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                3. Classificação por postura
+              </h3>
+              <p className="text-base md:text-lg">
+                Duas camadas: primeiro uma regex conservadora, depois
+                refinamento por LLM (Claude Haiku 4.5) sobre as PLs que
+                a regex marcou como protetivas. Resultados:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
                   <strong className="text-emerald-700">Protetiva</strong>{" "}
-                  — Amplia direitos, cria política pública, melhora
-                  atendimento, protege a vítima. É o padrão na ausência
-                  de sinais contrários.
+                  — amplia direitos, cria política pública, protege a
+                  vítima. Padrão quando não há sinal contrário.
                 </li>
                 <li>
                   <strong className="text-amber-700">Punitivista</strong>{" "}
-                  — Foca em aumentar pena, ampliar rigor penal, criar
-                  cadastros de condenados. Não melhora necessariamente
-                  a proteção material; é uma resposta pela via do
-                  Direito Penal.
+                  — foca em aumentar pena, criar cadastro de condenados,
+                  castração química, regime fechado. Não melhora a
+                  proteção material. Conta como produção mas recebe selo.
                 </li>
                 <li>
                   <strong className="text-red-700">Regressiva</strong>{" "}
-                  — Restringe direitos conquistados, controla ou pune a
-                  vítima, criminaliza aborto legal, susta resoluções
-                  protetivas. Mesmo mencionando &ldquo;mulher&rdquo; na
-                  ementa, atua contra direitos reprodutivos e de gênero.
+                  — criminaliza aborto legal, obriga notificação à polícia
+                  de vítima de estupro que fez aborto, susta resoluções
+                  que protegem crianças, autoriza porte de arma como
+                  resposta à violência doméstica, condiciona BPC à
+                  renúncia do aborto legal.{" "}
+                  <strong>
+                    Removida do ranking e subtrai 2 pontos do score.
+                  </strong>
                 </li>
               </ul>
               <p className="text-base md:text-lg">
-                A classificação é automática, por correspondência de
-                padrões regulares sobre a ementa de cada PL. É uma
-                primeira camada de filtro — o contexto específico de
-                cada proposição não é analisado juridicamente. PLs
-                classificados como regressivos são{" "}
-                <strong>removidos dos rankings</strong>; punitivistas
-                contam como produção mas recebem selo específico. Na
-                dúvida, a postura padrão é protetiva.
+                O LLM roda semanalmente e encontra regressivas/punitivistas
+                sutis que a regex perde (ex: PLs que condicionam benefício
+                financeiro à renúncia do aborto legal, ou que criminalizam
+                falsas acusações de violência doméstica como obstáculo
+                processual). Cada reclassificação inclui a justificativa
+                do modelo no JSON — auditável por PL.
               </p>
             </div>
 
+            {/* Votações */}
             <div className="space-y-4 pt-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Interpretação das votações
+                4. Interpretação das votações
               </h3>
               <p className="text-base md:text-lg">
-                Para cada uma das 17 votações nominais apresentadas,
-                escrevemos manualmente:
+                Para cada votação nominal de plenário, escrevemos:
               </p>
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
-                  Um parágrafo explicando <strong>o projeto de lei</strong>{" "}
-                  em linguagem acessível.
+                  O que o <strong>projeto de lei</strong> faz, em
+                  linguagem acessível.
                 </li>
                 <li>
-                  Uma frase sobre{" "}
-                  <strong>o que exatamente foi votado</strong> (se é o
-                  texto original, um destaque, um recurso ou um
+                  O que <strong>exatamente foi votado</strong> naquela
+                  sessão (texto original, destaque, recurso ou
                   requerimento).
                 </li>
                 <li>
-                  Uma frase sobre{" "}
-                  <strong>o resultado e suas consequências</strong>.
+                  O <strong>resultado</strong> e suas consequências.
                 </li>
                 <li>
-                  Duas frases interpretando{" "}
-                  <strong>o que significa votar SIM</strong> e{" "}
-                  <strong>o que significa votar NÃO</strong>.
+                  O que significa <strong>votar SIM</strong> e o que
+                  significa <strong>votar NÃO</strong> — sem rótulo de
+                  &ldquo;pró&rdquo; ou &ldquo;contra&rdquo;.
                 </li>
               </ul>
               <p className="text-base md:text-lg">
-                Cada votação também é classificada em{" "}
-                <strong>mérito</strong> (quando decide conteúdo
-                substantivo) ou <strong>procedural</strong> (quando
-                decide rito: destaques, requerimentos, recursos). Essa
-                distinção aparece como selo em cada card.
+                Cada votação é classificada em <strong>mérito</strong>{" "}
+                (decide conteúdo substantivo) ou{" "}
+                <strong>procedural</strong> (decide rito). Também
+                mostramos autor e relator de cada proposição.
               </p>
             </div>
 
+            {/* Gênero */}
             <div className="space-y-4 pt-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Índice de coerência por deputado
+                5. Agregação por gênero
               </h3>
               <p className="text-base md:text-lg">
-                Apenas as 4 votações classificadas como <strong>de mérito</strong>{" "}
-                são usadas no cálculo do índice de coerência. Para cada
-                deputado que participou de ao menos uma dessas 4
-                votações, calculamos:
+                O campo <strong>sexo</strong> (M ou F) vem da API da
+                Câmara, declarado pela própria Casa. Cruzamos com autoria,
+                relatoria e votação pra gerar os contrastes do site:
+                mulheres são 17% da Câmara mas respondem por ~45% das PLs
+                sobre o tema e mais de 50% das estruturais.
               </p>
-              <p className="pl-6 font-mono-data text-sm text-[var(--color-text)]">
-                score = (votos SIM ÷ participações) × 100
-              </p>
-              <p className="text-base md:text-lg">
-                Nas 4 votações de mérito analisadas, votar SIM equivale a
-                apoiar a ampliação de proteção às mulheres (inclusão da
-                violência vicária na Maria da Penha, política nacional
-                de assistência jurídica, monitoramento eletrônico
-                obrigatório, criminalização do descumprimento de medida
-                protetiva mesmo com consentimento). Essa equivalência{" "}
-                <strong>é uma escolha editorial</strong> — um leitor pode
-                discordar do sentido de alguma das votações. O índice
-                deve ser lido como amostra, não como juízo final.
-              </p>
-              <p className="text-base md:text-lg">
-                Para ser incluído na listagem &ldquo;100% pró-proteção&rdquo;,
-                o deputado precisa ter votado SIM em pelo menos 3 das 4
-                votações, sem nenhuma recusa. O critério de 3 mínimo
-                evita distorções por participações pontuais.
+              <p className="text-sm text-[var(--color-text-tertiary)]">
+                Limitação: a API não registra identidade de gênero
+                auto-declarada. O observatório herda essa restrição.
               </p>
             </div>
 
+            {/* Score */}
             <div className="space-y-4 pt-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Agregação por gênero
+                6. Score do mapa por estado
               </h3>
               <p className="text-base md:text-lg">
-                Para cada um dos 389 deputados autores e dos ~535
-                deputados que participaram de alguma votação,
-                consultamos a API{" "}
-                <code className="font-mono-data text-sm">/deputados/&#123;id&#125;</code>{" "}
-                para obter o campo <strong>sexo</strong> (M ou F). Esse
-                dado vem declarado pela própria Casa no registro de cada
-                parlamentar. Cruzamos com as métricas de autoria,
-                relatoria e votação para gerar os contrastes que
-                aparecem no site: 17% da composição vs 41% da autoria,
-                79% das relatorias, 2,1× de produtividade per capita.
-              </p>
-            </div>
-
-            <div className="space-y-4 pt-4">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Identificação de relatores
-              </h3>
-              <p className="text-base md:text-lg">
-                Para cada uma das 1.142 PLs da atual legislatura,
-                buscamos todas as tramitações registradas e extraímos
-                eventos cujo despacho começa com &ldquo;Designad[o|a]
-                Relator&rdquo;. O nome do relator e seu partido/UF são
-                parseados por expressão regular. Em seguida, cruzamos
-                com a base de deputados para identificar o sexo.
-              </p>
-              <p className="text-base md:text-lg">
-                Foram identificadas designações de relatoria em mais de
-                300 PLs (algumas passam por múltiplas comissões, então
-                têm relatores diferentes em cada uma). Nos cards de
-                votação, aparece o relator mais recente associado à PL.
-                As demais ainda não tinham relator designado quando os
-                dados foram coletados.
-              </p>
-            </div>
-
-            <div className="space-y-4 pt-4">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Taxa de aprovação
-              </h3>
-              <p className="text-base md:text-lg">
-                Para cada PL da atual legislatura, consultamos o campo{" "}
-                <code className="font-mono-data text-sm">
-                  statusProposicao.descricaoSituacao
-                </code>
-                . Categorizamos em 6 destinos: (1) transformou-se em lei;
-                (2) aprovada na Câmara, tramitando no Senado; (3) pronta
-                para pauta; (4) em tramitação com relator ou parecer;
-                (5) aguardando relator; (6) arquivada, retirada ou
-                devolvida. A categorização é feita por correspondência de
-                padrões sobre a descrição da situação.
-              </p>
-            </div>
-
-            <div className="space-y-4 pt-4">
-              <h3
-                className="text-xl font-bold text-[var(--color-text)]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Score &ldquo;articulador&rdquo; do mapa por estado
-              </h3>
-              <p className="text-base md:text-lg">
-                No mapa &ldquo;quem representa no seu estado&rdquo;, o
+                No mapa &ldquo;Quem representa o seu estado&rdquo;, o
                 top 3 de cada UF é calculado por:
               </p>
-              <p className="pl-6 font-mono-data text-sm text-[var(--color-text)]">
+              <p className="pl-6 font-mono-data text-sm">
                 score = [(estruturais × 2) + incrementais −
                 (regressivos × 2)] × peso_sexo
               </p>
-              <p className="pl-6 font-mono-data text-sm text-[var(--color-text)]">
-                peso_sexo = 2,5 se F · 1,0 se M
+              <p className="pl-6 font-mono-data text-sm">
+                peso_sexo = 2,5 se mulher · 1,0 se homem
               </p>
               <p className="text-base md:text-lg">
-                O peso 2,5 para deputadas mulheres é uma escolha
-                editorial <strong>declarada</strong> para compensar a
-                sub-representação feminina no Congresso (17% da
-                composição). Ela reconhece que uma deputada que chega à
-                Câmara encontra mais barreiras institucionais para
-                apresentar e aprovar PLs do que um deputado homem com o
-                mesmo perfil. Sem essa compensação, o mapa ficaria
-                dominado por quem tem mais acesso, não por quem tem
-                mais atuação relativa. Se o leitor discorda, pode
-                recalcular os ranks com peso 1 em{" "}
+                O peso 2,5 é uma <strong>escolha editorial declarada</strong>{" "}
+                pra compensar que mulheres são 17% da Câmara e enfrentam
+                mais barreiras pra apresentar e aprovar PLs. Sem a
+                compensação, o mapa refletiria acesso institucional, não
+                atuação relativa. Quem discordar pode recalcular com peso
+                1 em{" "}
                 <code className="font-mono-data text-sm">
                   scripts/rebuild_articuladores.py
                 </code>
@@ -523,159 +393,138 @@ export default function MetodologiaPage() {
               </p>
             </div>
 
+            {/* Destino */}
             <div className="space-y-4 pt-4">
               <h3
-                className="text-xl font-bold text-[var(--color-text)]"
+                className="text-xl font-bold"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Pipeline de regeração
+                7. Taxa de aprovação
               </h3>
               <p className="text-base md:text-lg">
-                Todos os dados são reprodutíveis a partir de scripts
-                Python em{" "}
-                <code className="font-mono-data text-sm">scripts/</code>:
+                Pra cada PL, consultamos a situação atual de tramitação e
+                categorizamos em 6 destinos: virou lei, tramita no Senado,
+                pronta pra pauta, em tramitação com relator, aguardando
+                relator, ou arquivada. Cada categoria é clicável no site —
+                mostra as PLs naquele status.
               </p>
-              <ul className="ml-6 list-disc space-y-1.5 text-sm md:text-base text-[var(--color-text-secondary)]">
-                <li>
-                  <code className="font-mono-data">rebuild_autoria.py</code>{" "}
-                  — busca todas as proposições de 2023–2026, filtra por
-                  keywords e classifica por forma.
-                </li>
-                <li>
-                  <code className="font-mono-data">enrich_autoria.py</code>{" "}
-                  — adiciona sexo por deputado, gender_stats,
-                  totalPls.
-                </li>
-                <li>
-                  <code className="font-mono-data">classify_stance.py</code>{" "}
-                  — classifica cada PL em protetiva, punitivista ou
-                  regressiva. Remove regressivas dos totais.
-                </li>
-                <li>
-                  <code className="font-mono-data">
-                    rebuild_articuladores.py
-                  </code>{" "}
-                  — agrega top 3 por UF com peso F × 2,5.
-                </li>
-                <li>
-                  <code className="font-mono-data">
-                    rebuild_legislativo.py
-                  </code>{" "}
-                  — regera o JSON da seção &ldquo;O tipo de lei&rdquo;
-                  com tramitação individual de cada PL.
-                </li>
-                <li>
-                  <code className="font-mono-data">enrich_votacoes.py</code>{" "}
-                  — adiciona autor principal e relator mais recente a
-                  cada votação de plenário.
-                </li>
-              </ul>
             </div>
+          </section>
+
+          {/* Automação */}
+          <section className="space-y-5">
+            <h2
+              className="text-3xl font-black"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Atualização automática
+            </h2>
+
+            <p className="text-base md:text-lg">
+              O site é atualizado <strong>todos os dias às 03:00
+              (horário de Brasília)</strong> via GitHub Actions. O
+              pipeline:
+            </p>
+            <ol className="ml-6 list-decimal space-y-1.5 text-base text-[var(--color-text-secondary)] md:text-lg">
+              <li>Busca todas as proposições 2023-2026 na API da Câmara</li>
+              <li>Filtra por ~80 palavras-chave</li>
+              <li>Classifica por forma (regex) e postura (regex)</li>
+              <li>Agrega por UF, gênero, partido, destino</li>
+              <li>Busca autor e relator de cada votação</li>
+              <li>Tenta buscar candidatos 2026 no TSE (ativa quando publicar)</li>
+              <li>Se dados mudaram, commita e pusha</li>
+              <li>Vercel rebuilda o site automaticamente</li>
+            </ol>
+            <p className="text-base md:text-lg">
+              <strong>Às segundas-feiras</strong>, o LLM (Claude Haiku 4.5)
+              roda sobre as PLs protetivas pra detectar regressivas e
+              punitivistas sutis que a regex perde. Custo: ~$0,85 por
+              execução.
+            </p>
+            <p className="text-base md:text-lg">
+              Todo o código é reprodutível. Os scripts estão em{" "}
+              <code className="font-mono-data text-sm">scripts/</code>{" "}
+              no repositório.
+            </p>
           </section>
 
           {/* Limitações */}
           <section className="space-y-5">
             <h2
-              className="text-3xl font-black text-[var(--color-text)]"
+              className="text-3xl font-black"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Limitações
+              O que não está coberto
             </h2>
 
             <ul className="ml-6 list-disc space-y-3 text-base text-[var(--color-text-secondary)] md:text-lg">
               <li>
                 <strong className="text-[var(--color-text)]">
-                  O observatório cobre apenas a Câmara dos Deputados.
+                  Só Câmara, não Senado.
                 </strong>{" "}
-                Proposições que nasceram no Senado ou medidas provisórias
-                só aparecem se também tramitaram na Câmara. A integração
-                com o Senado está prevista para versão futura.
+                PLs que nasceram no Senado ou medidas provisórias só
+                aparecem se tramitaram na Câmara. Integração com Senado
+                está prevista.
               </li>
               <li>
                 <strong className="text-[var(--color-text)]">
-                  A classificação das PLs é automática.
+                  Classificação automática tem erros.
                 </strong>{" "}
-                Uma proposta pode cair em &ldquo;incremental&rdquo;
-                quando, no contexto mais amplo, teria efeitos estruturais
-                — ou o contrário. A classificação deve ser lida como
-                filtro agregado, não como juízo sobre cada PL
-                individualmente.
+                Uma PL pode ser marcada como incremental quando teria
+                efeitos estruturais. A classificação por postura (regex +
+                LLM) é conservadora: na dúvida, marca como protetiva. Mas
+                LLMs alucinam — cada reclassificação tem justificativa
+                auditável no JSON.
               </li>
               <li>
                 <strong className="text-[var(--color-text)]">
-                  A interpretação SIM/NÃO é editorial.
+                  Interpretação SIM/NÃO é editorial.
                 </strong>{" "}
-                Nas votações de &ldquo;Mantido o texto&rdquo;, um voto
-                NÃO pode significar tanto &ldquo;quero enfraquecer
-                proteção&rdquo; quanto &ldquo;quero uma proteção ainda
-                mais forte que foi rejeitada&rdquo;. Onde essa ambiguidade
-                existe, ela é mencionada explicitamente no card da
-                votação.
+                Um voto NÃO pode significar &ldquo;quero enfraquecer
+                proteção&rdquo; ou &ldquo;quero uma proteção ainda mais
+                forte&rdquo;. O site explica o contexto em cada card, mas
+                o leitor deve ler antes de concluir.
               </li>
               <li>
                 <strong className="text-[var(--color-text)]">
-                  O índice de coerência não cobre todo o histórico
-                  parlamentar
-                </strong>
-                . São apenas 4 votações, escolhidas por serem as mais
-                contestadas em plenário sobre o tema na atual
-                legislatura. Um deputado pode ter votado consistentemente
-                em comissões (dados não exibidos aqui) de forma
-                diferente do que aparece em plenário.
+                  Gênero binário.
+                </strong>{" "}
+                A API da Câmara registra M ou F. Não há dado de identidade
+                de gênero auto-declarada.
               </li>
               <li>
                 <strong className="text-[var(--color-text)]">
-                  Binariedade de gênero.
+                  Votações de comissão não aparecem.
                 </strong>{" "}
-                A API da Câmara registra sexo apenas como M ou F. Não há
-                dado sobre identidade de gênero auto-declarada. O
-                observatório herda essa limitação.
+                Mostramos só votações nominais de plenário. Deputados
+                podem ter votado consistentemente em comissões de forma
+                diferente.
               </li>
               <li>
                 <strong className="text-[var(--color-text)]">
-                  Relatorias invisíveis.
+                  O peso 2,5 pra mulheres é uma escolha.
                 </strong>{" "}
-                PLs apensadas a outras ou que tramitam em conjunto podem
-                ter relatoria que não aparece diretamente nos dados de
-                tramitação da PL original. O número de relatorias
-                identificadas é um piso, não um teto.
-              </li>
-              <li>
-                <strong className="text-[var(--color-text)]">
-                  Subnotificação do Atlas.
-                </strong>{" "}
-                O número do Hero (3.903) é o piso reconhecido por IPEA e
-                FBSP. Mortes violentas por causa indeterminada e casos
-                classificados erroneamente como suicídio ou acidente
-                podem conter feminicídios que não aparecem aqui.
+                Existe pra compensar sub-representação. Nem todo leitor
+                vai concordar. O código permite mudar.
               </li>
             </ul>
           </section>
 
-          {/* Atualização */}
+          {/* Infraestrutura */}
           <section className="space-y-5">
             <h2
-              className="text-3xl font-black text-[var(--color-text)]"
+              className="text-3xl font-black"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Atualização e infraestrutura
+              Infraestrutura
             </h2>
 
             <p className="text-base md:text-lg">
-              Os dados legislativos (proposições, votações, relatorias,
-              status) podem ser atualizados diariamente via nova consulta
-              às APIs. Os dados demográficos e do Atlas da Violência são
-              estáticos e refletem a última publicação oficial. A data
-              da última coleta aparece no rodapé de cada seção quando
-              relevante.
-            </p>
-
-            <p className="text-base md:text-lg">
-              O site é gerado estaticamente (Next.js com SSG), hospedado
-              gratuitamente na Vercel. As visualizações usam D3.js e
-              React. Nenhum dado pessoal é coletado de quem visita —
-              não há cookies de rastreamento, pixels de redes sociais ou
-              formulários de coleta. O código é aberto.
+              Next.js (SSG) + D3.js + Tailwind, hospedado na Vercel.
+              Pipeline em Python. Classificação LLM via Anthropic API
+              (Haiku 4.5). Cron via GitHub Actions. Custo total: ~$4/mês
+              (LLM semanal). Nenhum dado pessoal é coletado — sem
+              cookies, pixels ou formulários.
             </p>
           </section>
 
@@ -683,22 +532,13 @@ export default function MetodologiaPage() {
           <section className="border-t border-gray-200 pt-10">
             <p className="text-sm text-[var(--color-text-secondary)]">
               <strong className="text-[var(--color-text)]">Ininterrupta</strong>{" "}
-              é uma publicação brasileira de inteligência cultural.
+              — publicação brasileira independente.
               <br />
-              <a
-                href="https://ininterrupta.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--color-blood)] hover:underline"
-              >
-                ininterrupta.com
-              </a>{" "}
-              ·{" "}
               <a
                 href="https://instagram.com/ininterrupta.sys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-blood)] hover:underline"
+                className="text-[var(--color-blue)] hover:underline"
               >
                 @ininterrupta.sys
               </a>
