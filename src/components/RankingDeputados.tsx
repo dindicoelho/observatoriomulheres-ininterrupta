@@ -114,7 +114,7 @@ function DeputadoModal({
   deputado: Deputado;
   onClose: () => void;
 }) {
-  const [filter, setFilter] = useState<"all" | "simbólica" | "incremental" | "estrutural">("all");
+  const [filter, setFilter] = useState<"all" | "simbólica" | "incremental" | "estrutural" | "protetivo" | "punitivista" | "regressivo">("all");
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -128,10 +128,15 @@ function DeputadoModal({
     };
   }, [onClose]);
 
+  const stanceFilters = ["protetivo", "punitivista", "regressivo"] as const;
+  const isStanceFilter = stanceFilters.includes(filter as typeof stanceFilters[number]);
+
   const filteredPLs =
     filter === "all"
       ? deputado.pls
-      : deputado.pls.filter((p) => p.categoria === filter);
+      : isStanceFilter
+        ? deputado.pls.filter((p) => p.stance === filter)
+        : deputado.pls.filter((p) => p.categoria === filter);
 
   const pctEstr =
     deputado.total > 0
@@ -200,20 +205,41 @@ function DeputadoModal({
               deputado.punitivistas !== undefined ||
               deputado.regressivos !== undefined) && (
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {(deputado.protetivos ?? 0) - (deputado.punitivistas ?? 0) > 0 && (
-                  <span className="rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider bg-[#1DB389]/10 text-[#0F8B6B]">
-                    {(deputado.protetivos ?? 0) - (deputado.punitivistas ?? 0)} protetivos
-                  </span>
+                {(deputado.protetivos ?? 0) > 0 && (
+                  <button
+                    onClick={() => setFilter(filter === "protetivo" ? "all" : "protetivo")}
+                    className={`rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                      filter === "protetivo"
+                        ? "bg-[#1DB389] text-white"
+                        : "bg-[#1DB389]/10 text-[#0F8B6B] hover:bg-[#1DB389]/20"
+                    }`}
+                  >
+                    {deputado.protetivos} protetivos
+                  </button>
                 )}
                 {(deputado.punitivistas ?? 0) > 0 && (
-                  <span className="rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-700">
+                  <button
+                    onClick={() => setFilter(filter === "punitivista" ? "all" : "punitivista")}
+                    className={`rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                      filter === "punitivista"
+                        ? "bg-amber-500 text-white"
+                        : "bg-amber-500/15 text-amber-700 hover:bg-amber-500/25"
+                    }`}
+                  >
                     {deputado.punitivistas} punitivistas
-                  </span>
+                  </button>
                 )}
                 {(deputado.regressivos ?? 0) > 0 && (
-                  <span className="rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider bg-red-600/15 text-red-700">
+                  <button
+                    onClick={() => setFilter(filter === "regressivo" ? "all" : "regressivo")}
+                    className={`rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                      filter === "regressivo"
+                        ? "bg-red-600 text-white"
+                        : "bg-red-600/15 text-red-700 hover:bg-red-600/25"
+                    }`}
+                  >
                     {deputado.regressivos} regressivos
-                  </span>
+                  </button>
                 )}
               </div>
             )}
