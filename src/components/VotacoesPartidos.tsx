@@ -369,69 +369,29 @@ export default function VotacoesPartidos() {
                             proposição:
                           </p>
                           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                            <div className={`rounded-lg border-l-4 p-4 ${
-                              v.voto_pro_mulher === "sim"
-                                ? "border-[#1DB389] bg-[#1DB389]/8"
-                                : v.voto_pro_mulher === "nao"
-                                  ? "border-[var(--color-blood)] bg-[var(--color-blood)]/5"
-                                  : "border-[var(--color-teal)] bg-[var(--color-teal)]/5"
-                            }`}>
-                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-teal)]">
-                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-teal)] text-[10px] text-white">
+                            <div className="rounded-lg border border-gray-200 bg-[var(--color-bg-alt)] p-4">
+                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-text)]">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text)] text-[10px] text-white">
                                   ✓
                                 </span>
                                 Votar SIM
                               </p>
-                              {v.voto_pro_mulher === "sim" && (
-                                <p className="mt-1.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-[#1DB389]">
-                                  Voto pró-proteção à mulher
-                                </p>
-                              )}
-                              {v.voto_pro_mulher === "nao" && (
-                                <p className="mt-1.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-[var(--color-blood)]">
-                                  Voto contra proteção à mulher
-                                </p>
-                              )}
-                              <p className="mt-2 text-sm font-medium leading-relaxed text-[var(--color-text)]">
+                              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
                                 {v.interpretacao_sim}
                               </p>
                             </div>
-                            <div className={`rounded-lg border-l-4 p-4 ${
-                              v.voto_pro_mulher === "nao"
-                                ? "border-[#1DB389] bg-[#1DB389]/8"
-                                : v.voto_pro_mulher === "sim"
-                                  ? "border-[var(--color-blood)] bg-[var(--color-blood)]/5"
-                                  : "border-[var(--color-blood)] bg-[var(--color-blood)]/5"
-                            }`}>
-                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-blood)]">
-                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-blood)] text-[10px] text-white">
+                            <div className="rounded-lg border border-gray-200 bg-[var(--color-bg-alt)] p-4">
+                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-text)]">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text)] text-[10px] text-white">
                                   ✗
                                 </span>
                                 Votar NÃO
                               </p>
-                              {v.voto_pro_mulher === "sim" && (
-                                <p className="mt-1.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-[var(--color-blood)]">
-                                  Voto contra proteção à mulher
-                                </p>
-                              )}
-                              {v.voto_pro_mulher === "nao" && (
-                                <p className="mt-1.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-[#1DB389]">
-                                  Voto pró-proteção à mulher
-                                </p>
-                              )}
-                              <p className="mt-2 text-sm font-medium leading-relaxed text-[var(--color-text)]">
+                              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
                                 {v.interpretacao_nao}
                               </p>
                             </div>
                           </div>
-                          {!v.voto_pro_mulher && (
-                            <p className="mt-3 rounded bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-800">
-                              Nesta votação, a relação SIM/NÃO com
-                              proteção à mulher é ambígua — depende da
-                              interpretação de cada parlamentar. Leia o
-                              contexto acima.
-                            </p>
-                          )}
                         </div>
 
                         {/* Gender breakdown */}
