@@ -45,8 +45,11 @@ export default function Home() {
           <VotacoesPartidos />
         </div>
 
-        {/* ATO 03 — Quem atua contra */}
-        <div id="ato-03">
+        {/* ATO 03 — Timeline legislativa */}
+        <TimelineLegislativa />
+
+        {/* ATO 04 — Quem atua contra */}
+        <div id="ato-04">
           <ProducaoRegressiva />
         </div>
 
@@ -59,9 +62,6 @@ export default function Home() {
         <div id="senado">
           <SenadoSection />
         </div>
-
-        {/* ATO 04 — Timeline legislativa */}
-        <TimelineLegislativa />
       </main>
       <Footer />
     </>

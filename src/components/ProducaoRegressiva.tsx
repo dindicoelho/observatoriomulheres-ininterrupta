@@ -317,9 +317,9 @@ export default function ProducaoRegressiva() {
         <div className="offset-left">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[#D43F3F]">
-              [ ATO 03 / QUEM ATUA CONTRA ]
+              [ ATO 04 / QUEM ATUA CONTRA ]
             </p>
-            <ShareButton path="/ato-03" title="Nem toda lei é proteção" dark />
+            <ShareButton path="/ato-04" title="Nem toda lei é proteção" dark />
           </div>
           <ScrollFloat
             as="h2"

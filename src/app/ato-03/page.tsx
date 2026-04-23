@@ -2,13 +2,13 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Nem toda lei é proteção — Observatório Político",
+  title: "O tipo de lei — Observatório Político",
   description:
-    "62 deputados assinam proposições regressivas: criminalização do aborto legal, armamentismo, sustação de resoluções protetivas. Veja quem são.",
+    "Das mais de mil proposições, 76% estão paradas em comissão. Só 16 viraram lei em 3 anos. Veja o funil legislativo.",
   openGraph: {
-    title: "Nem toda lei é proteção.",
+    title: "O Congresso está agindo?",
     description:
-      "171 PLs regressivas identificadas. 62 deputados que assinam. Criminalização do aborto, armamentismo, sustação do Conanda.",
+      "76% paradas em comissão. 79 nunca receberam relator. 16 viraram lei. O funil legislativo da proteção à mulher.",
   },
 };
 

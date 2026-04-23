@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "fs/promises";
 import { join } from "path";
 
-export const alt = "O Congresso está agindo? 76% paradas em comissão";
+export const alt = "Nem toda lei é proteção — 171 PLs regressivas identificadas";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -29,21 +29,21 @@ export default async function OG() {
           fontFamily: "Archivo",
         }}
       >
-        <div style={{ fontFamily: "Archivo", fontSize: 16, letterSpacing: 4, textTransform: "uppercase", color: "#DCFF00" }}>
-          [ ATO 03 · O TIPO DE LEI ]
+        <div style={{ fontFamily: "Archivo", fontSize: 16, letterSpacing: 4, textTransform: "uppercase", color: "#D43F3F" }}>
+          [ ATO 04 · QUEM ATUA CONTRA ]
         </div>
         <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center", marginTop: 24 }}>
           <div style={{ fontFamily: "ArchivoBlack", fontSize: 104, lineHeight: 0.92, color: "#FFFFFF", letterSpacing: -3 }}>
-            O Congresso
+            Nem toda lei
           </div>
-          <div style={{ fontFamily: "ArchivoBlack", fontSize: 104, lineHeight: 0.92, color: "#DCFF00", letterSpacing: -3 }}>
-            está agindo?
+          <div style={{ fontFamily: "ArchivoBlack", fontSize: 104, lineHeight: 0.92, color: "#D43F3F", letterSpacing: -3 }}>
+            é proteção.
           </div>
         </div>
         <div style={{ display: "flex", gap: 56, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 24 }}>
-          <Stat value="76%" label="Paradas em comissão" color="#D43F3F" />
-          <Stat value="16" label="Viraram lei" color="#DCFF00" />
-          <Stat value="79" label="Sem relator" />
+          <Stat value="171" label="PLs regressivas" color="#D43F3F" />
+          <Stat value="62" label="Deputados envolvidos" color="#FF8080" />
+          <Stat value="152" label="PLs punitivistas" color="#F59E0B" />
         </div>
       </div>
     ),

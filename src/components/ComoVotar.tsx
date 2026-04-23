@@ -21,14 +21,22 @@ const STEPS = [
   },
   {
     numero: "03",
-    titulo: "Quem atua contra",
+    titulo: "O tipo de lei que é feita",
     texto:
-      "Os parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo como resposta, sustação de resoluções que protegem crianças.",
+      "Das mais de mil proposições, quantas viram lei? 76% estão paradas em comissão. Veja o funil legislativo e as curiosidades.",
     ancora: "#ato-03",
-    cta: "Ver regressivas ↓",
+    cta: "Ver o funil ↓",
   },
   {
     numero: "04",
+    titulo: "Quem atua contra",
+    texto:
+      "Os parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo como resposta, sustação de resoluções que protegem crianças.",
+    ancora: "#ato-04",
+    cta: "Ver regressivas ↓",
+  },
+  {
+    numero: "05",
     titulo: "Quem representa seu estado",
     texto:
       "Mapa do Brasil com os 3 deputados que mais se destacam em cada estado. 5 UFs não elegeram nenhuma mulher pra Câmara nesta legislatura.",
