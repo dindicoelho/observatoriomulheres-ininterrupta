@@ -120,14 +120,18 @@ def main():
     all_materias = fetch_materias_keyword(2023, 2026)
     print(f"    Total bruto: {len(all_materias)}")
 
-    # 3. Filtrar por keywords
+    # 3. Filtrar por keywords + remover requerimentos (RQS, REQ, INS = procedurais)
+    TIPOS_LEGISLATIVOS = {"PL", "PEC", "PLP", "PDL", "PRS"}
     filtered = []
     for m in all_materias:
+        sigla = (m.get("SiglaSubtipoMateria") or m.get("Sigla") or "").upper().strip()
+        if sigla not in TIPOS_LEGISLATIVOS:
+            continue
         ementa = m.get("EmentaMateria") or m.get("Ementa") or ""
         if matches_keywords(ementa):
             filtered.append(m)
 
-    print(f"    Após filtro keywords: {len(filtered)}")
+    print(f"    Após filtro keywords + só PL/PEC/PLP/PDL/PRS: {len(filtered)}")
 
     # 4. Classificar
     materias_out = []
