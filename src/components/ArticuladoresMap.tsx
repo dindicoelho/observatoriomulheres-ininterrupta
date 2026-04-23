@@ -175,8 +175,8 @@ export default function ArticuladoresMap() {
       const altaViolencia = taxa > FEMINICIDIO.media_nacional;
       const altaProducao = score > maxScore * 0.3;
       if (altaViolencia && !altaProducao) return "#7F1D1D"; // vermelho escuro
-      if (altaViolencia && altaProducao) return "#065F46"; // verde escuro
-      if (!altaViolencia && altaProducao) return "#D1FAE5"; // verde claro
+      if (altaViolencia && altaProducao) return "#DC2626"; // verde escuro
+      if (!altaViolencia && altaProducao) return "#DBEAFE"; // verde claro
       return "#E5E7EB"; // cinza — baixa violência + baixa produção
     };
 
@@ -260,7 +260,7 @@ export default function ArticuladoresMap() {
         }
         if (layer === "cruzamento") {
           const fill = getFill(sigla);
-          return fill === "#7F1D1D" || fill === "#065F46" ? "#ffffff" : "#0A0A0A";
+          return fill === "#7F1D1D" || fill === "#DC2626" ? "#ffffff" : "#0A0A0A";
         }
         const uf = DATA.ufs[sigla];
         const score = uf?.top3[0]?.score_articulador ?? 0;
@@ -486,8 +486,8 @@ export default function ArticuladoresMap() {
                 <p className="font-mono-data uppercase tracking-wider">Violência × resposta legislativa</p>
                 <div className="flex flex-wrap gap-3">
                   <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#7F1D1D]" /> Alta violência · baixa produção</span>
-                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#065F46]" /> Alta violência · alta produção</span>
-                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#D1FAE5]" /> Baixa violência · alta produção</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#DC2626]" /> Alta violência · alta produção</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#DBEAFE]" /> Baixa violência · alta produção</span>
                   <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#E5E7EB]" /> Baixa violência · baixa produção</span>
                 </div>
               </div>
