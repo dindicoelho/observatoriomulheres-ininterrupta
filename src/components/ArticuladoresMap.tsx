@@ -492,7 +492,6 @@ export default function ArticuladoresMap() {
                 </div>
               </div>
             )}
-            </div>
           </div>
 
           {/* Detail panel */}
@@ -678,6 +677,7 @@ export default function ArticuladoresMap() {
           FBSP / 18º Anuário de Segurança Pública (feminicídio {FEMINICIDIO.ano_referencia}) ·
           Atualização automática diária.
         </p>
+      </div>
     </section>
     </>
   );

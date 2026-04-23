@@ -355,34 +355,43 @@ export default function VotacoesPartidos() {
                           {v.resultado}
                         </p>
 
-                        {/* Interpretações Sim/Não */}
-                        <p className="mt-5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                          [ Significado neutro de cada voto ]
-                        </p>
-                        <div className="mt-2 grid gap-3 sm:grid-cols-2">
-                          <div className="rounded-lg border-l-2 border-[var(--color-teal)] bg-[var(--color-bg-alt)] p-4">
-                            <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-teal)]">
-                              Quem votou SIM
-                            </p>
-                            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
-                              {v.interpretacao_sim}
-                            </p>
-                          </div>
-                          <div className="rounded-lg border-l-2 border-[var(--color-blood)] bg-[var(--color-bg-alt)] p-4">
-                            <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blood)]">
-                              Quem votou NÃO
-                            </p>
-                            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
-                              {v.interpretacao_nao}
-                            </p>
+                        {/* Interpretações Sim/Não — destaque */}
+                        <div className="mt-6 rounded-xl border-2 border-[var(--color-text)]/10 bg-white p-5">
+                          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text)]">
+                            [ 03 · O que cada voto significa ]
+                          </p>
+                          <p className="mt-2 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                            Votar NÃO nem sempre é ser contra a mulher.
+                            Em alguns casos, NÃO pode significar querer
+                            uma proteção ainda mais forte. Leia o
+                            significado específico de cada voto nesta
+                            proposição:
+                          </p>
+                          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                            <div className="rounded-lg border-l-4 border-[var(--color-teal)] bg-[var(--color-teal)]/5 p-4">
+                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-teal)]">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-teal)] text-[10px] text-white">
+                                  ✓
+                                </span>
+                                Votar SIM
+                              </p>
+                              <p className="mt-2 text-sm font-medium leading-relaxed text-[var(--color-text)]">
+                                {v.interpretacao_sim}
+                              </p>
+                            </div>
+                            <div className="rounded-lg border-l-4 border-[var(--color-blood)] bg-[var(--color-blood)]/5 p-4">
+                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-blood)]">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-blood)] text-[10px] text-white">
+                                  ✗
+                                </span>
+                                Votar NÃO
+                              </p>
+                              <p className="mt-2 text-sm font-medium leading-relaxed text-[var(--color-text)]">
+                                {v.interpretacao_nao}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                        <p className="mt-3 text-xs italic leading-relaxed text-[var(--color-text-tertiary)]">
-                          O voto não equivale diretamente a ser a favor
-                          ou contra mulheres. Pode refletir disputa sobre
-                          a forma do texto, emendas, estratégia política
-                          ou autoria. Leia o contexto antes de concluir.
-                        </p>
 
                         {/* Gender breakdown */}
                         {v.genero && v.genero.F.total > 0 && v.genero.M.total > 0 && (() => {
