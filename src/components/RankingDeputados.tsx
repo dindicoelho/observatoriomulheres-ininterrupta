@@ -8,6 +8,7 @@ import candidatosData from "../data/candidatos_2026.json";
 import ScrollFloat from "./ScrollFloat";
 import Counter from "./Counter";
 import AnimatedList from "./AnimatedList";
+import ShareButton from "./ShareButton";
 
 type PL = {
   id: number;
@@ -525,9 +526,12 @@ export default function RankingDeputados() {
       <section className="bg-white px-6 py-24">
         <div className="mx-auto max-w-5xl">
           <div className="mb-12 offset-left">
-            <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ ATO 01 / QUEM FAZ AS LEIS ]
-            </p>
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                [ ATO 01 / QUEM FAZ AS LEIS ]
+              </p>
+              <ShareButton path="/ato-01" title="Quem propõe as leis sobre violência contra a mulher" />
+            </div>
             <ScrollFloat
               as="h2"
               text="Quem propõe"

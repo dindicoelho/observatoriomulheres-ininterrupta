@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import autoriaData from "../data/autoria.json";
 import ScrollFloat from "./ScrollFloat";
+import ShareButton from "./ShareButton";
 
 type PL = {
   id: number;
@@ -314,9 +315,12 @@ export default function ProducaoRegressiva() {
     <section className="dark-section bg-[#0A0A0A] px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[#D43F3F]">
-            [ ATO 03 / QUEM ATUA CONTRA ]
-          </p>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[#D43F3F]">
+              [ ATO 03 / QUEM ATUA CONTRA ]
+            </p>
+            <ShareButton path="/ato-03" title="Nem toda lei é proteção" dark />
+          </div>
           <ScrollFloat
             as="h2"
             text="Nem toda lei"

@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 import articuladoresData from "../data/articuladores_uf.json";
 import ScrollFloat from "./ScrollFloat";
+import ShareButton from "./ShareButton";
 
 type Articulador = {
   id: number;
@@ -195,9 +196,12 @@ export default function ArticuladoresMap() {
     <section className="bg-white px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 offset-left">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            [ GUIA ELEITORAL POR ESTADO ]
-          </p>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ GUIA ELEITORAL POR ESTADO ]
+            </p>
+            <ShareButton path="/guia-estados" title="Quem representa seu estado" />
+          </div>
           <ScrollFloat
             as="h2"
             text="Quem representa"

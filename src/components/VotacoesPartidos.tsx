@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import votacoesData from "../data/votacoes.json";
 import ScrollFloat from "./ScrollFloat";
 import ScrollReveal from "./ScrollReveal";
+import ShareButton from "./ShareButton";
 
 type Votacao = {
   id: string;
@@ -179,9 +180,12 @@ export default function VotacoesPartidos() {
     <section className="bg-[var(--color-bg-alt)] px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 offset-left">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            [ ATO 02 / DISCURSO E VOTO ]
-          </p>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ ATO 02 / DISCURSO E VOTO ]
+            </p>
+            <ShareButton path="/ato-02" title="Discurso e voto: como cada partido vota" />
+          </div>
           <ScrollFloat
             as="h2"
             text="Discurso"
