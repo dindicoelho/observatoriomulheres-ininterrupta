@@ -470,7 +470,8 @@ function GlossarioPLs() {
                 destino.
               </p>
               <p>
-                Nós classificamos cada proposição em três tipos:{" "}
+                Nós classificamos cada proposição em duas dimensões.
+                Primeiro por <strong className="text-[var(--color-text)]">forma</strong>:{" "}
                 <strong style={{ color: "#7A7A7A" }}>simbólicas</strong>{" "}
                 (datas, homenagens),{" "}
                 <strong style={{ color: "#005FFF" }}>incrementais</strong>{" "}
@@ -486,6 +487,21 @@ function GlossarioPLs() {
                   estruturais
                 </strong>{" "}
                 (criam programas, fundos ou políticas novas).
+              </p>
+              <p>
+                Depois por <strong className="text-[var(--color-text)]">postura</strong>:{" "}
+                <strong className="text-emerald-700">protetivas</strong>{" "}
+                (ampliam direitos, criam políticas, protegem a vítima),{" "}
+                <strong className="text-amber-700">punitivistas</strong>{" "}
+                (focam em aumentar pena sem proteção material — contam
+                no ranking mas recebem selo) e{" "}
+                <strong className="text-red-700">regressivas</strong>{" "}
+                (criminalizam aborto legal, obrigam notificação à polícia,
+                sustam resoluções protetivas, propõem armamentismo —{" "}
+                <strong className="text-[var(--color-text)]">
+                  subtraem pontos do score
+                </strong>
+                ).
               </p>
             </div>
           </div>
