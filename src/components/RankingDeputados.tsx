@@ -519,12 +519,9 @@ const TSE_DISPONIVEL = CANDIDATOS.size > 0;
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
-  const [soCandidatos, setSoCandidatos] = useState(false);
   const minPls = 3;
 
-  const filtered = DATA.deputados.filter(
-    (d) => d.total >= minPls && (!soCandidatos || CANDIDATOS.has(d.id))
-  );
+  const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
   // Score penaliza regressivas: estr×2 + incr - regr×2
   const scoreOf = (d: Deputado) =>
@@ -776,28 +773,15 @@ export default function RankingDeputados() {
               </button>
             </div>
 
-            {/* Toggle candidatos 2026 */}
-            <button
-              onClick={() => TSE_DISPONIVEL && setSoCandidatos(!soCandidatos)}
-              className={`ml-auto rounded-full px-4 py-1.5 text-xs transition-colors ${
-                !TSE_DISPONIVEL
-                  ? "cursor-not-allowed border border-dashed border-[var(--color-text-tertiary)]/30 text-[var(--color-text-tertiary)]"
-                  : soCandidatos
-                    ? "bg-[var(--color-blue)] text-white"
-                    : "border border-[var(--color-blue)]/30 text-[var(--color-blue)] hover:bg-[var(--color-blue)]/10"
-              }`}
-              title={
-                TSE_DISPONIVEL
-                  ? "Filtrar só candidatos à reeleição em 2026"
-                  : "Aguardando publicação do TSE (previsto jun-ago 2026)"
-              }
-            >
-              {TSE_DISPONIVEL
-                ? soCandidatos
-                  ? "✓ Só candidatos 2026"
-                  : "Filtrar candidatos 2026"
-                : "Candidatos 2026 · aguardando TSE"}
-            </button>
+            {/* Legenda candidatos 2026 */}
+            {TSE_DISPONIVEL && (
+              <span className="ml-auto flex items-center gap-1.5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                <span className="rounded-full bg-[var(--color-blue)] px-1.5 py-0.5 text-[8px] font-bold text-white">
+                  2026
+                </span>
+                = candidato à reeleição
+              </span>
+            )}
           </div>
 
           {/* Ranking */}
@@ -827,13 +811,18 @@ export default function RankingDeputados() {
                     )}
 
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-baseline gap-x-3">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                         <span className="font-bold text-[var(--color-text)]">
                           {d.nome}
                         </span>
                         <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
                           {d.partido}·{d.uf}
                         </span>
+                        {TSE_DISPONIVEL && CANDIDATOS.has(d.id) && (
+                          <span className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
+                            2026
+                          </span>
+                        )}
                         {d.situacao !== "Exercício" && (
                           <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
                             {d.situacao}

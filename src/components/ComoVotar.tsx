@@ -115,10 +115,15 @@ export default function ComoVotar() {
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
             Quando o TSE publicar a lista oficial de candidatos (previsto
-            entre junho e agosto de 2026), o ranking e o mapa serão
-            filtrados automaticamente para mostrar{" "}
+            entre junho e agosto de 2026), os deputados candidatos à
+            reeleição receberão um{" "}
+            <span className="inline-block rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
+              2026
+            </span>{" "}
+            no ranking e nas regressivas. No mapa por estado, o top 3
+            será filtrado pra mostrar{" "}
             <strong className="text-[var(--color-text)]">
-              apenas quem está concorrendo à reeleição
+              só quem pode ser votado
             </strong>
             . Assim você compara diretamente quem quer seu voto com o
             que essa pessoa fez nos últimos 4 anos.

@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect } from "react";
 import autoriaData from "../data/autoria.json";
+import candidatosData from "../data/candidatos_2026.json";
 import ScrollFloat from "./ScrollFloat";
 import ShareButton from "./ShareButton";
 
@@ -34,6 +35,10 @@ type AutoriaJSON = {
 };
 
 const DATA = autoriaData as AutoriaJSON;
+const CANDIDATOS_SET = new Set(
+  (candidatosData as { candidatos_ids: number[] }).candidatos_ids
+);
+const TSE_ON = CANDIDATOS_SET.size > 0;
 
 type Agrupamento = {
   padrao: string;
@@ -446,9 +451,16 @@ export default function ProducaoRegressiva() {
                   />
                 )}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold text-white">
-                    {d.nome}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="truncate text-sm font-bold text-white">
+                      {d.nome}
+                    </p>
+                    {TSE_ON && CANDIDATOS_SET.has(d.id) && (
+                      <span className="flex-shrink-0 rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
+                        2026
+                      </span>
+                    )}
+                  </div>
                   <p className="font-mono-data text-[10px] text-white/50">
                     {d.partido} · {d.uf}
                   </p>

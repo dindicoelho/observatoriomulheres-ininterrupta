@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import * as d3 from "d3";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 import articuladoresData from "../data/articuladores_uf.json";
+import autoriaData from "../data/autoria.json";
+import candidatosData from "../data/candidatos_2026.json";
 import ScrollFloat from "./ScrollFloat";
 import ShareButton from "./ShareButton";
 
@@ -42,6 +44,39 @@ type ArticuladoresJSON = {
 
 const DATA = articuladoresData as ArticuladoresJSON;
 
+type AutoriaDep = {
+  id: number;
+  nome: string;
+  partido: string;
+  uf: string;
+  foto: string;
+  total: number;
+  estruturais: number;
+  incrementais: number;
+  simbolicas: number;
+  protetivos?: number;
+  punitivistas?: number;
+  regressivos?: number;
+  pls: Array<{
+    id: number;
+    tipo: string;
+    numero: number;
+    ano: number;
+    ementa: string;
+    data: string;
+    categoria: string;
+    stance?: string;
+    llm_justificativa?: string;
+  }>;
+};
+const AUTORIA_IDX = new Map(
+  (autoriaData as { deputados: AutoriaDep[] }).deputados.map((d) => [d.id, d])
+);
+const CANDIDATOS_SET = new Set(
+  (candidatosData as { candidatos_ids: number[] }).candidatos_ids
+);
+const TSE_ON = CANDIDATOS_SET.size > 0;
+
 const UF_NAMES: Record<string, string> = {
   AC: "Acre", AL: "Alagoas", AM: "Amazonas", AP: "Amapá",
   BA: "Bahia", CE: "Ceará", DF: "Distrito Federal", ES: "Espírito Santo",
@@ -61,6 +96,7 @@ export default function ArticuladoresMap() {
   > | null>(null);
   const [selectedUf, setSelectedUf] = useState<string>("SP");
   const [hoveredUf, setHoveredUf] = useState<string | null>(null);
+  const [selectedDep, setSelectedDep] = useState<AutoriaDep | null>(null);
 
   // Load geojson
   useEffect(() => {
@@ -193,6 +229,92 @@ export default function ArticuladoresMap() {
   const displayData = DATA.ufs[displayUf];
 
   return (
+    <>
+    {/* Modal do deputado */}
+    {selectedDep && (() => {
+      const dep = selectedDep;
+      const filteredPls = dep.pls;
+      return (
+        <div
+          className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/70 backdrop-blur-sm md:items-center md:px-4"
+          onClick={() => setSelectedDep(null)}
+        >
+          <div
+            className="flex h-full w-full flex-col overflow-hidden bg-white shadow-2xl md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start gap-4 border-b border-gray-100 p-6">
+              {dep.foto && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={dep.foto} alt="" className="h-16 w-16 flex-shrink-0 rounded-full object-cover" />
+              )}
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-2xl font-bold text-[var(--color-text)]" style={{ fontFamily: "var(--font-display)" }}>
+                    {dep.nome}
+                  </h3>
+                  {TSE_ON && CANDIDATOS_SET.has(dep.id) && (
+                    <span className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
+                      Candidato 2026
+                    </span>
+                  )}
+                </div>
+                <p className="font-mono-data text-sm text-[var(--color-text-tertiary)]">
+                  {dep.partido} · {dep.uf}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-3 text-sm">
+                  <span><strong className="font-mono-data">{dep.total}</strong> <span className="text-[var(--color-text-secondary)]">proposições</span></span>
+                  <span><strong className="font-mono-data" style={{ color: "#1DB389" }}>{dep.estruturais}</strong> <span className="text-[var(--color-text-secondary)]">estruturais</span></span>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {(dep.protetivos ?? 0) > 0 && (
+                    <span className="rounded bg-[#1DB389]/10 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-[#0F8B6B]">
+                      {dep.protetivos} protetivos
+                    </span>
+                  )}
+                  {(dep.punitivistas ?? 0) > 0 && (
+                    <span className="rounded bg-amber-500/15 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                      {dep.punitivistas} punitivistas
+                    </span>
+                  )}
+                  {(dep.regressivos ?? 0) > 0 && (
+                    <span className="rounded bg-red-600/15 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-red-700">
+                      {dep.regressivos} regressivos
+                    </span>
+                  )}
+                </div>
+              </div>
+              <button onClick={() => setSelectedDep(null)} className="flex-shrink-0 rounded-full bg-[var(--color-bg-alt)] p-2 hover:bg-gray-200" aria-label="Fechar">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <ul className="divide-y divide-gray-100">
+                {filteredPls.slice(0, 30).map((pl) => (
+                  <li key={pl.id} className="p-5 hover:bg-[var(--color-bg-alt)]">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="font-mono-data text-sm font-bold text-[var(--color-text)]">{pl.tipo} {pl.numero}/{pl.ano}</span>
+                      <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">{pl.data}</span>
+                      {pl.stance === "punitivista" && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase text-amber-700">punitivista</span>}
+                      {pl.stance === "regressivo" && <span className="rounded bg-red-600/15 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase text-red-700">regressivo</span>}
+                    </div>
+                    <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                      {pl.ementa.length > 250 ? pl.ementa.slice(0, 250) + "…" : pl.ementa}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-4 text-center">
+              <a href={`https://www.camara.leg.br/deputados/${dep.id}`} target="_blank" rel="noopener noreferrer" className="font-mono-data text-xs text-[var(--color-blue)] hover:underline">
+                Ver perfil completo na Câmara →
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    })()}
+
     <section className="bg-white px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 offset-left">
@@ -316,76 +438,84 @@ export default function ArticuladoresMap() {
 
             {displayData && (
               <ul className="mt-6 space-y-4">
-                {displayData.top3.map((d, i) => (
-                  <li
-                    key={d.id}
-                    className="rounded-lg border border-gray-200 bg-white p-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span
-                        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full font-mono-data text-sm font-bold"
-                        style={{
-                          backgroundColor: i === 0 ? "#DCFF00" : "var(--color-bg-alt)",
-                          color: i === 0 ? "#0A0A0A" : "var(--color-text)",
-                        }}
+                {displayData.top3.map((d, i) => {
+                  const dep = AUTORIA_IDX.get(d.id);
+                  const isCandidato = TSE_ON && CANDIDATOS_SET.has(d.id);
+                  return (
+                    <li key={d.id}>
+                      <button
+                        onClick={() => dep && setSelectedDep(dep)}
+                        className="w-full rounded-lg border border-gray-200 bg-white p-4 text-left transition-colors hover:border-[var(--color-blue)]/40 hover:bg-[var(--color-blue)]/5"
                       >
-                        {i + 1}
-                      </span>
-                      {d.foto && (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img
-                          src={d.foto}
-                          alt=""
-                          loading="lazy"
-                          className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
-                        />
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-bold text-[var(--color-text)]">
-                          {d.nome}
-                        </p>
-                        <p className="font-mono-data text-[10px] text-[var(--color-text-tertiary)]">
-                          {d.partido} · {d.uf}
-                        </p>
-                        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono-data text-[10px]">
-                          <span className="text-[var(--color-text-secondary)]">
-                            <strong className="text-[var(--color-text)]">
-                              {d.total_pls}
-                            </strong>{" "}
-                            PLs
+                        <div className="flex items-start gap-3">
+                          <span
+                            className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full font-mono-data text-sm font-bold"
+                            style={{
+                              backgroundColor: i === 0 ? "#DCFF00" : "var(--color-bg-alt)",
+                              color: i === 0 ? "#0A0A0A" : "var(--color-text)",
+                            }}
+                          >
+                            {i + 1}
                           </span>
-                          {d.estruturais > 0 && (
-                            <span
-                              className="rounded px-1.5"
-                              style={{
-                                backgroundColor: "#0A0A0A",
-                                color: "#DCFF00",
-                              }}
-                            >
-                              <strong>{d.estruturais}</strong> estruturais
-                            </span>
+                          {d.foto && (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img
+                              src={d.foto}
+                              alt=""
+                              loading="lazy"
+                              className="h-10 w-10 flex-shrink-0 rounded-full object-cover"
+                            />
                           )}
-                          {d.incrementais > 0 && (
-                            <span className="text-[var(--color-text-secondary)]">
-                              <strong className="text-[var(--color-text)]">
-                                {d.incrementais}
-                              </strong>{" "}
-                              incrementais
-                            </span>
-                          )}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <p className="truncate text-sm font-bold text-[var(--color-text)]">
+                                {d.nome}
+                              </p>
+                              {isCandidato && (
+                                <span className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
+                                  2026
+                                </span>
+                              )}
+                            </div>
+                            <p className="font-mono-data text-[10px] text-[var(--color-text-tertiary)]">
+                              {d.partido} · {d.uf}
+                            </p>
+                            <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono-data text-[10px]">
+                              <span className="text-[var(--color-text-secondary)]">
+                                <strong className="text-[var(--color-text)]">
+                                  {d.total_pls}
+                                </strong>{" "}
+                                PLs
+                              </span>
+                              {d.estruturais > 0 && (
+                                <span
+                                  className="rounded px-1.5"
+                                  style={{
+                                    backgroundColor: "#0A0A0A",
+                                    color: "#DCFF00",
+                                  }}
+                                >
+                                  <strong>{d.estruturais}</strong> estruturais
+                                </span>
+                              )}
+                              {d.incrementais > 0 && (
+                                <span className="text-[var(--color-text-secondary)]">
+                                  <strong className="text-[var(--color-text)]">
+                                    {d.incrementais}
+                                  </strong>{" "}
+                                  incrementais
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <span className="flex-shrink-0 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blue)]">
+                            ver →
+                          </span>
                         </div>
-                      </div>
-                      <a
-                        href={`https://www.camara.leg.br/deputados/${d.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blue)] hover:underline"
-                      >
-                        ver ↗
-                      </a>
-                    </div>
-                  </li>
-                ))}
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             )}
 
@@ -406,5 +536,6 @@ export default function ArticuladoresMap() {
         </p>
       </div>
     </section>
+    </>
   );
 }
