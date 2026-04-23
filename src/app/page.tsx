@@ -5,7 +5,7 @@ import VotacoesPartidos from "@/components/VotacoesPartidos";
 import ArticuladoresMap from "@/components/ArticuladoresMap";
 import ProducaoRegressiva from "@/components/ProducaoRegressiva";
 import ComoVotar from "@/components/ComoVotar";
-import SenadoSection from "@/components/SenadoSection";
+// import SenadoSection from "@/components/SenadoSection";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -58,10 +58,6 @@ export default function Home() {
           <ArticuladoresMap />
         </div>
 
-        {/* Senado Federal */}
-        <div id="senado">
-          <SenadoSection />
-        </div>
       </main>
       <Footer />
     </>
