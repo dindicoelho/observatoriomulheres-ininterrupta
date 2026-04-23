@@ -6,8 +6,26 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 import articuladoresData from "../data/articuladores_uf.json";
 import autoriaData from "../data/autoria.json";
 import candidatosData from "../data/candidatos_2026.json";
+import feminicidioData from "../data/feminicidio_uf.json";
 import ScrollFloat from "./ScrollFloat";
 import ShareButton from "./ShareButton";
+
+type FeminicidioUF = {
+  taxa: number;
+  vitimas: number;
+  ranking: number;
+  estimativa: boolean;
+  subnotificacao: boolean;
+};
+type FeminicidioJSON = {
+  ano_referencia: number;
+  media_nacional: number;
+  total_nacional: number;
+  ufs: Record<string, FeminicidioUF>;
+};
+const FEMINICIDIO = feminicidioData as FeminicidioJSON;
+
+type MapLayer = "producao" | "feminicidio" | "cruzamento";
 
 type Articulador = {
   id: number;
@@ -97,6 +115,7 @@ export default function ArticuladoresMap() {
   const [selectedUf, setSelectedUf] = useState<string>("SP");
   const [hoveredUf, setHoveredUf] = useState<string | null>(null);
   const [selectedDep, setSelectedDep] = useState<AutoriaDep | null>(null);
+  const [layer, setLayer] = useState<MapLayer>("producao");
 
   // Load geojson
   useEffect(() => {
@@ -120,15 +139,46 @@ export default function ArticuladoresMap() {
 
     svg.attr("width", width).attr("height", height);
 
-    // Color scale based on score of top articulador
+    // Color scales per layer
     const scores = Object.values(DATA.ufs).map(
       (u) => u.top3[0]?.score_articulador ?? 0
     );
     const maxScore = Math.max(...scores);
-    const colorScale = d3
+    const prodScale = d3
       .scaleSequential<string>()
       .domain([0, maxScore])
       .interpolator(d3.interpolateRgb("#E6EEFF", "#005FFF"));
+
+    const taxas = Object.values(FEMINICIDIO.ufs).map((u) => u.taxa);
+    const maxTaxa = Math.max(...taxas);
+    const femScale = d3
+      .scaleSequential<string>()
+      .domain([0, maxTaxa])
+      .interpolator(d3.interpolateRgb("#FFF5F5", "#991B1B"));
+
+    const getFill = (sigla: string): string => {
+      if (layer === "producao") {
+        const uf = DATA.ufs[sigla];
+        if (uf?.zero_mulheres) return "url(#no-women-pattern)";
+        const score = uf?.top3[0]?.score_articulador ?? 0;
+        return score > 0 ? prodScale(score) : "#E6EEFF";
+      }
+      if (layer === "feminicidio") {
+        const fem = FEMINICIDIO.ufs[sigla];
+        return fem ? femScale(fem.taxa) : "#F3F4F6";
+      }
+      // Cruzamento: alta violência + baixa produção = vermelho escuro
+      const fem = FEMINICIDIO.ufs[sigla];
+      const uf = DATA.ufs[sigla];
+      const taxa = fem?.taxa ?? 0;
+      const score = uf?.top3[0]?.score_articulador ?? 0;
+      const altaViolencia = taxa > FEMINICIDIO.media_nacional;
+      const altaProducao = score > maxScore * 0.3;
+      if (altaViolencia && !altaProducao) return "#7F1D1D"; // vermelho escuro
+      if (altaViolencia && altaProducao) return "#065F46"; // verde escuro
+      if (!altaViolencia && altaProducao) return "#D1FAE5"; // verde claro
+      return "#E5E7EB"; // cinza — baixa violência + baixa produção
+    };
 
     const projection = d3.geoMercator().fitSize([width, height], geoData);
     const path = d3.geoPath(projection);
@@ -164,10 +214,7 @@ export default function ArticuladoresMap() {
       .attr("d", (d) => path(d) ?? "")
       .attr("fill", (d) => {
         const sigla = (d.properties as { sigla: string }).sigla;
-        const uf = DATA.ufs[sigla];
-        if (uf?.zero_mulheres) return "url(#no-women-pattern)";
-        const score = uf?.top3[0]?.score_articulador ?? 0;
-        return score > 0 ? colorScale(score) : "#E6EEFF";
+        return getFill(sigla);
       })
       .attr("stroke", (d) => {
         const sigla = (d.properties as { sigla: string }).sigla;
@@ -207,6 +254,14 @@ export default function ArticuladoresMap() {
       .attr("dy", "0.35em")
       .attr("fill", (d) => {
         const sigla = (d.properties as { sigla: string }).sigla;
+        if (layer === "feminicidio") {
+          const fem = FEMINICIDIO.ufs[sigla];
+          return (fem?.taxa ?? 0) > 1.8 ? "#ffffff" : "#0A0A0A";
+        }
+        if (layer === "cruzamento") {
+          const fill = getFill(sigla);
+          return fill === "#7F1D1D" || fill === "#065F46" ? "#ffffff" : "#0A0A0A";
+        }
         const uf = DATA.ufs[sigla];
         const score = uf?.top3[0]?.score_articulador ?? 0;
         return score > 20 ? "#ffffff" : "#0A0A0A";
@@ -216,7 +271,7 @@ export default function ArticuladoresMap() {
       .style("font-weight", "700")
       .style("pointer-events", "none")
       .text((d) => (d.properties as { sigla: string }).sigla);
-  }, [geoData, selectedUf]);
+  }, [geoData, selectedUf, layer]);
 
   useEffect(() => {
     drawMap();
@@ -367,44 +422,133 @@ export default function ArticuladoresMap() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-[1fr_1.2fr]">
+        {/* Layer toggle */}
+        <div className="mt-8 flex flex-wrap gap-2">
+          {([
+            { key: "producao" as MapLayer, label: "Produção legislativa" },
+            { key: "feminicidio" as MapLayer, label: "Taxa de feminicídio" },
+            { key: "cruzamento" as MapLayer, label: "Cruzamento" },
+          ]).map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setLayer(opt.key)}
+              className={`rounded-full px-4 py-1.5 font-mono-data text-xs uppercase tracking-wider transition-colors ${
+                layer === opt.key
+                  ? "bg-[var(--color-text)] text-white"
+                  : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1.2fr]">
           {/* Map */}
           <div>
             <div ref={containerRef} className="relative">
               <svg ref={svgRef} className="w-full" />
             </div>
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--color-text-tertiary)]">
-              <span className="font-mono-data uppercase tracking-wider">
-                Produção legislativa por estado
-              </span>
-              <div className="flex items-center gap-2">
-                <span>baixa</span>
-                <div
-                  className="h-3 w-20 rounded"
-                  style={{
-                    background:
-                      "linear-gradient(to right, #E6EEFF, #7DA4FF, #005FFF)",
-                  }}
-                />
-                <span>alta</span>
+
+            {/* Legenda dinâmica */}
+            {layer === "producao" && (
+              <>
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--color-text-tertiary)]">
+                  <span className="font-mono-data uppercase tracking-wider">
+                    Produção legislativa por estado
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span>baixa</span>
+                    <div className="h-3 w-20 rounded" style={{ background: "linear-gradient(to right, #E6EEFF, #7DA4FF, #005FFF)" }} />
+                    <span>alta</span>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center gap-2 text-xs text-[var(--color-text-tertiary)]">
+                  <div className="h-4 w-6 rounded border border-[#D43F3F]/40" style={{ background: "repeating-linear-gradient(45deg, #FFE4E4, #FFE4E4 3px, #D43F3F 3px, #D43F3F 5px)" }} />
+                  <span className="font-mono-data uppercase tracking-wider">Sem deputada eleita</span>
+                </div>
+              </>
+            )}
+            {layer === "feminicidio" && (
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--color-text-tertiary)]">
+                <span className="font-mono-data uppercase tracking-wider">
+                  Taxa por 100 mil mulheres ({FEMINICIDIO.ano_referencia})
+                </span>
+                <div className="flex items-center gap-2">
+                  <span>baixa</span>
+                  <div className="h-3 w-20 rounded" style={{ background: "linear-gradient(to right, #FFF5F5, #DC2626, #991B1B)" }} />
+                  <span>alta</span>
+                </div>
               </div>
-            </div>
-            <div className="mt-3 flex items-center gap-2 text-xs text-[var(--color-text-tertiary)]">
-              <div
-                className="h-4 w-6 rounded border border-[#D43F3F]/40"
-                style={{
-                  background:
-                    "repeating-linear-gradient(45deg, #FFE4E4, #FFE4E4 3px, #D43F3F 3px, #D43F3F 5px)",
-                }}
-              />
-              <span className="font-mono-data uppercase tracking-wider">
-                Sem nenhuma deputada eleita (57ª leg.)
-              </span>
+            )}
+            {layer === "cruzamento" && (
+              <div className="mt-4 space-y-2 text-xs text-[var(--color-text-tertiary)]">
+                <p className="font-mono-data uppercase tracking-wider">Violência × resposta legislativa</p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#7F1D1D]" /> Alta violência · baixa produção</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#065F46]" /> Alta violência · alta produção</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#D1FAE5]" /> Baixa violência · alta produção</span>
+                  <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-sm bg-[#E5E7EB]" /> Baixa violência · baixa produção</span>
+                </div>
+              </div>
+            )}
             </div>
           </div>
 
-          {/* Top 3 panel */}
-          <div className="rounded-2xl bg-[var(--color-bg-alt)] p-6">
+          {/* Detail panel */}
+          <div className="space-y-4">
+            {/* Feminicídio stats */}
+            {(() => {
+              const fem = FEMINICIDIO.ufs[displayUf];
+              if (!fem) return null;
+              const diff = fem.taxa - FEMINICIDIO.media_nacional;
+              const above = diff > 0;
+              return (
+                <div className={`rounded-2xl p-5 ${above ? "border border-red-200 bg-red-50" : "border border-gray-200 bg-white"}`}>
+                  <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                    [ {UF_NAMES[displayUf]} · Feminicídio {FEMINICIDIO.ano_referencia} ]
+                  </p>
+                  <div className="mt-3 flex items-baseline gap-3">
+                    <p
+                      className={`leading-none ${above ? "text-red-700" : "text-[var(--color-text)]"}`}
+                      style={{ fontFamily: "var(--font-display-condensed)", fontSize: "clamp(2rem, 5vw, 3rem)", letterSpacing: "-0.02em" }}
+                    >
+                      {fem.taxa.toFixed(1)}
+                    </p>
+                    <p className="text-sm text-[var(--color-text-secondary)]">
+                      por 100 mil mulheres
+                    </p>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono-data text-[10px]">
+                    <span className="text-[var(--color-text-secondary)]">
+                      <strong className={above ? "text-red-700" : "text-[var(--color-text)]"}>
+                        {fem.ranking}º
+                      </strong>{" "}
+                      no ranking nacional
+                    </span>
+                    <span className="text-[var(--color-text-secondary)]">
+                      <strong className="text-[var(--color-text)]">{fem.vitimas}</strong> vítimas
+                    </span>
+                    <span className={above ? "text-red-600" : "text-emerald-600"}>
+                      {above ? "+" : ""}{diff.toFixed(1)} pts da média
+                    </span>
+                  </div>
+                  {fem.estimativa && (
+                    <p className="mt-2 font-mono-data text-[9px] text-[var(--color-text-tertiary)]">
+                      * Dado estimado (fonte regional FBSP)
+                    </p>
+                  )}
+                  {fem.subnotificacao && (
+                    <p className="mt-2 font-mono-data text-[9px] text-amber-600">
+                      ⚠ Subnotificação reconhecida pelo FBSP
+                    </p>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Top 3 panel */}
+            <div className="rounded-2xl bg-[var(--color-bg-alt)] p-6">
             <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
               [ {UF_NAMES[displayUf] || displayUf} · Top 3 articuladores ]
             </p>
@@ -525,16 +669,15 @@ export default function ArticuladoresMap() {
                 articuladores políticos da região.
               </div>
             )}
+            </div>
           </div>
         </div>
 
         <p className="mt-10 font-mono-data text-xs text-[var(--color-text-tertiary)]">
-          Fonte: API de Dados Abertos da Câmara dos Deputados ·
-          {DATA.total_deputados} deputados · Legislatura 2023-2026 ·
-          Score: (estr×2 + incr) × peso_sexo · Atualização automática
-          diária. Filtro de candidatos 2026 ativa quando TSE publicar.
+          Fontes: API da Câmara dos Deputados (produção legislativa) ·
+          FBSP / 18º Anuário de Segurança Pública (feminicídio {FEMINICIDIO.ano_referencia}) ·
+          Atualização automática diária.
         </p>
-      </div>
     </section>
     </>
   );

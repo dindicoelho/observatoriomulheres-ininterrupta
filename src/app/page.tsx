@@ -6,6 +6,7 @@ import ArticuladoresMap from "@/components/ArticuladoresMap";
 import ProducaoRegressiva from "@/components/ProducaoRegressiva";
 import ComoVotar from "@/components/ComoVotar";
 // import SenadoSection from "@/components/SenadoSection";
+import QuadranteCritico from "@/components/QuadranteCritico";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -57,6 +58,9 @@ export default function Home() {
         <div id="guia-estados">
           <ArticuladoresMap />
         </div>
+
+        {/* Quadrante crítico */}
+        <QuadranteCritico />
 
       </main>
       <Footer />
