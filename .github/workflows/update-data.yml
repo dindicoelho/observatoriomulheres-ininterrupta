@@ -45,7 +45,11 @@ jobs:
       - name: "[6/7] Enrich votacoes (autor + relator)"
         run: python -u scripts/enrich_votacoes.py
 
-      - name: "[7/7] Fetch candidatos TSE 2026 (silencia se indisponível)"
+      - name: "[7/8] Rebuild Senado Federal"
+        run: python -u scripts/rebuild_senado.py
+        timeout-minutes: 15
+
+      - name: "[8/8] Fetch candidatos TSE 2026 (silencia se indisponível)"
         run: python -u scripts/fetch_candidatos_tse.py
 
       - name: Check for changes
