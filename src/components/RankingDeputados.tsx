@@ -704,8 +704,26 @@ export default function RankingDeputados() {
             );
           })()}
 
+          {/* Disclaimer score */}
+          <div className="mt-10 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-[var(--color-bg-alt)] p-5">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ Sobre este ranking ]
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              Score = <strong>(PLs estruturais × 2) + (PLs incrementais
+              × 1) − (PLs regressivas × 2)</strong>. Proposições
+              classificadas como regressivas (criminalização do aborto
+              legal, armamentismo, sustação de resoluções protetivas){" "}
+              <strong>subtraem pontos</strong> do autor. Punitivistas
+              contam como produção mas recebem selo. Classificação
+              automática (regex + LLM), conservadora: na dúvida,
+              protetiva. Considera apenas deputados em exercício com 3+
+              proposições sobre o tema.
+            </p>
+          </div>
+
           {/* Sort controls + filtro candidatos */}
-          <div className="mt-10 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
               Ordenar por:
             </span>

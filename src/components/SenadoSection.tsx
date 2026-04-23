@@ -149,8 +149,23 @@ export default function SenadoSection() {
             </div>
           </div>
 
+          {/* Disclaimer score */}
+          <div className="mt-14 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-white p-5">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ Sobre este ranking ]
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              Score = <strong>[(PLs estruturais × 2) + (PLs incrementais
+              × 1) − (PLs regressivas × 2)] × peso_sexo</strong>. O{" "}
+              <strong>peso_sexo</strong> é <strong>2,5 para mulheres</strong>{" "}
+              e 1,0 para homens. Requerimentos (RQS, REQ) e indicações
+              (INS) são filtrados — contam apenas projetos de lei,
+              PECs, PDLs e resoluções.
+            </p>
+          </div>
+
           {/* Ranking */}
-          <div className="mt-14">
+          <div className="mt-8">
             <p className="mb-6 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
               [ Top 15 senadores · produção legislativa sobre mulher ]
             </p>
