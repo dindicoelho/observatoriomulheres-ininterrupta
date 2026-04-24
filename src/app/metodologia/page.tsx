@@ -362,7 +362,7 @@ export default function MetodologiaPage() {
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 score = [(estruturais × 2) + incrementais −
-                (regressivos × 2)] × peso_sexo
+                (regressivos × 5)] × peso_sexo
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 peso_sexo = 2,5 se mulher · 1,0 se homem

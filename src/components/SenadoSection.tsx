@@ -156,7 +156,7 @@ export default function SenadoSection() {
             </p>
             <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
               Score = <strong>[(PLs estruturais × 2) + (PLs incrementais
-              × 1) − (PLs regressivas × 2)] × peso_sexo</strong>. O{" "}
+              × 1) − (PLs regressivas × 5)] × peso_sexo</strong>. O{" "}
               <strong>peso_sexo</strong> é <strong>2,5 para mulheres</strong>{" "}
               e 1,0 para homens. Requerimentos (RQS, REQ) e indicações
               (INS) são filtrados — contam apenas projetos de lei,

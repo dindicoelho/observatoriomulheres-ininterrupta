@@ -902,7 +902,7 @@ export default function RankingDeputados() {
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
             Fonte: API de Dados Abertos da Câmara dos Deputados ·
             Legislatura 2023-2026 · Deputados com 3+ PLs ·
-            Score: (estruturais × 2) + incrementais − (regressivas × 2) ·
+            Score: (estruturais × 2) + incrementais − (regressivas × 5) ·
             Atualização automática diária.
           </p>
         </div>
