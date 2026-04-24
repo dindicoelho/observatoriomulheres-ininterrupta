@@ -69,6 +69,15 @@ def classify_pl(client, ementa, model="claude-haiku-4-5-20251001"):
         return None
 
 
+def load_overrides():
+    """Carrega overrides manuais que têm prioridade sobre o LLM."""
+    p = Path(__file__).parent / "stance_overrides.json"
+    if p.exists():
+        data = json.loads(p.read_text(encoding="utf-8"))
+        return {k: v["stance"] for k, v in data.items() if not k.startswith("_")}
+    return {}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true", help="Não escreve no autoria.json")
@@ -89,6 +98,17 @@ def main():
     client = Anthropic()  # usa ANTHROPIC_API_KEY
 
     autoria = json.loads((DATA_DIR / "autoria.json").read_text(encoding="utf-8"))
+    overrides = load_overrides()
+    if overrides:
+        print(f">>> {len(overrides)} overrides manuais carregados (pulados pelo LLM)")
+
+    # Aplicar overrides primeiro
+    for d in autoria["deputados"]:
+        for pl in d["pls"]:
+            ov = overrides.get(str(pl["id"]))
+            if ov:
+                pl["stance"] = ov
+                pl["llm_justificativa"] = "Override manual — verificado editorialmente."
 
     # Coletar PLs únicas marcadas como protetivas (candidatas a reclassificação)
     seen = set()
@@ -97,6 +117,9 @@ def main():
         for pl in d["pls"]:
             if pl["id"] in seen:
                 continue
+            if str(pl["id"]) in overrides:
+                seen.add(pl["id"])
+                continue  # já tem override, pular
             if pl.get("stance") == "protetivo":
                 seen.add(pl["id"])
                 candidates.append(pl)

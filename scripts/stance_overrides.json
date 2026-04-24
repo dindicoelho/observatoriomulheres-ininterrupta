@@ -1,0 +1,7 @@
+{
+  "_nota": "Overrides manuais de classificação LLM. Verificados editorialmente. O LLM pode misclassificar PLs cujo contexto é ambíguo na ementa mas claro na prática.",
+  "2600787": {"stance": "protetivo", "motivo": "Sâmia PL 269/2026: restringe armas pra quem tem medida protetiva — é pró-proteção, não armamentismo"},
+  "2350532": {"stance": "protetivo", "motivo": "Sâmia PL 998/2023: tipifica impedir aborto legal como tortura — protege acesso ao aborto"},
+  "2486191": {"stance": "protetivo", "motivo": "Erika PL 821/2025: suspende pensão DO AGRESSOR como medida protetiva — não penaliza a vítima"},
+  "2424641": {"stance": "protetivo", "motivo": "Erika PDL 111/2024: susta resolução CFM 2.378 que DIFICULTAVA aborto legal — sustar regra regressiva é protetivo"}
+}

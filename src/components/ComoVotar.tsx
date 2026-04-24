@@ -13,6 +13,14 @@ const STEPS = [
   },
   {
     numero: "02",
+    titulo: "Quem representa seu estado",
+    texto:
+      "Mapa do Brasil com os 3 deputados que mais se destacam em cada estado. 5 UFs não elegeram nenhuma mulher pra Câmara nesta legislatura.",
+    ancora: "#guia-estados",
+    cta: "Ir pro mapa ↓",
+  },
+  {
+    numero: "03",
     titulo: "O tipo de lei que é feita",
     texto:
       "Das mais de mil proposições, quantas viram lei? 76% estão paradas em comissão. Veja o funil legislativo e as curiosidades.",
@@ -20,7 +28,7 @@ const STEPS = [
     cta: "Ver o funil ↓",
   },
   {
-    numero: "03",
+    numero: "04",
     titulo: "Como cada partido vota",
     texto:
       "As votações de mérito no plenário: o que foi decidido, qual foi o placar por partido, e o que significa cada voto. Tudo em linguagem acessível.",
@@ -28,20 +36,12 @@ const STEPS = [
     cta: "Ir pras votações ↓",
   },
   {
-    numero: "04",
+    numero: "05",
     titulo: "Quem atua contra",
     texto:
       "Os parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo como resposta, sustação de resoluções que protegem crianças.",
     ancora: "#ato-04",
     cta: "Ver regressivas ↓",
-  },
-  {
-    numero: "05",
-    titulo: "Quem representa seu estado",
-    texto:
-      "Mapa do Brasil com os 3 deputados que mais se destacam em cada estado. 5 UFs não elegeram nenhuma mulher pra Câmara nesta legislatura.",
-    ancora: "#guia-estados",
-    cta: "Ir pro mapa ↓",
   },
 ];
 
