@@ -361,7 +361,7 @@ export default function MetodologiaPage() {
                 top 3 de cada UF é calculado por:
               </p>
               <p className="pl-6 font-mono-data text-sm">
-                score = [(estruturais × 2) + incrementais −
+                score = [(estruturais × 2) + (incrementais × 1) + (simbólicas × 1) −
                 (regressivos × 5)] × peso_sexo
               </p>
               <p className="pl-6 font-mono-data text-sm">
