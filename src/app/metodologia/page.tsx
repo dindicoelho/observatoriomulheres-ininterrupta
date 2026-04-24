@@ -365,7 +365,7 @@ export default function MetodologiaPage() {
                 (regressivos × 5)] × peso_sexo
               </p>
               <p className="pl-6 font-mono-data text-sm">
-                peso_sexo = 2,5 se mulher · 1,0 se homem
+                peso_sexo = 5 se mulher · 1,0 se homem
               </p>
               <p className="text-base md:text-lg">
                 O peso 2,5 é uma <strong>escolha editorial declarada</strong>{" "}

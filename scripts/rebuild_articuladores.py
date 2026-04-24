@@ -34,9 +34,9 @@ def main():
             continue
         regr = d.get("regressivos", 0)
         base_score = d["estruturais"] * 2 + d["incrementais"] - regr * 5
-        # Peso 2.5 pra mulheres no score de articulação
+        # Peso 5 pra mulheres no score de articulação
         sexo = d.get("sexo") or coer_idx.get(d["id"], {}).get("sexo")
-        mult = 2.5 if sexo == "F" else 1.0
+        mult = 5.0 if sexo == "F" else 1.0
         score = base_score * mult
         if score <= 0:
             continue
