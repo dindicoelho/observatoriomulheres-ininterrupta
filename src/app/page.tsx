@@ -26,6 +26,11 @@ export default function Home() {
           <RankingDeputados />
         </div>
 
+        {/* Guia eleitoral por estado */}
+        <div id="guia-estados">
+          <ArticuladoresMap />
+        </div>
+
         {/* Marquee — marcos legislativos */}
         <div className="bg-[var(--color-dark)] py-8">
           <MarqueeTicker
@@ -52,11 +57,6 @@ export default function Home() {
         {/* ATO 04 — Quem atua contra */}
         <div id="ato-04">
           <ProducaoRegressiva />
-        </div>
-
-        {/* Guia eleitoral por estado */}
-        <div id="guia-estados">
-          <ArticuladoresMap />
         </div>
 
 
