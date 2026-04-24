@@ -48,6 +48,7 @@ type Articulador = {
 
 type UFData = {
   total_deps: number;
+  deputados_atuantes?: number;
   top3: Articulador[];
   camara_F?: number;
   camara_M?: number;
@@ -587,7 +588,7 @@ export default function ArticuladoresMap() {
             </p>
             <p className="mt-1 text-xs text-[var(--color-text-tertiary)]">
               {displayData
-                ? `Dentre ${displayData.total_deps} deputados em exercício`
+                ? `${displayData.total_deps} deputados na bancada · ${displayData.deputados_atuantes ?? 0} atuam no tema`
                 : "Selecione um estado"}
             </p>
 

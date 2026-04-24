@@ -581,8 +581,9 @@ export default function RankingDeputados() {
           </div>
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
-            Na atual legislatura (2023-2026), <strong>{DATA.totalDeputados} deputados</strong>{" "}
-            propuseram {DATA.totalPls} proposições sobre violência contra a mulher.
+            Dos 513 deputados da Câmara, <strong>{DATA.totalDeputados} propuseram</strong>{" "}
+            {DATA.totalPls} proposições sobre violência contra a mulher.{" "}
+            <strong>{513 - DATA.totalDeputados} não propuseram nada</strong> sobre o tema.
             Quem são?
           </p>
 

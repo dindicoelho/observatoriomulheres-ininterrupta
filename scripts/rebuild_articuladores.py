@@ -66,14 +66,7 @@ def main():
     for uf, lst in por_uf.items():
         lst.sort(key=lambda x: x["score_articulador"], reverse=True)
 
-    ufs_out = {}
-    for uf, lst in por_uf.items():
-        ufs_out[uf] = {
-            "total_deps": len(lst),
-            "top3": lst[:3],
-        }
-
-    # Composição da Câmara por UF — conta deputadas na legislatura 57ª
+    # Composição da Câmara por UF — conta TODOS deputados da legislatura 57ª
     comp_uf = {}
     for cd in coer.get("deputados", []):
         uf = cd.get("uf")
@@ -88,15 +81,35 @@ def main():
             comp_uf[uf]["M"] += 1
         comp_uf[uf]["total"] += 1
 
-    # Anotar zero_mulheres por UF
-    for uf, data in ufs_out.items():
+    # Montar ufs_out com total_deps = TOTAL da bancada (não só quem tem score)
+    ufs_out = {}
+    for uf, lst in por_uf.items():
         camara = comp_uf.get(uf, {"F": 0, "M": 0, "total": 0})
-        data["camara_F"] = camara["F"]
-        data["camara_M"] = camara["M"]
-        data["camara_total"] = camara["total"]
-        data["zero_mulheres"] = camara["F"] == 0
+        atuantes = len(lst)
+        ufs_out[uf] = {
+            "total_deps": camara["total"],  # total da bancada, não só quem pontuou
+            "deputados_atuantes": atuantes,
+            "top3": lst[:3],
+            "camara_F": camara["F"],
+            "camara_M": camara["M"],
+            "camara_total": camara["total"],
+            "zero_mulheres": camara["F"] == 0,
+        }
 
-    total_deputados = sum(len(v) for v in por_uf.values())
+    # UFs que estão na composição mas não em por_uf (0 PLs sobre o tema)
+    for uf, camara in comp_uf.items():
+        if uf not in ufs_out:
+            ufs_out[uf] = {
+                "total_deps": camara["total"],
+                "deputados_atuantes": 0,
+                "top3": [],
+                "camara_F": camara["F"],
+                "camara_M": camara["M"],
+                "camara_total": camara["total"],
+                "zero_mulheres": camara["F"] == 0,
+            }
+
+    total_deputados = sum(comp_uf[uf]["total"] for uf in comp_uf)
     out = {"ufs": ufs_out, "total_deputados": total_deputados}
 
     (DATA_DIR / "articuladores_uf.json").write_text(
