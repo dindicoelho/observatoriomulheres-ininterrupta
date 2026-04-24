@@ -41,13 +41,13 @@ export default function Home() {
           />
         </div>
 
-        {/* ATO 02 — Como se vota */}
-        <div id="ato-02">
+        {/* ATO 02 — Timeline legislativa */}
+        <TimelineLegislativa />
+
+        {/* ATO 03 — Como se vota */}
+        <div id="ato-03">
           <VotacoesPartidos />
         </div>
-
-        {/* ATO 03 — Timeline legislativa */}
-        <TimelineLegislativa />
 
         {/* ATO 04 — Quem atua contra */}
         <div id="ato-04">

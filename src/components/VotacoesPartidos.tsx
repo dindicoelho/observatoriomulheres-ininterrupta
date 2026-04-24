@@ -184,9 +184,9 @@ export default function VotacoesPartidos() {
         <div className="mb-12 offset-left">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-              [ ATO 02 / DISCURSO E VOTO ]
+              [ ATO 03 / DISCURSO E VOTO ]
             </p>
-            <ShareButton path="/ato-02" title="Discurso e voto: como cada partido vota" />
+            <ShareButton path="/ato-03" title="Discurso e voto: como cada partido vota" />
           </div>
           <ScrollFloat
             as="h2"

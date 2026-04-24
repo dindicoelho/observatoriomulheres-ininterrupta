@@ -13,19 +13,19 @@ const STEPS = [
   },
   {
     numero: "02",
-    titulo: "Como cada partido vota",
-    texto:
-      "As votações de mérito no plenário: o que foi decidido, qual foi o placar por partido, e o que significa cada voto. Tudo em linguagem acessível.",
-    ancora: "#ato-02",
-    cta: "Ir pras votações ↓",
-  },
-  {
-    numero: "03",
     titulo: "O tipo de lei que é feita",
     texto:
       "Das mais de mil proposições, quantas viram lei? 76% estão paradas em comissão. Veja o funil legislativo e as curiosidades.",
-    ancora: "#ato-03",
+    ancora: "#ato-02",
     cta: "Ver o funil ↓",
+  },
+  {
+    numero: "03",
+    titulo: "Como cada partido vota",
+    texto:
+      "As votações de mérito no plenário: o que foi decidido, qual foi o placar por partido, e o que significa cada voto. Tudo em linguagem acessível.",
+    ancora: "#ato-03",
+    cta: "Ir pras votações ↓",
   },
   {
     numero: "04",

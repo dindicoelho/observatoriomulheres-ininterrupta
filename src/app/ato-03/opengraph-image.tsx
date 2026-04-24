@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "fs/promises";
 import { join } from "path";
 
-export const alt = "O Congresso está agindo? 76% paradas em comissão";
+export const alt = "Discurso e voto: como cada partido vota sobre violência contra a mulher";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -24,26 +24,29 @@ export default async function OG() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#0A0A0A",
+          backgroundColor: "#F7F7F5",
           padding: "60px 72px",
           fontFamily: "Archivo",
         }}
       >
-        <div style={{ fontFamily: "Archivo", fontSize: 16, letterSpacing: 4, textTransform: "uppercase", color: "#DCFF00" }}>
-          [ ATO 03 · O TIPO DE LEI ]
+        <div style={{ fontFamily: "Archivo", fontSize: 16, letterSpacing: 4, textTransform: "uppercase", color: "#005FFF" }}>
+          [ ATO 03 · DISCURSO E VOTO ]
         </div>
         <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center", marginTop: 24 }}>
-          <div style={{ fontFamily: "ArchivoBlack", fontSize: 104, lineHeight: 0.92, color: "#FFFFFF", letterSpacing: -3 }}>
-            O Congresso
+          <div style={{ fontFamily: "ArchivoBlack", fontSize: 96, lineHeight: 0.92, color: "#0A0A0A", letterSpacing: -3 }}>
+            Discurso
           </div>
-          <div style={{ fontFamily: "ArchivoBlack", fontSize: 104, lineHeight: 0.92, color: "#DCFF00", letterSpacing: -3 }}>
-            está agindo?
+          <div style={{ fontFamily: "ArchivoBlack", fontSize: 96, lineHeight: 0.92, color: "#005FFF", letterSpacing: -3 }}>
+            e voto.
+          </div>
+          <div style={{ fontFamily: "Archivo", fontSize: 24, lineHeight: 1.3, color: "rgba(10,10,10,0.6)", marginTop: 28, maxWidth: 700 }}>
+            Como cada partido votou nas proposições sobre violência contra a mulher no plenário da Câmara.
           </div>
         </div>
-        <div style={{ display: "flex", gap: 56, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 24 }}>
-          <Stat value="76%" label="Paradas em comissão" color="#D43F3F" />
-          <Stat value="16" label="Viraram lei" color="#DCFF00" />
-          <Stat value="79" label="Sem relator" />
+        <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>
+          <Stat value="17" label="Votações nominais" />
+          <Stat value="6" label="PLs em plenário" />
+          <Stat value="4" label="De mérito" color="#005FFF" />
         </div>
       </div>
     ),
@@ -54,11 +57,11 @@ export default async function OG() {
   );
 }
 
-function Stat({ value, label, color = "#FFFFFF" }: { value: string; label: string; color?: string }) {
+function Stat({ value, label, color = "#0A0A0A" }: { value: string; label: string; color?: string }) {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ fontFamily: "ArchivoBlack", fontSize: 64, lineHeight: 0.95, color, letterSpacing: -2 }}>{value}</div>
-      <div style={{ fontFamily: "Archivo", fontSize: 14, letterSpacing: 2, textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: "ArchivoBlack", fontSize: 56, lineHeight: 0.95, color, letterSpacing: -2 }}>{value}</div>
+      <div style={{ fontFamily: "Archivo", fontSize: 14, letterSpacing: 2, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginTop: 6 }}>{label}</div>
     </div>
   );
 }
