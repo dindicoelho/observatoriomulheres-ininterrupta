@@ -90,7 +90,7 @@ function BigNumber({ value }: { value: number }) {
       style={{
         fontFamily: "var(--font-display-condensed)",
         letterSpacing: "-0.05em",
-        fontSize: "clamp(6rem, 22vw, 22rem)",
+        fontSize: "clamp(4rem, 12vw, 10rem)",
       }}
     >
       {display.toLocaleString("pt-BR")}
@@ -329,7 +329,7 @@ export default function TimelineLegislativa() {
               </div>
 
               {/* Scroll steps */}
-              <div className="mt-8 space-y-[50vh] md:mt-0 md:w-1/2 md:space-y-[60vh]">
+              <div className="relative z-20 mt-8 space-y-[50vh] md:mt-0 md:w-1/2 md:space-y-[60vh]">
                 {phases.map((p, i) => (
                   <div
                     key={i}
