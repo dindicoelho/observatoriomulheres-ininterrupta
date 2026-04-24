@@ -529,8 +529,11 @@ export default function RankingDeputados() {
 
   const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
+  // Regressivas penalizam com peso -5
+  const scoreOf = (d: Deputado) => d.total - (d.regressivos ?? 0) * 5;
+
   const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === "total") return b.total - a.total;
+    if (sortBy === "total") return scoreOf(b) - scoreOf(a);
     if (sortBy === "estruturais") return b.estruturais - a.estruturais;
     const pa = a.total > 0 ? a.estruturais / a.total : 0;
     const pb = b.total > 0 ? b.estruturais / b.total : 0;
