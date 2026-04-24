@@ -29,6 +29,7 @@ type Votacao = {
     { sim: number; nao: number; outros: number; total: number; pctSim: number }
   >;
   voto_pro_mulher?: "sim" | "nao" | null;
+  contexto_voto?: string | null;
   genero?: {
     F: { sim: number; nao: number; outros: number; total: number; pctSim: number };
     M: { sim: number; nao: number; outros: number; total: number; pctSim: number };
@@ -369,29 +370,68 @@ export default function VotacoesPartidos() {
                             proposição:
                           </p>
                           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                            <div className="rounded-lg border border-gray-200 bg-[var(--color-bg-alt)] p-4">
-                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-text)]">
-                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text)] text-[10px] text-white">
+                            <div className={`rounded-lg border-l-4 p-4 ${
+                              v.voto_pro_mulher === "sim"
+                                ? "border-[#1DB389] bg-[#1DB389]/8"
+                                : v.voto_pro_mulher === "nao"
+                                  ? "border-gray-300 bg-gray-50"
+                                  : "border-gray-200 bg-[var(--color-bg-alt)]"
+                            }`}>
+                              <p className={`flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider ${
+                                v.voto_pro_mulher === "sim" ? "text-[#1DB389]" : "text-[var(--color-text)]"
+                              }`}>
+                                <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] text-white ${
+                                  v.voto_pro_mulher === "sim" ? "bg-[#1DB389]" : "bg-[var(--color-text)]"
+                                }`}>
                                   ✓
                                 </span>
                                 Votar SIM
+                                {v.voto_pro_mulher === "sim" && (
+                                  <span className="ml-1 text-[9px] font-bold text-[#1DB389]">
+                                    · pró-proteção
+                                  </span>
+                                )}
                               </p>
                               <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
                                 {v.interpretacao_sim}
                               </p>
                             </div>
-                            <div className="rounded-lg border border-gray-200 bg-[var(--color-bg-alt)] p-4">
-                              <p className="flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider text-[var(--color-text)]">
-                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text)] text-[10px] text-white">
+                            <div className={`rounded-lg border-l-4 p-4 ${
+                              v.voto_pro_mulher === "nao"
+                                ? "border-[#1DB389] bg-[#1DB389]/8"
+                                : v.voto_pro_mulher === "sim"
+                                  ? "border-gray-300 bg-gray-50"
+                                  : "border-gray-200 bg-[var(--color-bg-alt)]"
+                            }`}>
+                              <p className={`flex items-center gap-2 font-mono-data text-xs font-bold uppercase tracking-wider ${
+                                v.voto_pro_mulher === "nao" ? "text-[#1DB389]" : "text-[var(--color-text)]"
+                              }`}>
+                                <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] text-white ${
+                                  v.voto_pro_mulher === "nao" ? "bg-[#1DB389]" : "bg-[var(--color-text)]"
+                                }`}>
                                   ✗
                                 </span>
                                 Votar NÃO
+                                {v.voto_pro_mulher === "nao" && (
+                                  <span className="ml-1 text-[9px] font-bold text-[#1DB389]">
+                                    · pró-proteção
+                                  </span>
+                                )}
                               </p>
                               <p className="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
                                 {v.interpretacao_nao}
                               </p>
                             </div>
                           </div>
+                          {/* Contexto da classificação */}
+                          {v.contexto_voto && (
+                            <p className="mt-3 rounded-lg bg-[var(--color-bg-alt)] px-4 py-3 text-xs leading-relaxed text-[var(--color-text-secondary)]">
+                              <strong className="font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                                Por que classificamos assim:{" "}
+                              </strong>
+                              {v.contexto_voto}
+                            </p>
+                          )}
                         </div>
 
                         {/* Gender breakdown */}
