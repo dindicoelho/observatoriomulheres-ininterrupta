@@ -46,13 +46,17 @@ REGRESSIVO_PATTERNS = [
     # Veto a recursos públicos para pautas de direito reprodutivo
     r"(veda|vedar|proibir).*(incentivo|recurso|verba|rouanet|subven).*\baborto\b",
     r"proibe.*publica[cç]ao.*\baborto\b",
-    # Sustação de resoluções protetivas (só Conanda 258 explícita por enquanto)
+    # Sustação de resoluções protetivas (Conanda, CNDM)
     r"susta.*resolu[cç]ao.*conanda.*258",
     r"susta.*resolu[cç]ao conanda n.*258",
+    r"susta.*resolu[cç]ao.*(conanda|cndm)",
+    # Enfraquecer Maria da Penha (contraditório/ampla defesa pra agressor)
+    r"contraditorio.*ampla defesa.*(maria da penha|viol[eê]ncia dom[eé]stica)",
+    r"ampla defesa.*contraditorio.*(maria da penha|medida protetiva)",
     # Anti direitos trans
-    r"proibe.*bloqueio puberal",
-    r"proibe.*terapia hormonal.*(crianca|adolescente)",
-    r"proibe.*(transicao|redesignacao).*(crianca|adolescente|menor)",
+    r"proib(e|i[cç]ao).*bloqueio puberal",
+    r"proib(e|i[cç]ao).*terapia hormonal.*(crianca|adolescente)",
+    r"proib(e|i[cç]ao).*(transicao|redesignacao|transexualiz).*(crianca|adolescente|menor)",
     # Armamentismo como "solução" à vítima de violência
     r"direito.*porte.*arma.*(v[ií]tima|mulher.*viol|mulher.*domest)",
     r"autoriza.*porte.*arma.*(v[ií]tima|mulher.*viol)",
