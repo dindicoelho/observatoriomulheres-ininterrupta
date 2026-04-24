@@ -18,7 +18,8 @@ type PL = {
   ementa: string;
   data: string;
   categoria: "simbólica" | "incremental" | "estrutural";
-  stance?: "protetivo" | "punitivista" | "regressivo";
+  stance?: "protetivo" | "punitivista" | "regressivo" | "nao_classificado";
+  llm_justificativa?: string;
 };
 
 type Deputado = {
@@ -390,6 +391,16 @@ function DeputadoModal({
                         ? pl.ementa.slice(0, 280) + "…"
                         : pl.ementa}
                     </p>
+                    {pl.llm_justificativa && (pl.stance === "regressivo" || pl.stance === "punitivista") && (
+                      <p className="mt-2 rounded bg-gray-50 px-3 py-2 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                        <span className={`font-mono-data text-[9px] uppercase tracking-wider ${
+                          pl.stance === "regressivo" ? "text-red-600" : "text-amber-600"
+                        }`}>
+                          Por que é {pl.stance}:{" "}
+                        </span>
+                        {pl.llm_justificativa}
+                      </p>
+                    )}
                     <a
                       href={`https://www.camara.leg.br/propostas-legislativas/${pl.id}`}
                       target="_blank"

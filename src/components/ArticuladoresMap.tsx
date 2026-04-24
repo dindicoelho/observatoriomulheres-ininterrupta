@@ -380,6 +380,16 @@ export default function ArticuladoresMap() {
                     <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">
                       {pl.ementa.length > 250 ? pl.ementa.slice(0, 250) + "…" : pl.ementa}
                     </p>
+                    {pl.llm_justificativa && (pl.stance === "regressivo" || pl.stance === "punitivista") && (
+                      <p className="mt-2 rounded bg-gray-50 px-3 py-2 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                        <span className={`font-mono-data text-[9px] uppercase tracking-wider ${
+                          pl.stance === "regressivo" ? "text-red-600" : "text-amber-600"
+                        }`}>
+                          Por que é {pl.stance}:{" "}
+                        </span>
+                        {pl.llm_justificativa}
+                      </p>
+                    )}
                   </li>
                 ))}
               </ul>
