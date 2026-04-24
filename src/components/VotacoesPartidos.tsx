@@ -165,13 +165,10 @@ export default function VotacoesPartidos() {
       });
     });
 
-    // Sort groups: mérito first, then by principal date desc. Top 10 only.
+    // Só grupos com votação de mérito, por data desc. Top 10.
     return groups
-      .sort((a, b) => {
-        if (a.temMerito && !b.temMerito) return -1;
-        if (b.temMerito && !a.temMerito) return 1;
-        return b.principal.data.localeCompare(a.principal.data);
-      })
+      .filter((g) => g.temMerito)
+      .sort((a, b) => b.principal.data.localeCompare(a.principal.data))
       .slice(0, 10);
   }, []);
 
