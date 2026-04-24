@@ -109,6 +109,12 @@ const CATEGORY_LABELS = {
   estrutural: "Estrutural",
 };
 
+const CATEGORY_LABELS_PLURAL: Record<string, string> = {
+  simbólica: "Simbólicas",
+  incremental: "Incrementais",
+  estrutural: "Estruturais",
+};
+
 function DeputadoModal({
   deputado,
   onClose,
@@ -342,7 +348,7 @@ function DeputadoModal({
                     : { color: CATEGORY_COLORS[cat] }
                 }
               >
-                {CATEGORY_LABELS[cat]}s ({count})
+                {CATEGORY_LABELS_PLURAL[cat]} ({count})
               </button>
             );
           })}
