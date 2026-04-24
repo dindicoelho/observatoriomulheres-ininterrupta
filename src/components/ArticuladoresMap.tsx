@@ -115,6 +115,7 @@ export default function ArticuladoresMap() {
   const [selectedUf, setSelectedUf] = useState<string>("SP");
   const [hoveredUf, setHoveredUf] = useState<string | null>(null);
   const [selectedDep, setSelectedDep] = useState<AutoriaDep | null>(null);
+  const [mapModalFilter, setMapModalFilter] = useState<"all" | "protetivo" | "punitivista" | "regressivo">("all");
   const [layer, setLayer] = useState<MapLayer>("producao");
 
   // Load geojson
@@ -288,7 +289,9 @@ export default function ArticuladoresMap() {
     {/* Modal do deputado */}
     {selectedDep && (() => {
       const dep = selectedDep;
-      const filteredPls = dep.pls;
+      const filteredPls = mapModalFilter === "all"
+        ? dep.pls
+        : dep.pls.filter((p) => p.stance === mapModalFilter);
       return (
         <div
           className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/70 backdrop-blur-sm md:items-center md:px-4"
@@ -323,19 +326,40 @@ export default function ArticuladoresMap() {
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {(dep.protetivos ?? 0) > 0 && (
-                    <span className="rounded bg-[#1DB389]/10 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-[#0F8B6B]">
+                    <button
+                      onClick={() => setMapModalFilter(mapModalFilter === "protetivo" ? "all" : "protetivo")}
+                      className={`rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                        mapModalFilter === "protetivo"
+                          ? "bg-[#1DB389] text-white"
+                          : "bg-[#1DB389]/10 text-[#0F8B6B] hover:bg-[#1DB389]/20"
+                      }`}
+                    >
                       {dep.protetivos} protetivos
-                    </span>
+                    </button>
                   )}
                   {(dep.punitivistas ?? 0) > 0 && (
-                    <span className="rounded bg-amber-500/15 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                    <button
+                      onClick={() => setMapModalFilter(mapModalFilter === "punitivista" ? "all" : "punitivista")}
+                      className={`rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                        mapModalFilter === "punitivista"
+                          ? "bg-amber-500 text-white"
+                          : "bg-amber-500/15 text-amber-700 hover:bg-amber-500/25"
+                      }`}
+                    >
                       {dep.punitivistas} punitivistas
-                    </span>
+                    </button>
                   )}
                   {(dep.regressivos ?? 0) > 0 && (
-                    <span className="rounded bg-red-600/15 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-red-700">
+                    <button
+                      onClick={() => setMapModalFilter(mapModalFilter === "regressivo" ? "all" : "regressivo")}
+                      className={`rounded px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                        mapModalFilter === "regressivo"
+                          ? "bg-red-600 text-white"
+                          : "bg-red-600/15 text-red-700 hover:bg-red-600/25"
+                      }`}
+                    >
                       {dep.regressivos} regressivos
-                    </span>
+                    </button>
                   )}
                 </div>
               </div>
@@ -587,7 +611,7 @@ export default function ArticuladoresMap() {
                   return (
                     <li key={d.id}>
                       <button
-                        onClick={() => dep && setSelectedDep(dep)}
+                        onClick={() => { if (dep) { setMapModalFilter("all"); setSelectedDep(dep); } }}
                         className="w-full rounded-lg border border-gray-200 bg-white p-4 text-left transition-colors hover:border-[var(--color-blue)]/40 hover:bg-[var(--color-blue)]/5"
                       >
                         <div className="flex items-start gap-3">
