@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import legislativoData from "../data/legislativo.json";
+import curiosidadesData from "../data/curiosidades.json";
 import ScrollFloat from "./ScrollFloat";
 
 type Proposicao = {
@@ -568,79 +569,26 @@ export default function TimelineLegislativa() {
           />
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {[
-              {
-                selo: "Decisão mais apertada",
-                pl: "PL 6415/2025",
-                titulo:
-                  "Política Nacional de Assistência Jurídica às Vítimas",
-                dado: "213 × 152",
-                texto:
-                  "A votação mais disputada de proposições sobre proteção à mulher na 57ª legislatura. Foi aprovada por 61 votos de diferença em 11 de março de 2026. O texto agora tramita no Senado.",
-                link: "https://www.camara.leg.br/propostas-legislativas/2596663",
-              },
-              {
-                selo: "Tema em ascensão",
-                pl: "4 PLs em abril/2026",
-                titulo: "Climatério e menopausa viram política pública",
-                dado: "2 semanas",
-                texto:
-                  "Em duas semanas, 4 proposições foram apresentadas estabelecendo diretrizes de atenção à saúde da mulher no climatério e menopausa — pauta até então quase ausente das estatísticas legislativas.",
-                link: "https://www.camara.leg.br/propostas-legislativas/2617029",
-              },
-              {
-                selo: "Lei in memoriam",
-                pl: "PL 827/2025",
-                titulo:
-                  "Dia Nacional do Enfrentamento ao Transfeminicídio",
-                dado: "15/fev",
-                texto:
-                  "Proposição da dep. Erika Hilton instituindo um dia nacional in memoriam à travesti Dandara dos Santos, brutalmente assassinada em Fortaleza em 2017. O caso chocou o Brasil e tornou-se marco na discussão sobre transfeminicídio.",
-                link: "https://www.camara.leg.br/propostas-legislativas/2453894",
-              },
-              {
-                selo: "Novo conceito legal",
-                pl: "PL 3880/2024",
-                titulo: "Violência vicária entra na Maria da Penha",
-                dado: "232 × 151",
-                texto:
-                  "Pela primeira vez, o Brasil reconhece legalmente a violência vicária — quando o agressor atinge a mulher através de seus filhos. A proposta foi aprovada e segue para o Senado.",
-                link: "https://www.camara.leg.br/propostas-legislativas/2462009",
-              },
-              {
-                selo: "Fenômeno recente",
-                pl: "PL 1870/2026",
-                titulo:
-                  "Programa Nacional de Proteção a Órfãos de Feminicídio",
-                dado: "1/4 dos casos",
-                texto:
-                  "Apresentada em abril de 2026, propõe proteção integral a crianças cujas mães foram mortas em feminicídio. Segundo o FBSP, 1 em cada 4 feminicídios deixa filhos órfãos — hoje sem política específica.",
-                link: "https://www.camara.leg.br/propostas-legislativas/2615283",
-              },
-              {
-                selo: "Campanha batizada",
-                pl: "PL 3397/2024",
-                titulo: "Setembro Neon — violência política de gênero",
-                dado: "Nova cor, nova pauta",
-                texto:
-                  "Proposição da dep. Sâmia Bomfim institui campanha nacional contra a violência política de gênero e raça contra a mulher. Batizada de “Setembro Neon”, a iniciativa reconhece uma forma de violência ainda tratada como residual.",
-                link: "https://www.camara.leg.br/propostas-legislativas/2452147",
-              },
-            ].map((c, i) => (
+            {(curiosidadesData as { curiosidades: Array<{
+                selo: string; pl: string; titulo: string;
+                dado: string; texto: string; link: string;
+              }> }).curiosidades.map((c, i) => (
               <a
                 key={i}
-                href={c.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={c.link || "#"}
+                target={c.link ? "_blank" : undefined}
+                rel={c.link ? "noopener noreferrer" : undefined}
                 className="group rounded-xl border border-white/10 bg-white/[0.02] p-6 transition-colors hover:border-[var(--color-neon)]/40 hover:bg-white/[0.04]"
               >
                 <div className="flex items-center justify-between">
                   <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
                     [ {c.selo} ]
                   </p>
-                  <span className="font-mono-data text-[10px] text-white/40 group-hover:text-white">
-                    {c.pl} →
-                  </span>
+                  {c.pl && (
+                    <span className="font-mono-data text-[10px] text-white/40 group-hover:text-white">
+                      {c.pl} →
+                    </span>
+                  )}
                 </div>
                 <h4
                   className="mt-4 text-xl font-bold leading-tight text-white md:text-2xl"

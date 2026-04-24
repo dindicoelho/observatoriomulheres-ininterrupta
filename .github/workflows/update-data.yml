@@ -42,14 +42,23 @@ jobs:
         run: python -u scripts/rebuild_legislativo.py
         timeout-minutes: 20
 
-      - name: "[6/7] Enrich votacoes (autor + relator)"
+      - name: "[6/10] Enrich votacoes (autor + relator)"
         run: python -u scripts/enrich_votacoes.py
 
-      - name: "[7/8] Rebuild Senado Federal"
+      - name: "[7/10] Detectar novas votações + interpretação LLM"
+        run: python -u scripts/update_votacoes.py
+        timeout-minutes: 20
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: "[8/10] Rebuild curiosidades"
+        run: python -u scripts/rebuild_curiosidades.py
+
+      - name: "[9/10] Rebuild Senado Federal"
         run: python -u scripts/rebuild_senado.py
         timeout-minutes: 15
 
-      - name: "[8/8] Fetch candidatos TSE 2026 (silencia se indisponível)"
+      - name: "[10/10] Fetch candidatos TSE 2026 (silencia se indisponível)"
         run: python -u scripts/fetch_candidatos_tse.py
 
       - name: Check for changes
