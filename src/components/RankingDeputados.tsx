@@ -722,44 +722,8 @@ export default function RankingDeputados() {
             );
           })()}
 
-          {/* Sort controls */}
+          {/* Controls */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            <span className="font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
-              Ordenar por:
-            </span>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSortBy("total")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                  sortBy === "total"
-                    ? "bg-[var(--color-text)] text-white"
-                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-                }`}
-              >
-                Quantidade total
-              </button>
-              <button
-                onClick={() => setSortBy("estruturais")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                  sortBy === "estruturais"
-                    ? "bg-[var(--color-teal)] text-white"
-                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-                }`}
-              >
-                Nº de estruturais
-              </button>
-              <button
-                onClick={() => setSortBy("pct_estrutural")}
-                className={`rounded-full px-3 py-1 text-xs transition-colors ${
-                  sortBy === "pct_estrutural"
-                    ? "bg-[var(--color-teal)] text-white"
-                    : "bg-[var(--color-bg-alt)] text-[var(--color-text-secondary)] hover:bg-gray-200"
-                }`}
-              >
-                % estruturais
-              </button>
-            </div>
-
             {/* Legenda candidatos 2026 */}
             {TSE_DISPONIVEL && (
               <span className="ml-auto flex items-center gap-1.5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
