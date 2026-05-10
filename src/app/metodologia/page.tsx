@@ -364,7 +364,20 @@ export default function MetodologiaPage() {
                 score = [(PLs estruturais × 3) + (PLs incrementais × 1)
                 + (PLs simbólicas × 1) − (PLs punitivistas × 2)
                 − (PLs regressivas × 7)
-                − (votos SIM em regressivas × 7)] × peso_sexo
+                − (votos SIM em regressivas × 7)]
+                × ficha_limpa × peso_sexo
+              </p>
+              <p className="pl-6 font-mono-data text-sm">
+                ficha_limpa = 1,5 se 100% protetivas · 1,0 caso
+                contrário
+              </p>
+              <p className="text-base md:text-lg">
+                Deputados com <strong>ficha 100% protetiva</strong>{" "}
+                (zero punitivistas, zero regressivas, zero votos
+                regressivos) recebem bônus <strong>×1,5</strong> no
+                score. A lógica: quem só propõe proteção demonstra
+                consistência e compromisso — merece diferenciação de
+                quem mistura proteção com punitivismo ou retrocesso.
               </p>
               <p className="text-base md:text-lg">
                 A penalidade por <strong>voto</strong> em proposição
@@ -373,8 +386,6 @@ export default function MetodologiaPage() {
                 <strong>punitivismo</strong> é −2 pontos — menor que
                 regressiva, mas não zero, porque punitivismo (aumento
                 de pena, cadastros) não melhora proteção material.
-                Votar a favor de sustar uma resolução protetiva é tão
-                relevante quanto assinar um projeto regressivo.
               </p>
               <p className="text-base md:text-lg">
                 Deputados filiados recentemente a partidos cuja bancada

@@ -36,7 +36,11 @@ def main():
         punit = d.get("punitivistas", 0)
         votos_regr = d.get("votos_regressivos", 0)
         base_score = d["estruturais"] * 3 + d["incrementais"] + d["simbolicas"] - punit * 2 - regr * 7 - votos_regr * 7
-        # Peso 5 pra mulheres DEPOIS do desconto
+        # Bônus ×1.5 pra ficha 100% protetiva
+        ficha_limpa = punit == 0 and regr == 0 and votos_regr == 0
+        if ficha_limpa:
+            base_score = base_score * 1.5
+        # Peso 5 pra mulheres DEPOIS do desconto e bônus
         sexo = d.get("sexo") or coer_idx.get(d["id"], {}).get("sexo")
         mult = 5.0 if sexo == "F" else 1.0
         score = base_score * mult
