@@ -7,6 +7,8 @@ import ProducaoRegressiva from "@/components/ProducaoRegressiva";
 import ComoVotar from "@/components/ComoVotar";
 // import SenadoSection from "@/components/SenadoSection";
 // import QuadranteCritico from "@/components/QuadranteCritico";
+import LeadPopup from "@/components/LeadPopup";
+import LeadSection from "@/components/LeadSection";
 import Footer from "@/components/Footer";
 import ProgressBar from "@/components/ProgressBar";
 import MarqueeTicker from "@/components/MarqueeTicker";
@@ -60,7 +62,10 @@ export default function Home() {
         </div>
 
 
+        {/* Inscreva-se */}
+        <LeadSection />
       </main>
+      <LeadPopup />
       <Footer />
     </>
   );
