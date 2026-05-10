@@ -557,9 +557,9 @@ export default function RankingDeputados() {
 
   const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
-  // Score: estr×2 + incr×1 + simb×1 - punit×2 - regr×5 - votos_regr×5
+  // Score: estr×3 + incr×1 + simb×1 - punit×2 - regr×5 - votos_regr×5
   const scoreOf = (d: Deputado) =>
-    d.estruturais * 2 + d.incrementais + d.simbolicas
+    d.estruturais * 3 + d.incrementais + d.simbolicas
     - (d.punitivistas ?? 0) * 2
     - (d.regressivos ?? 0) * 5
     - (d.votos_regressivos ?? 0) * 5;
@@ -930,7 +930,7 @@ export default function RankingDeputados() {
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
             Fonte: API de Dados Abertos da Câmara dos Deputados ·
             Legislatura 2023-2026 · Deputados com 3+ PLs ·
-            Score: (estruturais × 2) + (incrementais × 1) + (simbólicas × 1) − (punitivistas × 2) − (regressivas × 5) − (votos regressivos × 5) ·
+            Score: (estruturais × 3) + (incrementais × 1) + (simbólicas × 1) − (punitivistas × 2) − (regressivas × 5) − (votos regressivos × 5) ·
             Atualização automática diária.
           </p>
         </div>

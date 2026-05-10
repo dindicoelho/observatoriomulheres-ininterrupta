@@ -141,7 +141,7 @@ def main():
 
     # Re-sort por score (estr*2 + incr - regressivos*2)
     def score(d):
-        return d["estruturais"] * 2 + d["incrementais"] - d["regressivos"] * 2
+        return d["estruturais"] * 3 + d["incrementais"] - d["regressivos"] * 2
 
     deps.sort(key=score, reverse=True)
 

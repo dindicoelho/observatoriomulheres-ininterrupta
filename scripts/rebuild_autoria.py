@@ -389,7 +389,7 @@ def main():
 
     # Ordenar por score (estr*2 + incr*1) desc
     deputados_out.sort(
-        key=lambda d: d["estruturais"] * 2 + d["incrementais"] * 1,
+        key=lambda d: d["estruturais"] * 3 + d["incrementais"] * 1,
         reverse=True,
     )
 
@@ -404,7 +404,7 @@ def main():
     # Preview do top 20
     print("\n>>> TOP 20 (por estr*2 + incr):")
     for i, d in enumerate(deputados_out[:20], 1):
-        score = d["estruturais"] * 2 + d["incrementais"]
+        score = d["estruturais"] * 3 + d["incrementais"]
         print(
             f"  {i:2d}. {d['nome']:<35} ({d['partido']}/{d['uf']}) "
             f"total={d['total']:3d} estr={d['estruturais']:2d} "

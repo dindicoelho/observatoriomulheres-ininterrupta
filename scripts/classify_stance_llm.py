@@ -203,7 +203,7 @@ def main():
         d["simbolicas"] = sum(1 for p in non_regr if p["categoria"] == "simbólica")
 
     autoria["deputados"].sort(
-        key=lambda d: d["estruturais"] * 2 + d["incrementais"] - d.get("regressivos", 0) * 2,
+        key=lambda d: d["estruturais"] * 3 + d["incrementais"] - d.get("regressivos", 0) * 2,
         reverse=True,
     )
 

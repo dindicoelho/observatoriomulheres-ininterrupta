@@ -50,7 +50,7 @@ def main():
     # PLs com maior score (top 100 — mais prováveis de ir a plenário)
     deps_sorted = sorted(
         autoria["deputados"],
-        key=lambda d: d["estruturais"] * 2 + d["incrementais"],
+        key=lambda d: d["estruturais"] * 3 + d["incrementais"],
         reverse=True,
     )
     # Coletar PLs únicas dos top deputados

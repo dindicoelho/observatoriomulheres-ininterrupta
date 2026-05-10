@@ -451,7 +451,7 @@ export default function ArticuladoresMap() {
             [ Sobre este ranking ]
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Score = <strong>[(PLs estruturais × 2) + (PLs incrementais
+            Score = <strong>[(PLs estruturais × 3) + (PLs incrementais
             × 1) + (PLs simbólicas × 1) − (PLs punitivistas × 2) − (PLs regressivas × 5) − (votos regressivos × 5)] × peso_sexo</strong>. O{" "}
             <strong>peso_sexo</strong> é <strong>5 para mulheres</strong>{" "}
             e 1,0 para homens — uma compensação editorial explícita pela

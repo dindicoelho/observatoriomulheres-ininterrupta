@@ -102,7 +102,7 @@ def main():
     no_ranking = [d for d in autoria["deputados"] if d["total"] >= 3]
     no_ranking.sort(
         key=lambda d: (
-            d["estruturais"] * 2 + d["incrementais"] + d["simbolicas"]
+            d["estruturais"] * 3 + d["incrementais"] + d["simbolicas"]
             - d.get("regressivos", 0) * 5
             - d.get("votos_regressivos", 0) * 5
         ),
@@ -111,7 +111,7 @@ def main():
 
     print("\n>>> TOP 20 com penalidade de voto:")
     for i, d in enumerate(no_ranking[:20], 1):
-        score_old = d["estruturais"] * 2 + d["incrementais"] + d["simbolicas"] - d.get("regressivos", 0) * 5
+        score_old = d["estruturais"] * 3 + d["incrementais"] + d["simbolicas"] - d.get("regressivos", 0) * 5
         score_new = score_old - d.get("votos_regressivos", 0) * 5
         vr = d.get("votos_regressivos", 0)
         mark = f" ⚠ -{vr*5}pts ({vr} voto{'s' if vr>1 else ''} regr)" if vr > 0 else ""
