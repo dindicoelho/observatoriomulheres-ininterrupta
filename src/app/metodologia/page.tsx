@@ -357,22 +357,31 @@ export default function MetodologiaPage() {
                 6. Score do mapa por estado
               </h3>
               <p className="text-base md:text-lg">
-                No mapa &ldquo;Quem representa o seu estado&rdquo;, o
-                top 3 de cada UF é calculado por:
+                Tanto o ranking top 20 quanto o mapa por estado usam a
+                mesma fórmula de score:
               </p>
               <p className="pl-6 font-mono-data text-sm">
-                score = [(estruturais × 2) + (incrementais × 1) + (simbólicas × 1) −
-                (regressivos × 5)] × peso_sexo
+                score = [(PLs estruturais × 2) + (PLs incrementais × 1)
+                + (PLs simbólicas × 1) − (PLs regressivas × 5)] ×
+                peso_sexo
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 peso_sexo = 5 se mulher · 1,0 se homem
               </p>
               <p className="text-base md:text-lg">
-                O peso 2,5 é uma <strong>escolha editorial declarada</strong>{" "}
-                pra compensar que mulheres são 17% da Câmara e enfrentam
-                mais barreiras pra apresentar e aprovar PLs. Sem a
-                compensação, o mapa refletiria acesso institucional, não
-                atuação relativa.
+                O <strong>peso_sexo 5 para mulheres</strong> é uma{" "}
+                <strong>escolha editorial declarada</strong> pra
+                compensar a sub-representação feminina na Câmara (só
+                17% da composição). Sem esse peso, o mapa ficaria
+                dominado por quem tem mais acesso institucional, não
+                por quem tem mais atuação relativa no tema.
+              </p>
+              <p className="text-base md:text-lg">
+                Considera apenas deputados em{" "}
+                <strong>exercício na atual legislatura</strong>. Quando
+                o TSE publicar a lista oficial de candidatos a 2026, a
+                seção será filtrada automaticamente para mostrar só quem
+                efetivamente se candidatou à reeleição.
               </p>
             </div>
 
