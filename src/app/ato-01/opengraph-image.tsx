@@ -42,7 +42,7 @@ export default async function OG() {
         </div>
         <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>
           <Stat value="389" label="Deputados" />
-          <Stat value="1.059" label="PLs protetivas" />
+          <Stat value="1.078" label="PLs sobre o tema" />
           <Stat value="15/20" label="Mulheres no top" color="#1DB389" />
         </div>
       </div>

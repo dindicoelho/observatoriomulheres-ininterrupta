@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Quem propõe as leis sobre violência contra a mulher?",
     description:
-      "389 deputados, 1.059 PLs protetivas, 15 mulheres no top 20. Ranking da 57ª legislatura.",
+      "389 deputados que propuseram proposições sobre violência contra a mulher. Ranking da 57ª legislatura.",
   },
 };
 

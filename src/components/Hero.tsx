@@ -1,6 +1,12 @@
 "use client";
 
 import TrueFocus from "./TrueFocus";
+import autoriaData from "../data/autoria.json";
+
+const TOTAL_PLS = (autoriaData as { totalPls: number }).totalPls;
+const TOTAL_DEPS = (autoriaData as { totalDeputados: number }).totalDeputados;
+const TOTAL_REGR = (autoriaData as { deputados: Array<{ regressivos?: number }> }).deputados
+  .reduce((sum, d) => sum + (d.regressivos ?? 0), 0);
 
 export default function Hero() {
   return (
@@ -52,7 +58,7 @@ export default function Hero() {
           <p className="max-w-xl text-sm leading-relaxed text-white/60 md:text-base">
             Dados públicos da Câmara dos Deputados, atualizados
             automaticamente.{" "}
-            <strong className="text-white">1.059 proposições. 389 deputados. 171 regressivas expostas.</strong>
+            <strong className="text-white">{TOTAL_PLS.toLocaleString("pt-BR")} proposições. {TOTAL_DEPS} deputados. {TOTAL_REGR} regressivas expostas.</strong>
           </p>
           <div className="flex items-center gap-3">
             <span className="font-mono-data text-xs uppercase tracking-widest text-white/50">

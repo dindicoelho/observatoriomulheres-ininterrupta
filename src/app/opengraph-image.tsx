@@ -13,6 +13,15 @@ async function loadFont(name: string) {
 }
 
 export default async function OpengraphImage() {
+  // Ler números dinâmicos do JSON
+  const autoriaRaw = await readFile(join(process.cwd(), "src", "data", "autoria.json"), "utf-8");
+  const autoria = JSON.parse(autoriaRaw);
+  const totalPls = (autoria.totalPls ?? 0).toLocaleString("pt-BR");
+  const totalDeps = String(autoria.totalDeputados ?? 0);
+  const totalRegr = String(
+    (autoria.deputados ?? []).reduce((s: number, d: { regressivos?: number }) => s + (d.regressivos ?? 0), 0)
+  );
+
   const [archivoBlack, archivo] = await Promise.all([
     loadFont("ArchivoBlack-Regular.ttf"),
     loadFont("Archivo-Regular.ttf"),
@@ -124,9 +133,9 @@ export default async function OpengraphImage() {
             borderTop: "1px solid rgba(255,255,255,0.15)",
           }}
         >
-          <StatBlock value="1.142" label="Proposições" />
-          <StatBlock value="389" label="Deputados atuantes" />
-          <StatBlock value="62" label="Com PLs regressivas" color="#D43F3F" />
+          <StatBlock value={totalPls} label="Proposições" />
+          <StatBlock value={totalDeps} label="Deputados atuantes" />
+          <StatBlock value={totalRegr} label="PLs regressivas" color="#D43F3F" />
           <StatBlock value="5" label="UFs sem deputada" color="#D43F3F" />
         </div>
       </div>
