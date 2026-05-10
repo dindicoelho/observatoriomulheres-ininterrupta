@@ -369,10 +369,19 @@ export default function MetodologiaPage() {
               <p className="text-base md:text-lg">
                 A penalidade por <strong>voto</strong> em proposição
                 regressiva tem o mesmo peso da penalidade por{" "}
-                <strong>autoria</strong> (−5 pontos). Votar a favor de
-                sustar uma resolução protetiva é tão relevante quanto
-                assinar um projeto regressivo — um voto efetivamente
-                decide a aprovação.
+                <strong>autoria</strong> (−5 pontos). A penalidade por{" "}
+                <strong>punitivismo</strong> é −2 pontos — menor que
+                regressiva, mas não zero, porque punitivismo (aumento
+                de pena, cadastros) não melhora proteção material.
+                Votar a favor de sustar uma resolução protetiva é tão
+                relevante quanto assinar um projeto regressivo.
+              </p>
+              <p className="text-base md:text-lg">
+                Deputados filiados recentemente a partidos cuja bancada
+                votou &gt;70% SIM no PDL 3/2025 (sustação do Conanda)
+                recebem um <strong>selo informativo de filiação</strong>{" "}
+                — sem desconto no score, apenas contexto factual sobre
+                alinhamento partidário.
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 peso_sexo = 5 se mulher · 1,0 se homem

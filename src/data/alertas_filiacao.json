@@ -1,0 +1,23 @@
+{
+  "_nota": "Selos factuais sobre filiação/promoção partidária recente a partidos com histórico de voto regressivo. Não penaliza score — apenas informa.",
+  "alertas": [
+    {
+      "deputado_id": 220604,
+      "nome": "Amom Mandel",
+      "tipo": "promocao",
+      "texto_curto": "Vice-líder do Republicanos (2026)",
+      "texto_longo": "Tornou-se vice-líder nacional do Republicanos em 2026. A bancada do partido votou 97% SIM no PDL 3/2025, que sustou diretrizes do Conanda sobre aborto legal em crianças vítimas de estupro. O deputado estava ausente na votação.",
+      "partido": "REPUBLICANOS",
+      "pct_sim_pdl_conanda": 97
+    },
+    {
+      "deputado_id": 204455,
+      "nome": "Lêda Borges",
+      "tipo": "filiacao",
+      "texto_curto": "Filiação 2026 ao Republicanos",
+      "texto_longo": "Deixou o PSDB e se filiou ao Republicanos em 2026, em ato com a senadora Damares Alves. A bancada do partido votou 97% SIM no PDL 3/2025, que sustou diretrizes do Conanda sobre aborto legal em crianças vítimas de estupro. A deputada estava ausente na votação.",
+      "partido": "REPUBLICANOS",
+      "pct_sim_pdl_conanda": 97
+    }
+  ]
+}
