@@ -99,36 +99,8 @@ def main():
             "link": f"https://www.camara.leg.br/propostas-legislativas/{e['id']}",
         })
 
-    # 5. Destino: quantas viraram lei
-    destino = legislativo.get("destino_stats", {}).get("por_categoria", {})
-    aprovadas = destino.get("aprovada", 0)
-    total = legislativo.get("total", 0)
-    if total > 0:
-        pct = (aprovadas / total) * 100
-        curiosidades.append({
-            "selo": "Taxa de aprovação",
-            "pl": "",
-            "titulo": f"Só {aprovadas} de {total} viraram lei",
-            "dado": f"{pct:.1f}%",
-            "texto": f"Das {total} proposições da legislatura, apenas {aprovadas} ({pct:.1f}%) se transformaram em norma. {destino.get('arquivada', 0)} foram arquivadas e {destino.get('sem_relator', 0)} nunca receberam relator.",
-            "link": "",
-        })
-
-    # 6. Deputado(a) com mais PLs estruturais
-    top_estr = sorted(autoria["deputados"], key=lambda d: d["estruturais"], reverse=True)
-    if top_estr:
-        d = top_estr[0]
-        curiosidades.append({
-            "selo": "Mais estruturais",
-            "pl": "",
-            "titulo": f"{d['nome']} ({d['partido']}/{d['uf']})",
-            "dado": f"{d['estruturais']}",
-            "texto": f"O(a) deputado(a) com mais proposições estruturais na legislatura — {d['estruturais']} projetos que criam programas, fundos ou políticas nacionais. Total de {d['total']} PLs sobre o tema.",
-            "link": f"https://www.camara.leg.br/deputados/{d['id']}",
-        })
-
-    # Limitar a 6
-    curiosidades = curiosidades[:6]
+    # Limitar a 4
+    curiosidades = curiosidades[:4]
 
     (DATA_DIR / "curiosidades.json").write_text(
         json.dumps({"curiosidades": curiosidades}, ensure_ascii=False, indent=2),
