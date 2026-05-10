@@ -363,13 +363,13 @@ export default function MetodologiaPage() {
               <p className="pl-6 font-mono-data text-sm">
                 score = [(PLs estruturais × 3) + (PLs incrementais × 1)
                 + (PLs simbólicas × 1) − (PLs punitivistas × 2)
-                − (PLs regressivas × 5)
-                − (votos SIM em regressivas × 5)] × peso_sexo
+                − (PLs regressivas × 7)
+                − (votos SIM em regressivas × 7)] × peso_sexo
               </p>
               <p className="text-base md:text-lg">
                 A penalidade por <strong>voto</strong> em proposição
                 regressiva tem o mesmo peso da penalidade por{" "}
-                <strong>autoria</strong> (−5 pontos). A penalidade por{" "}
+                <strong>autoria</strong> (−7 pontos). A penalidade por{" "}
                 <strong>punitivismo</strong> é −2 pontos — menor que
                 regressiva, mas não zero, porque punitivismo (aumento
                 de pena, cadastros) não melhora proteção material.

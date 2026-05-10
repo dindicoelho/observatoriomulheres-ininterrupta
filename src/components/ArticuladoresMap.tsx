@@ -452,7 +452,7 @@ export default function ArticuladoresMap() {
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
             Score = <strong>[(PLs estruturais × 3) + (PLs incrementais
-            × 1) + (PLs simbólicas × 1) − (PLs punitivistas × 2) − (PLs regressivas × 5) − (votos regressivos × 5)] × peso_sexo</strong>. O{" "}
+            × 1) + (PLs simbólicas × 1) − (PLs punitivistas × 2) − (PLs regressivas × 7) − (votos regressivos × 7)] × peso_sexo</strong>. O{" "}
             <strong>peso_sexo</strong> é <strong>5 para mulheres</strong>{" "}
             e 1,0 para homens — uma compensação editorial explícita pela
             sub-representação feminina na Câmara (só 17% da composição).
