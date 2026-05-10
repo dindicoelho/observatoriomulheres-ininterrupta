@@ -362,7 +362,8 @@ export default function MetodologiaPage() {
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 score = [(PLs estruturais × 2) + (PLs incrementais × 1)
-                + (PLs simbólicas × 1) − (PLs regressivas × 5)
+                + (PLs simbólicas × 1) − (PLs punitivistas × 2)
+                − (PLs regressivas × 5)
                 − (votos SIM em regressivas × 5)] × peso_sexo
               </p>
               <p className="text-base md:text-lg">
