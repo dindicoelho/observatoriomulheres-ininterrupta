@@ -51,14 +51,17 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: "[8/10] Rebuild curiosidades"
+      - name: "[8/11] Penalidade por voto regressivo"
+        run: python -u scripts/compute_vote_penalty.py
+
+      - name: "[9/11] Rebuild curiosidades"
         run: python -u scripts/rebuild_curiosidades.py
 
-      - name: "[9/10] Rebuild Senado Federal"
+      - name: "[10/11] Rebuild Senado Federal"
         run: python -u scripts/rebuild_senado.py
         timeout-minutes: 15
 
-      - name: "[10/10] Fetch candidatos TSE 2026 (silencia se indisponível)"
+      - name: "[11/11] Fetch candidatos TSE 2026 (silencia se indisponível)"
         run: python -u scripts/fetch_candidatos_tse.py
 
       - name: Check for changes

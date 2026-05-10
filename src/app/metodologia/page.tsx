@@ -362,8 +362,16 @@ export default function MetodologiaPage() {
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 score = [(PLs estruturais × 2) + (PLs incrementais × 1)
-                + (PLs simbólicas × 1) − (PLs regressivas × 5)] ×
-                peso_sexo
+                + (PLs simbólicas × 1) − (PLs regressivas × 5)
+                − (votos SIM em regressivas × 5)] × peso_sexo
+              </p>
+              <p className="text-base md:text-lg">
+                A penalidade por <strong>voto</strong> em proposição
+                regressiva tem o mesmo peso da penalidade por{" "}
+                <strong>autoria</strong> (−5 pontos). Votar a favor de
+                sustar uma resolução protetiva é tão relevante quanto
+                assinar um projeto regressivo — um voto efetivamente
+                decide a aprovação.
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 peso_sexo = 5 se mulher · 1,0 se homem

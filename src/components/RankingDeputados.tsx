@@ -37,6 +37,14 @@ type Deputado = {
   protetivos?: number;
   punitivistas?: number;
   regressivos?: number;
+  votos_regressivos?: number;
+  votos_regressivos_detalhe?: Array<{
+    pl_ref: string;
+    descricao: string;
+    data: string;
+    placar: string;
+    voto: string;
+  }>;
   pls: PL[];
 };
 
@@ -540,9 +548,11 @@ export default function RankingDeputados() {
 
   const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
-  // Score: estr×2 + incr×1 + simb×1 - regr×5
+  // Score: estr×2 + incr×1 + simb×1 - regr_autoria×5 - votos_regr×5
   const scoreOf = (d: Deputado) =>
-    d.estruturais * 2 + d.incrementais + d.simbolicas - (d.regressivos ?? 0) * 5;
+    d.estruturais * 2 + d.incrementais + d.simbolicas
+    - (d.regressivos ?? 0) * 5
+    - (d.votos_regressivos ?? 0) * 5;
 
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "total") return scoreOf(b) - scoreOf(a);
@@ -864,6 +874,21 @@ export default function RankingDeputados() {
                           · {pctEstr.toFixed(0)}% estruturais
                         </span>
                       </div>
+
+                      {/* Selo voto regressivo */}
+                      {(d.votos_regressivos ?? 0) > 0 && d.votos_regressivos_detalhe && (
+                        <div
+                          className="mt-2 flex items-center gap-1.5 rounded bg-[#ED447F]/10 px-2.5 py-1"
+                          title={d.votos_regressivos_detalhe.map(
+                            (vr) => `Votou ${vr.voto} no ${vr.pl_ref}: ${vr.descricao}. ${vr.placar} em ${vr.data}.`
+                          ).join(" ")}
+                        >
+                          <span className="text-[#ED447F]">⚠</span>
+                          <span className="font-mono-data text-[10px] font-bold text-[#ED447F]">
+                            Votou SIM em {d.votos_regressivos_detalhe[0].pl_ref}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <span className="self-center font-mono-data text-xs text-[var(--color-text-tertiary)]">
@@ -879,7 +904,7 @@ export default function RankingDeputados() {
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
             Fonte: API de Dados Abertos da Câmara dos Deputados ·
             Legislatura 2023-2026 · Deputados com 3+ PLs ·
-            Score: (estruturais × 2) + (incrementais × 1) + (simbólicas × 1) − (regressivas × 5) ·
+            Score: (estruturais × 2) + (incrementais × 1) + (simbólicas × 1) − (regressivas × 5) − (votos regressivos × 5) ·
             Atualização automática diária.
           </p>
         </div>
