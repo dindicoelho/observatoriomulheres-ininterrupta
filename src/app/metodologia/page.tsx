@@ -510,20 +510,50 @@ export default function MetodologiaPage() {
           </section>
 
           {/* Assinatura */}
-          <section className="border-t border-gray-200 pt-10">
-            <p className="text-sm text-[var(--color-text-secondary)]">
-              <strong className="text-[var(--color-text)]">Ininterrupta</strong>{" "}
-              — publicação brasileira independente.
-              <br />
+          {/* Sobre a Ininterrupta */}
+          <section className="space-y-5">
+            <h2
+              className="text-3xl font-black"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Sobre a Ininterrupta
+            </h2>
+
+            <p className="text-base md:text-lg">
+              A <strong>Ininterrupta</strong> é uma publicação brasileira
+              independente de inteligência cultural. Fundada por Dindi
+              Coelho, investiga as camadas invisíveis que conectam
+              cultura, política e comportamento no Brasil.
+            </p>
+
+            <p className="text-base md:text-lg">
+              A publicação não tem fins lucrativos e não recebe
+              financiamento de nenhuma instituição pública ou privada.
+              Opera com dados públicos, código aberto e transparência
+              editorial.
+            </p>
+
+            <p className="text-base md:text-lg">
+              Este observatório político é um dos projetos da
+              Ininterrupta — nasceu da pergunta{" "}
+              <em>
+                &ldquo;todo mundo sabe que violência contra mulher é
+                crime, mas quem está fazendo algo pra mudar?&rdquo;
+              </em>{" "}
+              e usa exclusivamente dados da API da Câmara dos Deputados
+              pra responder.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-4">
               <a
                 href="https://instagram.com/ininterrupta.sys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-blue)] hover:underline"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm text-[var(--color-text-secondary)] hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
               >
                 @ininterrupta.sys
               </a>
-            </p>
+            </div>
           </section>
         </article>
       </main>

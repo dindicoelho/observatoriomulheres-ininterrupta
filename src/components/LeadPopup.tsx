@@ -72,9 +72,10 @@ export default function LeadPopup() {
         </div>
 
         <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-          Este observatório é atualizado automaticamente com dados da
-          Câmara dos Deputados. Inscreva-se pra receber as atualizações
-          mais relevantes antes da eleição de outubro.
+          Inscreva-se pra receber a <strong>newsletter quinzenal
+          da Ininterrupta</strong> — inteligência cultural, dados e
+          análise política — e atualizações deste observatório antes
+          da eleição de outubro.
         </p>
 
         {status === "done" ? (
@@ -119,7 +120,7 @@ export default function LeadPopup() {
         )}
 
         <p className="mt-4 text-center text-[10px] text-[var(--color-text-tertiary)]">
-          Projeto da{" "}
+          Ao se inscrever, você recebe a newsletter quinzenal da{" "}
           <a
             href="https://instagram.com/ininterrupta.sys"
             target="_blank"
@@ -127,8 +128,8 @@ export default function LeadPopup() {
             className="text-[var(--color-blue)] hover:underline"
           >
             Ininterrupta
-          </a>
-          . Sem spam. Só dados.
+          </a>{" "}
+          + atualizações deste observatório. Cancele quando quiser.
         </p>
       </div>
     </div>

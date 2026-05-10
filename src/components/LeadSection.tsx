@@ -42,9 +42,10 @@ export default function LeadSection() {
         />
 
         <p className="mt-6 text-base leading-relaxed text-white/80 md:text-lg">
-          Receba as atualizações mais relevantes do observatório direto
-          no seu email — novas votações, novos projetos regressivos,
-          mudanças no ranking. Sem spam, só dados.
+          Receba a <strong className="text-white">newsletter quinzenal
+          da Ininterrupta</strong> — inteligência cultural, dados e
+          análise política — e atualizações deste observatório: novas
+          votações, novos projetos regressivos, mudanças no ranking.
         </p>
 
         {status === "done" ? (
@@ -89,7 +90,9 @@ export default function LeadSection() {
         )}
 
         <p className="mt-6 text-[10px] text-white/40">
-          Projeto da Ininterrupta. Seus dados não serão compartilhados.
+          Ao se inscrever, você recebe a newsletter quinzenal da
+          Ininterrupta + atualizações deste observatório. Cancele quando
+          quiser. Seus dados não serão compartilhados.
         </p>
       </div>
     </section>
