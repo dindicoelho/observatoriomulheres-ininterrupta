@@ -888,15 +888,20 @@ export default function RankingDeputados() {
                       {/* Selo voto regressivo */}
                       {(d.votos_regressivos ?? 0) > 0 && d.votos_regressivos_detalhe && (
                         <div
-                          className="mt-2 flex items-center gap-1.5 rounded bg-[#ED447F]/10 px-2.5 py-1"
+                          className="mt-2 rounded bg-[#ED447F]/10 px-2.5 py-1.5"
                           title={d.votos_regressivos_detalhe.map(
                             (vr) => `Votou ${vr.voto} no ${vr.pl_ref}: ${vr.descricao}. ${vr.placar} em ${vr.data}.`
                           ).join(" ")}
                         >
-                          <span className="text-[#ED447F]">⚠</span>
-                          <span className="font-mono-data text-[10px] font-bold text-[#ED447F]">
-                            Votou SIM em {d.votos_regressivos_detalhe[0].pl_ref}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[#ED447F]">⚠</span>
+                            <span className="font-mono-data text-[10px] font-bold text-[#ED447F]">
+                              Votou SIM: {d.votos_regressivos_detalhe[0].descricao}
+                            </span>
+                          </div>
+                          <p className="mt-0.5 pl-5 font-mono-data text-[9px] text-[#ED447F]/70">
+                            {d.votos_regressivos_detalhe[0].pl_ref} · {d.votos_regressivos_detalhe[0].placar} · {d.votos_regressivos_detalhe[0].data}
+                          </p>
                         </div>
                       )}
 
