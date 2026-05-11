@@ -12,12 +12,14 @@ A partir desta atualização, **voto SIM em pauta regressiva pesa igual a autori
 score = [(estruturais × 3) + (incrementais × 1) + (simbólicas × 1)
        − (punitivistas × 2)
        − (PLs regressivas × 7)
-       − (votos SIM em regressivas × 7)] × ficha_limpa
+       − (votos SIM em regressivas × 5)] × ficha_limpa
 ```
 
 Onde `ficha_limpa = 1,5` se a deputada tem zero punitivistas, zero regressivas e zero votos regressivos. Caso contrário, `1,0`.
 
-A primeira PL no escopo da penalidade por voto é o **PDL 3/2025 (Conanda)**, aprovado em 5 de novembro de 2025 pelo placar 317×111. Cento e noventa e nove deputados em exercício votaram SIM nesse decreto, e portanto recebem o desconto de −7 pontos no score. Outras votações podem ser adicionadas à lista no futuro, sempre com curadoria editorial explícita — cada entrada da lista vive em [`scripts/regressive_votes_seed.json`](../scripts/regressive_votes_seed.json) com justificativa publicada.
+A primeira PL no escopo da penalidade por voto é o **PDL 3/2025 (Conanda)**, aprovado em 5 de novembro de 2025 pelo placar 317×111. Cento e noventa e nove deputados em exercício votaram SIM nesse decreto, e portanto recebem o desconto de −5 pontos no score. Outras votações podem ser adicionadas à lista no futuro, sempre com curadoria editorial explícita — cada entrada da lista vive em [`scripts/regressive_votes_seed.json`](../scripts/regressive_votes_seed.json) com justificativa publicada.
+
+O peso da penalidade por voto (−5) é menor que o da penalidade por autoria de PL regressiva (−7) — reconhecendo que propor uma PL é um ato político mais ativo que acompanhar uma votação. Mas é maior que o peso por punitivismo de autoria (−2), porque voto é responsabilidade direta pela aprovação da pauta.
 
 ## Quem desceu
 

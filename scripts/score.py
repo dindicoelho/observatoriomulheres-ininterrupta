@@ -5,9 +5,14 @@ e o teste cruzado em tests/ garante que os números batem.
 
 Score do RANKING NACIONAL:
     base = estruturais×3 + incrementais + simbólicas
-         − punitivistas×2 − regressivas×7 − votos_regressivos×7
+         − punitivistas×2 − regressivas×7 − votos_regressivos×5
     score = base × 1,5  se ficha 100% protetiva (zero pun/reg/voto_reg)
           = base       caso contrário
+
+Voto SIM em pauta regressiva pesa menos que autoria de PL regressiva
+(−5 vs −7). Reconhece que propor é mais ativo politicamente do que
+acompanhar uma votação, mas mantém que voto é responsabilidade
+direta pela aprovação — pesa mais que punitivismo de autoria (−2).
 
 Score do MAPA POR ESTADO:
     score_mapa = score_ranking × peso_sexo
@@ -36,7 +41,7 @@ def base_score(d: Mapping) -> float:
         + _g(d, "simbolicas")
         - _g(d, "punitivistas") * 2
         - _g(d, "regressivos") * 7
-        - _g(d, "votos_regressivos") * 7
+        - _g(d, "votos_regressivos") * 5
     )
 
 

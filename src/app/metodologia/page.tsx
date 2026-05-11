@@ -364,7 +364,7 @@ export default function MetodologiaPage() {
                 score = [(PLs estruturais × 3) + (PLs incrementais × 1)
                 + (PLs simbólicas × 1) − (PLs punitivistas × 2)
                 − (PLs regressivas × 7)
-                − (votos SIM em regressivas × 7)]
+                − (votos SIM em regressivas × 5)]
                 × ficha_limpa × peso_sexo
               </p>
               <p className="pl-6 font-mono-data text-sm">
@@ -380,12 +380,16 @@ export default function MetodologiaPage() {
                 quem mistura proteção com punitivismo ou retrocesso.
               </p>
               <p className="text-base md:text-lg">
-                A penalidade por <strong>voto</strong> em proposição
-                regressiva tem o mesmo peso da penalidade por{" "}
-                <strong>autoria</strong> (−7 pontos). A penalidade por{" "}
-                <strong>punitivismo</strong> é −2 pontos — menor que
-                regressiva, mas não zero, porque punitivismo (aumento
-                de pena, cadastros) não melhora proteção material.
+                A penalidade por <strong>autoria</strong> de PL
+                regressiva é −7 pontos. A penalidade por <strong>voto
+                SIM</strong> em pauta regressiva é −5 pontos — menor
+                que autoria, porque propor é mais ativo politicamente
+                do que acompanhar uma votação, mas maior que
+                punitivismo (−2), porque voto é responsabilidade
+                direta pela aprovação. A penalidade por{" "}
+                <strong>punitivismo</strong> de autoria é −2 pontos —
+                não zero, porque punitivismo (aumento de pena,
+                cadastros) não melhora proteção material.
               </p>
               <p className="pl-6 font-mono-data text-sm">
                 peso_sexo = 5 se mulher SEM retrocesso · 1,0 caso
