@@ -387,13 +387,6 @@ export default function MetodologiaPage() {
                 regressiva, mas não zero, porque punitivismo (aumento
                 de pena, cadastros) não melhora proteção material.
               </p>
-              <p className="text-base md:text-lg">
-                Deputados filiados recentemente a partidos cuja bancada
-                votou &gt;70% SIM no PDL 3/2025 (sustação do Conanda)
-                recebem um <strong>selo informativo de filiação</strong>{" "}
-                — sem desconto no score, apenas contexto factual sobre
-                alinhamento partidário.
-              </p>
               <p className="pl-6 font-mono-data text-sm">
                 peso_sexo = 5 se mulher SEM retrocesso · 1,0 caso
                 contrário

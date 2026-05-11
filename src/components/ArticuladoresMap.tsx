@@ -6,7 +6,6 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 import articuladoresData from "../data/articuladores_uf.json";
 import autoriaData from "../data/autoria.json";
 import candidatosData from "../data/candidatos_2026.json";
-import alertasFiliacao from "../data/alertas_filiacao.json";
 import feminicidioData from "../data/feminicidio_uf.json";
 import ScrollFloat from "./ScrollFloat";
 import ShareButton from "./ShareButton";
@@ -96,14 +95,6 @@ const CANDIDATOS_SET = new Set(
   (candidatosData as { candidatos_ids: number[] }).candidatos_ids
 );
 const TSE_ON = CANDIDATOS_SET.size > 0;
-
-const ALERTAS_MAP = new Map(
-  (alertasFiliacao as { alertas: Array<{
-    deputado_id: number;
-    texto_curto: string;
-    texto_longo: string;
-  }> }).alertas.map((a) => [a.deputado_id, a])
-);
 
 const UF_NAMES: Record<string, string> = {
   AC: "Acre", AL: "Alagoas", AM: "Amazonas", AP: "Amapá",
@@ -698,18 +689,6 @@ export default function ArticuladoresMap() {
                                 </span>
                               )}
                             </div>
-                            {/* Selo filiação */}
-                            {ALERTAS_MAP.has(d.id) && (
-                              <div
-                                className="mt-2 flex items-center gap-1 rounded border border-amber-300/40 bg-amber-50 px-2 py-0.5"
-                                title={ALERTAS_MAP.get(d.id)!.texto_longo}
-                              >
-                                <span className="text-amber-600 text-[10px]">⚑</span>
-                                <span className="font-mono-data text-[9px] font-bold text-amber-700">
-                                  {ALERTAS_MAP.get(d.id)!.texto_curto}
-                                </span>
-                              </div>
-                            )}
                           </div>
                           <span className="flex-shrink-0 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blue)]">
                             ver →

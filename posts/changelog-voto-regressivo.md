@@ -38,11 +38,9 @@ Outra mudança neste patch toca o mapa por estado. O `peso_sexo × 5` — multip
 
 Punitivismo isolado não descaracteriza o peso: ele já tem o desconto próprio de −2 pontos. Mas voto em retrocesso, sim. A lógica é simples: o multiplicador foi pensado para ampliar a voz de **quem faz a pauta da mulher avançar**. Não para amplificar quem está empurrando a pauta na direção oposta enquanto carrega o crachá da mesma luta.
 
-## E os outros casos
+## O que ficou fora deste patch
 
-**Amom Mandel (REPUBLICANOS/AM)** mantém score — ele estava ausente na votação do PDL Conanda, e ausência não conta como voto SIM. Mas ele aparece com um **selo factual de promoção partidária**: tornou-se vice-líder nacional do Republicanos em 2026, partido cuja bancada votou 97% SIM no PDL.
-
-**Lêda Borges (REPUBLICANOS/GO)** também recebe selo, neste caso de filiação: deixou o PSDB em 2026 em ato com a senadora Damares Alves. Selo informativo, sem desconto no score — quem decide o peso disso na hora do voto é a leitora.
+Considerou-se adicionar **selos informativos de filiação partidária** — para sinalizar deputados que se filiaram em 2026 a partidos cuja bancada votou massivamente SIM no PDL Conanda. A decisão foi **não fazer**: o critério depende muito de escolhas editoriais (qual partido, qual janela, qual percentual da bancada) e mistura comportamento individual com comportamento de bancada. O Observatório prefere registrar voto, autoria e relatoria — o que cada deputada e cada deputado fez —, e deixar para a leitora associar isso ao partido ou ao caminho político de cada um.
 
 ## Auditabilidade
 

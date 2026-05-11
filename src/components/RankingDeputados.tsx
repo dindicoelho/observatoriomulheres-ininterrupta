@@ -5,7 +5,6 @@ import autoriaData from "../data/autoria.json";
 import coerenciaData from "../data/coerencia.json";
 import relatoriaData from "../data/relatoria.json";
 import candidatosData from "../data/candidatos_2026.json";
-import alertasFiliacao from "../data/alertas_filiacao.json";
 import ScrollFloat from "./ScrollFloat";
 import Counter from "./Counter";
 import AnimatedList from "./AnimatedList";
@@ -542,14 +541,6 @@ const CANDIDATOS = new Set(
 );
 const TSE_DISPONIVEL = CANDIDATOS.size > 0;
 
-const ALERTAS_FILIACAO = new Map(
-  (alertasFiliacao as { alertas: Array<{
-    deputado_id: number;
-    texto_curto: string;
-    texto_longo: string;
-  }> }).alertas.map((a) => [a.deputado_id, a])
-);
-
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
@@ -910,21 +901,6 @@ export default function RankingDeputados() {
                         </div>
                       )}
 
-                      {/* Selo filiação/alinhamento */}
-                      {ALERTAS_FILIACAO.has(d.id) && (() => {
-                        const alerta = ALERTAS_FILIACAO.get(d.id)!;
-                        return (
-                          <div
-                            className="mt-2 flex items-center gap-1.5 rounded border border-amber-300/40 bg-amber-50 px-2.5 py-1"
-                            title={alerta.texto_longo}
-                          >
-                            <span className="text-amber-600">⚑</span>
-                            <span className="font-mono-data text-[10px] font-bold text-amber-700">
-                              {alerta.texto_curto}
-                            </span>
-                          </div>
-                        );
-                      })()}
                     </div>
 
                     <span className="self-center font-mono-data text-xs text-[var(--color-text-tertiary)]">

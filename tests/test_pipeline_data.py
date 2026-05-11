@@ -50,12 +50,6 @@ def articuladores():
     return json.loads((DATA / "articuladores_uf.json").read_text(encoding="utf-8"))
 
 
-@pytest.fixture(scope="module")
-def alertas():
-    raw = json.loads((DATA / "alertas_filiacao.json").read_text(encoding="utf-8"))
-    return {a["deputado_id"]: a for a in raw.get("alertas", [])}
-
-
 # ---------------------------------------------------------------------------
 # Casos 1-4: ranking principal — deputadas com voto SIM no PDL Conanda
 #            saem do topo do ranking
@@ -117,18 +111,13 @@ def test_caso5_progressistas_mantêm_top20(deps, nome):
 
 
 # ---------------------------------------------------------------------------
-# Caso 6: Amom Mandel — não votou SIM (ausente), mantém score,
-#         mas tem o selo de filiação
+# Caso 6: Amom Mandel — não votou SIM (ausente), mantém score sem penalidade
 # ---------------------------------------------------------------------------
 
-def test_caso6_amom_mandel_sem_penalidade_de_voto_e_com_selo(deps, alertas):
+def test_caso6_amom_mandel_sem_penalidade_de_voto(deps):
     d = buscar(deps, "Amom Mandel")
     # Ausência não conta como voto SIM
     assert d.get("votos_regressivos", 0) == 0, "Ausência não pode contar como voto regressivo"
-    # Mas ele deve aparecer no selo factual de filiação/promoção
-    assert d["id"] in alertas, "Amom Mandel precisa de selo de filiação/promoção partidária"
-    alerta = alertas[d["id"]]
-    assert "republicanos" in alerta["partido"].lower()
 
 
 # ---------------------------------------------------------------------------
@@ -178,11 +167,6 @@ def test_pdl_conanda_no_seed_e_propagado(deps):
     assert contador >= 100, (
         f"PDL 3/2025 deveria aparecer em 100+ deputados, encontrado em {contador}"
     )
-
-
-def test_lêda_borges_tem_selo_de_filiacao(deps, alertas):
-    d = buscar(deps, "Lêda Borges")
-    assert d["id"] in alertas, "Lêda Borges precisa de selo de filiação 2026"
 
 
 def test_peso_sexo_so_aplica_com_ficha_sem_retrocesso(deps):
