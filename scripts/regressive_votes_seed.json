@@ -1,0 +1,15 @@
+{
+  "_nota": "Votações de plenário classificadas manualmente como regressivas. Usadas pelo compute_vote_penalty.py em adição ao scan automático de PLs com stance='regressivo' em autoria.json. Cada entrada precisa apontar pra uma votação real (votacao_id no formato da API da Câmara) e justificar por que é regressiva. Auditável: cada votação tem placar real e link pra Câmara.",
+  "votacoes": [
+    {
+      "votacao_id": "2482078-57",
+      "pl_id": 2482078,
+      "pl_ref": "PDL 3/2025",
+      "data": "2025-11-05",
+      "placar": "Sim 317 × Não 111",
+      "descricao": "PDL Conanda — aborto legal em crianças vítimas de estupro",
+      "tooltip_longo": "Votou SIM no PDL 3/2025, que sustou diretrizes do Conanda sobre aborto legal em crianças vítimas de estupro. Aprovado 317×111 em 05/11/2025.",
+      "justificativa_regressiva": "Sustação de resolução protetiva do Conanda sobre atendimento de crianças e adolescentes vítimas de violência sexual."
+    }
+  ]
+}

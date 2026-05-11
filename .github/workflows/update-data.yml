@@ -12,7 +12,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v4
@@ -25,34 +25,35 @@ jobs:
       - name: Install dependencies
         run: pip install anthropic
 
-      - name: "[1/6] Rebuild autoria (fetch Câmara API)"
+      - name: "[1/11] Rebuild autoria (fetch Câmara API)"
         run: python -u scripts/rebuild_autoria.py
         timeout-minutes: 30
 
-      - name: "[2/6] Enrich autoria (sexo, gender_stats)"
+      - name: "[2/11] Enrich autoria (sexo, gender_stats)"
         run: python -u scripts/enrich_autoria.py
 
-      - name: "[3/6] Classify stance (regex)"
+      - name: "[3/11] Classify stance (regex)"
         run: python -u scripts/classify_stance.py
 
-      - name: "[4/6] Rebuild articuladores (top 3 por UF)"
+      - name: "[4/11] Penalidade por voto regressivo (seed editorial)"
+        run: python -u scripts/compute_vote_penalty.py
+        timeout-minutes: 10
+
+      - name: "[5/11] Rebuild articuladores (top 3 por UF)"
         run: python -u scripts/rebuild_articuladores.py
 
-      - name: "[5/6] Rebuild legislativo (tramitação)"
+      - name: "[6/11] Rebuild legislativo (tramitação)"
         run: python -u scripts/rebuild_legislativo.py
         timeout-minutes: 20
 
-      - name: "[6/10] Enrich votacoes (autor + relator)"
+      - name: "[7/11] Enrich votacoes (autor + relator)"
         run: python -u scripts/enrich_votacoes.py
 
-      - name: "[7/10] Detectar novas votações + interpretação LLM"
+      - name: "[8/11] Detectar novas votações + interpretação LLM"
         run: python -u scripts/update_votacoes.py
         timeout-minutes: 20
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-
-      - name: "[8/11] Penalidade por voto regressivo"
-        run: python -u scripts/compute_vote_penalty.py
 
       - name: "[9/11] Rebuild curiosidades"
         run: python -u scripts/rebuild_curiosidades.py
@@ -82,7 +83,7 @@ jobs:
   # Classificação LLM — roda só às segundas (custo ~$0.85/run)
   classify-llm:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     needs: update
     if: github.event.schedule == '0 6 * * 1' || github.event_name == 'workflow_dispatch'
 
@@ -110,6 +111,7 @@ jobs:
       - name: "Re-enrich after LLM"
         run: |
           python -u scripts/enrich_autoria.py
+          python -u scripts/compute_vote_penalty.py
           python -u scripts/rebuild_articuladores.py
           python -u scripts/rebuild_legislativo.py
 

@@ -395,7 +395,8 @@ export default function MetodologiaPage() {
                 alinhamento partidário.
               </p>
               <p className="pl-6 font-mono-data text-sm">
-                peso_sexo = 5 se mulher · 1,0 se homem
+                peso_sexo = 5 se mulher SEM retrocesso · 1,0 caso
+                contrário
               </p>
               <p className="text-base md:text-lg">
                 O <strong>peso_sexo 5 para mulheres</strong> é uma{" "}
@@ -404,6 +405,15 @@ export default function MetodologiaPage() {
                 17% da composição). Sem esse peso, o mapa ficaria
                 dominado por quem tem mais acesso institucional, não
                 por quem tem mais atuação relativa no tema.
+              </p>
+              <p className="text-base md:text-lg">
+                Porém, esse peso <strong>só vale quando a ficha não
+                tem retrocesso</strong> — zero PLs regressivas e zero
+                votos SIM em pauta regressiva. Quem retrocede direitos
+                da mulher não recebe o multiplicador desenhado para
+                ampliar voz às mulheres da pauta. Punitivismo isolado
+                mantém o peso porque já tem o desconto próprio de −2
+                pontos.
               </p>
               <p className="text-base md:text-lg">
                 Considera apenas deputados em{" "}

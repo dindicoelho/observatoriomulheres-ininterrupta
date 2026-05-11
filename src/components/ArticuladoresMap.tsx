@@ -456,15 +456,16 @@ export default function ArticuladoresMap() {
             <strong>100% de PLs protetivas</strong> (zero punitivistas,
             zero regressivas, zero votos regressivos) recebem bônus
             ×1,5 no score. O{" "}
-            <strong>peso_sexo</strong> é <strong>5 para mulheres</strong>{" "}
-            e 1,0 para homens — uma compensação editorial explícita pela
-            sub-representação feminina na Câmara (só 17% da composição).
-            Sem esse peso, o mapa ficaria dominado por quem tem mais
-            acesso institucional, não por quem tem mais atuação relativa
-            no tema. Considera apenas deputados em{" "}
-            <strong>exercício na atual legislatura</strong>. Quando o
-            TSE publicar a lista oficial de candidatos a 2026, a seção
-            será filtrada automaticamente para mostrar só quem
+            <strong>peso_sexo</strong> é <strong>5 para mulheres
+            sem retrocesso na ficha</strong> (zero PLs regressivas e
+            zero votos SIM em pauta regressiva) e 1,0 caso contrário —
+            uma compensação editorial explícita pela sub-representação
+            feminina na Câmara (só 17% da composição). Quem retrocede
+            direitos da mulher não recebe o multiplicador desenhado
+            para ampliar voz às mulheres da pauta. Considera apenas
+            deputados em <strong>exercício na atual legislatura</strong>.
+            Quando o TSE publicar a lista oficial de candidatos a 2026,
+            a seção será filtrada automaticamente para mostrar só quem
             efetivamente se candidatou à reeleição.
           </p>
         </div>
