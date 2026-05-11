@@ -1,5 +1,12 @@
 {
-  "_nota": "Votações de plenário classificadas manualmente como regressivas. Usadas pelo compute_vote_penalty.py em adição ao scan automático de PLs com stance='regressivo' em autoria.json. Cada entrada precisa apontar pra uma votação real (votacao_id no formato da API da Câmara) e justificar por que é regressiva. Auditável: cada votação tem placar real e link pra Câmara.",
+  "_nota": "Votações de plenário classificadas manualmente como regressivas. Fonte primária para o compute_vote_penalty.py. Cada entrada precisa apontar pra uma votação real (votacao_id no formato da API da Câmara) e justificar por que é regressiva.",
+  "_criterios_de_inclusao": [
+    "Critério 1 — A votação tem que ser de mérito (aprovação do PDL/PL em si, não um requerimento de urgência ou destaque sem efeito direto). Procedurais entram só se forem decisivas e não decorrentes de outra votação já no seed (evita dupla contagem).",
+    "Critério 2 — A pauta tem que tocar diretamente direitos da mulher ou de meninas. PLs sobre temas conexos (militarização escolar, segurança pública) ficam fora mesmo que o classificador automático tenha marcado como regressivas.",
+    "Critério 3 — Quando o mérito virou pró-mulher por substitutivo da relatora (caso PL 6020/2023), o tratamento correto é o campo voto_pro_mulher no votacoes.json, não entrada no seed. O substitutivo pode neutralizar a ementa original.",
+    "Critério 4 — Se a PL aparece como regressiva por bug do classificador (caso PL 2449/2023 — licença maternidade, na verdade protetiva), abrir issue pra corrigir o classifier em vez de adicionar no seed."
+  ],
+  "_curadoria_realizada": "2026-05-11 — Avaliadas 30 votações candidatas em 11 PLs. Nenhuma adicionada além do PDL 3/2025. Detalhamento: 12 votações em PDLs apensos ao PDL 3 (decorrentes), 6 votações em PLs de vigilância armada nas escolas (pauta tangencial), 10 votações em PL 6020/2023 (substitutivo virou pró-mulher), 2 votações em PL 2449/2023 (bug do classifier).",
   "votacoes": [
     {
       "votacao_id": "2482078-57",
