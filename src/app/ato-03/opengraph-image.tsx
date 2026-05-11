@@ -1,19 +1,15 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { loadFont, getOGStats } from "../og-helpers";
 
 export const alt = "Discurso e voto: como cada partido vota sobre violência contra a mulher";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-async function loadFont(name: string) {
-  return readFile(join(process.cwd(), "public", "fonts", name));
-}
-
 export default async function OG() {
-  const [bold, regular] = await Promise.all([
+  const [bold, regular, stats] = await Promise.all([
     loadFont("ArchivoBlack-Regular.ttf"),
     loadFont("Archivo-Regular.ttf"),
+    getOGStats(),
   ]);
 
   return new ImageResponse(
@@ -44,9 +40,9 @@ export default async function OG() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>
-          <Stat value="17" label="Votações nominais" />
-          <Stat value="6" label="PLs em plenário" />
-          <Stat value="4" label="De mérito" color="#005FFF" />
+          <Stat value={stats.totalVotacoes} label="Votações nominais" />
+          <Stat value={stats.plsVotadas} label="PLs em plenário" />
+          <Stat value={stats.merito} label="De mérito" color="#005FFF" />
         </div>
       </div>
     ),

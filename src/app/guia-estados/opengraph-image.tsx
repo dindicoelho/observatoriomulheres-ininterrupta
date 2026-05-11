@@ -1,14 +1,9 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { loadFont } from "../og-helpers";
 
 export const alt = "Mapa: quem representa seu estado em políticas de proteção à mulher";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-
-async function loadFont(name: string) {
-  return readFile(join(process.cwd(), "public", "fonts", name));
-}
 
 export default async function OG() {
   const [bold, regular] = await Promise.all([
@@ -46,7 +41,7 @@ export default async function OG() {
         <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>
           <Stat value="27" label="Estados" />
           <Stat value="5" label="Sem deputada" color="#D43F3F" />
-          <Stat value="2,5×" label="Peso mulheres" color="#005FFF" />
+          <Stat value="5×" label="Peso mulheres" color="#005FFF" />
         </div>
       </div>
     ),

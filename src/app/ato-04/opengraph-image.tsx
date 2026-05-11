@@ -1,19 +1,15 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { loadFont, getOGStats } from "../og-helpers";
 
-export const alt = "Nem toda lei é proteção — 171 PLs regressivas identificadas";
+export const alt = "Nem toda lei é proteção";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-async function loadFont(name: string) {
-  return readFile(join(process.cwd(), "public", "fonts", name));
-}
-
 export default async function OG() {
-  const [bold, regular] = await Promise.all([
+  const [bold, regular, stats] = await Promise.all([
     loadFont("ArchivoBlack-Regular.ttf"),
     loadFont("Archivo-Regular.ttf"),
+    getOGStats(),
   ]);
 
   return new ImageResponse(
@@ -41,9 +37,9 @@ export default async function OG() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 56, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 24 }}>
-          <Stat value="171" label="PLs regressivas" color="#D43F3F" />
-          <Stat value="62" label="Deputados envolvidos" color="#FF8080" />
-          <Stat value="152" label="PLs punitivistas" color="#F59E0B" />
+          <Stat value={stats.totalRegr} label="PLs regressivas" color="#D43F3F" />
+          <Stat value={stats.depsComRegr} label="Deputados envolvidos" color="#FF8080" />
+          <Stat value={stats.totalPunit} label="PLs punitivistas" color="#F59E0B" />
         </div>
       </div>
     ),

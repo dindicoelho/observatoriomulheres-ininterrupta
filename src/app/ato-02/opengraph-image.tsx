@@ -1,19 +1,15 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { loadFont, getOGStats } from "../og-helpers";
 
-export const alt = "O Congresso está agindo? 76% paradas em comissão";
+export const alt = "O Congresso está agindo?";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-async function loadFont(name: string) {
-  return readFile(join(process.cwd(), "public", "fonts", name));
-}
-
 export default async function OG() {
-  const [bold, regular] = await Promise.all([
+  const [bold, regular, stats] = await Promise.all([
     loadFont("ArchivoBlack-Regular.ttf"),
     loadFont("Archivo-Regular.ttf"),
+    getOGStats(),
   ]);
 
   return new ImageResponse(
@@ -41,9 +37,9 @@ export default async function OG() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 56, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 24 }}>
-          <Stat value="76%" label="Paradas em comissão" color="#D43F3F" />
-          <Stat value="16" label="Viraram lei" color="#DCFF00" />
-          <Stat value="79" label="Sem relator" />
+          <Stat value={stats.pctTramitando} label="Paradas em comissão" color="#D43F3F" />
+          <Stat value={stats.aprovadas} label="Viraram lei" color="#DCFF00" />
+          <Stat value={stats.semRelator} label="Sem relator" />
         </div>
       </div>
     ),

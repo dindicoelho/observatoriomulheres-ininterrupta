@@ -1,19 +1,15 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { loadFont, getOGStats } from "../og-helpers";
 
 export const alt = "Ranking: quem propõe as leis sobre violência contra a mulher";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-async function loadFont(name: string) {
-  return readFile(join(process.cwd(), "public", "fonts", name));
-}
-
 export default async function OG() {
-  const [bold, regular] = await Promise.all([
+  const [bold, regular, stats] = await Promise.all([
     loadFont("ArchivoBlack-Regular.ttf"),
     loadFont("Archivo-Regular.ttf"),
+    getOGStats(),
   ]);
 
   return new ImageResponse(
@@ -41,9 +37,9 @@ export default async function OG() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>
-          <Stat value="389" label="Deputados" />
-          <Stat value="1.078" label="PLs sobre o tema" />
-          <Stat value="15/20" label="Mulheres no top" color="#1DB389" />
+          <Stat value={stats.totalDeps} label="Deputados" />
+          <Stat value={stats.totalPls} label="PLs sobre o tema" />
+          <Stat value={stats.top20F} label="Mulheres no top" color="#1DB389" />
         </div>
       </div>
     ),
