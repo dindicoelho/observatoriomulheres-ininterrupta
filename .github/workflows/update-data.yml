@@ -26,46 +26,54 @@ jobs:
       - name: Install dependencies
         run: pip install anthropic
 
-      - name: "[1/11] Rebuild autoria (fetch Câmara API)"
+      - name: "[1/13] Rebuild autoria (fetch Câmara API)"
         run: python -u scripts/rebuild_autoria.py
         timeout-minutes: 30
 
-      - name: "[2/11] Enrich autoria (sexo, gender_stats)"
+      - name: "[2/13] Enrich autoria (sexo, gender_stats)"
         run: python -u scripts/enrich_autoria.py
 
-      - name: "[3/11] Classify stance (regex)"
+      - name: "[3/13] Classify stance (regex)"
         run: python -u scripts/classify_stance.py
 
-      - name: "[4/11] Penalidade por voto regressivo (seed editorial)"
+      - name: "[4/13] Penalidade por voto regressivo (seed editorial)"
         run: python -u scripts/compute_vote_penalty.py
         timeout-minutes: 10
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "[5/11] Rebuild articuladores (top 3 por UF)"
+      - name: "[5/13] Rebuild coerência (votos nas 4 PLs de mérito)"
+        run: python -u scripts/rebuild_coerencia.py
+        timeout-minutes: 10
+
+      - name: "[6/13] Rebuild relatoria (designações por sexo)"
+        run: python -u scripts/rebuild_relatoria.py
+        timeout-minutes: 30
+
+      - name: "[7/13] Rebuild articuladores (top 3 por UF)"
         run: python -u scripts/rebuild_articuladores.py
 
-      - name: "[6/11] Rebuild legislativo (tramitação)"
+      - name: "[8/13] Rebuild legislativo (tramitação)"
         run: python -u scripts/rebuild_legislativo.py
         timeout-minutes: 20
 
-      - name: "[7/11] Enrich votacoes (autor + relator)"
+      - name: "[9/13] Enrich votacoes (autor + relator)"
         run: python -u scripts/enrich_votacoes.py
 
-      - name: "[8/11] Detectar novas votações + interpretação LLM"
+      - name: "[10/13] Detectar novas votações + interpretação LLM"
         run: python -u scripts/update_votacoes.py
         timeout-minutes: 20
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: "[9/11] Rebuild curiosidades"
+      - name: "[11/13] Rebuild curiosidades"
         run: python -u scripts/rebuild_curiosidades.py
 
-      - name: "[10/11] Rebuild Senado Federal"
+      - name: "[12/13] Rebuild Senado Federal"
         run: python -u scripts/rebuild_senado.py
         timeout-minutes: 15
 
-      - name: "[11/11] Fetch candidatos TSE 2026 (silencia se indisponível)"
+      - name: "[13/13] Fetch candidatos TSE 2026 (silencia se indisponível)"
         run: python -u scripts/fetch_candidatos_tse.py
 
       - name: Check for changes
