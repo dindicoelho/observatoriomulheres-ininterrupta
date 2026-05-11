@@ -60,13 +60,11 @@ export default function Home() {
         <div id="ato-04">
           <ProducaoRegressiva />
         </div>
-
-
-        {/* Inscreva-se */}
-        <LeadSection />
       </main>
       <LeadPopup />
       <Footer />
+      {/* Inscreva-se — última coisa do site, depois do CTA */}
+      <LeadSection />
     </>
   );
 }
