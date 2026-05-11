@@ -57,26 +57,82 @@ export default function Footer() {
       <div className="mx-auto max-w-3xl">
         {/* CTA */}
         <div className="mb-10 offset-left">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-            [ ENCERRAMENTO ]
+          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-neon)]">
+            [ ~5 MESES PARA OUTUBRO DE 2026 ]
           </p>
           <h2
-            className="text-3xl font-medium leading-[1.1] md:text-5xl lg:text-6xl"
+            className="text-3xl font-medium leading-[1.05] md:text-5xl lg:text-7xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Agora você sabe.
+            Em outubro, o voto é seu.
             <br />
             <span className="text-[var(--color-neon)]">
-              O que vai fazer com isso?
+              A responsabilidade também.
             </span>
           </h2>
         </div>
 
-        <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
-          Este site é atualizado automaticamente toda vez que a Câmara
-          publica algo novo. Salve nos favoritos — e mande pra quem
-          precisa ver antes de outubro.
+        <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
+          <strong className="text-white">513 deputados. 81 senadores.
+          27 governadores.</strong> Outubro redesenha o Congresso que
+          decide, pelos próximos quatro anos, se Maria da Penha avança
+          ou retrocede, se feminicídio vira pauta ou estatística, se
+          mulher é prioridade ou nota de rodapé.
         </p>
+
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
+          Você acabou de ver quem propõe, quem vota a favor, quem vota
+          contra, e quem usa o mandato pra desmontar direitos — com
+          nome, partido, número de PL e data. Não dá mais pra dizer
+          que o Congresso é uma caixa-preta.{" "}
+          <strong className="text-white">E não dá mais pra dizer que
+          não sabia.</strong>
+        </p>
+
+        {/* Plano de ação */}
+        <div className="mt-10 rounded-2xl border-2 border-[var(--color-neon)] bg-[var(--color-neon)]/[0.06] p-6 md:p-8">
+          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
+            [ O que fazer com isso ]
+          </p>
+          <ol className="mt-4 space-y-3 text-base leading-relaxed text-white md:text-lg">
+            <li className="flex gap-4">
+              <span className="font-display-condensed text-3xl leading-none text-[var(--color-neon)] md:text-4xl">
+                01
+              </span>
+              <span className="pt-1">
+                <strong>Salve este observatório.</strong> Ele é
+                atualizado toda vez que a Câmara publica algo novo —
+                volte antes de digitar o número na urna.
+              </span>
+            </li>
+            <li className="flex gap-4">
+              <span className="font-display-condensed text-3xl leading-none text-[var(--color-neon)] md:text-4xl">
+                02
+              </span>
+              <span className="pt-1">
+                <strong>Mande pra três pessoas</strong> que vão votar
+                em outubro. Tia, primo, grupo da firma, vizinho. Cada
+                um manda pra mais três.
+              </span>
+            </li>
+            <li className="flex gap-4">
+              <span className="font-display-condensed text-3xl leading-none text-[var(--color-neon)] md:text-4xl">
+                03
+              </span>
+              <span className="pt-1">
+                <strong>Vote sabendo.</strong> Cabine fechada,
+                celular bloqueado, memória curta. Não dá pra dizer
+                que esqueceu se ainda dá tempo de aprender.
+              </span>
+            </li>
+          </ol>
+          <p className="mt-6 border-t border-[var(--color-neon)]/20 pt-4 text-sm leading-relaxed text-white/75 md:text-base">
+            O Congresso atual foi eleito por uma minoria que prestou
+            atenção. O próximo vai ser eleito do mesmo jeito.{" "}
+            <strong className="text-white">O voto é a única coisa
+            que o Congresso ainda escuta.</strong>
+          </p>
+        </div>
 
         {/* Actions */}
         <div className="mt-10 flex flex-wrap gap-3">
@@ -84,7 +140,7 @@ export default function Footer() {
             onClick={handleShare}
             className="inline-flex items-center gap-2 rounded-full bg-[var(--color-neon)] px-6 py-3 font-mono-data text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-dark)] transition-transform hover:scale-105"
           >
-            {copied ? "Link copiado ✓" : "Compartilhar site"}
+            {copied ? "Link copiado ✓" : "Mandar pra três eleitores"}
           </button>
           <Link
             href="/metodologia"

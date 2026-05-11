@@ -474,6 +474,57 @@ export default function ArticuladoresMap() {
           votações-chave. Passe o mouse ou clique no mapa.
         </p>
 
+        {/* Selos editoriais */}
+        <div className="mt-8 grid gap-3 md:grid-cols-2">
+          {/* Selo 1 — Peso 5× para mulheres */}
+          <div className="relative overflow-hidden rounded-2xl border-2 border-[var(--color-blue)] bg-[var(--color-blue)] p-5 text-white shadow-sm">
+            <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-white/70">
+              [ Recorte editorial ]
+            </p>
+            <div className="mt-3 flex items-center gap-4">
+              <span className="font-display-condensed text-5xl leading-none text-[var(--color-neon)] md:text-6xl">
+                ×5
+              </span>
+              <p className="text-base font-bold leading-tight md:text-lg">
+                Mulheres sem retrocesso na ficha entram no ranking com{" "}
+                <span className="text-[var(--color-neon)]">peso 5×</span>.
+              </p>
+            </div>
+            <p className="mt-3 text-xs leading-relaxed text-white/85">
+              Compensação editorial explícita pela sub-representação
+              feminina na Câmara — elas são só <strong>17% da casa</strong>,
+              mas respondem pela maioria dos PLs estruturais. Quem
+              retrocede direitos da mulher não recebe o multiplicador.
+            </p>
+          </div>
+
+          {/* Selo 2 — Aguardando TSE */}
+          <div className="relative overflow-hidden rounded-2xl border-2 border-dashed border-[var(--color-text)] bg-[var(--color-neon)] p-5 text-[var(--color-text)] shadow-sm">
+            <div className="flex items-center justify-between">
+              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text)]/70">
+                [ Aguardando TSE ]
+              </p>
+              <span className="flex items-center gap-1.5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text)]/70">
+                <span className="relative inline-flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-text)] opacity-60"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-text)]"></span>
+                </span>
+                live
+              </span>
+            </div>
+            <p className="mt-3 text-base font-bold leading-tight text-[var(--color-text)] md:text-lg">
+              Será atualizado automaticamente quando sair a lista
+              oficial de candidatos a 2026.
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-[var(--color-text)]/80">
+              Hoje listamos todos os deputados em <strong>exercício na
+              atual legislatura</strong>. Quando o TSE publicar quem
+              se candidatou, o ranking refiltra em tempo real e passa
+              a mostrar só quem está concorrendo à reeleição.
+            </p>
+          </div>
+        </div>
+
         {/* Disclaimer */}
         <div className="mt-6 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-[var(--color-bg-alt)] p-5">
           <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
