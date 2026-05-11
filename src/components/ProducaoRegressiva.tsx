@@ -362,7 +362,7 @@ export default function ProducaoRegressiva() {
             interrupção da gestação, susta resoluções protetivas
             (Conanda 258), autoriza porte de arma como &ldquo;proteção&rdquo;
             à vítima, ou criminaliza a reaproximação consensual. Cada
-            regressiva subtrai <strong>2 pontos</strong> do score do
+            regressiva subtrai <strong>7 pontos</strong> do score do
             autor.
           </p>
         </div>

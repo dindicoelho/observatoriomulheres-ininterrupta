@@ -275,7 +275,7 @@ export default function MetodologiaPage() {
                   resposta à violência doméstica, condiciona BPC à
                   renúncia do aborto legal.{" "}
                   <strong>
-                    Removida do ranking e subtrai 2 pontos do score.
+                    Removida do ranking e subtrai 7 pontos do score.
                   </strong>
                 </li>
               </ul>
