@@ -525,12 +525,30 @@ export default function ArticuladoresMap() {
           </div>
         </div>
 
-        {/* Disclaimer */}
-        <div className="mt-6 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-[var(--color-bg-alt)] p-5">
-          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            [ Sobre este ranking ]
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+        {/* Disclaimer — dropdown */}
+        <details className="group mt-6 rounded-xl border border-[var(--color-text-tertiary)]/20 bg-[var(--color-bg-alt)] open:bg-[var(--color-bg-alt)]">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 p-5 hover:bg-gray-100/60 [&::-webkit-details-marker]:hidden">
+            <span className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+              [ Sobre este ranking ]
+            </span>
+            <span className="flex items-center gap-2 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-secondary)]">
+              <span className="group-open:hidden">ver fórmula</span>
+              <span className="hidden group-open:inline">fechar</span>
+              <svg
+                className="h-3 w-3 transition-transform group-open:rotate-180"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 4.5l3 3 3-3" />
+              </svg>
+            </span>
+          </summary>
+          <p className="px-5 pb-5 text-sm leading-relaxed text-[var(--color-text-secondary)]">
             Score = <strong>[(PLs estruturais × 3) + (PLs incrementais
             × 1) + (PLs simbólicas × 1) − (PLs punitivistas × 2) − (PLs regressivas × 7) − (votos regressivos × 5)] × ficha_limpa × peso_sexo</strong>. Deputados com{" "}
             <strong>100% de PLs protetivas</strong> (zero punitivistas,
@@ -548,7 +566,7 @@ export default function ArticuladoresMap() {
             a seção será filtrada automaticamente para mostrar só quem
             efetivamente se candidatou à reeleição.
           </p>
-        </div>
+        </details>
 
         {/* Layer toggle */}
         <div className="mt-8 flex flex-wrap gap-2">
