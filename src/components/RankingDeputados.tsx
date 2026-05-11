@@ -5,6 +5,7 @@ import autoriaData from "../data/autoria.json";
 import coerenciaData from "../data/coerencia.json";
 import relatoriaData from "../data/relatoria.json";
 import candidatosData from "../data/candidatos_2026.json";
+import votacoesData from "../data/votacoes.json";
 import ScrollFloat from "./ScrollFloat";
 import Counter from "./Counter";
 import AnimatedList from "./AnimatedList";
@@ -79,15 +80,30 @@ type RelatoriaJSON = {
 const RELATORIA = relatoriaData as RelatoriaJSON;
 const COERENCIA_MAP = new Map(COERENCIA.deputados.map((d) => [d.id, d]));
 
-// PL labels for the 4 mérito votes (human-readable)
-const MERITO_LABELS: Record<string, string> = {
-  "2462009-79": "PL 3880/2024 — Violência vicária na Lei Maria da Penha",
-  "2596663-47": "PL 6415/2025 — Política Nacional de Assistência Jurídica",
-  "2449741-72": "PL 2942/2024 — Monitoramento eletrônico obrigatório",
-  "2413257-116": "PL 6020/2023 — Crime mesmo com consentimento da vítima",
+// Labels das votações de mérito — derivados de votacoes.json
+// (mesma fonte que rebuild_coerencia.py usa pros IDs). Quando
+// update_votacoes.py detectar uma nova votação de mérito, ela
+// aparece automaticamente no modal sem precisar editar nada aqui.
+type VotacoesJSON = {
+  votacoes: Array<{
+    id: string;
+    pl_ref?: string;
+    titulo_curto?: string;
+    tipo?: string;
+  }>;
 };
+const VOTACOES = votacoesData as VotacoesJSON;
+const MERITO_LABELS: Record<string, string> = Object.fromEntries(
+  VOTACOES.votacoes
+    .filter((v) => v.tipo === "mérito")
+    .map((v) => [
+      v.id,
+      v.titulo_curto ? `${v.pl_ref ?? "?"} — ${v.titulo_curto}` : (v.pl_ref ?? v.id),
+    ])
+);
 
-// Get the actual vote ids used
+// IDs das votações de mérito vêm de coerencia.json (que por sua vez
+// derivou de votacoes.json no pipeline). As duas fontes têm que bater.
 const MERITO_IDS = COERENCIA.merito_vote_ids;
 
 type AutoriaJSON = {
@@ -284,7 +300,7 @@ function DeputadoModal({
           return (
             <div className="border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-4">
               <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-                [ Voto nas 4 votações de mérito do plenário ]
+                [ Voto nas {MERITO_IDS.length} votações de mérito do plenário ]
               </p>
               <p className="mt-1 text-[11px] text-[var(--color-text-tertiary)]">
                 O voto aqui listado não equivale a posição contra ou a

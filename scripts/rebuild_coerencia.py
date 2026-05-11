@@ -13,10 +13,14 @@ Score = sim / (sim + nao) × 100. Não usa voto_pro_mulher — o frontend
 exibe os votos com aviso editorial de que "o contexto de cada PL
 importa" (ver RankingDeputados.tsx no modal de cada deputado).
 
-Os IDs das votações de mérito ficam hardcoded aqui porque o frontend
-também tem labels hardcoded em RankingDeputados.tsx. Quando aparecer
-uma 5ª votação de mérito relevante (via update_votacoes.py), atualizar
-MERITO_IDS aqui E o MERITO_LABELS no componente.
+Os IDs vêm dinamicamente de votacoes.json (campo tipo == "mérito").
+Esse arquivo é atualizado pelo update_votacoes.py quando detecta novas
+votações nominais no plenário. Resultado: quando aparece uma 5ª votação
+de mérito, ela entra automaticamente no modal sem precisar editar
+código nem este script.
+
+O frontend lê o mesmo votacoes.json pra montar os labels dinamicamente,
+então não há sincronização manual entre duas listas.
 """
 
 import json
@@ -28,14 +32,19 @@ from pathlib import Path
 API = "https://dadosabertos.camara.leg.br/api/v2"
 DATA_DIR = Path(__file__).parent.parent / "src" / "data"
 
-# Mesmas 4 votações de mérito mostradas no modal do deputado.
-# Manter sincronizado com MERITO_LABELS em src/components/RankingDeputados.tsx
-MERITO_IDS = [
-    "2462009-79",   # PL 3880/2024 — Violência vicária na Lei Maria da Penha
-    "2596663-47",   # PL 6415/2025 — Política Nacional de Assistência Jurídica
-    "2449741-72",   # PL 2942/2024 — Monitoramento eletrônico obrigatório
-    "2413257-116",  # PL 6020/2023 — Crime mesmo com consentimento da vítima
-]
+
+def carregar_merito_ids() -> list[str]:
+    """Lê votacoes.json e retorna IDs das votações de mérito, ordenadas
+    por data desc (mais recentes primeiro)."""
+    p = DATA_DIR / "votacoes.json"
+    if not p.exists():
+        print(">>> votacoes.json não encontrado — sem votações de mérito.")
+        return []
+    data = json.loads(p.read_text(encoding="utf-8"))
+    meritos = [v for v in data.get("votacoes", []) if v.get("tipo") == "mérito"]
+    meritos.sort(key=lambda x: x.get("data", ""), reverse=True)
+    ids = [v["id"] for v in meritos if v.get("id")]
+    return ids
 
 
 def fetch_json(url: str, retries: int = 4) -> dict:
@@ -103,14 +112,20 @@ def main():
         autoria = json.loads(autoria_path.read_text(encoding="utf-8"))
         sexo_idx = {d["id"]: d.get("sexo") for d in autoria.get("deputados", [])}
 
+    merito_ids = carregar_merito_ids()
+    if not merito_ids:
+        print(">>> Nenhuma votação de mérito encontrada em votacoes.json — saindo.")
+        return
+    print(f">>> {len(merito_ids)} votações de mérito carregadas de votacoes.json")
+
     print(f"\n[1/3] Buscando deputados da 57ª legislatura...")
     deps = fetch_deputados_57()
     print(f">>> {len(deps)} deputados encontrados")
 
-    print(f"\n[2/3] Coletando votos em {len(MERITO_IDS)} votações de mérito...")
+    print(f"\n[2/3] Coletando votos em {len(merito_ids)} votações de mérito...")
     votos_por_votacao: dict = {}
-    for i, vid in enumerate(MERITO_IDS, 1):
-        print(f"    [{i}/{len(MERITO_IDS)}] {vid}")
+    for i, vid in enumerate(merito_ids, 1):
+        print(f"    [{i}/{len(merito_ids)}] {vid}")
         votos_por_votacao[vid] = fetch_votos(vid)
         time.sleep(0.2)
 
@@ -120,7 +135,7 @@ def main():
         dep_id = d["id"]
         votes_by_id: dict = {}
         sim = nao = ausencias = 0
-        for vid in MERITO_IDS:
+        for vid in merito_ids:
             voto = votos_por_votacao[vid].get(dep_id)
             if voto == "Sim":
                 votes_by_id[vid] = "Sim"
@@ -154,7 +169,7 @@ def main():
         })
 
     out = {
-        "merito_vote_ids": MERITO_IDS,
+        "merito_vote_ids": merito_ids,
         "deputados": deputados_out,
     }
     (DATA_DIR / "coerencia.json").write_text(
