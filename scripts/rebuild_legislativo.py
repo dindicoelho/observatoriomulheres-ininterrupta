@@ -80,7 +80,7 @@ def main():
         for pl in d["pls"]:
             if pl["id"] in seen:
                 continue
-            if pl.get("stance") == "regressivo":
+            if pl.get("stance") in ("regressivo", "nao_classificado"):
                 continue
             seen.add(pl["id"])
             pls.append(
