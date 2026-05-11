@@ -521,10 +521,11 @@ export default function MetodologiaPage() {
               </li>
               <li>
                 <strong className="text-[var(--color-text)]">
-                  O peso 2,5 pra mulheres é uma escolha.
+                  O peso 5 pra mulheres é uma escolha editorial.
                 </strong>{" "}
-                Existe pra compensar sub-representação. Nem todo leitor
-                vai concordar.
+                Aplicado apenas no mapa por estado. Existe pra compensar
+                a sub-representação feminina (17% da Câmara). Nem todo
+                leitor vai concordar.
               </li>
             </ul>
           </section>
