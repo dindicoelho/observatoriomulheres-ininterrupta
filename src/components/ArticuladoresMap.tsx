@@ -39,6 +39,16 @@ type Articulador = {
   estruturais: number;
   incrementais: number;
   simbolicas: number;
+  punitivistas?: number;
+  regressivos?: number;
+  votos_regressivos?: number;
+  votos_regressivos_detalhe?: Array<{
+    pl_ref: string;
+    descricao: string;
+    data: string;
+    placar: string;
+    voto: string;
+  }>;
   coerencia_sim: number;
   coerencia_nao: number;
   coerencia_participacoes: number;
@@ -76,6 +86,14 @@ type AutoriaDep = {
   protetivos?: number;
   punitivistas?: number;
   regressivos?: number;
+  votos_regressivos?: number;
+  votos_regressivos_detalhe?: Array<{
+    pl_ref: string;
+    descricao: string;
+    data: string;
+    placar: string;
+    voto: string;
+  }>;
   pls: Array<{
     id: number;
     tipo: string;
@@ -363,6 +381,26 @@ export default function ArticuladoresMap() {
                     </button>
                   )}
                 </div>
+                {/* Selo de voto regressivo no modal — torna explícito o
+                    motivo do desconto no score */}
+                {(dep.votos_regressivos ?? 0) > 0 && dep.votos_regressivos_detalhe && dep.votos_regressivos_detalhe.length > 0 && (
+                  <div
+                    className="mt-3 rounded bg-[#ED447F]/10 px-2.5 py-1.5"
+                    title={dep.votos_regressivos_detalhe.map(
+                      (vr) => `Votou ${vr.voto} no ${vr.pl_ref}: ${vr.descricao}. ${vr.placar} em ${vr.data}.`
+                    ).join(" ")}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[#ED447F]">⚠</span>
+                      <span className="font-mono-data text-[10px] font-bold text-[#ED447F]">
+                        Votou SIM: {dep.votos_regressivos_detalhe[0].descricao}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 pl-5 font-mono-data text-[9px] text-[#ED447F]/70">
+                      {dep.votos_regressivos_detalhe[0].pl_ref} · {dep.votos_regressivos_detalhe[0].placar} · {dep.votos_regressivos_detalhe[0].data}
+                    </p>
+                  </div>
+                )}
               </div>
               <button onClick={() => setSelectedDep(null)} className="flex-shrink-0 rounded-full bg-[var(--color-bg-alt)] p-2 hover:bg-gray-200" aria-label="Fechar">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
@@ -689,6 +727,26 @@ export default function ArticuladoresMap() {
                                 </span>
                               )}
                             </div>
+                            {/* Selo de voto regressivo — explicita por que o
+                                score caiu quando há SIM em pauta regressiva */}
+                            {(d.votos_regressivos ?? 0) > 0 && d.votos_regressivos_detalhe && d.votos_regressivos_detalhe.length > 0 && (
+                              <div
+                                className="mt-2 rounded bg-[#ED447F]/10 px-2 py-1"
+                                title={d.votos_regressivos_detalhe.map(
+                                  (vr) => `Votou ${vr.voto} no ${vr.pl_ref}: ${vr.descricao}. ${vr.placar} em ${vr.data}.`
+                                ).join(" ")}
+                              >
+                                <div className="flex items-center gap-1">
+                                  <span className="text-[#ED447F] text-[10px]">⚠</span>
+                                  <span className="font-mono-data text-[9px] font-bold text-[#ED447F]">
+                                    Votou SIM: {d.votos_regressivos_detalhe[0].descricao}
+                                  </span>
+                                </div>
+                                <p className="mt-0.5 pl-4 font-mono-data text-[8px] text-[#ED447F]/70">
+                                  {d.votos_regressivos_detalhe[0].pl_ref} · {d.votos_regressivos_detalhe[0].data}
+                                </p>
+                              </div>
+                            )}
                           </div>
                           <span className="flex-shrink-0 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-blue)]">
                             ver →
