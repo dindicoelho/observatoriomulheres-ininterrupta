@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   update:
@@ -38,6 +39,8 @@ jobs:
       - name: "[4/11] Penalidade por voto regressivo (seed editorial)"
         run: python -u scripts/compute_vote_penalty.py
         timeout-minutes: 10
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "[5/11] Rebuild articuladores (top 3 por UF)"
         run: python -u scripts/rebuild_articuladores.py

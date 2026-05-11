@@ -1,0 +1,248 @@
+{
+  "_nota": "Lista de votações candidatas detectadas pelo compute_vote_penalty.py. NÃO é o seed — só registra o que o scan automático achou pra detectar quando aparece coisa nova. Atualizado pelo script a cada execução.",
+  "atualizado_em": "2026-05-11",
+  "candidatos_ids": [
+    "2355155-20",
+    "2355155-21",
+    "2359191-19",
+    "2359191-20",
+    "2361328-16",
+    "2361328-17",
+    "2377325-14",
+    "2377325-15",
+    "2413257-114",
+    "2413257-115",
+    "2413257-116",
+    "2413257-120",
+    "2413257-123",
+    "2413257-125",
+    "2413257-85",
+    "2413257-89",
+    "2413257-96",
+    "2476097-7",
+    "2482094-18",
+    "2482094-19",
+    "2482165-18",
+    "2482165-19",
+    "2482261-17",
+    "2482261-18",
+    "2482524-20",
+    "2482524-21",
+    "2482617-17",
+    "2482617-18",
+    "2483025-18",
+    "2483025-19"
+  ],
+  "candidatos": [
+    {
+      "votacao_id": "2355155-20",
+      "pl_ref": "PL 1688/2023",
+      "data": "2024-12-09",
+      "descricao_camara": "Aprovado o requerimento nº 1139/2023,da Sra. Silvye Alves, que solicita urgência",
+      "ementa_pl": "Altera as Leis nº 9.394, de 1996 e Nº 14.113, de 2020, com a finalidade de tornar obrigatória a implantação de vigilânci"
+    },
+    {
+      "votacao_id": "2355155-21",
+      "pl_ref": "PL 1688/2023",
+      "data": "2024-12-09",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Altera as Leis nº 9.394, de 1996 e Nº 14.113, de 2020, com a finalidade de tornar obrigatória a implantação de vigilânci"
+    },
+    {
+      "votacao_id": "2359191-19",
+      "pl_ref": "PL 2282/2023",
+      "data": "2024-12-09",
+      "descricao_camara": "Aprovado o requerimento nº 1139/2023,da Sra. Silvye Alves, que solicita urgência",
+      "ementa_pl": "Estabelece a obrigatoriedade de instalação de detectores de metais, sistema de monitoramento eletrônico, “botão do pânic"
+    },
+    {
+      "votacao_id": "2359191-20",
+      "pl_ref": "PL 2282/2023",
+      "data": "2024-12-09",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Estabelece a obrigatoriedade de instalação de detectores de metais, sistema de monitoramento eletrônico, “botão do pânic"
+    },
+    {
+      "votacao_id": "2361328-16",
+      "pl_ref": "PL 2449/2023",
+      "data": "2025-07-16",
+      "descricao_camara": "Aprovado o requerimento nº 2762/2025,do Sr. José Guimarães, que solicita urgênci",
+      "ementa_pl": "Altera o Art. 392 da CLT para estabelecer que o início da licença maternidade deverá ser fixada somente a partir da saíd"
+    },
+    {
+      "votacao_id": "2361328-17",
+      "pl_ref": "PL 2449/2023",
+      "data": "2025-07-16",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Altera o Art. 392 da CLT para estabelecer que o início da licença maternidade deverá ser fixada somente a partir da saíd"
+    },
+    {
+      "votacao_id": "2377325-14",
+      "pl_ref": "PL 3857/2023",
+      "data": "2024-12-09",
+      "descricao_camara": "Aprovado o requerimento nº 1139/2023,da Sra. Silvye Alves, que solicita urgência",
+      "ementa_pl": "Altera a Lei nº 9.394, de 20 de dezembro de 1996, tornando um dever do Estado, o fornecimento de detectores de metais, a"
+    },
+    {
+      "votacao_id": "2377325-15",
+      "pl_ref": "PL 3857/2023",
+      "data": "2024-12-09",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Altera a Lei nº 9.394, de 20 de dezembro de 1996, tornando um dever do Estado, o fornecimento de detectores de metais, a"
+    },
+    {
+      "votacao_id": "2413257-114",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-07-08",
+      "descricao_camara": "Rejeitado o Requerimento. Sim: 90; Não: 288; Abstenção: 1; Total: 379.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-115",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-07-08",
+      "descricao_camara": "Rejeitada a Preferência. Sim: 103; Não: 281; Total: 384.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-116",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-07-08",
+      "descricao_camara": "Aprovado o Substitutivo ao Projeto de Lei nº 6.020, de 2023, adotado pela relato",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-120",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-07-08",
+      "descricao_camara": "Rejeitada a Emenda ao Substitutivo.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-123",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-07-08",
+      "descricao_camara": "Aprovada a Redação Final assinada pela relatora, Dep. Rogéria Santos (REPUBLIC/B",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-125",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-07-08",
+      "descricao_camara": "Rejeitado o Destaque. Sim: 159; Não: 243; Total: 402.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-85",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-06-11",
+      "descricao_camara": "Rejeitado o Requerimento. Sim: 77; Não: 209; Total: 286.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-89",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-06-11",
+      "descricao_camara": "Rejeitado o Requerimento. Sim: 81; Não: 209; Total: 290.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2413257-96",
+      "pl_ref": "PL 6020/2023",
+      "data": "2025-06-11",
+      "descricao_camara": "Rejeitado o Requerimento. Sim: 75; Não: 189; Abstenção: 2; Total: 266.",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2476097-7",
+      "pl_ref": "PL 6020/2023",
+      "data": "2024-12-05",
+      "descricao_camara": "Aprovado, por unanimidade, o Requerimento de Urgência (Art. 155 do RICD).",
+      "ementa_pl": "Estabelece que a aproximação voluntária do agressor, mesmo que ocorra com o consentimento expresso da vítima, configura "
+    },
+    {
+      "votacao_id": "2482094-18",
+      "pl_ref": "PDL 6/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Aprovado o requerimento nº 3559/2025,da Sra. Chris Tonietto, que solicita urgênc",
+      "ementa_pl": "Susta a Resolução nº 258 de 23 de dezembro de 2024, do CONANDA que dispõe sobre o atendimento de crianças e adolescentes"
+    },
+    {
+      "votacao_id": "2482094-19",
+      "pl_ref": "PDL 6/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Susta a Resolução nº 258 de 23 de dezembro de 2024, do CONANDA que dispõe sobre o atendimento de crianças e adolescentes"
+    },
+    {
+      "votacao_id": "2482165-18",
+      "pl_ref": "PDL 14/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Aprovado o requerimento nº 3559/2025,da Sra. Chris Tonietto, que solicita urgênc",
+      "ementa_pl": "Susta a Resolução do Conselho Nacional dos Direitos da Criança e do Adolescente (Conanda) n.º 258, de 23 de dezembro de "
+    },
+    {
+      "votacao_id": "2482165-19",
+      "pl_ref": "PDL 14/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Susta a Resolução do Conselho Nacional dos Direitos da Criança e do Adolescente (Conanda) n.º 258, de 23 de dezembro de "
+    },
+    {
+      "votacao_id": "2482261-17",
+      "pl_ref": "PDL 25/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Aprovado o requerimento nº 3559/2025,da Sra. Chris Tonietto, que solicita urgênc",
+      "ementa_pl": "Susta a Resolução Conanda nº 258, de 23 de dezembro de 2024, que dispõe sobre o atendimento de crianças e adolescentes v"
+    },
+    {
+      "votacao_id": "2482261-18",
+      "pl_ref": "PDL 25/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Susta a Resolução Conanda nº 258, de 23 de dezembro de 2024, que dispõe sobre o atendimento de crianças e adolescentes v"
+    },
+    {
+      "votacao_id": "2482524-20",
+      "pl_ref": "PDL 48/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Aprovado o requerimento nº 3559/2025,da Sra. Chris Tonietto, que solicita urgênc",
+      "ementa_pl": "Susta a Resolução nº 258, de 23 de dezembro de 2024, do Conselho Nacional dos Direitos da Criança e do Adolescente (CONA"
+    },
+    {
+      "votacao_id": "2482524-21",
+      "pl_ref": "PDL 48/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Susta a Resolução nº 258, de 23 de dezembro de 2024, do Conselho Nacional dos Direitos da Criança e do Adolescente (CONA"
+    },
+    {
+      "votacao_id": "2482617-17",
+      "pl_ref": "PDL 53/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Aprovado o requerimento nº 3559/2025,da Sra. Chris Tonietto, que solicita urgênc",
+      "ementa_pl": "Susta os efeitos da Resolução nº 258 de 23 de dezembro de 2024, que dispõe sobre o atendimento de crianças e adolescente"
+    },
+    {
+      "votacao_id": "2482617-18",
+      "pl_ref": "PDL 53/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Susta os efeitos da Resolução nº 258 de 23 de dezembro de 2024, que dispõe sobre o atendimento de crianças e adolescente"
+    },
+    {
+      "votacao_id": "2483025-18",
+      "pl_ref": "PDL 65/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Aprovado o requerimento nº 3559/2025,da Sra. Chris Tonietto, que solicita urgênc",
+      "ementa_pl": "Susta os efeitos da Resolução nº 258, de 23 de dezembro de 2024, do Conselho Nacional dos Direitos da Criança e do Adole"
+    },
+    {
+      "votacao_id": "2483025-19",
+      "pl_ref": "PDL 65/2025",
+      "data": "2025-11-05",
+      "descricao_camara": "Alteração do Regime de Tramitação desta proposição em virtude da alteração do re",
+      "ementa_pl": "Susta os efeitos da Resolução nº 258, de 23 de dezembro de 2024, do Conselho Nacional dos Direitos da Criança e do Adole"
+    }
+  ]
+}
