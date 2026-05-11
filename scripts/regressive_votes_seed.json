@@ -6,7 +6,10 @@
     "Critério 3 — Quando o mérito virou pró-mulher por substitutivo da relatora (caso PL 6020/2023), o tratamento correto é o campo voto_pro_mulher no votacoes.json, não entrada no seed. O substitutivo pode neutralizar a ementa original.",
     "Critério 4 — Se a PL aparece como regressiva por bug do classificador (caso PL 2449/2023 — licença maternidade, na verdade protetiva), abrir issue pra corrigir o classifier em vez de adicionar no seed."
   ],
-  "_curadoria_realizada": "2026-05-11 — Avaliadas 30 votações candidatas em 11 PLs. Nenhuma adicionada além do PDL 3/2025. Detalhamento: 12 votações em PDLs apensos ao PDL 3 (decorrentes), 6 votações em PLs de vigilância armada nas escolas (pauta tangencial), 10 votações em PL 6020/2023 (substitutivo virou pró-mulher), 2 votações em PL 2449/2023 (bug do classifier).",
+  "_curadoria_realizada": [
+    "2026-05-11 — Avaliadas 30 votações candidatas em 11 PLs (peso -7). Nenhuma adicionada além do PDL 3/2025. Detalhamento: 12 votações em PDLs apensos ao PDL 3 (decorrentes), 6 votações em PLs de vigilância armada nas escolas (pauta tangencial), 10 votações em PL 6020/2023 (substitutivo virou pró-mulher), 2 votações em PL 2449/2023 (bug do classifier).",
+    "2026-05-11 — Após reduzir peso de -7 para -5, reavaliadas as mesmas 30 candidatas. Conclusão: os critérios técnicos não dependem do peso — dependem da natureza da votação. Nenhuma adicionada. Seed segue apenas com PDL 3/2025."
+  ],
   "votacoes": [
     {
       "votacao_id": "2482078-57",
