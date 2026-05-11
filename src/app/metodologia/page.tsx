@@ -593,6 +593,63 @@ export default function MetodologiaPage() {
               </a>
             </div>
           </section>
+
+          {/* Agradecimentos */}
+          <section className="space-y-5 border-t border-gray-200 pt-10">
+            <h2
+              className="text-3xl font-black"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Agradecimentos
+            </h2>
+
+            <p className="text-base md:text-lg">
+              Este projeto não seria possível sem o olhar, feedback e
+              tempo de pessoas incríveis que ajudaram com suas opiniões
+              e experiência — seja na navegação, estruturação de dados
+              e apontamentos:
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-x-1 gap-y-0.5 text-base text-[var(--color-text-secondary)]">
+              {[
+                "Ana Freitas",
+                "Ana Machado",
+                "Ana Mohallem",
+                "Annahy Laira",
+                "Ariane Polvani",
+                "Beatriz Pascon",
+                "Beta Harada",
+                "Bianca Brega",
+                "Camila Ribeiro",
+                "Danielle Marques",
+                "Isabella Mulholland",
+                "Janaina Navarrette",
+                "João JB Junior",
+                "Juliana Ghiselini",
+                "Juliana Morganti",
+                "Lilian Otuka",
+                "Mafe Galetti",
+                "Marina Dias",
+                "Marina Landherr",
+                "Patricia Chmielewski",
+                "Rafaella Gobara",
+                "Rafael Oliveira",
+                "Renata Ruas",
+                "Stella Pirani",
+                "Thais Jacoponi",
+                "Thais Mara",
+              ].map((nome, i, arr) => (
+                <span key={nome}>
+                  <strong className="text-[var(--color-text)]">{nome}</strong>
+                  {i < arr.length - 1 ? " ·" : ""}
+                </span>
+              ))}
+            </div>
+
+            <p className="mt-4 text-sm text-[var(--color-text-tertiary)]">
+              Obrigada por acreditarem nesse projeto.
+            </p>
+          </section>
         </article>
       </main>
     </>
