@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
-// ATO 04 — Quem atua contra — DESPUBLICADO (ano eleitoral)
-// A seção segue no projeto (componente ProducaoRegressiva e dados),
-// mas a rota redireciona pra home e a metadata foi neutralizada
-// pra não gerar preview do conteúdo despublicado em links cacheados.
+// Rota redireciona pro anchor na home. Metadata e OG image seguem
+// desativados (opengraph-image.tsx.disabled) para que links cacheados
+// não exibam preview com nomes/números individuais — a seção foi
+// redesenhada sem ranking de top regressivos.
 
 export default function Ato04Page() {
-  redirect("/");
+  redirect("/#ato-04");
 }

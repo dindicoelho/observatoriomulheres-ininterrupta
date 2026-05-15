@@ -35,15 +35,14 @@ const STEPS = [
     ancora: "#ato-03",
     cta: "Ir pras votações ↓",
   },
-  // ATO 04 — Quem atua contra — DESPUBLICADO (ano eleitoral)
-  // {
-  //   numero: "05",
-  //   titulo: "Quem atua contra",
-  //   texto:
-  //     "Os parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo como resposta, sustação de resoluções que protegem crianças.",
-  //   ancora: "#ato-04",
-  //   cta: "Ver regressivas ↓",
-  // },
+  {
+    numero: "05",
+    titulo: "Quem atua contra",
+    texto:
+      "Os parlamentares que assinam proposições regressivas — criminalização do aborto legal, armamentismo como resposta, sustação de resoluções que protegem crianças.",
+    ancora: "#ato-04",
+    cta: "Ver regressivas ↓",
+  },
 ];
 
 export default function ComoVotar() {
@@ -71,9 +70,10 @@ export default function ComoVotar() {
 
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
           Abaixo você vai encontrar dados reais sobre quem propõe leis
-          de proteção à mulher, como cada partido vota e quem representa
-          o seu estado. Tudo extraído direto da API da Câmara dos
-          Deputados. Aqui está um guia rápido do que você vai ver:
+          de proteção à mulher, como cada partido vota, quem atua contra
+          e quem representa o seu estado. Tudo extraído direto da API da
+          Câmara dos Deputados. Aqui está um guia rápido do que você vai
+          ver:
         </p>
 
         <div className="mt-12 grid gap-4 md:grid-cols-2">

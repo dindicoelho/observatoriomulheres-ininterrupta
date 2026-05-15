@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import autoriaData from "../data/autoria.json";
-import candidatosData from "../data/candidatos_2026.json";
 import ScrollFloat from "./ScrollFloat";
 import ShareButton from "./ShareButton";
 
@@ -35,10 +34,6 @@ type AutoriaJSON = {
 };
 
 const DATA = autoriaData as AutoriaJSON;
-const CANDIDATOS_SET = new Set(
-  (candidatosData as { candidatos_ids: number[] }).candidatos_ids
-);
-const TSE_ON = CANDIDATOS_SET.size > 0;
 
 type Agrupamento = {
   padrao: string;
@@ -48,186 +43,11 @@ type Agrupamento = {
   autores: Array<{ nome: string; partido: string; uf: string }>;
 };
 
-function RegressivoModal({
-  deputado,
-  onClose,
-}: {
-  deputado: {
-    id: number;
-    nome: string;
-    partido: string;
-    uf: string;
-    foto: string;
-    regressivos: number;
-    punitivistas: number;
-    pls_regressivos: PL[];
-    pls_punitivistas: PL[];
-  };
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", handleEsc);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = "";
-    };
-  }, [onClose]);
-
-  const allPls = [
-    ...deputado.pls_regressivos.map((p) => ({ ...p, _tipo: "regressivo" as const })),
-    ...deputado.pls_punitivistas.map((p) => ({ ...p, _tipo: "punitivista" as const })),
-  ];
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/80 backdrop-blur-sm md:items-center md:px-4"
-      onClick={onClose}
-    >
-      <div
-        className="flex h-full w-full flex-col overflow-hidden bg-[#0A0A0A] shadow-2xl md:h-auto md:max-h-[90vh] md:max-w-2xl md:rounded-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="flex items-start gap-4 border-b border-white/10 p-6">
-          {deputado.foto && (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={deputado.foto}
-              alt=""
-              className="h-16 w-16 flex-shrink-0 rounded-full object-cover grayscale"
-            />
-          )}
-          <div className="flex-1">
-            <h3
-              className="text-2xl font-bold text-white"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {deputado.nome}
-            </h3>
-            <p className="font-mono-data text-sm text-white/50">
-              {deputado.partido} · {deputado.uf}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {deputado.regressivos > 0 && (
-                <span className="rounded bg-[#D43F3F]/20 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-[#FF8080]">
-                  {deputado.regressivos} regressivas
-                </span>
-              )}
-              {deputado.punitivistas > 0 && (
-                <span className="rounded bg-amber-500/15 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-amber-400">
-                  {deputado.punitivistas} punitivistas
-                </span>
-              )}
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            className="flex-shrink-0 rounded-full bg-white/5 p-2 transition-colors hover:bg-white/10"
-            aria-label="Fechar"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M5 5l10 10M15 5L5 15"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* PL list */}
-        <div className="flex-1 overflow-y-auto">
-          <ul className="divide-y divide-white/5">
-            {allPls.map((pl) => (
-              <li key={pl.id} className="p-5 hover:bg-white/[0.03]">
-                <div className="flex items-start gap-3">
-                  <span
-                    className={`flex-shrink-0 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                      pl._tipo === "regressivo"
-                        ? "bg-[#D43F3F]/20 text-[#FF8080]"
-                        : "bg-amber-500/15 text-amber-400"
-                    }`}
-                  >
-                    {pl._tipo}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono-data text-sm font-bold text-white">
-                        {pl.tipo} {pl.numero}/{pl.ano}
-                      </span>
-                      <span className="font-mono-data text-xs text-white/40">
-                        {pl.data}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm leading-relaxed text-white/70">
-                      {pl.ementa.length > 300
-                        ? pl.ementa.slice(0, 300) + "…"
-                        : pl.ementa}
-                    </p>
-                    {pl.llm_justificativa && (
-                      <p className="mt-2 rounded bg-white/[0.04] px-3 py-2 text-xs leading-relaxed text-white/60">
-                        <span className="font-mono-data text-[9px] uppercase tracking-wider text-[#FF8080]">
-                          Por que é {pl._tipo}:{" "}
-                        </span>
-                        {pl.llm_justificativa}
-                      </p>
-                    )}
-                    <a
-                      href={`https://www.camara.leg.br/propostas-legislativas/${pl.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-block font-mono-data text-xs text-white/40 hover:text-[#FF8080]"
-                    >
-                      Ver na Câmara →
-                    </a>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-white/10 bg-white/[0.02] p-4 text-center">
-          <a
-            href={`https://www.camara.leg.br/deputados/${deputado.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono-data text-xs text-white/40 hover:text-[#FF8080]"
-          >
-            Ver perfil completo na Câmara →
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function ProducaoRegressiva() {
-  const { top, agrupamentos, total } = useMemo(() => {
+  const { agrupamentos } = useMemo(() => {
     const comRegr = DATA.deputados.filter(
       (d) => (d.regressivos ?? 0) > 0
     );
-    comRegr.sort((a, b) => (b.regressivos ?? 0) - (a.regressivos ?? 0));
-
-    // Top 12 deputados com mais PLs regressivas
-    const top = comRegr.slice(0, 12).map((d) => ({
-      id: d.id,
-      nome: d.nome,
-      partido: d.partido,
-      uf: d.uf,
-      foto: d.foto,
-      sexo: d.sexo,
-      regressivos: d.regressivos ?? 0,
-      punitivistas: d.punitivistas ?? 0,
-      pls_regressivos: d.pls.filter((p) => p.stance === "regressivo"),
-      pls_punitivistas: d.pls.filter((p) => p.stance === "punitivista"),
-    }));
 
     // Agrupar PLs regressivas recorrentes — mesma PL assinada por muitos
     const plCount = new Map<
@@ -302,21 +122,10 @@ export default function ProducaoRegressiva() {
     }
     agrupamentos.sort((a, b) => b.total_autores - a.total_autores);
 
-    const total = comRegr.length;
-
-    return { top, agrupamentos: agrupamentos.slice(0, 4), total };
+    return { agrupamentos: agrupamentos.slice(0, 4) };
   }, []);
 
-  const [selected, setSelected] = useState<(typeof top)[number] | null>(null);
-
   return (
-    <>
-      {selected && (
-        <RegressivoModal
-          deputado={selected}
-          onClose={() => setSelected(null)}
-        />
-      )}
     <section className="dark-section bg-[#0A0A0A] px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <div className="offset-left">
@@ -420,71 +229,6 @@ export default function ProducaoRegressiva() {
           </div>
         </div>
 
-        {/* Ranking dos que mais assinam regressivas */}
-        <div className="mt-20">
-          <p className="mb-4 font-mono-data text-xs uppercase tracking-[0.2em] text-[#FF8080]">
-            [ {total} deputados com alguma PL regressiva · Top 12 ]
-          </p>
-          <ScrollFloat
-            as="h3"
-            text="Quem mais assina"
-            stagger={30}
-            className="block text-2xl font-black leading-[0.95] text-white md:text-4xl"
-          />
-
-          <div className="mt-8 grid gap-3 md:grid-cols-2">
-            {top.map((d, i) => (
-              <button
-                key={d.id}
-                onClick={() => setSelected(d)}
-                className="group flex w-full items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition-colors hover:border-[#D43F3F]/40 hover:bg-[#D43F3F]/5"
-              >
-                <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#D43F3F]/15 font-mono-data text-xs font-bold text-[#FF8080]">
-                  {i + 1}
-                </span>
-                {d.foto && (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src={d.foto}
-                    alt=""
-                    className="h-12 w-12 flex-shrink-0 rounded-full object-cover grayscale"
-                  />
-                )}
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="truncate text-sm font-bold text-white">
-                      {d.nome}
-                    </p>
-                    {TSE_ON && CANDIDATOS_SET.has(d.id) && (
-                      <span className="flex-shrink-0 rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
-                        2026
-                      </span>
-                    )}
-                  </div>
-                  <p className="font-mono-data text-[10px] text-white/50">
-                    {d.partido} · {d.uf}
-                  </p>
-                </div>
-                <div className="flex-shrink-0 text-right">
-                  <p
-                    className="leading-none text-[#D43F3F]"
-                    style={{
-                      fontFamily: "var(--font-display-condensed)",
-                      fontSize: "2.25rem",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {d.regressivos}
-                  </p>
-                  <p className="font-mono-data text-[9px] uppercase tracking-wider text-white/50">
-                    regressivas
-                  </p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
         <p className="mt-12 max-w-2xl font-mono-data text-xs leading-relaxed text-white/40">
           Classificação automática baseada em palavras-chave conservadoras
           — na dúvida, uma PL é contada como protetiva. Os padrões de
@@ -496,6 +240,5 @@ export default function ProducaoRegressiva() {
         </p>
       </div>
     </section>
-    </>
   );
 }

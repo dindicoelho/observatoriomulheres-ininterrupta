@@ -3,7 +3,7 @@ import TimelineLegislativa from "@/components/TimelineLegislativa";
 import RankingDeputados from "@/components/RankingDeputados";
 import VotacoesPartidos from "@/components/VotacoesPartidos";
 import ArticuladoresMap from "@/components/ArticuladoresMap";
-// import ProducaoRegressiva from "@/components/ProducaoRegressiva"; // ATO 04 despublicado (ano eleitoral)
+import ProducaoRegressiva from "@/components/ProducaoRegressiva";
 import ComoVotar from "@/components/ComoVotar";
 // import SenadoSection from "@/components/SenadoSection";
 // import QuadranteCritico from "@/components/QuadranteCritico";
@@ -56,11 +56,10 @@ export default function Home() {
           <VotacoesPartidos />
         </div>
 
-        {/* ATO 04 — Quem atua contra — DESPUBLICADO (ano eleitoral)
+        {/* ATO 04 — Quem atua contra (sem ranking individual; só os padrões de PLs regressivas) */}
         <div id="ato-04">
           <ProducaoRegressiva />
         </div>
-        */}
       </main>
       <LeadPopup />
       <Footer />
