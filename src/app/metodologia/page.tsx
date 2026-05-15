@@ -439,6 +439,325 @@ export default function MetodologiaPage() {
             </div>
           </section>
 
+          {/* Fundamentação teórica */}
+          <section className="space-y-5">
+            <h2
+              className="text-3xl font-black"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Fundamentação teórica
+            </h2>
+
+            <p className="text-base md:text-lg">
+              Toda classificação de produção legislativa é política — não
+              existe observação neutra de uma pauta como direitos das
+              mulheres. As categorias usadas aqui (simbólica, incremental,
+              estrutural; protetiva, punitivista, regressiva) e os pesos
+              da fórmula de score não são invenção editorial: são tradução
+              de frameworks consolidados em ciência política, análise de
+              políticas públicas e criminologia feminista. Esta seção
+              explicita as referências por trás de cada escolha — pra que
+              o leitor possa concordar, discordar ou refazer as contas com
+              outros pesos.
+            </p>
+
+            {/* Forma */}
+            <div className="space-y-4 pt-2">
+              <h3
+                className="text-xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Por que simbólica, incremental e estrutural
+              </h3>
+              <p className="text-base md:text-lg">
+                A tipologia por forma tem três bases principais:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Edelman (1964)
+                  </strong>{" "}
+                  introduz política simbólica como categoria analítica:
+                  ações que respondem à demanda política produzindo
+                  significados públicos sem alterar a alocação material
+                  de recursos ou direitos. Dias nacionais, denominações,
+                  campanhas. Não são &ldquo;inúteis&rdquo; — produzem
+                  reconhecimento e agendamento — mas não mudam o que o
+                  Estado entrega.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Lindblom (1959)
+                  </strong>{" "}
+                  formaliza o incrementalismo: mudanças marginais em
+                  estruturas existentes — ajustar pena, mudar
+                  procedimento, incluir artigo na Maria da Penha. É como
+                  a maior parte da política pública avança.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Hall (1993)
+                  </strong>{" "}
+                  distingue mudanças de primeira ordem (parâmetros),
+                  segunda (instrumentos) e terceira (paradigma). PLs
+                  estruturais correspondem à terceira ordem — criam
+                  programa, fundo, sistema, política de Estado.
+                </li>
+              </ul>
+              <p className="text-base md:text-lg">
+                No contexto brasileiro, a tipologia dialoga com{" "}
+                <strong>Celina Souza (2006)</strong> e{" "}
+                <strong>Klaus Frey (2000)</strong>, que organizam o
+                campo de análise de políticas públicas em português.
+              </p>
+            </div>
+
+            {/* Postura */}
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Por que protetiva, punitivista e regressiva
+              </h3>
+              <p className="text-base md:text-lg">
+                Separar punitivismo de proteção não é distinção jurídica
+                — é criminológica e feminista. A literatura mostra
+                consistentemente que aumento de pena não reduz violência
+                contra a mulher; o que reduz é proteção material
+                (atendimento, casa-abrigo, medida protetiva eficaz,
+                independência econômica, prevenção). As fontes:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Carol Smart (1989)
+                  </strong>{" "}
+                  abre uma tradição de crítica feminista ao recurso ao
+                  direito penal como ferramenta de emancipação:
+                  entregar ao Estado o código penal pra &ldquo;proteger
+                  mulheres&rdquo; é dar a ele um instrumento que
+                  historicamente foi usado contra elas.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Elena Larrauri
+                  </strong>{" "}
+                  documenta empiricamente, na criminologia feminista
+                  espanhola, que punitivismo não reduz violência
+                  doméstica.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Garland (2001)
+                  </strong>{" "}
+                  e <strong className="text-[var(--color-text)]">
+                    Wacquant (2003)
+                  </strong>{" "}
+                  oferecem o framework geral: o Estado penal moderno
+                  desloca questões sociais pra resposta carcerária —
+                  pena maior como substituto barato de política pública.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Vera Andrade (2012)
+                  </strong>{" "}
+                  é a referência brasileira de criminologia crítica
+                  feminista; trata diretamente do &ldquo;paradoxo do
+                  feminismo punitivo&rdquo;.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Carmen Hein de Campos (org., 2011)
+                  </strong>{" "}
+                  lê a Lei Maria da Penha como lei de{" "}
+                  <strong>proteção integral</strong>, não como lei
+                  penal — é a leitura jurídico-feminista que orienta
+                  este site.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Maria Lúcia Karam
+                  </strong>{" "}
+                  e <strong className="text-[var(--color-text)]">
+                    Debora Diniz
+                  </strong>{" "}
+                  ancoram a posição sobre direitos reprodutivos e o
+                  custo material da criminalização do aborto — base do
+                  diagnóstico de que sustar resoluções protetivas e
+                  criminalizar aborto legal é{" "}
+                  <strong>regressivo</strong>, não &ldquo;neutro&rdquo;.
+                </li>
+              </ul>
+              <p className="text-base md:text-lg">
+                Daí a operacionalização:{" "}
+                <strong className="text-emerald-700">protetiva</strong>{" "}
+                amplia proteção material;{" "}
+                <strong className="text-amber-700">punitivista</strong>{" "}
+                aposta em pena maior, cadastro, regime fechado, castração
+                química;{" "}
+                <strong className="text-red-700">regressiva</strong>{" "}
+                retrocede direito conquistado.
+              </p>
+            </div>
+
+            {/* Pesos */}
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Por que esses pesos
+              </h3>
+              <p className="text-base md:text-lg">
+                Os pesos da fórmula (estrutural ×3, incremental e
+                simbólico ×1, punitivismo −2, regressivo −7, voto SIM em
+                regressiva −5) são a tradução dos frameworks acima em
+                número. Não há valor &ldquo;objetivo&rdquo; — a leitura é:
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  Estrutural multiplica porque corresponde à mudança de
+                  terceira ordem em Hall — mais articulação política,
+                  maior efeito redistributivo.
+                </li>
+                <li>
+                  Punitivismo penaliza pouco (−2) porque{" "}
+                  <em>ainda é produção legislativa</em> sobre o tema e
+                  parte do leitorado pode discordar da nossa leitura
+                  criminológica.
+                </li>
+                <li>
+                  Regressivo penaliza muito (−7) porque retroceder
+                  direito conquistado tem custo material diferente de
+                  apenas não avançar — segue Garland, Wacquant e a
+                  literatura de direitos reprodutivos.
+                </li>
+                <li>
+                  O <strong>peso de gênero (×5)</strong>, aplicado só
+                  ao mapa por estado, traduz numericamente o argumento
+                  de <strong>Anne Phillips (1995)</strong> e da literatura
+                  de &ldquo;política de presença&rdquo;: sub-representação
+                  descritiva (mulheres = 17,7% da Câmara) é um problema
+                  democrático em si. Sem o peso, o mapa seria dominado
+                  por quem tem mais acesso institucional, não por quem
+                  atua mais relativamente na pauta.
+                </li>
+              </ul>
+              <p className="text-base md:text-lg">
+                <strong>O leitor pode discordar dos pesos.</strong> Os
+                dados brutos vêm da API pública da Câmara, os scripts de
+                classificação estão em <code>scripts/</code>, e o JSON
+                final é auditável por PL — qualquer pessoa pode refazer
+                as contas com outros pesos.
+              </p>
+            </div>
+
+            {/* Referências */}
+            <div className="space-y-4 pt-4">
+              <h3
+                className="text-xl font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Referências
+              </h3>
+              <ul className="ml-6 list-disc space-y-2 text-sm text-[var(--color-text-secondary)] md:text-base">
+                <li>
+                  Andrade, Vera Regina Pereira de.{" "}
+                  <em>
+                    Pelas mãos da criminologia: o controle penal para
+                    além da (des)ilusão
+                  </em>
+                  . Rio de Janeiro: Revan/ICC, 2012.
+                </li>
+                <li>
+                  Campos, Carmen Hein de (org.).{" "}
+                  <em>
+                    Lei Maria da Penha Comentada em uma Perspectiva
+                    Jurídico-Feminista
+                  </em>
+                  . Rio de Janeiro: Lumen Juris, 2011.
+                </li>
+                <li>
+                  Diniz, Debora; Medeiros, Marcelo. &ldquo;Aborto no
+                  Brasil: uma pesquisa domiciliar com técnica de
+                  urna&rdquo;.{" "}
+                  <em>Ciência &amp; Saúde Coletiva</em>, 15 (supl. 1),
+                  2010.
+                </li>
+                <li>
+                  Edelman, Murray.{" "}
+                  <em>The Symbolic Uses of Politics</em>. Urbana:
+                  University of Illinois Press, 1964.
+                </li>
+                <li>
+                  Frey, Klaus. &ldquo;Políticas públicas: um debate
+                  conceitual e reflexões referentes à prática da
+                  análise de políticas públicas no Brasil&rdquo;.{" "}
+                  <em>Planejamento e Políticas Públicas</em> (IPEA),
+                  n. 21, 2000.
+                </li>
+                <li>
+                  Garland, David.{" "}
+                  <em>
+                    The Culture of Control: Crime and Social Order in
+                    Contemporary Society
+                  </em>
+                  . Oxford: Oxford University Press, 2001.
+                </li>
+                <li>
+                  Hall, Peter A. &ldquo;Policy Paradigms, Social
+                  Learning, and the State: The Case of Economic
+                  Policymaking in Britain&rdquo;.{" "}
+                  <em>Comparative Politics</em>, 25(3), 1993.
+                </li>
+                <li>
+                  Karam, Maria Lúcia.{" "}
+                  <em>
+                    Recuperar o desejo da liberdade e conter o poder
+                    punitivo
+                  </em>
+                  . Rio de Janeiro: Lumen Juris, 2009.
+                </li>
+                <li>
+                  Larrauri, Elena.{" "}
+                  <em>
+                    Mujeres y sistema penal: violencia doméstica
+                  </em>
+                  . Montevideo / Buenos Aires: BdeF, 2008.
+                </li>
+                <li>
+                  Lindblom, Charles E. &ldquo;The Science of
+                  &lsquo;Muddling Through&rsquo;&rdquo;.{" "}
+                  <em>Public Administration Review</em>, 19(2), 1959.
+                </li>
+                <li>
+                  Phillips, Anne.{" "}
+                  <em>The Politics of Presence</em>. Oxford: Oxford
+                  University Press, 1995.
+                </li>
+                <li>
+                  Smart, Carol.{" "}
+                  <em>Feminism and the Power of Law</em>. London:
+                  Routledge, 1989.
+                </li>
+                <li>
+                  Souza, Celina. &ldquo;Políticas Públicas: uma
+                  revisão da literatura&rdquo;.{" "}
+                  <em>Sociologias</em>, 8(16), 2006.
+                </li>
+                <li>
+                  Wacquant, Loïc.{" "}
+                  <em>
+                    Punir os Pobres: a nova gestão da miséria nos
+                    Estados Unidos
+                  </em>
+                  . Rio de Janeiro: Revan, 2003.
+                </li>
+              </ul>
+            </div>
+          </section>
+
           {/* Automação */}
           <section className="space-y-5">
             <h2
