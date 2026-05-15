@@ -1,17 +1,10 @@
 import { redirect } from "next/navigation";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Nem toda lei é proteção — Observatório Político",
-  description:
-    "62 deputados assinam proposições regressivas: criminalização do aborto legal, armamentismo, sustação de resoluções protetivas. Veja quem são.",
-  openGraph: {
-    title: "Nem toda lei é proteção.",
-    description:
-      "171 PLs regressivas identificadas. 62 deputados que assinam. Criminalização do aborto, armamentismo, sustação do Conanda.",
-  },
-};
+// ATO 04 — Quem atua contra — DESPUBLICADO (ano eleitoral)
+// A seção segue no projeto (componente ProducaoRegressiva e dados),
+// mas a rota redireciona pra home e a metadata foi neutralizada
+// pra não gerar preview do conteúdo despublicado em links cacheados.
 
 export default function Ato04Page() {
-  redirect("/#ato-04");
+  redirect("/");
 }
