@@ -653,7 +653,7 @@ export default function RankingDeputados() {
                     <span className="text-[var(--color-neon)]">
                       quase todo o trabalho
                     </span>{" "}
-                    sobre violência contra mulher.
+                    na pauta das mulheres.
                   </h3>
                 </div>
 
