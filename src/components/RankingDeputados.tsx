@@ -755,8 +755,8 @@ export default function RankingDeputados() {
                     className="max-w-3xl text-lg leading-relaxed text-white/95 md:text-xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    A política de enfrentamento à violência contra a
-                    mulher no Brasil é sustentada, em larga medida,{" "}
+                    A pauta de direitos das mulheres no Brasil é
+                    sustentada, em larga medida,{" "}
                     <strong className="text-[var(--color-neon)]">
                       pelas próprias mulheres do parlamento
                     </strong>
