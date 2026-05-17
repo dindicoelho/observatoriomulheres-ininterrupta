@@ -596,7 +596,7 @@ export default function RankingDeputados() {
               <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
                 [ ATO 01 / QUEM FAZ AS LEIS ]
               </p>
-              <ShareButton path="/ato-01" title="Quem propõe as leis sobre violência contra a mulher" />
+              <ShareButton path="/ato-01" title="Quem propõe as leis sobre direitos das mulheres" />
             </div>
             <ScrollFloat
               as="h2"
@@ -615,7 +615,7 @@ export default function RankingDeputados() {
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
             Dos 513 deputados da Câmara, <strong>{DATA.totalDeputados} propuseram</strong>{" "}
-            {DATA.totalPls} proposições sobre violência contra a mulher.{" "}
+            {DATA.totalPls} proposições ligadas a políticas pra mulheres.{" "}
             <strong>{513 - DATA.totalDeputados} não propuseram nada</strong> sobre o tema.
             Quem são?
           </p>

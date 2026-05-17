@@ -274,7 +274,7 @@ export default function TimelineLegislativa() {
             {
               value: total,
               label: "proposições",
-              title: "proposições sobre violência contra a mulher foram apresentadas na atual legislatura (2023-2026).",
+              title: "proposições sobre direitos das mulheres foram apresentadas na atual legislatura (2023-2026).",
               color: "#ffffff",
               pctTotal: 100,
             },

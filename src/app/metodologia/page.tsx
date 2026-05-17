@@ -60,12 +60,14 @@ export default function MetodologiaPage() {
             <p className="text-base md:text-lg">
               A premissa:{" "}
               <strong>
-                todo mundo já sabe que violência contra mulher é crime.
+                violência, direitos reprodutivos, saúde, trabalho — muito
+                do que protege as mulheres no Brasil já é lei.
               </strong>{" "}
               Quase ninguém sabe o que a Câmara dos Deputados faz — ou
-              deixa de fazer — sobre isso. Este site cruza dados da
-              legislatura 2023-2026 pra mostrar quem propõe, quem vota,
-              quem engaveta, quem protege e quem retrocede.
+              deixa de fazer — pra ampliar, defender ou retroceder esses
+              direitos. Este site cruza dados da legislatura 2023-2026
+              pra mostrar quem propõe, quem vota, quem engaveta, quem
+              protege e quem retrocede.
             </p>
 
             <p className="text-base md:text-lg">
@@ -94,11 +96,12 @@ export default function MetodologiaPage() {
               <p className="mt-3 text-base leading-relaxed">
                 Este observatório parte de uma premissa explícita:{" "}
                 <strong>
-                  violência contra a mulher é um problema estrutural que
-                  deve ser enfrentado com políticas públicas protetivas.
+                  a pauta de direitos das mulheres — violência,
+                  reprodução, saúde, trabalho, autonomia — deve ser
+                  ampliada e defendida com políticas públicas protetivas.
                 </strong>{" "}
                 Punitivismo (aumentar pena sem proteger mais) e retrocesso
-                em direitos reprodutivos não são tratados como avanço.
+                em direitos conquistados não são tratados como avanço.
               </p>
               <p className="mt-3 text-base leading-relaxed">
                 Na prática: proposições classificadas como{" "}

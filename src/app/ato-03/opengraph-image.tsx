@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { loadFont, getOGStats } from "../og-helpers";
 
-export const alt = "Discurso e voto: como cada partido vota sobre violência contra a mulher";
+export const alt = "Discurso e voto: como cada partido vota sobre direitos das mulheres";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -36,7 +36,7 @@ export default async function OG() {
             e voto.
           </div>
           <div style={{ fontFamily: "Archivo", fontSize: 24, lineHeight: 1.3, color: "rgba(10,10,10,0.6)", marginTop: 28, maxWidth: 700 }}>
-            Como cada partido votou nas proposições sobre violência contra a mulher no plenário da Câmara.
+            Como cada partido votou nas proposições sobre direitos das mulheres no plenário da Câmara.
           </div>
         </div>
         <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>

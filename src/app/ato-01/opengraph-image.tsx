@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { loadFont, getOGStats } from "../og-helpers";
 
-export const alt = "Ranking: quem propõe as leis sobre violência contra a mulher";
+export const alt = "Ranking: quem propõe as leis sobre direitos das mulheres";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

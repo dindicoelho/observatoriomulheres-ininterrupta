@@ -7,7 +7,7 @@ const STEPS = [
     numero: "01",
     titulo: "Quem propõe as leis",
     texto:
-      "Ranking dos deputados que mais apresentam projetos sobre violência contra a mulher — separando o que é proteção real do que é punitivismo ou retrocesso.",
+      "Ranking dos deputados que mais apresentam projetos sobre direitos das mulheres — separando o que é proteção real do que é punitivismo ou retrocesso.",
     ancora: "#ato-01",
     cta: "Ir pro ranking ↓",
   },

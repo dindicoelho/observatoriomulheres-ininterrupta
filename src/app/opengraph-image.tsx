@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 
 export const alt =
-  "Observatório político da violência contra a mulher — quem está fazendo algo?";
+  "Observatório político dos direitos das mulheres — quem está fazendo algo?";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

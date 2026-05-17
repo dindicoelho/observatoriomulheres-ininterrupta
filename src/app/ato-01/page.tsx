@@ -4,11 +4,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Quem propõe as leis — Observatório Político",
   description:
-    "Ranking dos deputados que mais apresentam projetos sobre violência contra a mulher. 15 das 20 mais produtivas são mulheres.",
+    "Ranking dos deputados que mais apresentam projetos sobre direitos das mulheres. 15 das 20 mais produtivas são mulheres.",
   openGraph: {
-    title: "Quem propõe as leis sobre violência contra a mulher?",
+    title: "Quem propõe as leis sobre direitos das mulheres?",
     description:
-      "389 deputados que propuseram proposições sobre violência contra a mulher. Ranking da 57ª legislatura.",
+      "389 deputados que propuseram proposições sobre direitos das mulheres. Ranking da 57ª legislatura.",
   },
 };
 

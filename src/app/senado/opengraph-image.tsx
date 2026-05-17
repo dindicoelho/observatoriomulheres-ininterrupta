@@ -37,7 +37,7 @@ export default async function OG() {
             E no Senado?
           </div>
           <div style={{ fontFamily: "Archivo", fontSize: 26, lineHeight: 1.3, color: "rgba(10,10,10,0.6)", marginTop: 28, maxWidth: 750 }}>
-            15 senadoras (18%) dominam a produção legislativa sobre violência contra a mulher. As 11 primeiras posições são todas de mulheres.
+            15 senadoras (18%) dominam a produção legislativa sobre direitos das mulheres. As 11 primeiras posições são todas de mulheres.
           </div>
         </div>
         <div style={{ display: "flex", gap: 48, borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: 24 }}>

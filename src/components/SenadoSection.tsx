@@ -66,7 +66,7 @@ export default function SenadoSection() {
               <p className="font-mono-data text-xs uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
                 [ SENADO FEDERAL ]
               </p>
-              <ShareButton path="/senado" title="Senado: quem propõe leis sobre violência contra a mulher" />
+              <ShareButton path="/senado" title="Senado: quem propõe leis sobre direitos das mulheres" />
             </div>
             <ScrollFloat
               as="h2"
@@ -85,7 +85,7 @@ export default function SenadoSection() {
             <strong className="text-[var(--color-text)]">
               {DATA.total_materias} matérias
             </strong>{" "}
-            sobre violência contra a mulher. Clique em cada senador
+            sobre direitos das mulheres. Clique em cada senador
             pra ver os projetos.
           </p>
 

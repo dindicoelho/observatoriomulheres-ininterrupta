@@ -3,9 +3,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mapa-violencia-mulher.vercel.app"),
-  title: "Quem está fazendo algo? — Observatório Político da Violência contra a Mulher",
+  title: "Quem está fazendo algo? — Observatório Político dos Direitos das Mulheres",
   description:
-    "Todo mundo sabe que violência contra mulher é grave. Esse observatório rastreia quem propõe leis, quem vota, quem relata e quem atua contra. 389 deputados · 1.142 PLs · 62 parlamentares com proposições regressivas.",
+    "Direitos das mulheres já são lei. Esse observatório rastreia o que a Câmara faz — quem propõe, quem vota, quem relata, quem atua contra. 389 deputados · 1.142 PLs · 62 parlamentares com proposições regressivas.",
   openGraph: {
     title: "Quem está fazendo algo?",
     description:
