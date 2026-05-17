@@ -140,9 +140,9 @@ export default function MetodologiaPage() {
                   <strong className="text-[var(--color-text)]">
                     ~21.000 proposições brutas
                   </strong>{" "}
-                  da 57ª legislatura (2023-2026), filtradas por ~80
-                  palavras-chave ligadas a direitos das mulheres. Após
-                  filtro:{" "}
+                  da 57ª legislatura (2023-2026), filtradas por ~90
+                  palavras-chave em 11 categorias temáticas ligadas a
+                  direitos das mulheres. Após filtro:{" "}
                   <strong className="text-[var(--color-text)]">
                     ~1.060 proposições protetivas e punitivistas
                   </strong>{" "}
@@ -206,12 +206,111 @@ export default function MetodologiaPage() {
                 1. Filtragem por palavras-chave
               </h3>
               <p className="text-base md:text-lg">
-                Buscamos na ementa de cada proposição ao menos uma de ~80
-                expressões: violência contra a mulher, violência doméstica,
-                violência sexual, Maria da Penha, feminicídio,
-                transfeminicídio, aborto, assédio, violência política de
-                gênero, saúde da mulher, mãe solo, mulher trans, mulher
-                indígena, entre outras.
+                Buscamos na ementa de cada proposição ao menos uma de{" "}
+                <strong>~90 expressões organizadas em 11 categorias
+                temáticas</strong>. A lista completa, com cada termo, está
+                no script{" "}
+                <code className="text-[var(--color-blue)]">
+                  scripts/rebuild_autoria.py
+                </code>
+                :
+              </p>
+              <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Violência (13 termos)
+                  </strong>{" "}
+                  — violência contra mulher, doméstica, familiar, de
+                  gênero, política de gênero, política contra mulher,
+                  obstétrica, psicológica, sexual, vicária.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Feminicídio (2)
+                  </strong>{" "}
+                  — feminicídio, transfeminicídio.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Leis de referência (7)
+                  </strong>{" "}
+                  — Lei Maria da Penha, lei do feminicídio, Henry Borel,
+                  Carolina Dieckmann, Henrique Eduardo Alves.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Crimes sexuais (11)
+                  </strong>{" "}
+                  — estupro, importunação sexual, assédio (sexual e
+                  moral), abuso sexual, exploração sexual, pornografia
+                  infantil, crimes contra a dignidade sexual.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Proteção e políticas (11)
+                  </strong>{" "}
+                  — proteção à mulher/vítima, medida protetiva,
+                  monitoramento eletrônico, patrulha Maria da Penha, Casa
+                  da Mulher Brasileira, disque 180.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Saúde e direitos reprodutivos (20)
+                  </strong>{" "}
+                  — saúde da mulher, saúde materna, mortalidade materna,
+                  parto humanizado, licença-maternidade, gestante,
+                  gravidez, aborto, abortamento, interrupção da gravidez,
+                  amamentação, câncer de mama, câncer de colo,
+                  endometriose, climatério, menopausa.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Discriminação e igualdade (8)
+                  </strong>{" "}
+                  — discriminação por gênero/sexo, igualdade de gênero,
+                  igualdade salarial, paridade, cotas para mulheres,
+                  participação política da mulher.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Trabalho e economia (6)
+                  </strong>{" "}
+                  — mãe solo, monoparental, pensão alimentícia, guarda
+                  compartilhada, mulher chefe de família.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Identidade (3)
+                  </strong>{" "}
+                  — mulher trans, mulheres trans, transexual.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Grupos específicos (6)
+                  </strong>{" "}
+                  — mulher negra, mulher indígena, mulher idosa, mulher
+                  com deficiência, meninas e mulheres.
+                </li>
+                <li>
+                  <strong className="text-[var(--color-text)]">
+                    Educação e cultura (2)
+                  </strong>{" "}
+                  — educação de gênero, escola sem violência.
+                </li>
+              </ul>
+              <p className="text-base md:text-lg">
+                <strong>O filtro não cobre só violência.</strong> O site
+                captura o universo amplo de pautas de gênero — saúde
+                reprodutiva, trabalho, identidade, igualdade salarial,
+                grupos específicos. Violência é a primeira (e maior)
+                categoria, mas é uma de onze.
+              </p>
+              <p className="text-base md:text-lg">
+                A lista é conservadora — na dúvida sobre incluir um termo,
+                a versão atual deixa de fora. O resultado: ~21.000
+                proposições brutas da 57ª legislatura são reduzidas a{" "}
+                ~1.060 protetivas e punitivistas + ~170 regressivas
+                removidas do ranking.
               </p>
             </div>
 
@@ -777,7 +876,7 @@ export default function MetodologiaPage() {
             </p>
             <ol className="ml-6 list-decimal space-y-1.5 text-base text-[var(--color-text-secondary)] md:text-lg">
               <li>Busca todas as proposições 2023-2026 na API da Câmara</li>
-              <li>Filtra por ~80 palavras-chave</li>
+              <li>Filtra por ~90 palavras-chave em 11 categorias (violência, saúde reprodutiva, trabalho, identidade, igualdade, grupos específicos, etc.)</li>
               <li>Classifica por forma (regex) e postura (regex)</li>
               <li>Agrega por UF, gênero, partido, destino</li>
               <li>Busca autor e relator de cada votação</li>

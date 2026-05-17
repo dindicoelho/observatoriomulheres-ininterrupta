@@ -224,7 +224,7 @@ export default function SenadoSection() {
 
           <p className="mt-8 font-mono-data text-xs text-[var(--color-text-tertiary)]">
             Fonte: API de Dados Abertos do Senado Federal ·
-            Legislatura 2023-2026 · ~80 palavras-chave ·
+            Legislatura 2023-2026 · ~90 palavras-chave em 11 categorias ·
             Atualização automática diária.
           </p>
         </div>

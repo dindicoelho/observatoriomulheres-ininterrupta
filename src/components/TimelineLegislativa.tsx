@@ -641,7 +641,7 @@ export default function TimelineLegislativa() {
 
         <p className="mt-12 font-mono-data text-xs text-white/40">
           Fonte: API de Dados Abertos da Câmara dos Deputados ·
-          ~80 palavras-chave sobre direitos da mulher ·
+          ~90 palavras-chave em 11 categorias sobre direitos das mulheres ·
           Classificação por forma + postura (regex + LLM) ·
           Atualização automática diária.
         </p>
