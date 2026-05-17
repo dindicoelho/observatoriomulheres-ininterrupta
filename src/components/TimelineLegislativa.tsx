@@ -190,6 +190,11 @@ function DestinoModal({
 export default function TimelineLegislativa() {
   const [phase, setPhase] = useState(0);
   const [destinoModal, setDestinoModal] = useState<{ label: string; color: string; key: string } | null>(null);
+  const [categoriaModal, setCategoriaModal] = useState<{
+    label: string;
+    color: string;
+    key: "simbólica" | "incremental" | "estrutural";
+  } | null>(null);
 
   // Scroll-triggered phases
   useEffect(() => {
@@ -231,6 +236,11 @@ export default function TimelineLegislativa() {
       )
     : [];
 
+  // PLs filtradas por categoria (forma) pro modal
+  const categoriaProposicoes = categoriaModal
+    ? DATA.proposicoes.filter((p) => p.categoria === categoriaModal.key)
+    : [];
+
   return (
     <>
       {destinoModal && (
@@ -239,6 +249,14 @@ export default function TimelineLegislativa() {
           color={destinoModal.color}
           proposicoes={destinoProposicoes}
           onClose={() => setDestinoModal(null)}
+        />
+      )}
+      {categoriaModal && (
+        <DestinoModal
+          label={categoriaModal.label}
+          color={categoriaModal.color}
+          proposicoes={categoriaProposicoes}
+          onClose={() => setCategoriaModal(null)}
         />
       )}
     <section className="dark-section px-6 py-24">
@@ -365,9 +383,16 @@ export default function TimelineLegislativa() {
         {/* Legend */}
         <div className="mt-16 grid gap-3 text-sm sm:grid-cols-3">
           {(["incremental", "estrutural", "simbólica"] as const).map((cat) => (
-            <div
+            <button
               key={cat}
-              className="rounded border border-white/10 bg-white/[0.03] p-4"
+              onClick={() =>
+                setCategoriaModal({
+                  label: CATEGORY_LABELS[cat],
+                  color: CATEGORY_COLORS[cat],
+                  key: cat,
+                })
+              }
+              className="rounded border border-white/10 bg-white/[0.03] p-4 text-left transition-colors hover:border-white/25 hover:bg-white/[0.06]"
             >
               <div className="flex items-center gap-2">
                 <span
@@ -385,7 +410,7 @@ export default function TimelineLegislativa() {
               <p className="mt-2 text-xs leading-relaxed text-white/60">
                 {CATEGORY_DESC[cat]}
               </p>
-            </div>
+            </button>
           ))}
         </div>
 
