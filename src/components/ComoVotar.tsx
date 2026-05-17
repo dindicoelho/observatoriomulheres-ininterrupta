@@ -107,28 +107,6 @@ export default function ComoVotar() {
             </a>
           ))}
         </div>
-
-        {/* TSE notice */}
-        <div className="mt-10 rounded-xl border border-[var(--color-blue)]/20 bg-[var(--color-blue)]/5 p-5">
-          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
-            [ Candidaturas 2026 ]
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            Quando o TSE publicar a lista oficial de candidatos (previsto
-            entre junho e agosto de 2026), os deputados candidatos à
-            reeleição receberão um{" "}
-            <span className="inline-block rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
-              2026
-            </span>{" "}
-            no ranking. No mapa por estado, o top 3
-            será filtrado pra mostrar{" "}
-            <strong className="text-[var(--color-text)]">
-              só quem pode ser votado
-            </strong>
-            . Assim você compara diretamente quem quer seu voto com o
-            que essa pessoa fez nos últimos 4 anos.
-          </p>
-        </div>
       </div>
     </section>
   );
