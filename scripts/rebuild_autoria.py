@@ -18,8 +18,12 @@ import re
 import time
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from collections import defaultdict
+
+# Câmara API tolera ~10 conexões simultâneas sem reclamar
+MAX_WORKERS = 10
 
 API = "https://dadosabertos.camara.leg.br/api/v2"
 DATA_DIR = Path(__file__).parent.parent / "src" / "data"
@@ -293,38 +297,44 @@ def main():
         cats[p["categoria"]] += 1
     print(f">>> Categorias: {dict(cats)}")
 
-    # 4. Para cada proposição, buscar autores
-    print(f"\nBuscando autores de {len(filtered)} proposições (pode demorar)...")
+    # 4. Para cada proposição, buscar autores (paralelo)
+    print(f"\nBuscando autores de {len(filtered)} proposições (paralelo, {MAX_WORKERS} workers)...")
     por_autor = defaultdict(list)
-    for i, p in enumerate(filtered, 1):
-        if i % 50 == 0:
-            print(f"  [{i}/{len(filtered)}]")
-        try:
-            autores = fetch_autores(p["id"])
-        except Exception as exc:
-            print(f"  erro em {p['id']}: {exc}")
-            continue
-
-        for a in autores:
-            uri = a.get("uri") or ""
-            # só deputados (uri /deputados/<id>)
-            m = re.search(r"/deputados/(\d+)", uri)
-            if not m:
+    done = 0
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        future_to_prop = {
+            executor.submit(fetch_autores, p["id"]): p for p in filtered
+        }
+        for future in as_completed(future_to_prop):
+            p = future_to_prop[future]
+            done += 1
+            if done % 100 == 0:
+                print(f"  [{done}/{len(filtered)}]")
+            try:
+                autores = future.result()
+            except Exception as exc:
+                print(f"  erro em {p['id']}: {exc}")
                 continue
-            dep_id = int(m.group(1))
-            por_autor[dep_id].append(
-                {
-                    "id": p["id"],
-                    "tipo": p["siglaTipo"],
-                    "numero": p["numero"],
-                    "ano": p["ano"],
-                    "ementa": p["ementa"],
-                    "data": p.get("dataApresentacao", "")[:10],
-                    "categoria": p["categoria"],
-                    "autor_nome": a.get("nome"),
-                }
-            )
-        time.sleep(0.05)
+
+            for a in autores:
+                uri = a.get("uri") or ""
+                # só deputados (uri /deputados/<id>)
+                m = re.search(r"/deputados/(\d+)", uri)
+                if not m:
+                    continue
+                dep_id = int(m.group(1))
+                por_autor[dep_id].append(
+                    {
+                        "id": p["id"],
+                        "tipo": p["siglaTipo"],
+                        "numero": p["numero"],
+                        "ano": p["ano"],
+                        "ementa": p["ementa"],
+                        "data": p.get("dataApresentacao", "")[:10],
+                        "categoria": p["categoria"],
+                        "autor_nome": a.get("nome"),
+                    }
+                )
 
     print(f">>> {len(por_autor)} autores distintos encontrados")
 
@@ -334,18 +344,23 @@ def main():
     deps_idx = {d["id"]: d for d in deps_ativos}
     print(f">>> {len(deps_ativos)} deputados na 57ª legislatura")
 
-    # 6. Enriquecer com situação (Exercício vs Afastado)
-    print("\nBuscando situação detalhada (pode demorar)...")
+    # 6. Enriquecer com situação (Exercício vs Afastado) — paralelo
+    print(f"\nBuscando situação detalhada (paralelo, {MAX_WORKERS} workers)...")
     deps_detalhe = {}
-    for i, d in enumerate(deps_ativos, 1):
-        if i % 50 == 0:
-            print(f"  [{i}/{len(deps_ativos)}]")
-        try:
-            det = fetch_deputado_detalhe(d["id"])
-            deps_detalhe[d["id"]] = det
-        except Exception as exc:
-            print(f"  erro em {d['id']}: {exc}")
-        time.sleep(0.03)
+    done = 0
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        future_to_dep = {
+            executor.submit(fetch_deputado_detalhe, d["id"]): d for d in deps_ativos
+        }
+        for future in as_completed(future_to_dep):
+            d = future_to_dep[future]
+            done += 1
+            if done % 100 == 0:
+                print(f"  [{done}/{len(deps_ativos)}]")
+            try:
+                deps_detalhe[d["id"]] = future.result()
+            except Exception as exc:
+                print(f"  erro em {d['id']}: {exc}")
 
     # 7. Montar autoria.json
     deputados_out = []

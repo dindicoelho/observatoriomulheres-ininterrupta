@@ -16,10 +16,10 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -28,7 +28,7 @@ jobs:
 
       - name: "[1/13] Rebuild autoria (fetch Câmara API)"
         run: python -u scripts/rebuild_autoria.py
-        timeout-minutes: 30
+        timeout-minutes: 40
 
       - name: "[2/13] Enrich autoria (sexo, gender_stats)"
         run: python -u scripts/enrich_autoria.py
