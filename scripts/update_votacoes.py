@@ -16,11 +16,13 @@ import os
 import re
 import time
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from collections import defaultdict
 
 DATA_DIR = Path(__file__).parent.parent / "src" / "data"
 API = "https://dadosabertos.camara.leg.br/api/v2"
+MAX_WORKERS = 10
 
 
 def fetch_json(url, retries=3):
@@ -74,25 +76,32 @@ def main():
     for v in votacoes["votacoes"]:
         pl_ids_to_check.add(v["pl_id"])
 
-    print(f">>> Checando {len(pl_ids_to_check)} PLs por novas votações...")
+    print(f">>> Checando {len(pl_ids_to_check)} PLs por novas votações (paralelo, {MAX_WORKERS} workers)...")
 
     new_votacoes = []
-    for i, pl_id in enumerate(sorted(pl_ids_to_check), 1):
-        if i % 50 == 0:
-            print(f"  [{i}/{len(pl_ids_to_check)}]")
-        data = fetch_json(f"{API}/proposicoes/{pl_id}/votacoes")
-        vots = data.get("dados", []) or []
-        for v in vots:
-            if (v.get("siglaOrgao") or "").upper() != "PLEN":
-                continue
-            if v.get("aprovacao") is None:
-                continue
-            if v["id"] in existing_ids:
-                continue
-            # Nova votação!
-            v["_pl_id"] = pl_id
-            new_votacoes.append(v)
-        time.sleep(0.05)
+    done = 0
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        future_to_pl = {
+            executor.submit(fetch_json, f"{API}/proposicoes/{pl_id}/votacoes"): pl_id
+            for pl_id in sorted(pl_ids_to_check)
+        }
+        for future in as_completed(future_to_pl):
+            pl_id = future_to_pl[future]
+            done += 1
+            if done % 100 == 0:
+                print(f"  [{done}/{len(pl_ids_to_check)}]")
+            data = future.result()
+            vots = data.get("dados", []) or []
+            for v in vots:
+                if (v.get("siglaOrgao") or "").upper() != "PLEN":
+                    continue
+                if v.get("aprovacao") is None:
+                    continue
+                if v["id"] in existing_ids:
+                    continue
+                # Nova votação!
+                v["_pl_id"] = pl_id
+                new_votacoes.append(v)
 
     if not new_votacoes:
         print(">>> Nenhuma votação nova encontrada.")
