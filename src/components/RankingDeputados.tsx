@@ -297,10 +297,12 @@ function DeputadoModal({
         {(() => {
           const coer = COERENCIA_MAP.get(deputado.id);
           if (!coer) return null;
+          const lastFive = MERITO_IDS.slice(0, 5);
+          const regressivos = deputado.votos_regressivos_detalhe ?? [];
           return (
             <div className="border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-4">
               <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-                [ Voto nas {MERITO_IDS.length} votações de mérito do plenário ]
+                [ Voto nas últimas {lastFive.length} votações de mérito ]
               </p>
               <p className="mt-1 text-[11px] text-[var(--color-text-tertiary)]">
                 O voto aqui listado não equivale a posição contra ou a
@@ -308,7 +310,7 @@ function DeputadoModal({
                 importa. Veja detalhes no Ato 02.
               </p>
               <ul className="mt-3 space-y-1.5">
-                {MERITO_IDS.map((vid) => {
+                {lastFive.map((vid) => {
                   const voto = coer.votes_by_id[vid] || "Ausente";
                   const label = MERITO_LABELS[vid] || vid;
                   const isSim = voto === "Sim";
@@ -336,6 +338,34 @@ function DeputadoModal({
                   );
                 })}
               </ul>
+
+              {regressivos.length > 0 && (
+                <>
+                  <p className="mt-5 font-mono-data text-[10px] uppercase tracking-[0.2em] text-[#B02525]">
+                    [ ⚠ Voto regressivo no histórico — desconta no score ]
+                  </p>
+                  <ul className="mt-2 space-y-1.5">
+                    {regressivos.map((vr) => (
+                      <li key={vr.pl_ref + vr.data} className="flex items-start gap-3 text-xs">
+                        <span className="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#ED447F] font-mono-data text-[10px] font-bold text-white">
+                          ⚠
+                        </span>
+                        <div className="flex-1">
+                          <p className="text-[var(--color-text-secondary)]">
+                            <span className="font-mono-data text-[10px] font-bold text-[#B02525]">
+                              {vr.pl_ref}
+                            </span>{" "}
+                            — {vr.descricao}
+                          </p>
+                          <p className="font-mono-data text-[10px] text-[var(--color-text-tertiary)]">
+                            Votou {vr.voto} · {vr.placar} · {vr.data}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </div>
           );
         })()}

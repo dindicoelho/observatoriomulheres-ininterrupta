@@ -6,9 +6,41 @@ import type { Feature, FeatureCollection, Geometry } from "geojson";
 import articuladoresData from "../data/articuladores_uf.json";
 import autoriaData from "../data/autoria.json";
 import candidatosData from "../data/candidatos_2026.json";
+import coerenciaData from "../data/coerencia.json";
 import feminicidioData from "../data/feminicidio_uf.json";
+import votacoesData from "../data/votacoes.json";
 import ScrollFloat from "./ScrollFloat";
 import ShareButton from "./ShareButton";
+
+type CoerenciaDeputado = {
+  id: number;
+  votes_by_id: Record<string, string>;
+};
+type CoerenciaJSON = {
+  merito_vote_ids: string[];
+  deputados: CoerenciaDeputado[];
+};
+const COERENCIA = coerenciaData as CoerenciaJSON;
+const COERENCIA_MAP = new Map(COERENCIA.deputados.map((d) => [d.id, d]));
+
+type VotacoesJSON = {
+  votacoes: Array<{
+    id: string;
+    pl_ref?: string;
+    titulo_curto?: string;
+    tipo?: string;
+  }>;
+};
+const VOTACOES = votacoesData as VotacoesJSON;
+const MERITO_LABELS: Record<string, string> = Object.fromEntries(
+  VOTACOES.votacoes
+    .filter((v) => v.tipo === "mérito")
+    .map((v) => [
+      v.id,
+      v.titulo_curto ? `${v.pl_ref ?? "?"} — ${v.titulo_curto}` : (v.pl_ref ?? v.id),
+    ])
+);
+const MERITO_IDS = COERENCIA.merito_vote_ids;
 
 type FeminicidioUF = {
   taxa: number;
@@ -134,7 +166,15 @@ export default function ArticuladoresMap() {
   const [selectedUf, setSelectedUf] = useState<string>("SP");
   const [hoveredUf, setHoveredUf] = useState<string | null>(null);
   const [selectedDep, setSelectedDep] = useState<AutoriaDep | null>(null);
-  const [mapModalFilter, setMapModalFilter] = useState<"all" | "protetivo" | "punitivista" | "regressivo">("all");
+  const [mapModalFilter, setMapModalFilter] = useState<
+    | "all"
+    | "protetivo"
+    | "punitivista"
+    | "regressivo"
+    | "estrutural"
+    | "incremental"
+    | "simbólica"
+  >("all");
   const [layer, setLayer] = useState<MapLayer>("producao");
 
   // Load geojson
@@ -308,9 +348,22 @@ export default function ArticuladoresMap() {
     {/* Modal do deputado */}
     {selectedDep && (() => {
       const dep = selectedDep;
-      const filteredPls = mapModalFilter === "all"
-        ? dep.pls
-        : dep.pls.filter((p) => p.stance === mapModalFilter);
+      const stanceFilters = ["protetivo", "punitivista", "regressivo"] as const;
+      const isStance = (stanceFilters as readonly string[]).includes(mapModalFilter);
+      const filteredPls =
+        mapModalFilter === "all"
+          ? dep.pls
+          : isStance
+            ? dep.pls.filter((p) => p.stance === mapModalFilter)
+            : dep.pls.filter((p) => p.categoria === mapModalFilter);
+      const coer = COERENCIA_MAP.get(dep.id);
+      const lastFiveMerito = MERITO_IDS.slice(0, 5);
+      const regressivos = dep.votos_regressivos_detalhe ?? [];
+      const CATS = [
+        { key: "estrutural" as const, label: "Estruturais", color: "#1DB389", count: dep.estruturais },
+        { key: "incremental" as const, label: "Incrementais", color: "#3B82D4", count: dep.incrementais },
+        { key: "simbólica" as const, label: "Simbólicas", color: "#6B6B64", count: dep.simbolicas },
+      ];
       return (
         <div
           className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/70 backdrop-blur-sm md:items-center md:px-4"
@@ -406,11 +459,134 @@ export default function ArticuladoresMap() {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
               </button>
             </div>
+
+            {/* Coerência nas últimas 5 votações de mérito + regressivos */}
+            {coer && (
+              <div className="border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-4">
+                <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                  [ Voto nas últimas {lastFiveMerito.length} votações de mérito ]
+                </p>
+                <p className="mt-1 text-[11px] text-[var(--color-text-tertiary)]">
+                  O voto aqui listado não equivale a posição contra ou a
+                  favor de mulheres — o contexto específico de cada PL
+                  importa. Veja detalhes no Ato 02.
+                </p>
+                <ul className="mt-3 space-y-1.5">
+                  {lastFiveMerito.map((vid) => {
+                    const voto = coer.votes_by_id[vid] || "Ausente";
+                    const label = MERITO_LABELS[vid] || vid;
+                    const isSim = voto === "Sim";
+                    const isNao = voto === "Não";
+                    return (
+                      <li key={vid} className="flex items-center gap-3 text-xs">
+                        <span
+                          className={`inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full font-mono-data text-[10px] font-bold ${
+                            isSim
+                              ? "bg-[var(--color-teal)] text-white"
+                              : isNao
+                              ? "bg-[var(--color-blood)] text-white"
+                              : "bg-gray-200 text-[var(--color-text-tertiary)]"
+                          }`}
+                        >
+                          {isSim ? "✓" : isNao ? "✗" : "—"}
+                        </span>
+                        <span className="flex-1 text-[var(--color-text-secondary)]">
+                          {label}
+                        </span>
+                        <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                          {voto}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {regressivos.length > 0 && (
+                  <>
+                    <p className="mt-5 font-mono-data text-[10px] uppercase tracking-[0.2em] text-[#B02525]">
+                      [ ⚠ Voto regressivo no histórico — desconta no score ]
+                    </p>
+                    <ul className="mt-2 space-y-1.5">
+                      {regressivos.map((vr) => (
+                        <li key={vr.pl_ref + vr.data} className="flex items-start gap-3 text-xs">
+                          <span className="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#ED447F] font-mono-data text-[10px] font-bold text-white">
+                            ⚠
+                          </span>
+                          <div className="flex-1">
+                            <p className="text-[var(--color-text-secondary)]">
+                              <span className="font-mono-data text-[10px] font-bold text-[#B02525]">
+                                {vr.pl_ref}
+                              </span>{" "}
+                              — {vr.descricao}
+                            </p>
+                            <p className="font-mono-data text-[10px] text-[var(--color-text-tertiary)]">
+                              Votou {vr.voto} · {vr.placar} · {vr.data}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Filtro por categoria — estrutural/incremental/simbólica */}
+            <div className="flex flex-wrap gap-2 border-b border-gray-100 bg-[var(--color-bg-alt)] px-6 py-3">
+              <button
+                onClick={() => setMapModalFilter("all")}
+                className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                  mapModalFilter === "all"
+                    ? "bg-[var(--color-text)] text-white"
+                    : "bg-white text-[var(--color-text-secondary)] hover:bg-gray-100"
+                }`}
+              >
+                Todas ({dep.total})
+              </button>
+              {CATS.map((cat) =>
+                cat.count > 0 ? (
+                  <button
+                    key={cat.key}
+                    onClick={() => setMapModalFilter(cat.key)}
+                    className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                      mapModalFilter === cat.key ? "text-white" : "bg-white hover:bg-gray-100"
+                    }`}
+                    style={
+                      mapModalFilter === cat.key
+                        ? { backgroundColor: cat.color }
+                        : { color: cat.color }
+                    }
+                  >
+                    {cat.label} ({cat.count})
+                  </button>
+                ) : null
+              )}
+            </div>
+
             <div className="flex-1 overflow-y-auto">
               <ul className="divide-y divide-gray-100">
-                {filteredPls.slice(0, 30).map((pl) => (
+                {filteredPls.slice(0, 30).map((pl) => {
+                  const catColor =
+                    pl.categoria === "estrutural"
+                      ? "#1DB389"
+                      : pl.categoria === "incremental"
+                      ? "#3B82D4"
+                      : "#6B6B64";
+                  const catLabel =
+                    pl.categoria === "estrutural"
+                      ? "Estrutural"
+                      : pl.categoria === "incremental"
+                      ? "Incremental"
+                      : "Simbólica";
+                  return (
                   <li key={pl.id} className="p-5 hover:bg-[var(--color-bg-alt)]">
                     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span
+                        className="rounded px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-white"
+                        style={{ backgroundColor: catColor }}
+                      >
+                        {catLabel}
+                      </span>
                       <span className="font-mono-data text-sm font-bold text-[var(--color-text)]">{pl.tipo} {pl.numero}/{pl.ano}</span>
                       <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">{pl.data}</span>
                       {pl.stance === "punitivista" && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase text-amber-700">punitivista</span>}
@@ -430,7 +606,8 @@ export default function ArticuladoresMap() {
                       </p>
                     )}
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             </div>
             <div className="border-t border-gray-100 bg-[var(--color-bg-alt)] p-4 text-center">
