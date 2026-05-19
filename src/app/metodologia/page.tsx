@@ -120,7 +120,7 @@ export default function MetodologiaPage() {
               metodológicas, inclusive modificá-las e contribuir para o
               projeto. Tudo está disponível no{" "}
               <a
-                href="https://github.com/dindicoelho/mapa-violencia-mulher"
+                href="https://github.com/dindicoelho/observatoriomulheres-ininterrupta"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-blue)] hover:underline"
@@ -179,11 +179,13 @@ export default function MetodologiaPage() {
               <p className="mt-3 text-base leading-relaxed">
                 Na prática: proposições classificadas como{" "}
                 <strong className="text-red-700">regressivas</strong> são{" "}
-                <strong>removidas do ranking e subtraem pontos</strong> do
-                score do autor. Proposições{" "}
+                <strong>removidas do ranking e subtraem 7 pontos</strong>{" "}
+                do score do autor. Proposições{" "}
                 <strong className="text-amber-700">punitivistas</strong>{" "}
-                contam como produção mas recebem selo. A classificação é
-                transparente — os critérios estão detalhados abaixo.
+                contam como produção, recebem selo e{" "}
+                <strong>subtraem 2 pontos</strong> do score. A
+                classificação é transparente — os critérios estão
+                detalhados abaixo.
               </p>
             </div>
           </section>
@@ -440,7 +442,8 @@ export default function MetodologiaPage() {
                   <strong className="text-amber-700">Punitivista</strong>{" "}
                   — foca em aumentar pena, criar cadastro de condenados,
                   castração química, regime fechado. Não melhora a
-                  proteção material. Conta como produção mas recebe selo.
+                  proteção material. Conta como produção, recebe selo e{" "}
+                  <strong>subtrai 2 pontos do score</strong>.
                 </li>
                 <li>
                   <strong className="text-red-700">Regressiva</strong>{" "}

@@ -565,7 +565,11 @@ function GlossarioPLs() {
                 (ampliam direitos, criam políticas, protegem a vítima),{" "}
                 <strong className="text-amber-700">punitivistas</strong>{" "}
                 (focam em aumentar pena sem proteção material — contam
-                no ranking mas recebem selo) e{" "}
+                no ranking, recebem selo e{" "}
+                <strong className="text-[var(--color-text)]">
+                  subtraem 2 pontos do score
+                </strong>
+                ) e{" "}
                 <strong className="text-red-700">regressivas</strong>{" "}
                 (criminalizam aborto legal, obrigam notificação à polícia,
                 sustam resoluções protetivas, propõem armamentismo —{" "}
