@@ -59,7 +59,7 @@ python scripts/classify_stance.py
 
 Crítica metodológica é bem-vinda. Os pesos da fórmula de score são uma escolha editorial declarada — qualquer pessoa pode refazer as contas com outros pesos.
 
-- **Achou um bug ou erro de classificação?** Abra uma [issue](https://github.com/dindicoelho/mapa-violencia-mulher/issues) descrevendo a PL e por que a classificação está errada.
+- **Achou um bug ou erro de classificação?** Abra uma [issue](https://github.com/dindicoelho/observatoriomulheres-ininterrupta/issues) descrevendo a PL e por que a classificação está errada.
 - **Quer sugerir mudança na metodologia?** Issue com a proposta + referências.
 - **Quer mandar PR?** Vai em frente. Tenta manter o estilo do código e adicionar/atualizar teste em `tests/` quando mudar lógica de pipeline.
 
