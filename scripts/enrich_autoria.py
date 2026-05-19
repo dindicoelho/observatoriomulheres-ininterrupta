@@ -60,6 +60,7 @@ def main():
     })
 
     total_pls_set = set()
+    regressivas_set = set()
     for d in deps:
         sexo = d.get("sexo")
         if sexo in gender:
@@ -77,11 +78,14 @@ def main():
         partidos[p]["deputados"] += 1
 
         for pl in d["pls"]:
-            if pl.get("stance") not in ("regressivo", "nao_classificado"):
+            if pl.get("stance") == "regressivo":
+                regressivas_set.add(pl["id"])
+            elif pl.get("stance") != "nao_classificado":
                 total_pls_set.add(pl["id"])
 
     autoria["totalDeputados"] = len(deps)
     autoria["totalPls"] = len(total_pls_set)
+    autoria["totalRegressivas"] = len(regressivas_set)
     autoria["gender_stats"] = gender
     autoria["partidos"] = dict(partidos)
     autoria["periodo"] = "2023-2026 (57ª legislatura)"
@@ -93,6 +97,7 @@ def main():
     print(f">>> Enriquecido:")
     print(f"    totalDeputados: {autoria['totalDeputados']}")
     print(f"    totalPls (únicos): {autoria['totalPls']}")
+    print(f"    totalRegressivas (únicos): {autoria['totalRegressivas']}")
     print(f"    gender_stats F: {gender['F']}")
     print(f"    gender_stats M: {gender['M']}")
 

@@ -1,5 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import autoriaData from "../../data/autoria.json";
+
+const TOTAL_BRUTAS = (autoriaData as { totalBrutas?: number }).totalBrutas ?? 21000;
+const TOTAL_PLS = (autoriaData as { totalPls: number }).totalPls;
+const TOTAL_DEPS = (autoriaData as { totalDeputados: number }).totalDeputados;
+const TOTAL_REGR = (autoriaData as { totalRegressivas?: number }).totalRegressivas ?? 0;
+
+// Arredondamentos pra leitura ("~21.000", "~1.060")
+const roundTo = (n: number, step: number) => Math.round(n / step) * step;
+const BRUTAS_APROX = roundTo(TOTAL_BRUTAS, 1000).toLocaleString("pt-BR");
+const PLS_APROX = roundTo(TOTAL_PLS, 10).toLocaleString("pt-BR");
+const REGR_APROX = roundTo(TOTAL_REGR, 10).toLocaleString("pt-BR");
 
 export const metadata: Metadata = {
   title: "Metodologia — Observatório Político da Violência contra a Mulher",
@@ -138,19 +150,19 @@ export default function MetodologiaPage() {
               <ul className="ml-6 list-disc space-y-2 text-base text-[var(--color-text-secondary)] md:text-lg">
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    ~21.000 proposições brutas
+                    ~{BRUTAS_APROX} proposições brutas
                   </strong>{" "}
                   da 57ª legislatura (2023-2026), filtradas por ~90
                   palavras-chave em 11 categorias temáticas ligadas a
                   direitos das mulheres. Após filtro:{" "}
                   <strong className="text-[var(--color-text)]">
-                    ~1.060 proposições protetivas e punitivistas
+                    ~{PLS_APROX} proposições protetivas e punitivistas
                   </strong>{" "}
-                  + ~170 regressivas removidas do ranking.
+                  + ~{REGR_APROX} regressivas removidas do ranking.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text)]">
-                    389 deputados autores
+                    {TOTAL_DEPS} deputados autores
                   </strong>{" "}
                   — com nome, partido, UF, foto, sexo e situação.
                 </li>
@@ -307,10 +319,10 @@ export default function MetodologiaPage() {
               </p>
               <p className="text-base md:text-lg">
                 A lista é conservadora — na dúvida sobre incluir um termo,
-                a versão atual deixa de fora. O resultado: ~21.000
+                a versão atual deixa de fora. O resultado: ~{BRUTAS_APROX}{" "}
                 proposições brutas da 57ª legislatura são reduzidas a{" "}
-                ~1.060 protetivas e punitivistas + ~170 regressivas
-                removidas do ranking.
+                ~{PLS_APROX} protetivas e punitivistas + ~{REGR_APROX}{" "}
+                regressivas removidas do ranking.
               </p>
             </div>
 

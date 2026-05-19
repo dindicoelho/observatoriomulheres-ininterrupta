@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import autoriaData from "../data/autoria.json";
+
+const TOTAL_PLS = (autoriaData as { totalPls: number }).totalPls;
+const TOTAL_DEPS = (autoriaData as { totalDeputados: number }).totalDeputados;
+const TOTAL_REGR = (autoriaData as { totalRegressivas?: number }).totalRegressivas ?? 0;
+
+const TOTAL_PLS_FMT = TOTAL_PLS.toLocaleString("pt-BR");
+
+const DESCRIPTION_FULL = `Direitos das mulheres já são lei. Esse observatório rastreia o que a Câmara faz — quem propõe, quem vota, quem relata, quem atua contra. ${TOTAL_DEPS} deputados · ${TOTAL_PLS_FMT} PLs · ${TOTAL_REGR} proposições regressivas expostas.`;
+const DESCRIPTION_SHORT = `Observatório político da 57ª legislatura. ${TOTAL_DEPS} deputados, ${TOTAL_PLS_FMT} PLs, ${TOTAL_REGR} proposições regressivas. Pra votar consciente em 2026.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mapa-violencia-mulher.vercel.app"),
   title: "Quem está fazendo algo? — Observatório Político dos Direitos das Mulheres",
-  description:
-    "Direitos das mulheres já são lei. Esse observatório rastreia o que a Câmara faz — quem propõe, quem vota, quem relata, quem atua contra. 389 deputados · 1.142 PLs · 62 parlamentares com proposições regressivas.",
+  description: DESCRIPTION_FULL,
   openGraph: {
     title: "Quem está fazendo algo?",
-    description:
-      "Observatório político da 57ª legislatura. 389 deputados, 1.142 PLs, 15 mulheres no top 20 de produção. Pra votar consciente em 2026.",
+    description: DESCRIPTION_SHORT,
     type: "website",
     locale: "pt_BR",
     siteName: "Observatório · Ininterrupta",
@@ -17,8 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Quem está fazendo algo?",
-    description:
-      "Observatório político da 57ª legislatura. 389 deputados, 1.142 PLs, 62 com proposições regressivas.",
+    description: DESCRIPTION_SHORT,
   },
 };
 

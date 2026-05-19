@@ -410,7 +410,14 @@ def main():
 
     out_path = DATA_DIR / "autoria.json"
     out_path.write_text(
-        json.dumps({"deputados": deputados_out}, ensure_ascii=False),
+        json.dumps(
+            {
+                "deputados": deputados_out,
+                "totalBrutas": len(all_props),
+                "totalFiltradas": len(filtered),
+            },
+            ensure_ascii=False,
+        ),
         encoding="utf-8",
     )
     print(f"\n>>> autoria.json salvo: {len(deputados_out)} deputados")
