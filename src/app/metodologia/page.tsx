@@ -66,7 +66,68 @@ export default function MetodologiaPage() {
                 Ininterrupta
               </a>
               , uma publicação independente. Não tem fins lucrativos e não
-              recebe financiamento de nenhuma instituição.
+              recebe financiamento de nenhuma instituição.{" "}
+              <strong>
+                É uma investigação autoral, que parte de um lugar de cidadã —
+                não de organização política.
+              </strong>
+            </p>
+
+            <div className="rounded-2xl border border-gray-200 bg-[var(--color-bg-alt)] p-6">
+              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+                [ Aviso ]
+              </p>
+              <p className="mt-3 text-base leading-relaxed">
+                Eu não sou um órgão político. Para acessar coletivos
+                especializados, recomendo:
+              </p>
+              <ul className="mt-3 space-y-1.5 text-base">
+                <li>
+                  <a
+                    href="https://www.elasnocongresso.com.br/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-blue)] hover:underline"
+                  >
+                    Elas no Congresso
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://inesc.org.br/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-blue)] hover:underline"
+                  >
+                    INESC — Instituto de Estudos Socioeconômicos
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://cfemea.org.br/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-blue)] hover:underline"
+                  >
+                    CFEMEA — Centro Feminista de Estudos e Assessoria
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <p className="text-base md:text-lg">
+              Você pode <strong>discordar</strong> das análises
+              metodológicas, inclusive modificá-las e contribuir para o
+              projeto. Tudo está disponível no{" "}
+              <a
+                href="https://github.com/dindicoelho/mapa-violencia-mulher"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--color-blue)] hover:underline"
+              >
+                GitHub
+              </a>
+              .
             </p>
 
             <p className="text-base md:text-lg">
@@ -1002,7 +1063,7 @@ export default function MetodologiaPage() {
               A <strong>Ininterrupta</strong> é uma publicação brasileira
               independente de inteligência cultural. Fundada por Dindi
               Coelho, investiga as camadas invisíveis que conectam
-              cultura, política e comportamento no Brasil.
+              cultura, tecnologia e comportamento no Brasil.
             </p>
 
             <p className="text-base md:text-lg">
