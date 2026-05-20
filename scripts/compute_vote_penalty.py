@@ -29,6 +29,7 @@ Idempotente: zera os campos antes de recalcular. Roda no cron diário.
 import json
 import os
 import subprocess
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -143,15 +144,20 @@ def main():
     print("\n[1/3] Carregando universo de votações regressivas (seed curado)...")
     universo = carregar_seed()
 
-    # Reset idempotente: zerar tudo primeiro
+    # Fail-fast: se o seed sumiu/não carregou, ABORTA sem tocar no autoria.
+    # Antes, zerávamos antes de validar — se o seed quebrasse, salvávamos
+    # autoria.json com votos_regressivos=0 pra todo mundo, silenciosamente,
+    # apagando a penalidade do score nacional inteiro.
+    if not universo:
+        print(">>> ERRO: nenhuma votação no seed editorial — abortando.", file=sys.stderr)
+        print(">>> autoria.json NÃO foi modificado. Verifique scripts/regressive_votes_seed.json.", file=sys.stderr)
+        sys.exit(1)
+
+    # Reset idempotente: zerar tudo só agora, depois que sabemos que o seed
+    # está OK e vamos repopular.
     for d in autoria["deputados"]:
         d["votos_regressivos"] = 0
         d["votos_regressivos_detalhe"] = []
-
-    if not universo:
-        print(">>> Nenhuma votação no seed — saindo sem mudanças.")
-        autoria_path.write_text(json.dumps(autoria, ensure_ascii=False), encoding="utf-8")
-        return
 
     # 2) Pra cada votação, coletar votos SIM
     print(f"\n[2/3] Coletando votos SIM em {len(universo)} votações...")

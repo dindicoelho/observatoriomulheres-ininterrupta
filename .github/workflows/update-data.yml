@@ -76,6 +76,9 @@ jobs:
       - name: "[13/13] Fetch candidatos TSE 2026 (silencia se indisponível)"
         run: python -u scripts/fetch_candidatos_tse.py
 
+      - name: "[guard] Invariantes do pipeline (regressivos/punitivistas)"
+        run: python -u scripts/check_pipeline_invariants.py
+
       - name: Check for changes
         id: changes
         run: |
@@ -125,6 +128,9 @@ jobs:
           python -u scripts/compute_vote_penalty.py
           python -u scripts/rebuild_articuladores.py
           python -u scripts/rebuild_legislativo.py
+
+      - name: "[guard] Invariantes do pipeline (regressivos/punitivistas)"
+        run: python -u scripts/check_pipeline_invariants.py
 
       - name: Check for changes
         id: changes

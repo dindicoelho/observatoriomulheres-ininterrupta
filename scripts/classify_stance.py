@@ -12,14 +12,53 @@ a vida das mulheres no Brasil". Evidência: punitivismo não reduz violência
 (literatura empírica ampla); criminalização do aborto aumenta morte materna.
 
 Conservador: na dúvida, protetivo. Assim evita acusação de filtro arbitrário.
+
+Ordem de prioridade (do mais permissivo ao mais autoritativo):
+1. Regex (este script — conservador, pega só padrões inequívocos)
+2. stance_llm_cache.json (Haiku 4.5 semanal — captura casos sutis)
+3. stance_overrides.json (curadoria editorial manual — palavra final)
+
+Sem o passo 2, todo dia o rebuild_autoria.py recriava autoria.json do zero
+e as classificações LLM eram perdidas até segunda (~-35% regressivos /
+-70% punitivistas durante a semana). O cache LLM corrige isso.
 """
 
 import json
 import re
+import sys
 from pathlib import Path
 from collections import defaultdict
 
 DATA_DIR = Path(__file__).parent.parent / "src" / "data"
+SCRIPTS_DIR = Path(__file__).parent
+LLM_CACHE_PATH = SCRIPTS_DIR / "stance_llm_cache.json"
+OVERRIDES_PATH = SCRIPTS_DIR / "stance_overrides.json"
+
+
+def load_llm_cache() -> dict:
+    """Cache de classificações LLM (semanal), aplicadas aqui pra sobreviver
+    ao rebuild diário. Sem isso, regressivos/punitivistas detectados pelo
+    Haiku eram zerados todo dia até a segunda."""
+    if not LLM_CACHE_PATH.exists():
+        return {}
+    try:
+        data = json.loads(LLM_CACHE_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f">>> ERRO lendo {LLM_CACHE_PATH.name}: {exc}", file=sys.stderr)
+        return {}
+    return data.get("classificacoes", {})
+
+
+def load_manual_overrides() -> dict:
+    """Overrides editoriais manuais. Prioridade máxima sobre regex e LLM."""
+    if not OVERRIDES_PATH.exists():
+        return {}
+    try:
+        data = json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f">>> ERRO lendo {OVERRIDES_PATH.name}: {exc}", file=sys.stderr)
+        return {}
+    return {k: v for k, v in data.items() if not k.startswith("_")}
 
 
 def normalize(s: str) -> str:
@@ -111,23 +150,56 @@ def main():
     autoria = json.loads((DATA_DIR / "autoria.json").read_text(encoding="utf-8"))
     deps = autoria["deputados"]
 
+    llm_cache = load_llm_cache()
+    manual_overrides = load_manual_overrides()
+    print(f">>> {len(llm_cache)} classificações LLM em cache · {len(manual_overrides)} overrides manuais")
+
     total_counts = defaultdict(int)
     flagged_examples = defaultdict(list)
+    aplicados_llm = 0
+    aplicados_manual = 0
 
     for d in deps:
         stance_counts = defaultdict(int)
         for pl in d["pls"]:
+            # 1) Regex (default, conservador)
             st = classify_stance(pl["ementa"])
+            origem = "regex"
+
+            # 2) LLM cache — sobrescreve se foi marcado regressivo/punitivista
+            #    com confiança >=0.8 na rodada semanal. Garante que essas
+            #    classificações sobrevivam ao rebuild_autoria diário.
+            pid_str = str(pl["id"])
+            llm_entry = llm_cache.get(pid_str)
+            if llm_entry and llm_entry.get("stance") in ("regressivo", "punitivista"):
+                st = llm_entry["stance"]
+                pl["llm_confianca"] = llm_entry.get("confianca")
+                pl["llm_justificativa"] = llm_entry.get("justificativa", "")
+                origem = "llm"
+                aplicados_llm += 1
+
+            # 3) Override manual — prioridade máxima
+            mo = manual_overrides.get(pid_str)
+            if mo:
+                st = mo["stance"]
+                pl["llm_justificativa"] = mo.get(
+                    "justificativa", "Override manual — verificado editorialmente."
+                )
+                origem = "manual"
+                aplicados_manual += 1
+
             pl["stance"] = st
             stance_counts[st] += 1
             total_counts[st] += 1
             if st != "protetivo" and len(flagged_examples[st]) < 12:
                 flagged_examples[st].append(
-                    f"{d['nome']} ({d['partido']}/{d['uf']}) — {pl['tipo']} {pl['numero']}/{pl['ano']}: {pl['ementa'][:130]}"
+                    f"[{origem}] {d['nome']} ({d['partido']}/{d['uf']}) — {pl['tipo']} {pl['numero']}/{pl['ano']}: {pl['ementa'][:130]}"
                 )
         d["protetivos"] = stance_counts["protetivo"]
         d["punitivistas"] = stance_counts["punitivista"]
         d["regressivos"] = stance_counts["regressivo"]
+
+    print(f">>> Aplicados: {aplicados_llm} LLM cache · {aplicados_manual} overrides manuais")
 
     # Recalcular total/estruturais/incrementais CONSIDERANDO SÓ PROTETIVOS E PUNITIVISTAS
     # (regressivos não contam como produção em prol da mulher)

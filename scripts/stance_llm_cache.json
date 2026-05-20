@@ -1,0 +1,1286 @@
+{
+  "_nota": "Cache de classificações LLM. Alimentado por scripts/classify_stance_llm.py (rotina semanal), lido por scripts/classify_stance.py como override sobre a regex no pipeline diário. Sem isso, as classificações LLM (regressivo/punitivista) eram perdidas todo dia quando rebuild_autoria.py recriava o autoria.json do zero, e só voltavam na segunda. Manual editorial: stance_overrides.json tem prioridade ainda maior.",
+  "atualizado_em": "2026-05-20",
+  "classificacoes": {
+    "2541924": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca exclusivamente em aumentar rigor penal (vedar atenuantes, reduzir prescrição) sem criar políticas de proteção, prevenção ou melhorias no atendimento às vítimas. Embora criminalize conduta grave, a abordagem é punitivista pura.",
+      "ementa_preview": "Amplia as vedações de aplicação de circunstâncias atenuantes e de redução do prazo de prescrição para os crimes que envolvam violência sexual contra homens, crianças e adolescentes.",
+      "pl_ref": "PL 3832/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2516021": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Embora tenha intenção protetiva, a medida foca exclusivamente em aumentar rigor penal (eliminar excludente de ilicitude) sem criar políticas de proteção material, atendimento ou prevenção. Caracteriza-se por endurecimento processual/penal típico de agendas punitivistas.",
+      "ementa_preview": "Determina a inaplicabilidade do princípio da insignificância aos crimes ou contravenções penais praticados contra a mulher no contexto de violência doméstica e familiar.",
+      "pl_ref": "PL 2526/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2348304": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição restringe atenuantes e impede redução de prazos de prescrição em crimes sexuais, focando em rigor penal sem criar políticas de proteção material ou atendimento. Embora nominalmente voltada à proteção, opera exclusivamente no campo punitivo, vedando benefícios processuais ao agressor.",
+      "ementa_preview": "Modifica os arts. 65 e 115 do Decreto-lei nº 2.848, de 7 de dezembro de 1940 – Código Penal, para alterar circunstância atenuante e veda a redução do prazo de prescrição para os crimes que envolvam vi",
+      "pl_ref": "PL 419/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2607982": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Autorizar armamento de vítimas como resposta a violência doméstica não constitui política protetiva efetiva (desvia recursos de proteção real como abrigos, delegacias especializadas e acolhimento). Historicamente, maior armamentismo em contextos de violência doméstica correlaciona com aumento de homicídios e desvio de armas para uso criminal, contradizendo proteção material.",
+      "ementa_preview": "Altera a Lei nº 10.826, de 22 de dezembro de 2003, e a Lei nº 11.340, de 7 de agosto de 2006, para estabelecer medidas destinadas à proteção da mulher em situação de violência doméstica e familiar, me",
+      "pl_ref": "PL 1095/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2594545": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Altera Lei de proteção a vítimas e testemunhas para estender benefícios a agentes de segurança, desviando recursos e prioridade de vítimas civis vulneráveis (sobretudo mulheres em violência doméstica). Enfraquece o programa especializado originalmente voltado para proteção de civis ameaçados, criando competição por recursos limitados em favor de categoria profissional já estruturada.",
+      "ementa_preview": "Altera a Lei nº 9.807, de 13 de julho de 1999, que estabelece normas para a organização e manutenção de programas especiais de proteção a vítimas e testemunhas ameaçadas, e a Lei nº 13.675, de 11 de j",
+      "pl_ref": "PL 6273/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2537418": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Embora formalmente trate de 'denúncias falsas', a proposição enfraquece a Lei Maria da Penha ao criar mecanismos de contra-acusação que desestimulam denúncias legítimas (mulheres temem ser criminalizadas) e inverte o ônus probatório contra vítimas, dificultando o acesso à proteção. Historicamente, tal dispositivo é instrumentalizado para punir vítimas que denunciam.",
+      "ementa_preview": "Dispõe sobre a responsabilização civil, penal e administrativa da parte que, de forma comprovadamente dolosa, utilizar dispositivos da Lei Maria da Penha (Lei nº 11.340/2006) para apresentar denúncia ",
+      "pl_ref": "PL 3474/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2472987": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca exclusivamente em endurecimento processual penal (prisão preventiva) sem criar políticas de proteção, atendimento ou prevenção para vítimas. Representa resposta típica punitivista que privilegia rigor penal sobre medidas protetivas substantivas.",
+      "ementa_preview": "Dispõe sobre a decretação da prisão preventiva nos crimes contra a dignidade sexual previstos no Código Penal e no Estatuto da Criança e do Adolescente.",
+      "pl_ref": "PL 4578/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2599430": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em restrição e controle de condenados (medida punitiva) em ambientes virtuais, sem indicar criação de políticas de proteção material à vítima ou ampliação de direitos. Embora tenha potencial preventivo, o desenho é fundamentalmente centrado em vigilância e restrição do condenado, não em proteção direta.",
+      "ementa_preview": "Dispõe sobre medidas de restrição e controle de acesso a ambientes virtuais por pessoas condenadas por crimes contra a dignidade sexual de crianças e adolescentes, e dá outras providências.",
+      "pl_ref": "PL 6827/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2599347": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Proposição focada exclusivamente em aumentar qualificação penal (incitação e apologia), sem criar políticas de proteção, atendimento ou prevenção material para crianças e adolescentes. Intervém no sistema de punição sem melhorar mecanismos de proteção da vítima.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para qualificar os crimes de incitação e de apologia quando relacionados a crimes contra a dignidade sexual de crianças e adoles",
+      "pl_ref": "PL 6744/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2599446": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar rigor penal (vedação de prisão domiciliar) sem criar políticas de proteção material às vítimas, atendimento ou prevenção. Reduz flexibilidade processual sem garantir melhor proteção das crianças e adolescentes.",
+      "ementa_preview": "Dispõe sobre a vedação da substituição da prisão preventiva por prisão domiciliar nas hipóteses de crimes contra a dignidade sexual de crianças e adolescentes, e dá outras providências.",
+      "pl_ref": "PL 6843/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2599590": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente no aumento de gravidade penal (pena mais severa) para crimes de exploração sexual, sem prever mecanismos de proteção material às vítimas, prevenção ou melhoria de atendimento. Típica abordagem punitivista que endurece sanção sem necessariamente ampliar direitos ou políticas de proteção.",
+      "ementa_preview": "Torna mais gravoso o tratamento penal destinado ao autor do crime de favorecimento da prostituição ou de outra forma de exploração sexual de criança ou adolescente ou de vulnerável praticado em faixa ",
+      "pl_ref": "PL 6986/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2599525": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Obriga notificação compulsória sem consentimento da vítima, retirando sua autonomia decisória e expondo-a a riscos de retaliação ou perda de controle sobre sua situação. Viola princípios de sigilo e autodeterminação consolidados na Lei Maria da Penha, que prioriza a proteção material e a vontade da vítima nas estratégias de segurança.",
+      "ementa_preview": "Dispõe sobre a comunicação compulsória às autoridades competentes, por parte dos condomínios residenciais, conjuntos habitacionais e congêneres, de casos ou indícios de violência doméstica e familiar ",
+      "pl_ref": "PL 6922/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2599554": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "A vedação da prisão especial é medida de rigor penal que não expande proteção material às vítimas, apenas aumenta penalidade processual do acusado. Não melhora atendimento, políticas públicas ou direitos das mulheres, focando exclusivamente em agravamento punitivo.",
+      "ementa_preview": "Dispõe sobre a vedação do direito à prisão especial para pessoa que tenha praticado crime de estupro.",
+      "pl_ref": "PL 6950/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2514935": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Obriga denúncia compulsória à polícia contra a vontade da vítima, violando seu direito à autodeterminação e podendo expô-la a maior risco. Ignora que vítimas têm razões legítimas para não denunciar (segurança, dependência econômica) e que decisões coercitivas aumentam vulnerabilidade.",
+      "ementa_preview": "Dispõe sobre a obrigatoriedade de condução à Delegacia Especializada de Atendimento à Mulher nos casos de denúncia de terceiros sobre violência doméstica e familiar, mesmo diante da negativa da vítima",
+      "pl_ref": "PL 2443/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2615911": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca exclusivamente em sanção penal (vedação automática de cargos públicos) sem criar mecanismos de proteção material às vítimas ou políticas públicas de prevenção. Embora tenha objetivo legítimo, caracteriza resposta punitivista pura que não necessariamente melhora a proteção das mulheres.",
+      "ementa_preview": "Dispõe sobre a vedação à nomeação para cargos em comissão, funções de confiança e à contratação com a Administração Pública de pessoas condenadas por crimes de violência doméstica e familiar contra a ",
+      "pl_ref": "PL 1806/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2612768": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para crime de estupro em circunstâncias específicas, sem criar políticas de proteção, atendimento ou prevenção material às vítimas. Amplia rigor penal sem melhorar proteção efetiva.",
+      "ementa_preview": "Altera o Decreto-Lei 2848/1940, Código Penal, para agravar a pena do crime de estupro praticado mediante administração de substâncias que reduzam a capacidade de resistência da vítima, bem como quando",
+      "pl_ref": "PL 1491/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2607457": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Embora mencione 'proteção à vítima', o núcleo da proposição é aumentar penas, ampliar agravantes e restringir benefícios penais — medidas punitivistas que não garantem necessariamente melhor atendimento, prevenção ou reparação material à vítima. A proteção processual é secundária frente ao foco central em rigor penal.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), o Decreto-Lei nº 3.689, de 3 de outubro de 1941 (Código de Processo Penal), e a Lei nº 8.072, de 25 de julho de 1990 (Lei dos Cr",
+      "pl_ref": "PL 1016/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2480344": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em sanção profissional e exclusão automática baseada em condenação criminal, sem mecanismos de reabilitação ou proteção material às vítimas. Representa endurecimento punitivo em vez de ampliar direitos ou políticas protetivas.",
+      "ementa_preview": "Exclui os Bacharéis em Direito com condenação com trânsito em julgado por violência contra a mulher da possibilidade de inscrição na Ordem dos Advogados do Brasil (OAB).",
+      "pl_ref": "PL 4912/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2455171": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Embora mencione violência contra mulher, a medida foca em rigor penal (negar liberdade provisória automaticamente) sem criar mecanismos de proteção material ou suporte à vítima. Restrições processuais indiscriminadas podem não aumentar segurança efetiva e desvia de políticas protetivas estruturais.",
+      "ementa_preview": "Altera o artigo 310 do Decreto-Lei nº 3.689, de 3 de outubro de 1941, (Código de Processo Penal) para denegar liberdade provisória na audiência  de custódia nos casos em que o agente for acusado por p",
+      "pl_ref": "PL 3317/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2442452": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente no aumento de pena para crimes já tipificados, sem criar mecanismos de proteção, atendimento ou prevenção material das vítimas. O reforço penal não melhora necessariamente a proteção de crianças, adolescentes ou vulneráveis contra exploração.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 – Código Penal, para estabelecer causa de aumento de pena no crime de favorecimento da prostituição ou de outra forma de exploração sexual de cr",
+      "pl_ref": "PL 2506/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2419509": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Reduz drasticamente o prazo prescricional de 5 anos (crime de lesão corporal simples) para apenas 2 anos em violência doméstica, dificultando o acesso à justiça e permitindo impunidade de agressores. Essa restrição prejudica materialmente a vítima ao limitar sua janela temporal para denunciar, especialmente considerando ciclos de violência que frequentemente envolvem períodos de silêncio e manipulação.",
+      "ementa_preview": "Altera o Código de Processo Penal, para prever prazo de 2 (dois) anos em direito de queixa e representação criminal nos casos de violência doméstica.",
+      "pl_ref": "PL 590/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2622073": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em responsabilização financeira e ressarcimento ao Estado pelo agressor, mecanismo típico de abordagem punitivista. Não institui proteção material, atendimento ou direitos novos às vítimas/dependentes, apenas penalidade econômica adicional.",
+      "ementa_preview": "Explicita a obrigação de ressarcimento ao Instituto Nacional do Seguro Social (INSS) pelo autor de feminicídio, incluindo valores pagos a título de pensão por morte aos dependentes da vítima, reforçan",
+      "pl_ref": "PL 2205/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2615393": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Exigir aviso prévio de rescisão durante estabilidade gestacional enfraquece a proteção legal que proíbe demissão de grávidas, criando mecanismo para contornar direito conquistado. Viola a garantia de emprego consagrada na CF/88 ao impor procedimento que facilita dispensa disfarçada.",
+      "ementa_preview": "Altera a Consolidação das Leis do Trabalho – CLT, para dispor a obrigação de aviso de rescisão do contrato de trabalho da gestante antes do fim do prazo de estabilidade no emprego.",
+      "pl_ref": "PL 1774/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2440784": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca explicitamente em 'punições mais severas' e alteração de penas no Código Penal, caracterizando abordagem punitivista pura. Não menciona políticas de proteção, atendimento às vítimas, prevenção ou políticas públicas de combate à cultura do estupro.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal) e a Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para estabelecer punições mais severas aos crimes de estupro e ",
+      "pl_ref": "PL 2388/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2615027": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Restringe direito de defesa de vítimas de violência doméstica ao limitar excludentes de punibilidade em crimes patrimoniais (como furto de bens do agressor), criando obstáculo processual que pode desestimular denúncias e impedir que vítimas usem meios legítimos de proteção patrimonial. Desvia do foco protetivo ao criminalizar condutas de mulheres em contexto de violência em vez de fortalecer políticas de segurança, acolhimento e reparação.",
+      "ementa_preview": "Altera o Código Penal para dispor sobre a inaplicabilidade da exclusão de punibilidade em crimes patrimoniais praticados em contexto de violência doméstica e familiar contra a mulher.",
+      "pl_ref": "PL 1739/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2476768": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em aumentar consequências penais (inelegibilidade automática) para condenados, sem implementar políticas de proteção material ou atendimento às vítimas. Embora tenha legitimidade moral, prioriza castigo do agressor sobre estruturas de proteção proativa à mulher.",
+      "ementa_preview": "Altera a Lei Complementar nº 64, de 18 de maio de 1990 (Lei de Inelegibilidade), para tornar inelegíveis para qualquer cargo os condenados criminalmente em situação de violência doméstica e familiar c",
+      "pl_ref": "PLP 219/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2416896": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em restrição de direitos políticos/funcionariais do condenado (proibição de nomeação) como mecanismo punitivo adicional, não em proteção material ou acesso a direitos das vítimas. Embora tenha alguma lógica preventiva, prioritariamente implementa sanção penal expandida.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006, para proibir a nomeação de pessoas condenadas por crimes tipificados como de violência doméstica e familiar contra a mulher, e dá outras providências.",
+      "pl_ref": "PL 34/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2346885": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em sanção administrativa automática (nulidade de nomeação) baseada em condenação penal, sem criar política de proteção, atendimento ou prevenção material. É medida de castigo/exclusão que não melhora proteção de crianças e adolescentes, apenas restringe oportunidades do condenado.",
+      "ementa_preview": "Dispõe sobre a nulidade da nomeação ou contratação, para determinados cargos e empregos públicos, de pessoa condenada por crime sexual contra criança ou adolescente.",
+      "pl_ref": "PL 165/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2589797": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas, restringir benefícios e alterar regime de cumprimento, características típicas de abordagem punitivista. Embora mencione combate à violência de gênero, não propõe medidas protetivas estruturantes (atendimento, acolhimento, políticas públicas), apenas endurecimento penal que estatisticamente não reduz feminicídios.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), e a Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para elevar a pena, restringir benefícios e estabelecer regime",
+      "pl_ref": "PL 6052/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2557550": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A medida foca em criar cadastro de condenados sem estabelecer novos mecanismos de proteção material às vítimas ou políticas públicas preventivas. Cadastros públicos de condenados caracterizam-se como punição adicional (exposição social) sem comprovada efetividade na redução de reincidência ou proteção de mulheres.",
+      "ementa_preview": "Cria Cadastro Nacional de pessoas condenadas por crime de violência contra a mulher, e dá outras providências.",
+      "pl_ref": "PL 4463/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2496632": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Proposta centra-se em aumentar consequências penais (perda automática de cargo público) sem criar mecanismos de proteção material às vítimas ou políticas públicas de prevenção. Configura rigor penal adicional caraterístico de abordagem punitivista.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para proibir a posse e o exercício em cargos, funções ou empregos públicos aos condenados por Feminicídio (Art. 121-A, CP) e/ou ",
+      "pl_ref": "PL 1621/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2496634": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "A proposição visa aumentar rigor penal ao vedação de escusas absolutórias (excludentes de punibilidade) em crimes da Lei Maria da Penha, endurecendo a repressão penal sem necessariamente ampliar proteção material ou atendimento à vítima. É claramente focada em castigo e aumento de pena, não em políticas protetivas.",
+      "ementa_preview": "Veda a aplicação de escusas absolutórias (causas excludentes da punibilidade) constantes do Art. 181, do Código Penal, nos crimes previstos na Lei Maria da Penha, ou decorrentes de sua aplicação, e dá",
+      "pl_ref": "PL 1623/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2496633": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em sanção penal adicional (perda automática de cargo/função) sem criar mecanismos de proteção material às vítimas. Embora tenha potencial dissuasório, caracteriza-se como punição acessória rigorosa típica de abordagem punitivista, não expandindo direitos ou políticas protetivas.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para proibir a posse e o exercício em cargos, funções ou empregos públicos aos condenados por Feminicídio (Art. 121-A, CP) e/ou ",
+      "pl_ref": "PL 1622/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2496631": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Embora combata agressores, a medida foca em sanção política (inelegibilidade) e cadastro/controle de condenados, não em políticas de proteção material às vítimas. O requisito de 'reabilitação indubitável' após 8 anos cumpre função de rigor penal sem garantir acesso a direitos, acolhimento ou políticas públicas para as mulheres afetadas.",
+      "ementa_preview": "Altera a Lei Complementar n. 64, de 18 de Maio de 1990, para tornar inelegíveis os condenados aos condenados por Feminicídio (Art. 121-A, CP) e/ou crimes previstos na Lei Federal 11.340/2006 (Lei Mari",
+      "pl_ref": "PLP 87/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2521255": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca explicitamente em 'punições e cumprimento de pena mais severas', que é característica do punitivismo penal, sem mencionar medidas de proteção material, atendimento à vítima ou políticas públicas de prevenção. Embora endereçe crimes graves, o mecanismo escolhido é exclusivamente o endurecimento penal.",
+      "ementa_preview": "Altera o Decreto-Lei nº 3.689, de 3 de outubro de 1941 (Código de Processo Penal), o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal) e a Lei nº 7.210, de 11 de julho de 1984 (Lei de Exec",
+      "pl_ref": "PL 2762/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2508495": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Autoriza armamentismo como resposta a violência de gênero, substituindo políticas públicas efetivas (abrigos, atendimento especializado, proteção policial) por arma de fogo, que estatisticamente aumenta risco de morte em contextos de violência doméstica. Fragiliza o Estatuto do Desarmamento sem melhorar a proteção material da vítima.",
+      "ementa_preview": "Altera a Lei nº 10.826, de 22 de dezembro de 2003 (Estatuto do Desarmamento), para permitir a posse e o porte de arma de fogo às mulheres sob medida protetiva.",
+      "pl_ref": "PL 2281/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2495600": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em restrição de direitos e castigo do condenado (proibição de acesso a espaços públicos) sem criar mecanismos de proteção material à vítima ou melhorar atendimento. A medida é essencialmente punitiva, não protetiva.",
+      "ementa_preview": "Proíbe o ingresso e a permanência em estádios e arenas esportivas de pessoas condenadas com trânsito em julgado por crimes previstos na Lei Maria da Penha (Lei nº 11.340/2006) e estabelece medidas de ",
+      "pl_ref": "PL 1559/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2426766": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Embora mencione 'isenção de punibilidade da mulher', a proposição 'valoriza a vida do feto na concepção' e 'moderniza a proibição legal de aborto', sinalizando restrição ao direito de interrupção de gestação previsto na lei vigente (anencefalia, estupro, risco de morte). Reduz direitos reprodutivos sob pretexto de 'dignidade'.",
+      "ementa_preview": "Esta Lei altera o Código Civil e o Código Penal para assegurar a todos a dignidade da pessoa humana, valorizar a vida do feto na concepção, modernizando a proibição legal de Aborto com a isenção de pu",
+      "pl_ref": "PL 1249/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2399457": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Proposições que alteram a idade de consentimento tipicamente buscam reduzi-la, o que diminuiria proteção legal de crianças e adolescentes contra exploração sexual. Mesmo sem detalhes da alteração específica, essa temática historicamente se associa a enfraquecimento de salvaguardas protetivas.",
+      "ementa_preview": "Altera Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para dispor a idade de consentimento nos crimes contra a dignidade sexual, e dá outras providências.",
+      "pl_ref": "PL 5203/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2395762": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A ementa indica foco explícito em 'medidas punitivas mais severas' e aumento de penas, sem mencionar ampliação de direitos, proteção material ou políticas públicas de prevenção. Enquadra-se no padrão punitivista de resposta via endurecimento penal.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940, Código Penal, para estabelecer medidas punitivas mais severas aos crimes de feminicídio e que envolvam violência doméstica e familiar, e dá out",
+      "pl_ref": "PL 4972/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2618592": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A suspensão automática de benefícios assistenciais e auxílios educacionais baseada apenas em denúncia (sem condenação) viola princípios de presunção de inocência e pode deixar vítimas em situação de vulnerabilidade se forem dependentes do acusado. Funciona como punição anterior ao devido processo legal, prejudicando materialmente pessoas que podem estar sob proteção de políticas sociais essenciais.",
+      "ementa_preview": "Altera as Leis nº 8.742, de 7 de dezembro de 1993; nº 10.260, de 12 de julho de 2001; nº 11.096, de 13 de janeiro de 2005; nº 14.601, de 19 de junho de 2023; e nº 14.818, de 16 de janeiro de 2024, par",
+      "pl_ref": "PL 1995/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2602662": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A proposta inverte a proteção ao trabalho: em vez de proteger vítimas de assédio moral, autoriza demissão por justa causa da vítima que sofre assédio, desprotegendo trabalhadoras. Viola o direito ao trabalho digno e acentua vulnerabilidade de mulheres em relações trabalhistas assimétricas.",
+      "ementa_preview": "Altera a Consolidação das Leis do Trabalho (CLT), aprovada pelo Decreto-Lei n° 5.452, de 1° de maio de 1943, para prever que a prática de assédio moral é hipótese que autoriza a demissão por justa cau",
+      "pl_ref": "PL 507/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2610391": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "A proposta foca exclusivamente em aumentar a severidade penal através de castração física, uma medida corporal extrema que não melhora proteção material, atendimento ou prevenção de crimes. Representa abordagem punitivista pura, desvinculada de políticas protetivas efetivas.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para acrescentar a penalidade de castração física aos condenados pelo crime de estupro.",
+      "pl_ref": "PL 1262/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2607450": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar a pena para crime de importunação sexual, característica típica de abordagem punitivista. Majoração penal não necessariamente amplia proteção material às vítimas ou cria políticas públicas de prevenção e atendimento.",
+      "ementa_preview": "Altera o art. 215-A do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para majorar a pena do crime de importunação sexual.",
+      "pl_ref": "PL 1012/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2346942": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para profissionais específicos, sem criar políticas de proteção material, prevenção ou melhoria de atendimento às vítimas. Embora aumente sanções (adequado para crimes graves), não avança em direitos ou políticas públicas de proteção.",
+      "ementa_preview": "Altera o Código Penal para incluir causa de aumento de pena do qualquer profissional que, em decorrência do exercício de suas funções, comete crime contra a liberdade sexual ou crime sexual contra vul",
+      "pl_ref": "PL 197/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2608131": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposta foca em aumentar rigor penal e controle (monitoramento eletrônico obrigatório), restringindo acesso a benefícios (trabalho externo), sem mencionar proteção a vítimas ou melhoria material de direitos. Embora não criminalize vítimas, caracteriza-se por endurecimento punitivo.",
+      "ementa_preview": "Altera a Lei de Execução Penal para estabelecer critérios mais rigorosos para a autorização de trabalho externo de pessoa privada de liberdade e determinar o uso obrigatório de monitoramento eletrônic",
+      "pl_ref": "PL 1098/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2375355": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em majorar penas de estupro sem mencionar medidas de proteção material, prevenção ou ampliação de direitos das vítimas. Aumentos penais isolados são característicos de abordagem punitivista que não necessariamente melhoram a proteção ou o atendimento às mulheres vítimas.",
+      "ementa_preview": "Altera os artigos 213 e 217 A e acrescenta o art. 218 D, todos do Decreto-Lei nº 2.848, de 07 de dezembro de 1940 - Código Penal Brasileiro, para majorar penas de estupro, e dá outras providências.",
+      "pl_ref": "PL 3702/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2371451": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A medida foca primordialmente no aumento de pena e autonomia do tipo penal, não em mecanismos de proteção material ou prevenção de violência. Embora reconheça a gravidade do feminicídio, não implementa políticas públicas de proteção, atendimento ou combate estrutural à violência de gênero.",
+      "ementa_preview": "Torna o feminicídio um crime autônomo e aumenta a pena a ele cominada.",
+      "pl_ref": "PL 3251/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2353945": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Expor dados de agressores na internet constitui castigo público e vigilância punitiva que não melhora proteção material das vítimas, criando risco de justiça de mão própria e violação de direitos processuais. Medidas protetivas efetivas (afastamento, monitoração eletrônica estatal) são superiores à exposição digital.",
+      "ementa_preview": "Dispõe sobre a exposição na Internet dos agressores cadastrados por violência doméstica e familiar nos termos da Lei Maria da Penha.",
+      "pl_ref": "PL 1479/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2351674": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para crimes existentes, sem criar mecanismos de proteção material, atendimento especializado ou políticas preventivas. Embora tenha intenção protetora ao visar pessoas vulneráveis, o instrumento escolhido é puramente punitivista (aumento penal).",
+      "ementa_preview": "Aumenta a pena dos crimes de violência doméstica, de furto, de roubo e de estelionato praticados contra pessoa com deficiência.",
+      "pl_ref": "PL 1196/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2621651": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca exclusivamente em aumentar penas (qualificadora) sem criar políticas de proteção, prevenção ou melhor atendimento à vítima. Reforça resposta penal severa, característica do modelo punitivista.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), e a Lei nº 9.455, de 7 de abril de 1997 (Lei de Tortura), para estabelecer o registro ou a divulgação da execução criminosa como",
+      "pl_ref": "PL 2196/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2551642": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposta restringe benefícios processuais (liberdade provisória, substituição de pena) focando em aumento de rigor penal, sem criar políticas de proteção material à vítima ou melhorar atendimento. Endurecimento penal isolado não amplifica direitos ou proteção concreta de mulheres.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), o Decreto-Lei nº 3.689, de 3 de outubro de 1941 (Código de Processo Penal), e a Lei nº 7.210, de 11 de julho de 1984 (Lei de Exe",
+      "pl_ref": "PL 4185/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2551651": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "Proposta restringe direitos processuais fundamentais (presunção de inocência, direito à liberdade provisória) ao vedar relaxamento de prisão mesmo em flagrante, endurecendo automaticamente o tratamento penal sem melhorar proteção material ou atendimento às vítimas. Caracteriza-se por foco exclusivo em rigor processual e maior encarceramento.",
+      "ementa_preview": "Altera o Decreto-Lei nº 3.689, de 3 de outubro de 1941 – Código de Processo Penal, para vedar a concessão de relaxamento da prisão, liberdade provisória e revogação da prisão preventiva nos casos de p",
+      "pl_ref": "PL 4186/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2380799": {
+      "stance": "regressivo",
+      "confianca": 0.92,
+      "justificativa": "Obriga escolas a palestras com conteúdo presumivelmente ideológico sobre 'efeitos do aborto' em contexto onde aborto é legal em casos específicos no Brasil, funcionando como controle reprodutivo e restrição do acesso a informação equilibrada. Impõe visão particular sobre direitos reprodutivos em espaço educativo público, limitando autonomia e direitos sexuais de alunas.",
+      "ementa_preview": "Dispõe sobre a obrigatoriedade de realização de palestras educativas sobre os efeitos do aborto nas escolas públicas de ensino fundamental e médio.",
+      "pl_ref": "PL 4005/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2380793": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em consequência penal automática (proibição de exercer profissão) sem criar mecanismos de proteção material às vítimas ou políticas preventivas de assédio. Embora tenha legitimidade em proteger estudantes, opera prioritariamente via castigo do condenado em vez de fortalecer atendimento, denúncia ou ambiente seguro nas instituições.",
+      "ementa_preview": "Dispõe sobre a proibição da contratação de professores que já foram condenados por assédio sexual para ministrar aulas em instituições de ensino, públicas e privadas, em todo o território nacional, e ",
+      "pl_ref": "PL 4004/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2372090": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em aumentar consequências penais (perda de benefícios sociais) para condenados, sem criar políticas de proteção material às vítimas, prevenção ou melhoria de atendimento. Configura medida de rigor penal desvinculada de proteção substantiva.",
+      "ementa_preview": "Dispõe sobre a perda de benefícios sociais para condenados por abuso sexual contra crianças e adolescentes.",
+      "pl_ref": "PL 3326/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2365897": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em medida punitiva/restritiva sobre condenados (vedação de cargo) sem estabelecer políticas de proteção material às vítimas, atendimento especializado ou prevenção. Caracteriza-se como resposta penal ao crime, não como ampliação de direitos ou melhoria de proteção efetiva.",
+      "ementa_preview": "Dispõe sobre vedação de nomeação a cargos públicos daqueles condenados por violência sexual contra criança e adolescente e dá outras providências",
+      "pl_ref": "PL 2830/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2362214": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em consequência penal automática (vedação de cargo) para condenados, sem criar políticas de proteção material a crianças e adolescentes, atendimento ou prevenção. Embora tenha lógica preventiva, é essencialmente medida de exclusão/castigo institucional típica de abordagem punitivista.",
+      "ementa_preview": "Dispõe sobre vedação de nomeação a cargos públicos daqueles condenados por violência sexual contra criança e adolescente e dá outras providências.",
+      "pl_ref": "PL 2564/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2606008": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A identificação visual compulsória funciona como estigmatização pública e viola direitos fundamentais do acusado sem comprovada efetividade na proteção da vítima. Representa punição anterior à condenação e pode gerar risco reverso (vigilantismo) sem melhorar mecanismos de monitoramento ou cumprimento das medidas protetivas.",
+      "ementa_preview": "Dispõe sobre a obrigatoriedade da identificação visual temporária, por meio de pulseira laranja, aos homens submetidos à Medida Protetiva de Urgência.",
+      "pl_ref": "PL 877/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2431159": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposta foca em exposição pública e constrangimento de condenados, mecanismo de castigo/humilhação, sem criar proteção material para vítimas ou ampliar políticas de atendimento. Embora tenha intenção punitiva contra agressores, não se caracteriza como regressiva pois não restringe direitos de mulheres.",
+      "ementa_preview": "Institui a obrigatoriedade de as empresas prestadoras de serviços e concessionárias de água, luz, telefone e internet, inserirem, nas faturas de consumo, no âmbito de sua publicidade institucional, as",
+      "pl_ref": "PL 1587/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2605731": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em aumentar rigor penal e fiscalização do agressor mediante monitoramento eletrônico obrigatório, sem estabelecer políticas de proteção material da vítima ou acesso a direitos. Embora possa ter efeito dissuasor, caracteriza-se por intensificar mecanismos punitivos em vez de ampliar atendimento ou proteção concreta.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), para tornar obrigatório o monitoramento eletrônico do agressor que residir no mesmo município da vítima, e estabelece medidas compl",
+      "pl_ref": "PL 858/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2485623": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A 'exclusão de ilicitude' para comunicar informações à vítima é fraseado vago que potencialmente autoriza terceiros (incluindo agressores ou seus aliados) a violar privacidade, sigilo profissional e confidencialidade sob pretexto de 'proteção', enfraquecendo mecanismos protetivos existentes na Lei Maria da Penha que dependem de sigilo e confiança entre vítima e profissionais.",
+      "ementa_preview": "Cria mecanismos de Proteção às Mulheres vítimas de violência doméstica, alterando o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), e a Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria ",
+      "pl_ref": "PL 720/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2483087": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A suspensão automática de estágio para gestante restringe a autonomia reprodutiva da mulher, impõe controle sobre sua permanência no mercado de trabalho e perpetua discriminação gestacional sob aparência de proteção. Viola o direito de escolha e pode funcionar como desincentivo à contratação de mulheres em idade reprodutiva.",
+      "ementa_preview": "Altera a Lei nº 11.788, de 25 de setembro de 2008, para prever a suspensão do estágio para a estagiária gestante.",
+      "pl_ref": "PL 301/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2577897": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposta foca em aumentar penas (ampliar período máximo de internação) sem indicar melhorias na proteção material, ressocialização ou políticas preventivas. Prioriza rigor penal sobre proteção efetiva de vítimas.",
+      "ementa_preview": "Altera a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente), para ampliar o período máximo da medida socioeducativa de internação nos casos de atos infracionais análogos a cri",
+      "pl_ref": "PL 5446/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2607697": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar a pena (agravante) sem criar mecanismos de proteção material à vítima ou políticas públicas de prevenção. Embora dirigida a crimes contra mulheres, o instrumento escolhido é puramente penal, caracterizando abordagem punitivista.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para estabelecer agravante de pena nos crimes de violência contra a mulher praticados na presença de criança ou adolescente.",
+      "pl_ref": "PL 1067/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2603962": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Proposta centra-se em aumentar rigor penal (vedação de atenuantes, exclusão de causas de redução de culpabilidade) sem criar mecanismos de proteção material ou atendimento à vítima. Endurece resposta criminal, não melhora proteção substantiva de crianças.",
+      "ementa_preview": "Reforça a natureza absoluta da vulnerabilidade da pessoa menor de 14 (quatorze) anos nos crimes contra a dignidade sexual, veda a aplicação do instituto do distinguishing e estabelece a inaplicabilida",
+      "pl_ref": "PL 671/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2603961": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A vedação do distinguishing em crimes sexuais contra menores visa restringir possibilidades de flexibilização jurisprudencial, reforçando rigidez penal. Embora proteja menores, o mecanismo é essencialmente punitivista ao limitar discricionariedade judicial, não criando políticas públicas ou melhorando atendimento às vítimas.",
+      "ementa_preview": "Dispõe sobre a vedação da aplicação do instituto do distinguishing em crimes contra a dignidade sexual praticados contra menores de 14 (quatorze) anos e reforça a natureza absoluta da vulnerabilidade ",
+      "pl_ref": "PL 670/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2543138": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas e criar novo tipo penal (erotização infantil) equiparando-as às de pornografia infantil, sem instituir políticas de proteção, atendimento ou prevenção materiais às crianças. Endurece resposta penal sem necessariamente melhorar mecanismos de proteção efetiva.",
+      "ementa_preview": "Altera a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente), para definir o crime de erotização infantil e aplicar-lhe as mesmas penas previstas para crimes de pornografia inf",
+      "pl_ref": "PL 3956/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2476455": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Transfere responsabilidade de proteção para a vítima (armamentismo) em vez de fortalecer políticas de prevenção, atendimento e afastamento do agressor; historicamente, armas nas mãos de vítimas aumentam risco de morte e não substituem medidas protetivas efetivas.",
+      "ementa_preview": "Estabelece medidas para garantir o acesso seguro e eficaz às armas de incapacitação neuromuscular (armas de eletrochoque) como instrumento de legítima defesa para mulheres que possuam medida protetiva",
+      "pl_ref": "PL 4711/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2614335": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A alteração de parâmetros de progressão de regime para crimes sexuais tipicamente endurece critérios de saída do sistema penal, focando em rigor punitivo sem necessariamente ampliar proteção material às vítimas. Sem conhecer o detalhe específico da alteração, o padrão legislativo neste tema é aumentar obstáculos à progressão (anos adicionais, requisitos mais rigorosos).",
+      "ementa_preview": "Altera o art. 112 da Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para estabelecer novo parâmetro de progressão de regime nos casos de condenação pelos crimes de estupro e de estupro ",
+      "pl_ref": "PL 1682/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2602381": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A alteração de parâmetros de progressão de regime para feminicídio é medida de endurecimento penal que não melhora proteção material de mulheres vivas, focando em maior rigor na execução da pena. Enquadra-se em punitivismo ao priorizar severidade penal sobre políticas preventivas e protetivas.",
+      "ementa_preview": "Altera o inciso VI-A do art. 112 da Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para estabelecer novo parâmetro de progressão de regime nos casos de condenação pelo crime de feminicí",
+      "pl_ref": "PL 468/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2552666": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição centra-se exclusivamente em agravar penas para crimes contra crianças, sem mencionar medidas protetivas, atendimento às vítimas, políticas de prevenção ou combate às causas estruturais. Aumentar severidade penal não reduz necessariamente vulnerabilidades ou melhora proteção material.",
+      "ementa_preview": "Altera o Código Penal e o Estatuto da Criança e do Adolescente para agravar as penas aplicadas aos crimes de abuso sexual, aliciamento, adultização e exposição de crianças e adolescentes na internet, ",
+      "pl_ref": "PL 4237/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2486867": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "A ementa explicitamente menciona 'recrudescer o tratamento penal', indicando aumento de pena ou rigor penal, sem menção a políticas de proteção material, atendimento ou prevenção. Foca exclusivamente no endurecimento da resposta punitiva.",
+      "ementa_preview": "Altera o art. 217-A do Código Penal Brasileiro (Decreto-Lei nº 2.848, de 7 de dezembro de 1940), para recrudescer o tratamento penal dispensado ao crime de estupro de vulnerável.",
+      "pl_ref": "PL 983/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2442358": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para crimes sexuais, sem mencionar medidas de proteção material às vítimas, acesso a serviços de atendimento ou políticas preventivas. Aumento penal isolado é característica de abordagem punitivista.",
+      "ementa_preview": "Modifica o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para aumentar as penas dos crimes contra a dignidade sexual.",
+      "pl_ref": "PL 2495/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2470028": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Proposta centra-se exclusivamente em aumentar rigidez penal mediante vedação automática de benefícios (progressão, liberdade condicional) sem criar mecanismos de proteção material à vítima ou políticas públicas de prevenção e acolhimento. Alinha-se à lógica punitivista que prioriza endurecimento de penas sobre ampliação de direitos e garantias das mulheres e crianças vítimas.",
+      "ementa_preview": "Acrescenta-se dispositivos à Lei nº 7.210, de 11 de julho de 1984 (Lei de Execuções Penais), e ao Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para vedar a concessão de benefícios a ",
+      "pl_ref": "PL 4425/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2348857": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A medida foca em punição administrativa (vedação a concursos e cargos) sem criar mecanismos de proteção material à vítima ou melhorar atendimento. Amplia restrições legais pós-condenação alinhada à lógica punitiva em vez de políticas protetivas.",
+      "ementa_preview": "Acrescenta art. 43-A à Lei nº 11.340, de 07 de agosto de 2006, para vedar aos condenados por crimes praticados com violência contra a mulher a participação em concursos públicos e inabilitá-los para o",
+      "pl_ref": "PL 539/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2611838": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em criar sistema de padronização cromática de tornozeleiras eletrônicas para autores de crimes contra mulheres e dignidade sexual, caracterizando medida de rigor penal e identificação pública de condenados. Não amplia proteção material à vítima, apenas aumenta mecanismo de castigo/visibilidade do agressor.",
+      "ementa_preview": "Dispõe sobre a padronização e classificação cromática de dispositivos de monitoramento eletrônico aplicados a investigados ou condenados por crimes de violência contra a mulher e crimes contra a digni",
+      "pl_ref": "PL 1394/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2350534": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição elimina escusas absolutórias (que dispensam pena) especificamente para casos de violência doméstica, aumentando rigor penal sem criar políticas de proteção material ou atendimento às vítimas. Embora proteja grupos vulneráveis, o mecanismo é exclusivamente punitivo.",
+      "ementa_preview": "Revoga o artigo 181 e altera os artigos 182 e 183 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para dispor sobre a inaplicabilidade de escusas absolutórias aos crimes cometidos no",
+      "pl_ref": "PL 1000/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2574090": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A medida restringe mecanismo de justiça consensual (ANPP) especificamente para crimes de pornografia infantil, focando em endurecimento processual/penal em vez de ampliar proteção material de crianças vítimas (atendimento, reparação, políticas preventivas). Caracteriza-se como punitivista por priorizar rigor penal sobre proteção substantiva.",
+      "ementa_preview": "Altera a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente), e a Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para vedar a aplicação do acordo de não persecuç",
+      "pl_ref": "PL 5325/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2483489": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição altera especificamente as penas (aumenta ou modifica rigor) dos crimes de estupro, caracterizando foco em incremento penal sem indicação de medidas protetivas, de atendimento à vítima ou de prevenção. Alterações penais puras, sem contexto de política integral de proteção, enquadram-se em lógica punitivista.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), modificando as penas dos crimes de estupro e de estupro de vulnerável.",
+      "pl_ref": "PL 361/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2486099": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "A proposição foca exclusivamente em aumentar rigor penal (enrijecimento de requisitos de progressão de regime) para condenados por feminicídio, sem criar mecanismos de proteção às vítimas ou políticas públicas de prevenção. Medidas puramente punitivas não necessariamente melhoram a segurança das mulheres.",
+      "ementa_preview": "Altera o artigo 112, da Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para enrijecer os requisitos de progressão de regime para os condenados pela prática de feminicídio.",
+      "pl_ref": "PL 797/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2498317": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição impõe sanção patrimonial aos herdeiros do agressor (exclusão sucessória), mecanismo de castigo que não amplia proteção material às vítimas ou suas famílias. Embora tenha intenção simbólica, foca em rigor punitivo ao patrimônio do feminicida em vez de políticas de proteção, reparação ou prevenção.",
+      "ementa_preview": "Altera a Lei nº 10.406, de 10 de janeiro de 2002, para acrescentar incisos ao art. 1814 e parágrafo único ao art. 1815, para excluir como herdeiro ou legatório os parentes do feminicida que tenha se s",
+      "pl_ref": "PL 1746/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2459345": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Estende direitos específicos de gestantes (proteção reprodutiva, saúde materna, direitos trabalhistas vinculados à gravidez) para \"pais e mães com crianças de colo\", diluindo proteções materiais baseadas na vulnerabilidade fisiológica da gestação e relativizando direitos reprodutivos exclusivos das mulheres. Essa estratégia típica neutraliza políticas públicas baseadas em gênero sob argumento de \"igualdade\", reduzindo proteção efetiva.",
+      "ementa_preview": "\"Dispõe sobre a extensão dos direitos atribuídos às mulheres gestantes para pais e mães com crianças de colo, e dá outras providências.\"",
+      "pl_ref": "PL 3733/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2355155": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A militarização de escolas não é política de proteção de direitos das mulheres, mas de controle e segurança punitiva que aumenta vigilância indiscriminada. Estudos indicam que ambientes armados e supervigiados amplificam vulnerabilidades de meninas e mulheres trans, não as protegem.",
+      "ementa_preview": "Altera as Leis nº 9.394, de 1996 e Nº 14.113, de 2020, com a finalidade de tornar obrigatória a implantação de vigilância armada, detector de metais e monitoramento eletrônico nas instituições de ensi",
+      "pl_ref": "PL 1688/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2359191": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Embora fraseada como medida de segurança, a proposição promove armamentismo e militarização de espaços educacionais sem evidência de eficácia em proteção de mulheres/vítimas, desviando recursos de políticas preventivas e de atendimento. A militarização escolar não aborda causas estruturais de violência de gênero e pode aumentar clima de insegurança, particularmente para grupos vulneráveis.",
+      "ementa_preview": "Estabelece a obrigatoriedade de instalação de detectores de metais, sistema de monitoramento eletrônico, “botão do pânico” e a presença de seguranças armados nas entradas das escolas e universidades d",
+      "pl_ref": "PL 2282/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2349401": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição cria uma sanção administrativa (inabilitação para concursos e cargos públicos) baseada em condenação criminal, focando em castigo do agressor sem aumentar proteção material às vítimas. Embora pudesse ter elementos dissuasórios, caracteriza-se primariamente como resposta punitiva não vinculada a políticas de prevenção, atendimento ou proteção efetiva.",
+      "ementa_preview": "Acrescenta o art. 41-A à Lei nº 11.340, de 7 de agosto de 2006, para proibir de prestar concursos públicos ou assumir cargos, empregos ou funções públicas, o condenado por crimes de violência sexual v",
+      "pl_ref": "PL 691/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2349305": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Proposta foca exclusivamente em aumentar penas (aplicação cumulativa) para crimes já tipificados, sem criar políticas de proteção, prevenção ou melhor atendimento às vítimas. Embora mencione feminicídio, o mecanismo é puramente penal-severo, caracterizando abordagem punitivista.",
+      "ementa_preview": "Acrescenta parágrafos aos arts. 121, 157 e 158 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 - Código Penal, estipulando que no homicídio doloso, no feminicídio, no latrocínio e na extorsão median",
+      "pl_ref": "PL 657/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2386543": {
+      "stance": "punitivista",
+      "confianca": 0.95,
+      "justificativa": "A vedação de progressão de regime é medida exclusivamente penal que restringe benefícios processuais sem criar políticas de proteção, atendimento ou prevenção. Aumenta rigor punitivo sem melhorar proteção material das vítimas de estupro.",
+      "ementa_preview": "Veda a progressão de regime para os condenados pelos crimes de estupro e de estupro de vulnerável, alterando o Decreto-Lei nº 2.848, de 7 de dezembro de 1940, Código Penal.",
+      "pl_ref": "PL 4383/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2542091": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Ementa enfatiza 'combater e punir' com alterações legais que tipificam e aumentam sanções penais, caracterizando abordagem punitivista. Falta menção a políticas de proteção material, atendimento, prevenção estrutural ou amparo às vítimas.",
+      "ementa_preview": "Estabelece medidas para prevenir, identificar, combater e punir práticas de adultização precoce, disseminação de pornografia infantil e atos de pedofilia em ambientes digitais, altera Lei N° 12.965 de",
+      "pl_ref": "PL 3851/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2486238": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar pena e criar agravantes para descumprimento de medidas protetivas, sem introduzir mecanismos de proteção material à vítima ou melhoria de atendimento. A criminalização mesmo com consentimento da vítima pode paradoxalmente prejudicá-la ao remover autonomia e criar obstáculos ao diálogo necessário em dinâmicas de violência complexas.",
+      "ementa_preview": "Estabelece que o descumprimento das medidas protetivas, mesmo que ocorra com o consentimento da vítima configura crime de descumprimento da medida protetiva com aumento da pena e agravantes.",
+      "pl_ref": "PL 833/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2485557": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca exclusivamente em aumentar penas e restringir benefícios processuais (progressão de regime) sem criar políticas de proteção, atendimento a vítimas ou prevenção material. Tipicamente punitivista, embora não cite castração química ou perda automática de cargo.",
+      "ementa_preview": "Altera o Título VI, do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para aumentar as penas dos crimes contra a dignidade sexual; e altera os artigos 112 e 126, da Lei nº 7.210, de 11",
+      "pl_ref": "PL 701/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2591047": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para crimes sexuais, sem introduzir novas políticas de proteção, prevenção ou atendimento à vítima. Ampliações penais isoladas não melhoram necessariamente a proteção material ou o acesso a direitos das vítimas.",
+      "ementa_preview": "Amplia as hipóteses de aumento de pena nos crimes contra a dignidade sexual, estabelecendo majorante específica quando o delito for praticado com emprego de arma de fogo ou mediante administração de s",
+      "pl_ref": "PL 6089/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2622094": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição concentra-se exclusivamente em aumentar penas para uma categoria específica de autores (líderes religiosos), sem criar mecanismos de proteção, atendimento ou prevenção às vítimas. Embora o aumento punitivo possa ter fundamento legítimo, a ausência de medidas protetivas e a exclusividade no endurecimento penal caracteriza abordagem punitivista.",
+      "ementa_preview": "Dispõe Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 — Código Penal, e a Lei nº 8.069, de 13 de julho de 1990 — Estatuto da Criança e do Adolescente, para aumentar a pena dos crimes contra a",
+      "pl_ref": "PL 2207/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2552545": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para crimes já tipificados quando cometidos via Pix, sem criar mecanismos de proteção, atendimento ou prevenção material. Embora aborde violência contra mulheres, atua no eixo penal (agravamento) em vez de garantir direitos ou políticas públicas protetivas.",
+      "ementa_preview": "Cria causas de aumento de pena nos crimes de ameaça, perseguição e de violência psicológica contra a mulher para os casos em que tais delitos forem cometidos por meio do campo de mensagem do arranjo d",
+      "pl_ref": "PL 4220/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2612578": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em sanção penal (vedação automática de cargo) sem mecanismos de proteção material ou política pública preventiva. Embora tenha lógica de proteção, é tipicamente punitivista por ênfase em rigor administrativo sem abordar raiz do problema ou suporte às vítimas.",
+      "ementa_preview": "Dispõe sobre a vedação de nomeação, contratação ou designação para cargo, emprego ou função pública, de pessoa condenada por crime sexual praticado contra criança ou adolescente, e dá outras providênc",
+      "pl_ref": "PL 1456/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2486222": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Restringe direitos fundamentais de presos sem vincular à proteção material de vítimas, criminalizando aspectos da vida privada sob pretexto de segurança. Não expande políticas de proteção; reduz direitos de detentos de forma desproporcional, caracterizando punitivismo que marginaliza sem resolver raízes da violência.",
+      "ementa_preview": "Altera a Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para proibir a concessão de visitas íntimas a presos condenados por crimes hediondos, violência contra mulheres e crianças, e par",
+      "pl_ref": "PL 828/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2528886": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Obriga sinalização alarmista sobre aborto legal em serviços de saúde, criando obstáculo ao acesso a direito garantido constitucionalmente e aumentando estigma. Funciona como mecanismo de controle e desinformação que restringe autonomia reprodutiva da mulher.",
+      "ementa_preview": "Dispõe sobre a obrigatoriedade de afixação de cartazes ou placas informativas acerca dos riscos do aborto, nos estabelecimentos de saúde.",
+      "pl_ref": "PL 3102/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2607946": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição cria regime especial de responsabilização com foco em aumentar rigor penal/socioeducativo para crimes sexuais, sem explicitar mecanismos de proteção, prevenção ou atendimento às vítimas. Afasta-se de políticas protetivas concretas ao priorizar endurecimento do sistema.",
+      "ementa_preview": "Altera a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente), para estabelecer regime especial de responsabilização socioeducativa para ato infracional análogo ao crime de estu",
+      "pl_ref": "PL 1088/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2584549": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A exigência de 'provas técnicas e materiais' para confirmar violência doméstica cria obstáculo processual que desprotege vítimas, pois muita violência deixa poucos registros materiais. O princípio 'in dubio pro reo' aplicado rigidamente neste contexto beneficia agressores e enfraquece a aplicação da Lei Maria da Penha, que já reconhecia a dificuldade probatória deste crime.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), para dispor sobre a necessidade de provas técnicas e materiais que confirmem a ocorrência de violência doméstica e familiar, assegu",
+      "pl_ref": "PL 5825/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2353856": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em agravar penalidades e reincidência no descumprimento de medidas protetivas, sem criar novos mecanismos de proteção material à vítima ou ampliar direitos. Aumentar pena é característica de abordagem punitivista.",
+      "ementa_preview": "Acresce dispositivos à Lei nº 11.340, de 7 de agosto de 2006, para agravar a violação das proibições e a penalidade decorrentes de reincidência no descumprimento de medidas protetivas",
+      "pl_ref": "PL 1466/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2354404": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas para crimes contra crianças e adolescentes, sem criar mecanismos de proteção, prevenção, atendimento especializado ou políticas públicas de amparo às vítimas. O aumento penal é medida punitivista clássica que não necessariamente melhora proteção material.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2848, de 7 de dezembro de 1940 – Código Penal -, para aumentar as penas do crime de lesão corporal, se for praticado contra criança menor de 12 anos, dos crimes sexuais contra ",
+      "pl_ref": "PL 1538/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2364287": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Embora mencione medidas protetivas, o foco central é em mecanismo punitivo/controle do agressor (monitoração eletrônica obrigatória) sem abordar ampliação de proteção material à vítima ou serviços de apoio. Confunde rigor penal com proteção efetiva.",
+      "ementa_preview": "Estabelece a obrigatoriedade de submissão à monitoração eletrônica do agressor contra quem tiver sido aplicada medida protetiva de urgência em decorrência de violência doméstica e familiar contra a mu",
+      "pl_ref": "PL 2736/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2409631": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente no aumento de penas (rigor penal) sem indicar medidas de proteção material, prevenção ou melhoria de atendimento às vítimas. Embora combater crimes sexuais seja legítimo, o enfoque em severidade punitiva sem políticas protetivas se enquadra na lógica punitivista.",
+      "ementa_preview": "Altera o Código Penal, a fim de estabelecer penas mais severas para o crime de estupro de vulnerável.",
+      "pl_ref": "PL 5870/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2442857": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas, vedar livramento condicional e enrijecer progressão de regime, sem criar políticas de proteção material, atendimento ou prevenção às vítimas. Medidas de rigor penal isolado não melhoram necessariamente a segurança ou dignidade de crianças, adolescentes e mulheres vítimas.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal); a Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal); e a Lei nº 8.609, de 13 de julho de 1990 (Estatuto da Criança e ",
+      "pl_ref": "PL 2533/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2555995": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca na criação de cadastro de condenados, mecanismo caracteristicamente punitivista que não amplia proteção material, atendimento ou direitos das vítimas. Enquanto pode ter intento dissuasório, não constitui política de proteção ou prevenção substantiva.",
+      "ementa_preview": "Cria o Cadastro Nacional de Pessoas Condenadas por Crimes de Violência contra a Mulher (CNPC Mulher).",
+      "pl_ref": "PL 4391/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2580867": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A medida foca em aumentar rigor penal (vedar liberdade provisória) sem criar mecanismos de proteção material à vítima ou políticas públicas de atendimento. Embora combata crime grave, o enfoque é puramente punitivo ao réu, não protetivo à mulher.",
+      "ementa_preview": "Altera o Decreto-Lei nº 3.689, de 3 de outubro de 1941 (Código de Processo Penal), para vedar a concessão de liberdade provisória aos que tenham cometido violência doméstica e familiar contra a mulher",
+      "pl_ref": "PL 5611/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2611786": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Embora mencione proteção de mulheres, a medida foca primariamente em aumentar sanção penal (suspensão compulsória de acesso digital) como efeito automático de condenação, sem criar políticas de proteção material, acolhimento ou prevenção. Restrições de direito do condenado não necessariamente ampliam direitos ou proteção das vítimas.",
+      "ementa_preview": "Estabelece a suspensão compulsória do acesso a plataformas de redes sociais como efeito específico da condenação para crimes dolosos praticados com violência ou grave ameaça, quando houver utilização ",
+      "pl_ref": "PL 1390/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2394488": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Embora mencione proteção da vítima, substitui políticas de proteção comprovadas (medidas protetivas, acolhimento, afastamento do agressor) por armamentismo, que aumenta risco de letal e não se justifica empiricamente. Contorna procedimentos de elegibilidade psicossocial para porte, criando exceção que desprotege ao invés de proteger.",
+      "ementa_preview": "Altera a Lei nº 10.826, de 22 dedezembro de 2003, para que amulher vítima de violência doméstica tenha direito e prioridade no processo de aquisição e porte de arma de fogo.",
+      "pl_ref": "PL 4885/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2369520": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca em mecanismo de vigilância eletrônica obrigatória do agressor como ferramenta de fiscalização, característica típica de endurecimento penal, em vez de fortalecer atendimento, acolhimento ou direitos da vítima. Embora a intenção seja garantir cumprimento de medidas protetivas, a abordagem prioriza monitoramento punitivo do ofensor sobre políticas de proteção material da mulher.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006 – Lei Maria da Penha, para dispor sobre o uso obrigatório de tornozeleira eletrônica como meio de fiscalizar o cumprimento das medidas protetivas de urgê",
+      "pl_ref": "PL 3097/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2361404": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Alterações ao mecanismo de revogação de medidas protetivas podem fragilizar a proteção de vítimas de violência doméstica ao facilitar a descontinuidade de salvaguardas. Sem detalhes do texto, a proposta de mudança nesta matérica essencial sugere potencial restrição de direitos já conquistados.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006, para dispor sobre a revogação de medidas protetivas.",
+      "pl_ref": "PL 2454/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2428154": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Transfere custo de monitoramento eletrônico para o condenado, criando barreira econômica ao acesso a benefícios penais e afetando desproporcionalmente mulheres em situação de pobreza. Funciona como punição adicional baseada em capacidade financeira, contrariando princípios de execução penal igualitária.",
+      "ementa_preview": "Altera a Lei nº 7.210, de 11 de julho de 1984, Lei de Execução Penal – LEP e o Decreto-Lei 2.848, de 1940, Código Penal, para prever o pagamento do monitoramento eletrônico pelo condenado.",
+      "pl_ref": "PL 1335/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2443312": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposta amplia o rol de crimes hediondos, focando em aumento de pena e rigor penal em vez de criar políticas protetivas ou melhorar atendimento à vítima. Embora a intenção seja combater violência doméstica, o mecanismo escolhido é exclusivamente punitivo-penal, sem expandir direitos ou proteção material das mulheres.",
+      "ementa_preview": "Altera o art. 1º da Lei nº 8.072, de 25 de julho de 1990, para inserir os crimes cometidos com violência doméstica e familiar contra mulher no rol de delitos hediondos.",
+      "pl_ref": "PL 2568/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2526707": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Proposta restringe benefício legal (minorante) exclusivamente para pessoas sob monitoramento eletrônico, aumentando rigor penal sem criar mecanismos de proteção ou políticas públicas. Foca em endurecimento de pena para população carcerária, frequentemente composta por mulheres em situações de vulnerabilidade.",
+      "ementa_preview": "Altera a Lei nº 11.343, de 23 de agosto de 2006, para vedar a aplicação da minorante do tráfico privilegiado, quando o agente estiver sob vigilância de monitoramento eletrônico.",
+      "pl_ref": "PL 2933/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2487422": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca primariamente em criar tipos penais e aumentar penas (qualificadores com resultado morte), sem estabelecer políticas protetivas, de prevenção ou de atendimento à vítima. Amplia o arsenal penal mas não necessariamente melhora a proteção material das mulheres ou a responsabilização efetiva.",
+      "ementa_preview": "Tipifica criminalmente o assédio moral e cria formas qualificadas dos crimes de assédio moral e de assédio sexual para os casos de que resulte o suicídio da vítima.",
+      "pl_ref": "PL 1080/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2361543": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Institui protocolo com nome ideológico ('não aborte') que, embora formalmente 'facultativo', cria barreira procedural e psicológica antes de acesso a direito legal, funcionando como constrangimento à interrupção legal de gestação. Altera leis de proteção a vítimas de violência sexual, potencialmente dificultando acesso ao aborto legal em casos de estupro.",
+      "ementa_preview": "Institui o protocolo \"OUÇA O CORAÇÃO. NÃO ABORTE\" que estabelece a realização facultativa de exame pela gestante antes da realização do procedimento de abortamento legal nos serviços de saúde próprios",
+      "pl_ref": "PL 2490/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2470719": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Substitui políticas públicas de proteção estrutural (acolhimento, segurança policial, afastamento do agressor) por armamentismo individual, reduzindo responsabilidade estatal e deslocando o ônus da segurança para a vítima. Historicamente, autorizar armas para 'defesa' da vítima é estratégia de desresponsabilização do Estado e risco de escalação de conflitos domésticos.",
+      "ementa_preview": "Dispõe sobre a concessão de porte de spray de pimenta para mulheres vítimas de violência doméstica amparadas por medida protetiva, com autorização e controle dos órgãos de segurança pública; altera a ",
+      "pl_ref": "PL 4464/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2607534": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A proposição criminaliza condutas de terceiros que facilitam o acesso ao aborto legal, criando obstáculos à efetivação de direitos reprodutivos já reconhecidos (estupro, risco de vida, anencefalia). Amplia a criminalização além da gestante, penalizando apoiadores e financiadores, o que restringe materialmente o exercício de direitos constitucionalmente protegidos.",
+      "ementa_preview": "Altera o artigo 126 do Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), a fim de tipificar a conduta do agente que coage, induz, instiga ou presta auxílio material ou financeiro à gestan",
+      "pl_ref": "PL 1027/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2490232": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Foca exclusivamente em aumentar penas e criar sanções administrativas para condenados, sem propor políticas de proteção, prevenção, atendimento às vítimas ou investigação aprimorada. A agravação penal não melhora materialmente a segurança de crianças e adolescentes.",
+      "ementa_preview": "Altera a Lei nº 8.069, de 13 de julho de 1990, para agravar as penas de policiais, conselheiros tutelares e professores que cometam abuso sexual contra crianças e adolescentes, bem como estabelecer sa",
+      "pl_ref": "PL 1245/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2545421": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em intensificação do rigor penal (monitoramento eletrônico permanente) sem mencionar medidas de proteção material às vítimas, prevenção ou melhoria de atendimento. Caracteriza-se como medida de castigo/controle do condenado, não ampliação de direitos ou políticas públicas protetivas.",
+      "ementa_preview": "Dispõe sobre a obrigatoriedade de monitoramento eletrônico permanente de condenados por crimes de natureza sexual contra crianças e adolescentes e dá outras providências.",
+      "pl_ref": "PL 3994/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2350955": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Susta política afirmativa que amplia direitos de mulheres trans e travestis, restringindo acesso a medidas de equidade. Atua diretamente contra direitos de grupos vulneráveis historicamente excluídos do mercado de trabalho.",
+      "ementa_preview": "Susta os efeitos de dispositivo, do Decreto nº 11.430, de 08 de março de 2023, que institui cotas para mulheres trans, travestis e outras possibilidades do gênero feminino em ações de equidade entre m",
+      "pl_ref": "PDL 68/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2348600": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A ementa visa proteger ensino de 'norma culta' em português, linguagem típica de projetos que buscam restringir políticas linguísticas inclusivas, multiculturais e de acessibilidade. Não menciona explicitamente direitos de mulheres, mas insere-se em padrão regressivo de controle normativo que afeta grupos vulneráveis, incluindo mulheres trans e estudantes de grupos minorizados.",
+      "ementa_preview": "Estabelece medidas protetivas ao direito dos estudantes de aprendizado da língua portuguesa de acordo com a norma culta e orientações legais de ensino, na forma que menciona.",
+      "pl_ref": "PL 467/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2385672": {
+      "stance": "regressivo",
+      "confianca": 0.98,
+      "justificativa": "A proibição da interrupção voluntária da gravidez restringe direitos reprodutivos das mulheres, criminalizando um procedimento legal no Brasil dentro dos marcos já estabelecidos (estupro, risco de vida, anencefalia). Configura clara regressão de direitos fundamentais.",
+      "ementa_preview": "Dispõe sobre a proibição da interrupção voluntária da gravidez e dá outras providências.",
+      "pl_ref": "PL 4307/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2396152": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Restringe direito ao acesso de informação sobre aborto legal, criminaliza indiretamente o exercício de direito garantido pela jurisprudência (aborto em casos de anencefalia, risco de vida, estupro), e censura plataformas digitais. Não protege mulheres, mas as afasta de informações essenciais para saúde reprodutiva.",
+      "ementa_preview": "Dispõe sobre o banimento de contas e domínios que promovam o aborto por meio de sites, aplicativos e plataformas online, e dá outras providências.",
+      "pl_ref": "PL 5013/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2418976": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Adia obrigatoriedade de publicação de relatórios de transparência salarial, enfraquecendo mecanismo de fiscalização e enforcement da igualdade salarial entre mulheres e homens. A postergação reduz visibilidade e accountability sobre disparidades remuneratórias, limitando direito das mulheres ao acesso a informações para reivindicar igualdade.",
+      "ementa_preview": "Altera a Lei nº 14.611, de 3 de julho de 2023, que dispõe sobre a igualdade salarial e critérios remuneratórios entre mulheres e homens; e altera a Consolidação das Leis do Trabalho, aprovada pelo Dec",
+      "pl_ref": "PL 500/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2485321": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Notificação compulsória por condomínios viola sigilo e autonomia da vítima, podendo expô-la a maior risco e constrangimento, além de conflitar com protocolos de segurança que priorizam a vontade da mulher. Medidas protetivas já existentes não exigem esse tipo de obrigação, que funciona como controle e vigilância da vítima em vez de proteção.",
+      "ementa_preview": "Altera a Lei nº 10.406, de 10 de janeiro de 2002 – Código Civil, para dispor sobre notificação compulsória pelos condomínios residenciais na hipótese de violência doméstica.",
+      "pl_ref": "PL 669/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2528433": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Ementa explicitamente focada em 'recrudescer o tratamento penal', aumentar penas e classificar como hediondos, sem mencionar políticas de proteção, atendimento a vítimas ou prevenção. Tipicamente punitivista puro.",
+      "ementa_preview": "Institui medidas de enfrentamento e repressão aos crimes de pornografia de crianças e adolescentes relacionados ao uso de inteligência artificial e de técnicas de mascaramento de endereço de IP empreg",
+      "pl_ref": "PL 3066/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2377291": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Aumenta rigor penal contra quem anuncia meios abortivos, criminalizando informação e acesso a direitos reprodutivos já garantidos legalmente. Restringe autonomia reprodutiva da mulher ao penalizar intermediários, afastando-se de políticas protetivas e avançando agenda de controle sobre corpos e escolhas reprodutivas.",
+      "ementa_preview": "Torna mais rigoroso o tratamento da conduta de anunciar processo, substância ou objeto destinado a provocar aborto, inserindo artigo no Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), e",
+      "pl_ref": "PL 3850/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2363363": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Impor advertências em testes de gravidez funciona como controle sobre a autonomia reprodutiva e a privacidade da mulher, potencialmente visando desestimular ou criminalizar uso de informação sobre própria gestação. Medida tipicamente associada a agendas que restringem direitos reprodutivos.",
+      "ementa_preview": "Obriga à impressão de advertência nas embalagens de produtos comercializados para a detecção de gravidez.",
+      "pl_ref": "PL 2674/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2464903": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Proposta que vincula celebração da vida especificamente à prevenção do aborto, enquadrando-se em restrição de direitos reprodutivos e autonomia corporal das mulheres. Usa linguagem de proteção para legitimar controle sobre decisões reprodutivas, não amplia acesso a direitos ou políticas públicas materiais de proteção.",
+      "ementa_preview": "Institui o mês “dezembro branco”, dedicado à promoção e celebração da vida, bem como ações que evitem o aborto.",
+      "pl_ref": "PL 4109/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2459891": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A proposição busca desestimular o acesso ao aborto legal (direito garantido constitucionalmente) criando incentivos financeiros à adoção como alternativa, funcionando como mecanismo de coerção sobre gestantes vulneráveis. Oferece bolsa condicionada a não exercer direito reprodutivo, restringindo autonomia em vez de proteger direitos materiais da mulher.",
+      "ementa_preview": "Institui o pagamento de uma \"bolsa vida\" para a família que adotar uma criança que for doada pela mãe que desejava praticar o aborto.",
+      "pl_ref": "PL 3797/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2598560": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em aumentar a severidade penal (crimes hediondos) e rigor processual, não em políticas de proteção material, atendimento ou prevenção da violência. Embora tenha intenção protetiva, o mecanismo escolhido é exclusivamente punitivo, sem criar serviços, abrigos ou políticas públicas de proteção.",
+      "ementa_preview": "Altera o art.1º da Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos), para incluir no rol de crimes hediondos os crimes dolosos praticados com violência ou grave ameaça contra mulher no ",
+      "pl_ref": "PL 6559/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2419052": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar a severidade penal (classificação como crime hediondo) sem criar políticas de proteção, atendimento ou reinserção social para vítimas de exploração sexual. Rigor penal isolado não resolve vulnerabilidades estruturais que levam à exploração.",
+      "ementa_preview": "Altera o inciso I do art. 1º da Lei nº 8.072 de Julho de 1990 (Lei de Crimes Hediondos) para inserir o favorecimento da prostituição ou outra forma de exploração sexual, no rol de Crimes Hediondos.",
+      "pl_ref": "PL 520/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2416460": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A tipificação de 'falsas acusações' e qualificadores para denúncias criminaliza vítimas e dificulta o acesso à justiça, criando risco de desestímulo ao denunciamento em casos reais de violência doméstica. Historicamente, esse tipo de mecanismo é instrumentalizado para proteger agressores e punir mulheres que denunciam.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), para tipificar penalmente a conduta de realizar falsas acusações no âmbito de violência doméstica e implementar qualificadoras para",
+      "pl_ref": "PL 6198/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2619602": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca exclusivamente em aumentar penas e criar agravantes penais, sem propor medidas de proteção material, prevenção, atendimento ou resgate às vítimas. Tipifica condutas omissivas de forma ampla, caracterizando abordagem fundamentalmente punitivista.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 (Código Penal), para prever causa de aumento de pena para quem facilita, consente ou se omite dolosamente em crimes contra a dignidade sexual de",
+      "pl_ref": "PL 2060/2026",
+      "classified_at": "2026-05-19"
+    },
+    "2442835": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em aumentar penas (qualificadora e majorante) e expandir o rol de crimes hediondos, mecanismos típicos de endurecimento penal. Embora mencione crimes contra dignidade sexual, não cria políticas de proteção material, atendimento ou prevenção de violência contra mulheres.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de Dezembro de 1940 (Código Penal) e a Lei nº 8.072, de 25 de julho de 1990 (Lei dos Crimes Hediondos), para instituir qualificadora e majorante nos crimes de furto",
+      "pl_ref": "PL 2528/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2387628": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Criminaliza e agrava penas para aborto, incluindo-o em crimes hediondos, o que restringe direitos reprodutivos conquistados (aborto legal em casos de estupro, risco de vida e anencefalia) e contradiz políticas de proteção das mulheres. Aumenta controle penal sobre decisões reprodutivas das mulheres em vez de ampliar acesso a direitos e políticas públicas protetivas.",
+      "ementa_preview": "Altera o Decreto-Lei nº 2.848, de 7 de dezembro de 1940 – Código Penal, e a Lei nº 8.072, de 25 de julho de 1990, que dispõe sobre crimes hediondos, visando agravar as penas referentes ao crime de abo",
+      "pl_ref": "PL 4469/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2434999": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A proibição de assistolia fetal em interrupções legais de gravidez (casos de estupro, risco de vida, anencefalia) restringe autonomia reprodutiva da mulher e impõe sofrimento desnecessário ao procedimento, mesmo em situações onde a lei já autoriza o aborto. Funciona como obstáculo adicional ao exercício de direito legalmente garantido.",
+      "ementa_preview": "Dispõe sobre a proibição do procedimento de assistolia fetal em casos específicos de interrupção da gravidez previstos em lei.",
+      "pl_ref": "PL 1958/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2406636": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A proposição autoriza armamentismo para vítimas de violência doméstica sob medidas protetivas, estratégia que estudos internacionais associam a maior risco de homicídio e não substitui políticas protetivas efetivas. Contradiz a lógica da Lei Maria da Penha, que prioriza afastamento do agressor e proteção especializada, não armamento da vítima.",
+      "ementa_preview": "Altera a Lei n° 10.826, de 22 de dezembro de 2003, que dispõe sobre registro, posse e comercialização de armas de fogo e munição, sobre o Sistema Nacional de Armas – Sinarm, define crimes e dá outras ",
+      "pl_ref": "PL 5698/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2377325": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Militariza escolas públicas sob pretexto de segurança, desviando recursos de políticas preventivas e de proteção integral das mulheres (educação, saúde, orientação). Funciona como punição/controle do espaço escolar em vez de expandir direitos e políticas protetivas materiais para meninas e mulheres.",
+      "ementa_preview": "Altera a Lei nº 9.394, de 20 de dezembro de 1996, tornando um dever do Estado, o fornecimento de detectores de metais, aparelhos de raios X, monitoramento eletrônico e segurança armada em toda rede de",
+      "pl_ref": "PL 3857/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2377361": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Embora formalmente voltada à 'segurança', a imposição de armamentismo e militarização em escolas restringe o direito a ambientes seguros e acessíveis, particularmente para meninas e mulheres que podem enfrentar intimidação por armas. Instrumentaliza medo em vez de implementar políticas de proteção material (capacitação de professores, apoio psicológico, protocolos contra assédio).",
+      "ementa_preview": "Altera a Lei nº 9.394, de 20 de dezembro de 1996, tornando um dever do Estado, o fornecimento de detectores de metais, aparelhos de raios X, monitoramento eletrônico  e segurança armada em toda rede d",
+      "pl_ref": "PL 3863/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2490707": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A sustação de resoluções que garantem atendimento e proteção de crianças e adolescentes vítimas de violência sexual restringe direitos fundamentais e políticas de proteção já estabelecidas. Configura retrocesso institucional ao impedir a implementação de medidas protetivas consolidadas pelo CONANDA.",
+      "ementa_preview": "Susta as Resoluções nº 252, de 16 de outubro de 2024, e nº 262, de 20 de março de 2025, do CONANDA que dispõe sobre o atendimento de crianças e adolescentes vítimas de violência sexual e a garantia de",
+      "pl_ref": "PDL 138/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2482617": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A sustação de resolução que garante direitos e atendimento especializado a crianças e adolescentes vítimas de violência sexual é uma ação que restringe direitos e prejudica a proteção material das vítimas. Não há indicativo de que a resolução sustada fosse prejudicial; ao contrário, suspendê-la reduz proteções já estabelecidas.",
+      "ementa_preview": "Susta os efeitos da Resolução nº 258 de 23 de dezembro de 2024, que dispõe sobre o atendimento de crianças e adolescentes vitimas de violência sexual e a garantia dos seus direitos.",
+      "pl_ref": "PDL 53/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2472871": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Autorizar porte de arma para vítimas de violência doméstica desvia do foco de políticas protetivas baseadas em medidas de proteção, acolhimento e afastamento do agressor. A arma aumenta riscos de homicídios, suicídios e acidentes, particularmente em contextos de violência doméstica onde dinâmicas de controle e impulsividade são fatores críticos.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006, para dispor sobre o porte de arma de fogo para mulheres vítimas de violência doméstica e pessoas ameaçadas.",
+      "pl_ref": "PL 4573/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2547124": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "Prioriza encarceramento automático sobre avaliação individualizada de risco e alternativas protetivas, criando presunção de culpa que viola direitos processuais. Medidas protetivas, monitoramento eletrônico e outras políticas públicas de proteção material seriam mais eficazes que prisão preventiva obrigatória.",
+      "ementa_preview": "Altera o Código de Processo Penal para tornar obrigatória a prisão preventiva em casos de violência contra a mulher, na audiência de custódia, salvo prova cabal de inexistência de risco.",
+      "pl_ref": "PL 4026/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2462271": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Armamentismo não é política de proteção material comprovada e desvia de medidas efetivas (acolhimento, segurança, afastamento do agressor). Historicamente, armas em ambientes de violência doméstica aumentam risco de feminicídio e retiram foco de proteções reais.",
+      "ementa_preview": "Acrescenta dispositivo à Lei nº 11.340, de 7 de agosto de 2006, para dispor sobre o direito da mulher que sofre violência doméstica ao porte de arma de fogo.",
+      "pl_ref": "PL 3930/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2399407": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Amplia objeção de consciência para aborto legal, criando obstáculo prático ao acesso de direito garantido pela Lei 12.015/2013 e jurisprudência, particularmente em contextos de vulnerabilidade onde mulheres dependem de serviços públicos. Restringe direitos reprodutivos estabelecidos ao priorizar convicção médica sobre autonomia reprodutiva da mulher.",
+      "ementa_preview": "Altera a Lei nº 12.842, de 10 de julho de 2013, para reconhecer o direito do médico à objeção de consciência para a não realização de aborto.",
+      "pl_ref": "PL 5194/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2350460": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Autorizar armamentismo como solução para proteção de mulheres em risco viola o modelo baseado em políticas públicas efetivas de segurança e acolhimento, historicamente associado a maior risco de morte em contextos de violência doméstica. A medida protetiva já existe como instrumento legal; armar a vítima substitui proteção estatal por responsabilização individual perigosa.",
+      "ementa_preview": "Altera a Lei 10.826, de 22 de dezembro de 2003, para incluir dispositivo que autorize mulheres sob medida protetiva decretada por ordem judicial portem arma de fogo.",
+      "pl_ref": "PL 977/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2567301": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "A Lei Maria da Penha foi construída sobre reconhecimento de vulnerabilidade estrutural de mulheres em relações de gênero; estender indiscriminadamente a homens (sem critério de vulnerabilidade) esvazia o marco legal, historicamente usado para derrotar avanços protetivos. Proposta típica de backlash contra direitos das mulheres.",
+      "ementa_preview": "Altera a Lei nº 11.340, de 7 de agosto de 2006 (Lei Maria da Penha), para incluir o art. 40-B, a fim de permitir a aplicação das medidas protetivas de urgência previstas na referida lei também às pess",
+      "pl_ref": "PL 4954/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2467617": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Veda ao órgão de direitos da criança discutir proteção de menores em situação de gravidez, restringindo acesso a informação e políticas públicas de saúde reprodutiva. Impede debater direitos de adolescentes grávidas, vulnerabilizando-as ao cercear capacidade institucional de proteção.",
+      "ementa_preview": "Altera a Lei nº 8.242, de 12 de outubro de 1991, para vedar ao Conselho Nacional dos Direitos da Criança e do Adolescente (Conanda) a discussão e o tratamento do tema do aborto em crianças e adolescen",
+      "pl_ref": "PL 4296/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2419012": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A proposição susta normas técnicas que orientam o atendimento a abortamento (espontâneo ou legal), removendo protocolos de proteção e cuidado às mulheres. Isso reduz direitos reprodutivos e acesso a atenção técnica qualificada, caracterizando retrocesso em políticas de saúde para mulheres.",
+      "ementa_preview": "Susta a  NOTA TÉCNICA CONJUNTA Nº 2/2024-SAPS/SAES/MS, que \"anula a NOTA TÉCNICA Nº 44/2022-DAPES/SAPS/MS (0027713213) e torna sem efeito o Manual “Atenção Técnica para Prevenção, Avaliação e Conduta ",
+      "pl_ref": "PDL 20/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2597314": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Susta orientação que permitia acesso a contraceptivo reversível sem consentimento parental, restringindo autonomia reprodutiva de adolescentes e reforçando controle parental sobre direitos reprodutivos. A medida obstrui política pública protetiva que reconhecia capacidade de decisão de meninas sobre seu corpo.",
+      "ementa_preview": "Susta, parcialmente, os efeitos da Nota Técnica Conjunta nº 419/2025-DGCI/DESCO/SAPS/MS, do Ministério da Saúde, exclusivamente quanto à orientação de dispensa de consentimento dos pais ou responsávei",
+      "pl_ref": "PDL 1209/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2597323": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A sustação elimina direito protegido de mobilidade para mulheres e pessoas LGBTQIA+ em situação de violência doméstica, restringindo acesso a política pública essencial de proteção. A medida ataca diretamente garantias de segurança e dignidade para vítimas de violência ao impedir remoção/redistribuição que as afasta do agressor.",
+      "ementa_preview": "Susta, integralmente, os efeitos da Portaria Conjunta nº 88, de 03 de dezembro de 2025, do Ministério da Gestão e da Inovação em Serviços Públicos e do Ministério das Mulheres, que dispõe sobre o dire",
+      "pl_ref": "PDL 1210/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2425231": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A notificação compulsória mensal de abortos funciona como mecanismo de vigilância e controle sobre corpos e decisões reprodutivas de mulheres, criando barreiras ao acesso a procedimentos legais e exposição de dados sensíveis. Diferencia-se de sistemas de notificação epidemiológica padrão ao impor frequência e especificidade que fomentam criminalização indireta.",
+      "ementa_preview": "Estabelece a obrigatoriedade de todas as instituições médicas, sejam públicas ou privadas, notificarem mensalmente ao Ministério da Saúde a ocorrência de abortos.",
+      "pl_ref": "PL 1152/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2362302": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Proposta que restringe acesso a tratamentos médicos legítimos para pessoas trans menores, criminalizando procedimentos reconhecidos por sociedades médicas internacionais como cuidados necessários. Funciona como controle de direitos reprodutivos e identitários, não protegendo materialmente crianças/adolescentes, mas limitando sua autonomia corporal e direitos.",
+      "ementa_preview": "Dispõe sobre intervenção cirúrgica ou tratamento de transexualização em criança ou adolescente, sem justa causa, alterando a Lei nº 8.069, de 13 de julho de 1990 (Estatuto da Criança e do Adolescente)",
+      "pl_ref": "PL 2574/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2564284": {
+      "stance": "punitivista",
+      "confianca": 0.85,
+      "justificativa": "A proposição foca em aumentar rigor penal (vedação de benefícios, responsabilidade funcional) sem criar mecanismos de proteção material às vítimas. Embora cite feminicídio, prioriza endurecimento punitivo em vez de políticas protetivas ou de atendimento à mulher vítima.",
+      "ementa_preview": "Altera a Lei nº 7.210, de 11 de julho de 1984 (Lei de Execução Penal), para vedar a concessão de benefícios a condenados em regime fechado pela prática de crimes dolosos contra a vida, incluindo o fem",
+      "pl_ref": "PL 4751/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2529248": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Armamentismo como resposta a violência doméstica substitui políticas de proteção material (abrigos, assistência social, redes de apoio) e transfere responsabilidade da segurança para a vítima, perpetuando ciclos de violência. Não há evidência de que armas aumentem proteção em contextos de violência doméstica, onde acesso a armas agrava risco de feminicídio.",
+      "ementa_preview": "Altera a Lei nº 10.826, de 22 de dezembro de 2003, para assegurar tramitação prioritária nos processos de aquisição, registro e porte de arma de fogo às mulheres em situação de violência doméstica e f",
+      "pl_ref": "PL 3127/2025",
+      "classified_at": "2026-05-19"
+    },
+    "2434676": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "A proposta restringe o direito ao aborto legal já garantido pela legislação brasileira, criminalizando procedimento médico legítimo e reduzindo autonomia reprodutiva das mulheres. Configura ataque direto a direitos reprodutivos consolidados, mesmo que parcialmente.",
+      "ementa_preview": "Esta Lei altera o artigo 128 do Decreto 2848 de 07 de dezembro de 2024 para inserir a proibição de pratica de aborto, realizada por médicos, após a 22ª (vigésima segunda) semana de gestação e dá outra",
+      "pl_ref": "PL 1920/2024",
+      "classified_at": "2026-05-19"
+    },
+    "2405948": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Susta resolução que estabelece diretrizes de proteção e tratamento digno para população LGBTQI+ no sistema de justiça criminal, removendo salvaguardas contra discriminação e violação de direitos. Atua contra direitos de grupos vulneráveis historicamente discriminados no cárcere.",
+      "ementa_preview": "Susta a Resolução nº 348, de 9 de outubro de 2020, do Conselho Nacional de Justiça, que “estabelece diretrizes e procedimentos a serem observados pelo Poder Judiciário, no âmbito criminal, com relação",
+      "pl_ref": "PDL 427/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2350415": {
+      "stance": "regressivo",
+      "confianca": 0.85,
+      "justificativa": "Autoriza armamentismo como substituto a políticas de proteção material (acolhimento, afastamento do agressor, monitoramento eletrônico), deslocando responsabilidade estatal para a vítima e aumentando risco de morte em dinâmicas de violência doméstica. Contradiz evidências de que armas em casa elevam lethality e não aumentam segurança em contextos de violência íntima.",
+      "ementa_preview": "Atribui presunção de efetiva necessidade para possuir e/ou portar armas de fogo de uso permitido por mulheres em situação de violência doméstica ou familiar ou situação de risco a integridade.",
+      "pl_ref": "PL 951/2023",
+      "classified_at": "2026-05-19"
+    },
+    "2349722": {
+      "stance": "regressivo",
+      "confianca": 0.95,
+      "justificativa": "Autoriza armamentismo como solução para violência doméstica, substituindo políticas protetivas de acolhimento, abrigos e responsabilização do agressor. Pesquisa consolidada mostra que armas em casa aumentam risco de feminicídio e não reduzem violência.",
+      "ementa_preview": "Dispõe sobre a isenção do Imposto sobre Produtos Industrializados (IPI) na aquisição de armas de fogo para mulheres vítimas de violência doméstica ou que desempenhem atividade em período noturno.",
+      "pl_ref": "PL 766/2023",
+      "classified_at": "2026-05-19"
+    }
+  }
+}

@@ -23,6 +23,8 @@ import argparse
 import json
 import sys
 import time
+from collections import defaultdict
+from datetime import date
 from pathlib import Path
 
 try:
@@ -32,6 +34,7 @@ except ImportError:
     sys.exit(1)
 
 DATA_DIR = Path(__file__).parent.parent / "src" / "data"
+LLM_CACHE_PATH = Path(__file__).parent / "stance_llm_cache.json"
 
 SYSTEM_PROMPT = """Você é um especialista em políticas públicas brasileiras com foco em direitos das mulheres.
 
@@ -76,6 +79,81 @@ def load_overrides():
         data = json.loads(p.read_text(encoding="utf-8"))
         return {k: v["stance"] for k, v in data.items() if not k.startswith("_")}
     return {}
+
+
+def persistir_cache_llm(autoria: dict, novos_resultados: dict) -> None:
+    """Atualiza scripts/stance_llm_cache.json com todas as classificações
+    LLM não-protetivas. Esse cache é lido por classify_stance.py no pipeline
+    diário pra que as classificações sobrevivam ao rebuild_autoria.
+
+    Estratégia cumulativa:
+    - Lê o cache anterior (se existir)
+    - Atualiza com classificações novas vindas desta rodada
+    - Re-extrai do autoria.json todas as PLs que têm llm_confianca, pra
+      cobrir entradas que vieram via stance_overrides.json ou que já
+      estavam marcadas em rodadas anteriores
+    """
+    if LLM_CACHE_PATH.exists():
+        try:
+            cache = json.loads(LLM_CACHE_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            cache = {"classificacoes": {}}
+    else:
+        cache = {"classificacoes": {}}
+
+    classificacoes = cache.get("classificacoes", {})
+    hoje = str(date.today())
+
+    # 1) Atualizar com resultados novos desta rodada
+    pl_meta = {}
+    for d in autoria["deputados"]:
+        for pl in d["pls"]:
+            pl_meta.setdefault(pl["id"], pl)
+
+    for pid, r in novos_resultados.items():
+        meta = pl_meta.get(pid, {})
+        classificacoes[str(pid)] = {
+            "stance": r["new_stance"],
+            "confianca": r["confianca"],
+            "justificativa": r["justificativa"],
+            "ementa_preview": (meta.get("ementa") or "")[:200],
+            "pl_ref": f"{meta.get('tipo','?')} {meta.get('numero','?')}/{meta.get('ano','?')}",
+            "classified_at": hoje,
+        }
+
+    # 2) Re-extrair do autoria.json todas as PLs já marcadas como
+    #    não-protetivas com llm_confianca — cobre entradas legadas
+    seen = set()
+    for d in autoria["deputados"]:
+        for pl in d["pls"]:
+            pid = pl["id"]
+            if pid in seen:
+                continue
+            seen.add(pid)
+            if pl.get("stance") in ("regressivo", "punitivista") and pl.get("llm_confianca"):
+                pid_str = str(pid)
+                if pid_str not in classificacoes:
+                    classificacoes[pid_str] = {
+                        "stance": pl["stance"],
+                        "confianca": pl["llm_confianca"],
+                        "justificativa": pl.get("llm_justificativa", ""),
+                        "ementa_preview": (pl.get("ementa") or "")[:200],
+                        "pl_ref": f"{pl['tipo']} {pl['numero']}/{pl['ano']}",
+                        "classified_at": hoje,
+                    }
+
+    cache_out = {
+        "_nota": "Cache de classificações LLM. Alimentado por scripts/classify_stance_llm.py (rotina semanal), lido por scripts/classify_stance.py como override sobre a regex no pipeline diário. Sem isso, as classificações LLM (regressivo/punitivista) eram perdidas todo dia quando rebuild_autoria.py recriava o autoria.json do zero, e só voltavam na segunda. Manual editorial: stance_overrides.json tem prioridade ainda maior.",
+        "atualizado_em": hoje,
+        "classificacoes": dict(sorted(classificacoes.items(), key=lambda kv: int(kv[0]))),
+    }
+    LLM_CACHE_PATH.write_text(
+        json.dumps(cache_out, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    by_stance = defaultdict(int)
+    for v in classificacoes.values():
+        by_stance[v["stance"]] += 1
+    print(f">>> stance_llm_cache.json atualizado: {len(classificacoes)} entradas ({dict(by_stance)})")
 
 
 def main():
@@ -188,6 +266,14 @@ def main():
                 pl["stance"] = r["new_stance"]
                 pl["llm_confianca"] = r["confianca"]
                 pl["llm_justificativa"] = r["justificativa"]
+
+    # Persistir cache LLM — sem isso, classify_stance.py (rodada diária)
+    # perde essas classificações no próximo rebuild_autoria. O cache é
+    # cumulativo: classificações antigas que não voltaram a ser revistas
+    # nesta rodada (ex.: a PL não foi mais marcada como protetiva pela
+    # regex) ficam preservadas. Quando o LLM revisar de novo e mudar de
+    # ideia, a nova entrada sobrescreve a antiga.
+    persistir_cache_llm(autoria, results)
 
     # Recalcular totais por deputado (já considerando regressivos=fora)
     for d in autoria["deputados"]:
