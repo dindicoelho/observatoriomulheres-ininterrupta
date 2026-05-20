@@ -174,6 +174,9 @@ export default function VotacoesPartidos() {
 
   const totalVotacoes = DATA.votacoes.length;
   const totalPLs = new Set(DATA.votacoes.map((v) => v.pl_ref)).size;
+  const totalNominais = DATA.votacoes.filter(
+    (v) => v.totalSim > 0 || v.totalNao > 0,
+  ).length;
 
   return (
     <section className="bg-[var(--color-bg-alt)] px-6 py-24">
@@ -203,7 +206,7 @@ export default function VotacoesPartidos() {
         <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-[var(--color-text-secondary)] md:text-xl">
           <ScrollReveal
             as="p"
-            text={`Das mais de mil proposições sobre a mulher na atual legislatura, ${totalPLs} chegaram a votação nominal no plenário da Câmara — totalizando ${totalVotacoes} votações. Estas são as ${grupos.length} mais recentes. Clique para entender exatamente o que foi votado.`}
+            text={`Das mais de mil proposições sobre a mulher na atual legislatura, ${totalPLs} chegaram ao plenário da Câmara — totalizando ${totalVotacoes} votações (${totalNominais} nominais, ${totalVotacoes - totalNominais} por consenso simbólico). Estas são as ${grupos.length} mais recentes. Clique para entender exatamente o que foi votado.`}
           />
         </div>
 
@@ -252,20 +255,31 @@ export default function VotacoesPartidos() {
                       <span className="font-mono-data text-xs text-[var(--color-text-tertiary)]">
                         {v.data}
                       </span>
-                      <span className="flex items-center gap-1.5 text-sm">
-                        <span className="h-3 w-3 rounded-sm bg-[var(--color-teal)]" />
-                        <span className="font-mono-data font-bold text-[var(--color-teal)]">
-                          {v.totalSim}
+                      {v.totalSim === 0 && v.totalNao === 0 ? (
+                        <span
+                          className="rounded-full bg-gray-100 px-2.5 py-1 font-mono-data text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-secondary)]"
+                          title="Aprovada por consenso em plenário, sem chamada nominal. A API da Câmara não registra votos individuais nesse tipo de votação."
+                        >
+                          Aprovada por consenso · sem votação nominal
                         </span>
-                        <span className="text-[var(--color-text-secondary)]">SIM</span>
-                      </span>
-                      <span className="flex items-center gap-1.5 text-sm">
-                        <span className="h-3 w-3 rounded-sm bg-[var(--color-blood)]" />
-                        <span className="font-mono-data font-bold text-[var(--color-blood)]">
-                          {v.totalNao}
-                        </span>
-                        <span className="text-[var(--color-text-secondary)]">NÃO</span>
-                      </span>
+                      ) : (
+                        <>
+                          <span className="flex items-center gap-1.5 text-sm">
+                            <span className="h-3 w-3 rounded-sm bg-[var(--color-teal)]" />
+                            <span className="font-mono-data font-bold text-[var(--color-teal)]">
+                              {v.totalSim}
+                            </span>
+                            <span className="text-[var(--color-text-secondary)]">SIM</span>
+                          </span>
+                          <span className="flex items-center gap-1.5 text-sm">
+                            <span className="h-3 w-3 rounded-sm bg-[var(--color-blood)]" />
+                            <span className="font-mono-data font-bold text-[var(--color-blood)]">
+                              {v.totalNao}
+                            </span>
+                            <span className="text-[var(--color-text-secondary)]">NÃO</span>
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
                   <span
@@ -516,18 +530,35 @@ export default function VotacoesPartidos() {
                           );
                         })()}
 
-                        {/* Partidos */}
-                        <p className="mb-1 mt-6 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                          [ Votos por partido ]
-                        </p>
-                        <p className="mb-3 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                          largura da barra proporcional ao tamanho do partido
-                        </p>
-                        <div>
-                          {parties.map(([party, data]) => (
-                            <PartyRow key={party} party={party} data={data} maxTotal={maxPartyTotal} />
-                          ))}
-                        </div>
+                        {/* Partidos — só mostra se houve votação nominal */}
+                        {parties.length > 0 ? (
+                          <>
+                            <p className="mb-1 mt-6 font-mono-data text-xs uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                              [ Votos por partido ]
+                            </p>
+                            <p className="mb-3 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                              largura da barra proporcional ao tamanho do partido
+                            </p>
+                            <div>
+                              {parties.map(([party, data]) => (
+                                <PartyRow key={party} party={party} data={data} maxTotal={maxPartyTotal} />
+                              ))}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4">
+                            <p className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                              [ Voto por partido — indisponível ]
+                            </p>
+                            <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                              Aprovada por consenso em plenário, sem chamada
+                              nominal. A API da Câmara não registra votos
+                              individuais nesse tipo de votação, então não
+                              é possível mostrar o comportamento de cada
+                              partido aqui.
+                            </p>
+                          </div>
+                        )}
 
                       </div>
 
@@ -550,11 +581,20 @@ export default function VotacoesPartidos() {
                                   <span className="rounded bg-[var(--color-bg-alt)] px-2 py-0.5 font-mono-data text-[9px] uppercase tracking-wider text-[var(--color-text-secondary)]">
                                     {o.tipo === "mérito" ? "Mérito" : "Procedural"}
                                   </span>
-                                  <span className="font-mono-data text-xs">
-                                    <span className="text-[var(--color-teal)] font-bold">{o.totalSim}</span>
-                                    <span className="text-[var(--color-text-tertiary)]">×</span>
-                                    <span className="text-[var(--color-blood)] font-bold">{o.totalNao}</span>
-                                  </span>
+                                  {o.totalSim === 0 && o.totalNao === 0 ? (
+                                    <span
+                                      className="rounded bg-gray-100 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-[var(--color-text-secondary)]"
+                                      title="Aprovada por consenso, sem chamada nominal"
+                                    >
+                                      Consenso
+                                    </span>
+                                  ) : (
+                                    <span className="font-mono-data text-xs">
+                                      <span className="text-[var(--color-teal)] font-bold">{o.totalSim}</span>
+                                      <span className="text-[var(--color-text-tertiary)]">×</span>
+                                      <span className="text-[var(--color-blood)] font-bold">{o.totalNao}</span>
+                                    </span>
+                                  )}
                                 </div>
                                 <p className="mt-1 leading-relaxed text-[var(--color-text-secondary)]">
                                   {o.o_que_foi_votado}
