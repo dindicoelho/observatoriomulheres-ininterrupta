@@ -121,20 +121,35 @@ def test_caso6_amom_mandel_sem_penalidade_de_voto(deps):
 
 
 # ---------------------------------------------------------------------------
-# Caso 7: GO — Adriana Accorsi no topo, Silvye Alves fora do top 3
+# Caso 7: GO — Silvye Alves fora do top 3 (voto regressivo derruba)
+#
+# O caso original exigia Adriana Accorsi LIDERANDO o estado, premissa de
+# uma curadoria de 2025 quando ela tinha a maior produção. Lêda Borges
+# (REPUBLICANOS/GO) ultrapassou pela quantidade de PLs incrementais
+# protetivas + ficha limpa + votos coerentes — pela metodologia "o que
+# faz, não a etiqueta", lidera legitimamente. O canário aqui é: Silvye
+# Alves (voto SIM no PDL Conanda) tem que ficar de fora, e quem lidera
+# tem que ter ficha limpa (sem retrocesso).
 # ---------------------------------------------------------------------------
 
-def test_caso7_goias_top3(articuladores):
+def test_caso7_goias_top3(articuladores, deps):
     go = articuladores["ufs"]["GO"]["top3"]
     nomes = [t["nome"] for t in go]
-    assert any("Adriana Accorsi" in n for n in nomes), (
-        "Adriana Accorsi deveria estar no top 3 de Goiás"
-    )
-    assert nomes[0].endswith("Adriana Accorsi") or "Adriana Accorsi" in nomes[0], (
-        f"Adriana Accorsi deveria liderar GO (top 3: {nomes})"
-    )
     assert not any("Silvye Alves" in n for n in nomes), (
-        f"Silvye Alves não deveria estar no top 3 de GO (atual: {nomes})"
+        f"Silvye Alves não deveria estar no top 3 de GO — votou SIM no PDL Conanda (atual: {nomes})"
+    )
+    # Quem lidera tem que ter ficha sem retrocesso (zero regressivo, zero voto regressivo)
+    from score import sem_retrocesso
+    dep_idx = {d["id"]: d for d in deps}
+    lider = go[0]
+    d = dep_idx[lider["id"]]
+    assert sem_retrocesso(d), (
+        f"{lider['nome']} lidera GO mas tem retrocesso na ficha "
+        f"(reg={d.get('regressivos',0)} vreg={d.get('votos_regressivos',0)}) — checar curadoria"
+    )
+    # Adriana Accorsi (PT) tem que estar no top 3 — produção sólida + voto coerente
+    assert any("Adriana Accorsi" in n for n in nomes), (
+        f"Adriana Accorsi (PT/GO) deveria estar no top 3 de Goiás (atual: {nomes})"
     )
 
 
