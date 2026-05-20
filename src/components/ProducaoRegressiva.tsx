@@ -151,35 +151,42 @@ export default function ProducaoRegressiva() {
         </div>
 
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/70 md:text-xl">
-          Algumas das proposições mais assinadas do Congresso sobre
-          &ldquo;mulher&rdquo; atuam <strong>contra</strong> direitos
-          conquistados. Criminalizam o aborto legal em casos de estupro,
-          obrigam hospitais a denunciar vítimas à polícia, sustam
-          resoluções que protegem crianças contra violência sexual,
-          propõem armamento como resposta à violência doméstica. O site
-          remove essas PLs do ranking de atuação — e{" "}
+          Algumas das proposições legislativas mais assinadas do
+          Congresso sobre &ldquo;mulher&rdquo; atuam <strong>contra</strong>{" "}
+          direitos conquistados. Criminalizam o aborto legal em casos
+          de estupro, obrigam hospitais a denunciar vítimas à polícia,
+          sustam resoluções que protegem crianças contra violência
+          sexual, propõem armamento como resposta à violência doméstica.
+          O site remove essas PLs do ranking de atuação — e{" "}
           <strong>subtrai do score</strong> de quem as assina.
         </p>
 
         <div className="mt-4 max-w-2xl rounded-xl border border-[#D43F3F]/40 bg-[#D43F3F]/10 p-4">
           <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[#FF8080]">
-            [ Método ]
+            [ Método — duas penalidades distintas ]
           </p>
           <p className="mt-2 text-sm leading-relaxed text-white/80">
-            Classificamos como <strong>regressiva</strong> toda PL que:
-            criminaliza aborto legal, obriga notificação à polícia de
-            interrupção da gestação, susta resoluções protetivas
-            (Conanda 258), autoriza porte de arma como &ldquo;proteção&rdquo;
-            à vítima, ou criminaliza a reaproximação consensual. Cada
-            regressiva subtrai <strong>7 pontos</strong> do score do
-            autor.
+            <strong>Autoria de PL regressiva</strong> (esta seção):
+            assinar uma proposta que criminaliza aborto legal, obriga
+            notificação à polícia de interrupção da gestação, susta
+            resoluções protetivas (Conanda 258), proíbe bloqueio puberal,
+            ou autoriza porte de arma como &ldquo;proteção&rdquo; à
+            vítima. Cada PL regressiva assinada subtrai{" "}
+            <strong>−7 pontos</strong> do score.
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-white/80">
+            <strong>Voto SIM em pauta regressiva</strong> (tratado no
+            Ato 02): votar a favor da aprovação em plenário. Subtrai{" "}
+            <strong>−5 pontos</strong> do score. Hoje, a única votação
+            curada é o PDL 3/2025 (Conanda), aprovado 317×111 em
+            05/11/2025.
           </p>
         </div>
 
         {/* Padrões recorrentes */}
         <div className="mt-16">
           <p className="mb-8 font-mono-data text-xs uppercase tracking-[0.2em] text-[#FF8080]">
-            [ 4 padrões assinados em massa ]
+            [ As 4 PLs regressivas mais assinadas no Congresso ]
           </p>
           <div className="space-y-6">
             {agrupamentos.map((a) => (
@@ -189,9 +196,14 @@ export default function ProducaoRegressiva() {
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <div>
-                    <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[#D43F3F]">
-                      [ {a.exemplo_pl} ]
-                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded bg-[#D43F3F]/20 px-2 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-[#FF8080]">
+                        PL — Autoria
+                      </span>
+                      <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[#D43F3F]">
+                        [ {a.exemplo_pl} ]
+                      </p>
+                    </div>
                     <p
                       className="mt-2 leading-[0.95] text-white"
                       style={{
