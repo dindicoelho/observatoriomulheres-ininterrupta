@@ -4,7 +4,7 @@ Mapa de quem propõe, quem vota, quem engaveta, quem protege e quem retrocede di
 
 Investigação autoral de [Dindi Coelho](https://instagram.com/ininterrupta.sys) como parte da [Ininterrupta](https://instagram.com/ininterrupta.sys), publicação independente de inteligência cultural.
 
-🔗 **Site:** https://mapaviolenciamulher.com.br (ou seu domínio na Vercel)
+🔗 **Site:** https://observatoriomulheres.ininterrupta.com (ou seu domínio na Vercel)
 
 ---
 
@@ -17,7 +17,7 @@ Investigação autoral de [Dindi Coelho](https://instagram.com/ininterrupta.sys)
 - Cruzamento com taxa de feminicídio (FBSP).
 - Senado, votações, relatoria, tramitação.
 
-A metodologia completa está em [`/metodologia`](https://mapaviolenciamulher.com.br/metodologia) no site — fontes, classificação, pesos, limitações e fundamentação teórica.
+A metodologia completa está em [`/metodologia`](https://observatoriomulheres.ininterrupta.com/metodologia) no site — fontes, classificação, pesos, limitações e fundamentação teórica.
 
 ## Stack
 
