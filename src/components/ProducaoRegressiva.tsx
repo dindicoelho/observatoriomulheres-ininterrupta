@@ -181,6 +181,16 @@ export default function ProducaoRegressiva() {
             curada é o PDL 3/2025 (Conanda), aprovado 317×111 em
             05/11/2025.
           </p>
+          <p className="mt-3 border-t border-[#D43F3F]/20 pt-3 text-sm leading-relaxed text-white/70">
+            <strong className="text-white">Por que só uma votação?</strong>{" "}
+            A maioria das PLs regressivas listadas abaixo está{" "}
+            <strong className="text-white">engavetada</strong> — nunca
+            foi a voto de mérito no plenário. A Câmara assina muito,
+            mas vota pouco: engaveta o que pode dar ruim, leva ao
+            plenário só o que tem maioria garantida. Quem assina já é
+            penalizado aqui (−7); só vira voto regressivo (−5) se a
+            PL for efetivamente aprovada.
+          </p>
         </div>
 
         {/* Padrões recorrentes */}
