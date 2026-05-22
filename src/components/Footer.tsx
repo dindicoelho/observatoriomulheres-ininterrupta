@@ -134,6 +134,19 @@ export default function Footer() {
           </p>
         </div>
 
+        {/* Coletivos */}
+        <p className="mt-8 text-sm leading-relaxed text-white/60 md:text-base">
+          Este observatório é um meio. Para informação aprofundada,
+          formação política e atuação coletiva, acesse os{" "}
+          <Link
+            href="/metodologia"
+            className="text-[var(--color-neon)] underline-offset-4 hover:underline"
+          >
+            coletivos e ONGs listados na metodologia
+          </Link>
+          .
+        </p>
+
         {/* Actions */}
         <div className="mt-10 flex flex-wrap gap-3">
           <button

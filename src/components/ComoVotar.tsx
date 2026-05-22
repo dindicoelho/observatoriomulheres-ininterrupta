@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import ScrollFloat from "./ScrollFloat";
 
 const STEPS = [
@@ -75,6 +76,29 @@ export default function ComoVotar() {
           Câmara dos Deputados. Aqui está um guia rápido do que você vai
           ver:
         </p>
+
+        <div className="mt-10 max-w-2xl rounded-2xl border border-gray-200 bg-[var(--color-bg-alt)] p-6 md:p-7">
+          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
+            [ Sobre este projeto ]
+          </p>
+          <p className="mt-3 text-base leading-relaxed text-[var(--color-text-secondary)] md:text-lg">
+            Este é um projeto{" "}
+            <strong className="text-[var(--color-text)]">autoral</strong>,
+            fruto de uma investigação tecnológica independente da
+            Ininterrupta. Não substitui o trabalho de coletivos, ONGs e
+            organizações que atuam diretamente com a pauta —{" "}
+            <strong className="text-[var(--color-text)]">
+              é mais um meio de informação
+            </strong>
+            , traduzindo dados públicos em algo legível pra quem vota.
+          </p>
+          <Link
+            href="/metodologia"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--color-blue)]/40 px-5 py-2.5 font-mono-data text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-blue)] transition-colors hover:bg-[var(--color-blue)] hover:text-white"
+          >
+            Ler metodologia →
+          </Link>
+        </div>
 
         <div className="mt-12 grid gap-4 md:grid-cols-2">
           {STEPS.map((s) => (
