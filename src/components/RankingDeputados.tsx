@@ -90,6 +90,8 @@ type VotacoesJSON = {
     pl_ref?: string;
     titulo_curto?: string;
     tipo?: string;
+    totalSim?: number;
+    totalNao?: number;
   }>;
 };
 const VOTACOES = votacoesData as VotacoesJSON;
@@ -100,6 +102,19 @@ const MERITO_LABELS: Record<string, string> = Object.fromEntries(
       v.id,
       v.titulo_curto ? `${v.pl_ref ?? "?"} — ${v.titulo_curto}` : (v.pl_ref ?? v.id),
     ])
+);
+// Votações de mérito aprovadas por acordo/consenso vêm da API com placar
+// 0×0 (sem registro nominal). Pra esses casos, "ausência" no votes_by_id
+// não significa que o deputado faltou — significa que ninguém foi
+// chamado a votar individualmente.
+const MERITO_CONSENSO_IDS = new Set<string>(
+  VOTACOES.votacoes
+    .filter(
+      (v) =>
+        v.tipo === "mérito" &&
+        (v.totalSim ?? 0) + (v.totalNao ?? 0) === 0
+    )
+    .map((v) => v.id)
 );
 
 // IDs das votações de mérito vêm de coerencia.json (que por sua vez
@@ -307,11 +322,16 @@ function DeputadoModal({
               <p className="mt-1 text-[11px] text-[var(--color-text-tertiary)]">
                 O voto aqui listado não equivale a posição contra ou a
                 favor de mulheres — o contexto específico de cada PL
-                importa. Veja detalhes no Ato 02.
+                importa. Veja detalhes no Ato 02.{" "}
+                <span className="text-[var(--color-blue)]">Consenso</span>{" "}
+                = aprovado por acordo de líderes, sem registro nominal
+                individual.
               </p>
               <ul className="mt-3 space-y-1.5">
                 {lastFive.map((vid) => {
-                  const voto = coer.votes_by_id[vid] || "Ausente";
+                  const votoRaw = coer.votes_by_id[vid];
+                  const isConsenso = !votoRaw && MERITO_CONSENSO_IDS.has(vid);
+                  const voto = votoRaw || (isConsenso ? "Consenso" : "Ausente");
                   const label = MERITO_LABELS[vid] || vid;
                   const isSim = voto === "Sim";
                   const isNao = voto === "Não";
@@ -323,15 +343,23 @@ function DeputadoModal({
                             ? "bg-[var(--color-teal)] text-white"
                             : isNao
                             ? "bg-[var(--color-blood)] text-white"
+                            : isConsenso
+                            ? "bg-[var(--color-blue)]/15 text-[var(--color-blue)]"
                             : "bg-gray-200 text-[var(--color-text-tertiary)]"
                         }`}
                       >
-                        {isSim ? "✓" : isNao ? "✗" : "—"}
+                        {isSim ? "✓" : isNao ? "✗" : isConsenso ? "≡" : "—"}
                       </span>
                       <span className="flex-1 text-[var(--color-text-secondary)]">
                         {label}
                       </span>
-                      <span className="font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                      <span
+                        className={`font-mono-data text-[10px] uppercase tracking-wider ${
+                          isConsenso
+                            ? "text-[var(--color-blue)]"
+                            : "text-[var(--color-text-tertiary)]"
+                        }`}
+                      >
                         {voto}
                       </span>
                     </li>

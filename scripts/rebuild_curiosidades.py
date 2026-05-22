@@ -29,9 +29,17 @@ def main():
     curiosidades = []
 
     # 1. Votação mais apertada
+    # Filtra votações sem placar nominal — votações simbólicas/por consenso
+    # vêm como 0×0 da API da Câmara e não são "apertadas", são unânimes sem
+    # registro. Exige pelo menos 50 votos totais pra ser considerada uma
+    # votação real e representativa.
     merito = [v for v in votacoes["votacoes"] if v.get("tipo") == "mérito"]
-    if merito:
-        apertadas = sorted(merito, key=lambda v: abs(v["totalSim"] - v["totalNao"]))
+    merito_com_placar = [
+        v for v in merito
+        if (v.get("totalSim", 0) + v.get("totalNao", 0)) >= 50
+    ]
+    if merito_com_placar:
+        apertadas = sorted(merito_com_placar, key=lambda v: abs(v["totalSim"] - v["totalNao"]))
         v = apertadas[0]
         diff = abs(v["totalSim"] - v["totalNao"])
         curiosidades.append({
