@@ -77,27 +77,70 @@ export default function ComoVotar() {
           ver:
         </p>
 
-        <div className="mt-10 max-w-2xl rounded-2xl border border-gray-200 bg-[var(--color-bg-alt)] p-6 md:p-7">
-          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-tertiary)]">
-            [ Sobre este projeto ]
+        <div className="mt-10 rounded-2xl bg-[var(--color-dark)] p-8 text-white md:p-10">
+          <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
+            [ Carta da autora · Sobre este projeto ]
           </p>
-          <p className="mt-3 text-base leading-relaxed text-[var(--color-text-secondary)] md:text-lg">
-            Este é um projeto{" "}
-            <strong className="text-[var(--color-text)]">autoral</strong>,
-            fruto de uma investigação tecnológica independente da
-            Ininterrupta. Não substitui o trabalho de coletivos, ONGs e
-            organizações que atuam diretamente com a pauta —{" "}
-            <strong className="text-[var(--color-text)]">
-              é mais um meio de informação
-            </strong>
-            , traduzindo dados públicos em algo legível pra quem vota.
-          </p>
-          <Link
-            href="/metodologia"
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--color-blue)]/40 px-5 py-2.5 font-mono-data text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-blue)] transition-colors hover:bg-[var(--color-blue)] hover:text-white"
-          >
-            Ler metodologia →
-          </Link>
+
+          <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-white/90 md:text-lg">
+            <p>
+              Esse site é o que eu consegui fazer com o que sei. Sou
+              comunicadora, entendo muito mais de comunicação do que
+              de política — e o que sei fazer é programar, usar IA
+              pra cruzar 21 mil proposições, e traduzir o juridiquês
+              em algo que cabe no celular antes de você entrar na
+              cabine.{" "}
+              <strong className="text-white">
+                Não substitui o trabalho de coletivos, ONGs e
+                organizações que atuam diretamente com a pauta — é
+                mais um meio de informação.
+              </strong>{" "}
+              E honestamente: tem muita gente que acha que eu nem
+              deveria ter feito isso, por não ser especialista
+              política nem organização constituída.
+            </p>
+            <p>
+              Eu falo aqui do lugar de cidadã, dentro de um
+              ecossistema complexo da política brasileira — mulher
+              LGBTQIAP+ ocupando um espaço que normalmente pede
+              credencial pra entrar. Porque{" "}
+              <strong className="text-white">
+                o medo de fazer as coisas &ldquo;do jeito errado&rdquo;
+                é o que mais trava a gente de fazer as coisas que
+                importam.
+              </strong>{" "}
+              Esperar a permissão certa, o título certo, o instituto
+              certo, é uma forma educada de não fazer nada.
+            </p>
+            <p>
+              Acredito de verdade que mais gente disposta a pesquisar
+              política e compartilhar é um caminho interessante pra
+              sociedade como um todo. Se você compartilhar, vira
+              coisa de mais gente. E mais gente votando informada é
+              o único jeito que eu conheço de fazer um Congresso
+              melhor.
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+            <p className="font-mono-data text-[11px] uppercase tracking-[0.15em] text-white/60">
+              — Dindi ·{" "}
+              <a
+                href="https://instagram.com/ininterrupta.sys"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--color-neon)] hover:underline"
+              >
+                @ininterrupta.sys
+              </a>
+            </p>
+            <Link
+              href="/metodologia"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--color-neon)] px-5 py-2.5 font-mono-data text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-dark)] transition-transform hover:scale-105"
+            >
+              Ler metodologia →
+            </Link>
+          </div>
         </div>
 
         <div className="mt-12 grid gap-4 md:grid-cols-2">
