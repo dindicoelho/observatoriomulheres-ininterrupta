@@ -77,8 +77,9 @@ export default function ComoVotar() {
           <div className="mt-6 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg">
             <p>
               Esse site é o que eu consegui fazer com o que sei. Sou
-              comunicadora, entendo muito mais de comunicação do que
-              de política — e o que sei fazer é usar IA pra cruzar
+              comunicadora e creative technologist, entendo muito
+              mais de comunicação do que de política — e o que sei
+              fazer é usar IA pra cruzar
               21 mil proposições e traduzir o juridiquês em algo
               que cabe no celular antes de você entrar na cabine.{" "}
               <strong className="text-white">
