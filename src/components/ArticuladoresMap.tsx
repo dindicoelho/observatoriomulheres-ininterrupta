@@ -286,12 +286,18 @@ export default function ArticuladoresMap() {
       })
       .style("cursor", "pointer")
       .style("transition", "fill 0.3s, stroke 0.2s")
-      .on("pointerenter", function (_, d) {
+      .style("touch-action", "manipulation")
+      .on("pointerenter", function (event, d) {
+        // Em touch, pular hover — o tap já dispara o click e atualiza o
+        // painel via selectedUf. O ciclo enter→leave intermediário causava
+        // o painel piscar e o click não registrar em mobile.
+        if (event.pointerType === "touch") return;
         const sigla = (d.properties as { sigla: string }).sigla;
         setHoveredUf(sigla);
         d3.select(this).attr("stroke", "#DCFF00").attr("stroke-width", 3);
       })
-      .on("pointerleave", function (_, d) {
+      .on("pointerleave", function (event, d) {
+        if (event.pointerType === "touch") return;
         const sigla = (d.properties as { sigla: string }).sigla;
         setHoveredUf(null);
         if (sigla !== selectedUf) {
