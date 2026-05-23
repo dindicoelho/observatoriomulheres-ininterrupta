@@ -107,12 +107,9 @@ export default function ComoVotar() {
                   mulher LGBTQIAP+, ocupo um espaço que normalmente
                   pede credencial pra entrar. Porque{" "}
                   <strong className="text-white">
-                    o medo de fazer as coisas &ldquo;do jeito errado&rdquo;
-                    é o que mais trava a gente de fazer as coisas que
-                    importam.
-                  </strong>{" "}
-                  Esperar a permissão certa, o título certo, o instituto
-                  certo, é uma forma educada de não fazer nada.
+                    o medo de fazer as coisas é o que mais trava as
+                    pessoas de botar no mundo o que importa.
+                  </strong>
                 </p>
                 <p>
                   <strong className="text-white">
