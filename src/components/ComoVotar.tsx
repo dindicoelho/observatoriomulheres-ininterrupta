@@ -78,13 +78,13 @@ export default function ComoVotar() {
             <p>
               Esse site é o que eu consegui fazer com o que sei. Sou
               comunicadora e creative technologist, entendo muito
-              mais de comunicação do que de política — e o que sei
-              fazer é usar IA pra cruzar
-              21 mil proposições e traduzir o juridiquês em algo
-              que cabe no celular antes de você entrar na cabine.{" "}
+              mais de comunicação do que de política. O que sei
+              fazer é usar IA pra cruzar 21 mil proposições e
+              traduzir o juridiquês em algo que cabe no celular
+              antes de você entrar na cabine.{" "}
               <strong className="text-white">
                 Não substitui o trabalho de coletivos, ONGs e
-                organizações que atuam diretamente com a pauta — é
+                organizações que atuam diretamente com a pauta. É
                 mais um meio de informação.
               </strong>{" "}
               E honestamente: tem muita gente que acha que eu nem
@@ -103,9 +103,9 @@ export default function ComoVotar() {
               <div className="mt-4 space-y-4">
                 <p>
                   Eu falo aqui do lugar de cidadã, dentro de um
-                  ecossistema complexo da política brasileira — mulher
-                  LGBTQIAP+ ocupando um espaço que normalmente pede
-                  credencial pra entrar. Porque{" "}
+                  ecossistema complexo da política brasileira. Como
+                  mulher LGBTQIAP+, ocupo um espaço que normalmente
+                  pede credencial pra entrar. Porque{" "}
                   <strong className="text-white">
                     o medo de fazer as coisas &ldquo;do jeito errado&rdquo;
                     é o que mais trava a gente de fazer as coisas que
@@ -120,7 +120,7 @@ export default function ComoVotar() {
                     ficar do jeito que está.
                   </strong>{" "}
                   Está à disposição da sociedade para evoluir para
-                  caminhos mais potentes — e acredito de verdade que
+                  caminhos mais potentes. Acredito de verdade que
                   mais gente disposta a pesquisar política e
                   compartilhar é um desses caminhos. Se você
                   compartilhar, vira coisa de mais gente. E mais gente
