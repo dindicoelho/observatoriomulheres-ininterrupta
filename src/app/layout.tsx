@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import autoriaData from "../data/autoria.json";
+
+const GA_MEASUREMENT_ID = "G-ZK2V1MCDPL";
 
 const TOTAL_PLS = (autoriaData as { totalPls: number }).totalPls;
 const TOTAL_DEPS = (autoriaData as { totalDeputados: number }).totalDeputados;
@@ -37,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="h-full antialiased">
       <body className="min-h-full">{children}</body>
+      <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
     </html>
   );
 }
