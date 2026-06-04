@@ -24,7 +24,7 @@ const STEPS = [
     numero: "03",
     titulo: "O tipo de lei que é feita",
     texto:
-      "Das mais de mil proposições, quantas viram lei? 76% estão paradas em comissão. Veja o funil legislativo e as curiosidades.",
+      "Das mais de mil proposições, quantas viram lei? 76% estão paradas em comissão. Veja o funil legislativo e o destaque da semana.",
     ancora: "#ato-02",
     cta: "Ver o funil ↓",
   },

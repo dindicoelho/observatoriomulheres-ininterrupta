@@ -2,8 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import legislativoData from "../data/legislativo.json";
-import curiosidadesData from "../data/curiosidades.json";
+import destaqueData from "../data/destaque.json";
 import ScrollFloat from "./ScrollFloat";
+
+type DestaqueCategoria = "votacao" | "punitivista" | "mobilizacao" | "panorama";
+
+const DESTAQUE_ACCENT: Record<DestaqueCategoria, string> = {
+  votacao: "var(--color-neon)",
+  punitivista: "#ef4444",
+  mobilizacao: "var(--color-neon)",
+  panorama: "rgba(255,255,255,0.6)",
+};
+
+const DESTAQUE_LABEL: Record<DestaqueCategoria, string> = {
+  votacao: "Votação recente",
+  punitivista: "Ameaça em movimento",
+  mobilizacao: "Mobilização parlamentar",
+  panorama: "Panorama do mês",
+};
 
 type Proposicao = {
   id: number;
@@ -581,63 +597,87 @@ export default function TimelineLegislativa() {
           </div>
         </div>
 
-        {/* Curiosidades — quadro editorial */}
-        <div className="mt-20">
-          <p className="mb-2 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
-            [ Curiosidades do legislativo ]
-          </p>
-          <ScrollFloat
-            as="h3"
-            text="O que passa despercebido"
-            stagger={30}
-            className="block text-2xl font-black leading-[0.95] text-white md:text-4xl"
-          />
+        {/* Destaque editorial — 1 grande fato recente, atualizado pelo pipeline diário */}
+        {(() => {
+          const d = (destaqueData as { destaque: {
+            categoria: DestaqueCategoria;
+            selo: string;
+            headline: string;
+            anchor: string;
+            contexto: string;
+            pl_ref: string;
+            link: string;
+            link_label: string;
+            updated_at: string;
+          } }).destaque;
+          const accent = DESTAQUE_ACCENT[d.categoria] ?? "var(--color-neon)";
+          const tag = DESTAQUE_LABEL[d.categoria] ?? "Destaque";
+          return (
+            <div className="mt-20">
+              <p className="mb-2 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
+                [ {tag} ]
+              </p>
+              <ScrollFloat
+                as="h3"
+                text="O fato mais relevante agora"
+                stagger={30}
+                className="block text-2xl font-black leading-[0.95] text-white md:text-4xl"
+              />
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {(curiosidadesData as { curiosidades: Array<{
-                selo: string; pl: string; titulo: string;
-                dado: string; texto: string; link: string;
-              }> }).curiosidades.map((c, i) => (
-              <a
-                key={i}
-                href={c.link || "#"}
-                target={c.link ? "_blank" : undefined}
-                rel={c.link ? "noopener noreferrer" : undefined}
-                className="group rounded-xl border border-white/10 bg-white/[0.02] p-6 transition-colors hover:border-[var(--color-neon)]/40 hover:bg-white/[0.04]"
+              <div
+                className="mt-10 rounded-2xl border bg-white/[0.03] p-8 md:p-12"
+                style={{ borderColor: `${accent}33` }}
               >
-                <div className="flex items-center justify-between">
-                  <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-neon)]">
-                    [ {c.selo} ]
+                <div className="flex items-center justify-between gap-4">
+                  <p
+                    className="font-mono-data text-[10px] uppercase tracking-[0.2em]"
+                    style={{ color: accent }}
+                  >
+                    [ {d.selo} ]
                   </p>
-                  {c.pl && (
-                    <span className="font-mono-data text-[10px] text-white/40 group-hover:text-white">
-                      {c.pl} →
+                  {d.pl_ref && (
+                    <span className="font-mono-data text-[10px] text-white/40">
+                      {d.pl_ref}
                     </span>
                   )}
                 </div>
+
                 <h4
-                  className="mt-4 text-xl font-bold leading-tight text-white md:text-2xl"
+                  className="mt-6 text-3xl font-black leading-[1.05] text-white md:text-5xl"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {c.titulo}
+                  {d.headline}
                 </h4>
-                <p
-                  className="mt-3 leading-none text-[var(--color-neon)]"
-                  style={{
-                    fontFamily: "var(--font-display-condensed)",
-                    fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {c.dado}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-white/70">
-                  {c.texto}
-                </p>
-              </a>
-            ))}
-          </div>
-        </div>
+
+                {d.anchor && (
+                  <p
+                    className="mt-4 font-mono-data text-sm"
+                    style={{ color: accent }}
+                  >
+                    {d.anchor}
+                  </p>
+                )}
+
+                {d.contexto && (
+                  <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+                    {d.contexto}
+                  </p>
+                )}
+
+                {d.link && (
+                  <a
+                    href={d.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2 font-mono-data text-xs uppercase tracking-[0.15em] text-white transition-colors hover:border-white hover:text-[var(--color-neon)]"
+                  >
+                    {d.link_label} →
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })()}
 
         <p className="mt-12 font-mono-data text-xs text-white/40">
           Fonte: API de Dados Abertos da Câmara dos Deputados ·

@@ -66,8 +66,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: "[11/13] Rebuild curiosidades"
-        run: python -u scripts/rebuild_curiosidades.py
+      - name: "[11/13] Rebuild destaque (1 grande fato recente)"
+        run: python -u scripts/rebuild_destaque.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: "[12/13] Rebuild Senado Federal"
         run: python -u scripts/rebuild_senado.py
@@ -89,7 +91,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/data/
+          git add src/data/ scripts/destaque_llm_cache.json
           git commit -m "chore: atualização automática de dados $(date -u +%Y-%m-%d)"
           git pull --rebase --autostash origin main
           git push
