@@ -14,6 +14,7 @@ Agora:
 """
 
 import json
+import random
 import re
 import time
 import urllib.parse
@@ -192,19 +193,23 @@ def classify(ementa: str) -> str:
     return "incremental"
 
 
-def fetch_json(url: str, retries: int = 4) -> dict:
+def fetch_json(url: str, retries: int = 8, timeout: int = 90) -> dict:
+    """Câmara API é instável: timeouts esporádicos derrubavam o pipeline
+    inteiro. Backoff exponencial truncado em 30s + jitter cobre janelas
+    de instabilidade de até ~5min sem amplificar carga em uptime parcial.
+    """
     for attempt in range(retries):
         try:
             req = urllib.request.Request(
                 url, headers={"User-Agent": "mapa-violencia-mulher/1.0"}
             )
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
                 return json.loads(r.read().decode("utf-8"))
         except Exception as exc:
             if attempt == retries - 1:
                 raise
-            sleep_s = 2 ** attempt
-            print(f"    retry {attempt+1}/{retries} em {sleep_s}s: {exc}")
+            sleep_s = min(2 ** attempt, 30) + random.uniform(0, 2)
+            print(f"    retry {attempt+1}/{retries} em {sleep_s:.1f}s: {exc}")
             time.sleep(sleep_s)
 
 
