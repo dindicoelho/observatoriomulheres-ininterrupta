@@ -604,7 +604,9 @@ export default function TimelineLegislativa() {
             selo: string;
             headline: string;
             anchor: string;
-            contexto: string;
+            o_que_propoe: string;
+            onde_esta: string;
+            o_que_se_decide: string;
             pl_ref: string;
             link: string;
             link_label: string;
@@ -612,6 +614,11 @@ export default function TimelineLegislativa() {
           } }).destaque;
           const accent = DESTAQUE_ACCENT[d.categoria] ?? "var(--color-neon)";
           const tag = DESTAQUE_LABEL[d.categoria] ?? "Destaque";
+          const linhas: Array<{ rotulo: string; valor: string }> = [
+            { rotulo: "O que propõe", valor: d.o_que_propoe },
+            { rotulo: "Onde está agora", valor: d.onde_esta },
+            { rotulo: "O que está em jogo", valor: d.o_que_se_decide },
+          ].filter((l) => l.valor);
           return (
             <div className="mt-20">
               <p className="mb-2 font-mono-data text-xs uppercase tracking-[0.2em] text-white/50">
@@ -658,10 +665,22 @@ export default function TimelineLegislativa() {
                   </p>
                 )}
 
-                {d.contexto && (
-                  <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
-                    {d.contexto}
-                  </p>
+                {linhas.length > 0 && (
+                  <dl className="mt-8 grid gap-5 border-t border-white/10 pt-8">
+                    {linhas.map((l) => (
+                      <div key={l.rotulo} className="grid gap-1 md:grid-cols-[180px_1fr] md:gap-6">
+                        <dt
+                          className="font-mono-data text-[10px] uppercase tracking-[0.2em]"
+                          style={{ color: accent }}
+                        >
+                          {l.rotulo}
+                        </dt>
+                        <dd className="text-base leading-relaxed text-white/85 md:text-lg">
+                          {l.valor}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
                 )}
 
                 {d.link && (

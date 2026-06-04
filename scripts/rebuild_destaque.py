@@ -40,6 +40,32 @@ MESES_PT = [
     "jul", "ago", "set", "out", "nov", "dez",
 ]
 
+# Tradução das siglas de órgão da Câmara em nome legível.
+# Cobre os ~15 órgãos mais comuns no dataset; fallback usa a sigla.
+ORGAO_NOMES = {
+    "MESA": "Mesa Diretora",
+    "PLEN": "Plenário",
+    "CCP": "Comissão de Constituição",
+    "CCJC": "Comissão de Constituição e Justiça e de Cidadania (CCJC)",
+    "CMULHER": "Comissão de Defesa dos Direitos da Mulher",
+    "CPASF": "Comissão de Previdência, Assistência Social, Infância, Adolescência e Família",
+    "CSPCCO": "Comissão de Segurança Pública e Combate ao Crime Organizado",
+    "CSAUDE": "Comissão de Saúde",
+    "CTRAB": "Comissão de Trabalho",
+    "CE": "Comissão de Educação",
+    "CASP": "Comissão de Administração e Serviço Público",
+    "CFT": "Comissão de Finanças e Tributação",
+    "CDHMIR": "Comissão de Direitos Humanos e Minorias",
+    "CICS": "Comissão de Indústria, Comércio e Serviços",
+    "CVT": "Comissão de Viação e Transportes",
+}
+
+
+def orgao_legivel(sigla: str | None) -> str:
+    if not sigla:
+        return ""
+    return ORGAO_NOMES.get(sigla, sigla)
+
 
 def fmt_data_br(iso: str) -> str:
     """2026-06-04 → 04 jun 2026"""
@@ -156,6 +182,27 @@ def tier_panorama(legislativo: dict) -> dict:
     }
 
 
+def enriquecer_status(proposicao: dict, legislativo: dict) -> dict:
+    """Monta um sub-dict 'status_agora' interpretado a partir do destino.
+    O label da fase vem do próprio JSON (categorias_labels), pra manter
+    coerência com o resto do site.
+    """
+    destino = proposicao.get("destino") or {}
+    fase = destino.get("categoria") or "desconhecida"
+    labels = (legislativo.get("destino_stats") or {}).get(
+        "categorias_labels", {}
+    )
+    sigla = destino.get("orgao")
+    return {
+        "fase": fase,
+        "fase_label": labels.get(fase, fase),
+        "orgao_sigla": sigla,
+        "orgao_nome": orgao_legivel(sigla),
+        "situacao": destino.get("situacao"),
+        "ultima_movimentacao": destino.get("data_hora"),
+    }
+
+
 def selecionar_evento(autoria, legislativo, votacoes) -> dict:
     for selector in (
         lambda: tier_votacao(votacoes),
@@ -166,6 +213,25 @@ def selecionar_evento(autoria, legislativo, votacoes) -> dict:
         if out:
             return out
     return tier_panorama(legislativo)
+
+
+def enriquecer_evento(sel: dict, legislativo: dict) -> None:
+    """Adiciona 'status_agora' (interpretado) no evento, in-place.
+    O LLM precisa disso pra escrever 'onde está' com precisão."""
+    tier = sel["tier"]
+    evento = sel["evento"]
+
+    if tier in ("punitivista", "mobilizacao"):
+        evento["status_agora"] = enriquecer_status(evento, legislativo)
+    elif tier == "votacao":
+        # Acha a PL associada pra puxar status pós-votação
+        pl_id = evento.get("pl_id")
+        prop = next(
+            (p for p in legislativo["proposicoes"] if p["id"] == pl_id),
+            None,
+        )
+        if prop:
+            evento["status_agora"] = enriquecer_status(prop, legislativo)
 
 
 # ---------- Signature ----------
@@ -192,22 +258,28 @@ def build_signature(sel: dict) -> str:
 
 # ---------- LLM ----------
 
-SYSTEM_PROMPT = """Você escreve manchetes editoriais para um observatório político brasileiro sobre direitos das mulheres na Câmara dos Deputados.
+SYSTEM_PROMPT = """Você escreve destaques editoriais para um observatório político brasileiro sobre direitos das mulheres na Câmara dos Deputados. Seu trabalho é deixar QUALQUER leitor entender, em segundos: o que está sendo decidido, em que pé está, e o que está em jogo.
 
 REGRAS DE TOM:
-- Manchete com força de impacto, MAS sem sensacionalismo.
+- Linguagem clara, jornalística, frase ativa, sem juridiquês.
 - Fato primeiro, julgamento depois (e julgamento curtíssimo).
-- Sempre baseada no dado bruto fornecido — NUNCA invente número, data ou nome.
-- Português brasileiro, jornalístico, frase ativa.
-- Evite adjetivos vagos ("importante", "histórico"). Use o número como ancoragem.
+- NUNCA invente número, data, sigla de comissão ou nome. Use só o que está no dado bruto.
+- Evite adjetivos vagos ("importante", "histórico"). Use o concreto.
+- Trate o leitor como inteligente, mas sem assumir que ele sabe como o Congresso funciona.
 
 REGRAS DE FORMATO:
-Responda APENAS com um JSON válido (sem markdown, sem ```), com estes campos:
+Responda APENAS com um JSON válido (sem markdown, sem ```), com EXATAMENTE estes campos:
+
 {
-  "headline": "1 frase, até 110 caracteres. Manchete. Sem ponto final.",
-  "anchor": "Dados-chave separados por ' · '. Ex: 'PL 6415/2025 · Aprovado · 11/03/2026'. Curto.",
-  "contexto": "2 a 3 frases curtas explicando por que esse fato importa, em até 320 caracteres totais. Sem editorializar pesado — diga o que aconteceu e qual a implicação prática.",
-  "link_label": "Texto curto pro botão de saída. Ex: 'Ver na Câmara' ou 'Ver projeto'."
+  "headline": "1 frase ATIVA até 110 caracteres dizendo O QUE essa proposição/votação faz ou propõe. Manchete. Sem ponto final. Ex: 'Aumento de pena para feminicídio com mutilação chega à Câmara' ou 'Câmara aprovou por 213×152 obrigar advogados públicos para vítimas'.",
+
+  "o_que_propoe": "1-2 frases (até 240 chars) explicando o conteúdo CONCRETO da proposta, sem juridiquês. O que muda na vida real. Use 'A proposta...' ou 'O projeto...'. Para votações, descreva o que está sendo votado.",
+
+  "onde_esta": "1 frase (até 160 chars) dizendo em que fase de tramitação está AGORA. Use o status_agora fornecido (fase_label + orgao_nome + situacao). Seja específico: 'Apresentado em [data], aguardando designação de relator na Comissão X' ou 'Aprovado no plenário em [data], segue pro Senado'. Se for status_agora ausente (panorama), escreva o recorte temporal.",
+
+  "o_que_se_decide": "1 frase (até 200 chars) explicando o ponto em jogo NESSE passo específico: qual a tensão, o que muda na prática se avançar, qual o dilema. Para PL nova: o trade-off da proposta. Para votação: o que aquela votação decidia. NUNCA editorialize partido; descreva a decisão.",
+
+  "link_label": "Texto curto pro botão. Ex: 'Ver na Câmara' ou 'Ver projeto'."
 }
 """
 
@@ -254,12 +326,33 @@ def chamar_llm(sel: dict) -> dict:
         return fallback_estatico(sel)
 
 
+def _onde_esta_humano(status: dict | None) -> str:
+    """Compõe 'Apresentado em DD/MM, aguardando relator na Comissão X' etc.
+    a partir do status_agora estruturado."""
+    if not status:
+        return ""
+    fase_label = status.get("fase_label") or status.get("fase") or ""
+    orgao = status.get("orgao_nome") or ""
+    sit = status.get("situacao") or ""
+    data_mov = (status.get("ultima_movimentacao") or "")[:10]
+    partes = []
+    if fase_label:
+        partes.append(fase_label)
+    if orgao:
+        partes.append(f"em {orgao}")
+    if sit:
+        partes.append(f"— {sit.lower()}")
+    if data_mov:
+        partes.append(f"(desde {fmt_data_br(data_mov)})")
+    return " ".join(partes).strip()
+
+
 def fallback_estatico(sel: dict) -> dict:
-    """Plano B determinístico caso o LLM falhe ou não esteja disponível.
-    Mantém a seção viva mesmo offline.
-    """
+    """Plano B determinístico caso o LLM falhe ou não esteja disponível."""
     tier = sel["tier"]
     e = sel["evento"]
+    status = e.get("status_agora")
+
     if tier == "votacao":
         verbo = {
             "aprovado": "aprovou",
@@ -270,28 +363,31 @@ def fallback_estatico(sel: dict) -> dict:
                 f"Câmara {verbo} {e.get('titulo_curto') or e['pl_ref']} "
                 f"por {e.get('totalSim',0)} a {e.get('totalNao',0)}"
             )[:110],
-            "anchor": (
-                f"{e['pl_ref']} · "
-                f"{(e.get('resultado_placar') or '').capitalize()} · "
-                f"{fmt_data_br(e['data'])}"
-            ),
-            "contexto": (
-                e.get("o_que_foi_votado")
-                or e.get("pl_ementa", "")[:300]
-            )[:320],
+            "o_que_propoe": (
+                e.get("projeto_sobre")
+                or e.get("pl_ementa", "")
+            )[:240],
+            "onde_esta": _onde_esta_humano(status) or f"Votado em {fmt_data_br(e['data'])}.",
+            "o_que_se_decide": (
+                e.get("o_que_foi_votado") or ""
+            )[:200],
             "link_label": "Ver na Câmara",
         }
     if tier == "punitivista":
         return {
             "headline": (
-                f"Nova proposição punitivista entrou na Câmara: "
+                f"Nova proposta punitivista chega à Câmara: "
                 f"{e['tipo']} {e['numero']}/{e['ano']}"
             )[:110],
-            "anchor": (
-                f"{e['tipo']} {e['numero']}/{e['ano']} · "
-                f"{e.get('categoria','?')} · {fmt_data_br(e['data'])}"
+            "o_que_propoe": (e.get("ementa") or "")[:240],
+            "onde_esta": (
+                _onde_esta_humano(status)
+                or f"Apresentada em {fmt_data_br(e['data'])}."
             ),
-            "contexto": (e.get("ementa") or "")[:320],
+            "o_que_se_decide": (
+                "Endurecimento penal sem alterar estrutura de proteção — "
+                "punição como resposta, não prevenção."
+            ),
             "link_label": "Ver projeto",
         }
     if tier == "mobilizacao":
@@ -300,12 +396,15 @@ def fallback_estatico(sel: dict) -> dict:
                 f"{e['total_coautores']} deputados assinam juntos "
                 f"{e['tipo']} {e['numero']}/{e['ano']}"
             )[:110],
-            "anchor": (
-                f"{e['tipo']} {e['numero']}/{e['ano']} · "
-                f"{e['total_coautores']} coautores · "
-                f"{fmt_data_br(e['data'])}"
+            "o_que_propoe": (e.get("ementa") or "")[:240],
+            "onde_esta": (
+                _onde_esta_humano(status)
+                or f"Apresentada em {fmt_data_br(e['data'])}."
             ),
-            "contexto": (e.get("ementa") or "")[:320],
+            "o_que_se_decide": (
+                f"Mobilização legislativa coletiva — {e['total_coautores']} "
+                "deputados como co-autores sinalizam força política da pauta."
+            ),
             "link_label": "Ver projeto",
         }
     # panorama
@@ -314,17 +413,17 @@ def fallback_estatico(sel: dict) -> dict:
             f"{e['total']} novas proposições sobre o tema "
             f"em {e['janela_dias']} dias"
         )[:110],
-        "anchor": (
-            f"{e['simbolicas']} simbólicas · "
-            f"{e['incrementais']} incrementais · "
-            f"{e['estruturais']} estruturais · "
-            f"{e['punitivistas']} punitivistas"
+        "o_que_propoe": (
+            f"Apresentadas: {e['simbolicas']} simbólicas, "
+            f"{e['incrementais']} incrementais, "
+            f"{e['estruturais']} estruturais."
         ),
-        "contexto": (
-            f"Nos últimos {e['janela_dias']} dias, a Câmara apresentou "
-            f"{e['total']} proposições relacionadas a direitos das mulheres. "
-            f"Categorias mostram onde o esforço legislativo está concentrado."
-        )[:320],
+        "onde_esta": f"Recorte das últimas {e['janela_dias']} datas de apresentação.",
+        "o_que_se_decide": (
+            f"{e['punitivistas']} dessas proposições têm postura "
+            "punitivista (aumento de pena sem mudar estrutura) — "
+            "o resto é protetivo ou neutro."
+        ),
         "link_label": "Ver acervo completo",
     }
 
@@ -369,12 +468,39 @@ def pl_ref_evento(sel: dict) -> str:
     return ""
 
 
+def anchor_derivado(sel: dict) -> str:
+    """Anchor é derivado em Python, não pelo LLM — garante que PL ref,
+    data e fase ficam sempre exatos."""
+    tier = sel["tier"]
+    e = sel["evento"]
+    if tier == "votacao":
+        status = (e.get("resultado_placar") or "").capitalize() or "Votado"
+        return f"{e['pl_ref']} · {status} · {fmt_data_br(e['data'])}"
+    if tier == "punitivista":
+        return (
+            f"{e['tipo']} {e['numero']}/{e['ano']} · "
+            f"Apresentada em {fmt_data_br(e['data'])}"
+        )
+    if tier == "mobilizacao":
+        return (
+            f"{e['tipo']} {e['numero']}/{e['ano']} · "
+            f"{e['total_coautores']} coautores · "
+            f"{fmt_data_br(e['data'])}"
+        )
+    # panorama
+    return (
+        f"{e['total']} proposições · {e['janela_dias']} dias · "
+        f"desde {fmt_data_br(e['desde'])}"
+    )
+
+
 def main() -> None:
     autoria = json.loads((DATA_DIR / "autoria.json").read_text(encoding="utf-8"))
     legislativo = json.loads((DATA_DIR / "legislativo.json").read_text(encoding="utf-8"))
     votacoes = json.loads((DATA_DIR / "votacoes.json").read_text(encoding="utf-8"))
 
     sel = selecionar_evento(autoria, legislativo, votacoes)
+    enriquecer_evento(sel, legislativo)
     sig = build_signature(sel)
     print(f">>> tier={sel['tier']}  signature={sig}")
 
@@ -402,8 +528,10 @@ def main() -> None:
             "categoria": sel["tier"],
             "selo": f"DESTAQUE — {fmt_data_br(hoje)}",
             "headline": render["headline"],
-            "anchor": render.get("anchor", ""),
-            "contexto": render.get("contexto", ""),
+            "anchor": anchor_derivado(sel),
+            "o_que_propoe": render.get("o_que_propoe", ""),
+            "onde_esta": render.get("onde_esta", ""),
+            "o_que_se_decide": render.get("o_que_se_decide", ""),
             "pl_ref": pl_ref_evento(sel),
             "link": link_evento(sel),
             "link_label": render.get("link_label", "Ver fonte"),
