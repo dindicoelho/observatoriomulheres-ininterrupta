@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import votacoesData from "../data/votacoes.json";
+import DestaqueAtual from "./DestaqueAtual";
 import ScrollFloat from "./ScrollFloat";
 import ScrollReveal from "./ScrollReveal";
 import ShareButton from "./ShareButton";
@@ -209,6 +210,8 @@ export default function VotacoesPartidos() {
             text={`Das mais de mil proposições sobre a mulher na atual legislatura, ${totalPLs} chegaram ao plenário da Câmara — totalizando ${totalVotacoes} votações (${totalNominais} nominais, ${totalVotacoes - totalNominais} por consenso simbólico). Estas são as ${grupos.length} mais recentes. Clique para entender exatamente o que foi votado.`}
           />
         </div>
+
+        <DestaqueAtual />
 
         <div className="mt-10 space-y-4">
           {grupos.map((grupo, idx) => {
