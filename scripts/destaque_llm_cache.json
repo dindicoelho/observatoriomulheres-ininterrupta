@@ -1,15 +1,12 @@
 {
-  "destaque": {
-    "categoria": "punitivista",
-    "selo": "DESTAQUE — 04 jun 2026",
+  "signature": "punitivista:PL2416/2026:2026-05-15",
+  "render": {
     "headline": "PL propõe aumentar pena de feminicídio quando houver mutilação ou deformidade",
-    "anchor": "PL 2416/2026 · Apresentada em 15 mai 2026",
     "o_que_propoe": "O projeto altera o Código Penal para criar uma causa de aumento de pena no crime de feminicídio quando a morte resultar em mutilação ou deformidade grave da vítima. Na prática, amplia a severidade da punição para esses casos específicos.",
     "onde_esta": "Apresentado em 15 de maio de 2026, o projeto está em tramitação na Mesa Diretora da Câmara, aguardando designação de relator.",
     "o_que_se_decide": "O ponto em jogo é se o Congresso vai endurecer a punição para feminicídios com violência extrema (mutilação ou deformidade grave), ou se considera que as penas atuais já são suficientes para esses crimes.",
-    "pl_ref": "PL 2416/2026",
-    "link": "https://www.camara.leg.br/propostas-legislativas/2624983",
-    "link_label": "Ver projeto",
-    "updated_at": "2026-06-04"
-  }
+    "link_label": "Ver projeto"
+  },
+  "generated_at": "2026-06-04",
+  "tier": "punitivista"
 }
