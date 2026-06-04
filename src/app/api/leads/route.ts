@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     const { error } = await supabase
       .from("leads")
-      .insert({ nome: nome || null, email: email.toLowerCase().trim() });
+      .insert({ nome: nome || null, email: email.toLowerCase().trim(), source: "observatorio" });
 
     if (error) {
       // Duplicate email — silently succeed
