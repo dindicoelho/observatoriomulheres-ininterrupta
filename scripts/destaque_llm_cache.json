@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-05-09:44:pun2:sim0",
+  "signature": "panorama:2026-05-11:51:pun2:sim0",
   "render": {
-    "headline": "Câmara avança com 44 projetos sobre direitos das mulheres em um mês",
-    "o_que_propoe": "Nos últimos 30 dias, foram apresentados ou avançaram 44 propostas relacionadas a direitos das mulheres. A maioria (35) foca em melhorias incrementais—como ampliar acesso a serviços ou fortalecer políticas existentes. Nove projetos buscam mudanças estruturais mais profundas. Apenas dois têm viés puramente punitivo.",
-    "onde_esta": "Panorama de atividade entre 9 de maio e 8 de junho de 2026. Os projetos estão em diferentes fases: alguns foram apresentados recentemente, outros tramitam em comissões ou plenário.",
-    "o_que_se_decide": "A proporção revela a estratégia predominante na Câmara: aprimorar políticas públicas e serviços (42 propostas de caráter protetivo) em vez de focar apenas em criminalização. O desafio é converter esse volume em aprovações efetivas.",
-    "link_label": "Ver panorama completo"
+    "headline": "Câmara avança em 51 projetos sobre direitos das mulheres em um mês",
+    "o_que_propoe": "Entre maio e junho de 2026, 51 projetos relacionados a direitos das mulheres estão em tramitação na Câmara. A maioria (42) propõe mudanças incrementais em leis existentes, enquanto 9 buscam reformas estruturais. Apenas 2 aumentam penas; 49 focam em proteção e prevenção.",
+    "onde_esta": "Panorama dos últimos 30 dias, a partir de 11 de maio de 2026. Os projetos estão em diferentes fases: apresentação, análise em comissões e votações.",
+    "o_que_se_decide": "O volume revela uma Câmara debatendo, paralelamente, tanto ajustes práticos em políticas de proteção quanto reformas mais profundas. A prevalência de medidas protetivas sobre punitivas mostra o eixo das discussões em curso.",
+    "link_label": "Ver projetos em tramitação"
   },
-  "generated_at": "2026-06-08",
+  "generated_at": "2026-06-10",
   "tier": "panorama"
 }
