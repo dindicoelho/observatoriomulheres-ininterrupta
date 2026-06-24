@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-05-24:43:pun0:sim0",
+  "signature": "panorama:2026-05-25:44:pun0:sim0",
   "render": {
-    "headline": "Câmara tem 43 projetos sobre direitos das mulheres em trâmite nos últimos 30 dias",
-    "o_que_propoe": "O panorama mostra proposições que tramitam na Câmara focadas em proteção e direitos das mulheres. A maioria (39) são mudanças incrementais em leis existentes, enquanto 4 buscam reformas estruturais. Nenhuma é meramente simbólica.",
-    "onde_esta": "Em tramitação entre 24 de maio e 23 de junho de 2026 na Câmara dos Deputados, em diferentes fases de votação e análise.",
-    "o_que_se_decide": "O volume reflete quais temas sobre mulheres ganham prioridade legislativa agora. A prevalência de mudanças incrementais indica ajustes pontuais; as 4 estruturais sinalizam tentativas de reforma mais profunda em políticas públicas.",
-    "link_label": "Ver projetos"
+    "headline": "Câmara avança com 44 projetos sobre direitos das mulheres em um mês",
+    "o_que_propoe": "Nos últimos 30 dias, a Câmara dos Deputados registrou 44 proposições relacionadas a direitos das mulheres. A maioria (40) traz mudanças incrementais em políticas existentes, enquanto 4 buscam alterações estruturais. Todas as propostas têm caráter protetivo.",
+    "onde_esta": "Proposições em diferentes fases de tramitação desde 25 de maio de 2026. O conjunto reflete movimento contínuo na agenda legislativa sobre direitos das mulheres.",
+    "o_que_se_decide": "O plenário e as comissões decidem, simultaneamente, em qual velocidade avançar essas agendas: mudanças pontuais em leis existentes ou reformas mais profundas. A concentração em propostas incrementais indica prioridade por ajustes rápidos.",
+    "link_label": "Ver panorama completo"
   },
-  "generated_at": "2026-06-23",
+  "generated_at": "2026-06-24",
   "tier": "panorama"
 }
