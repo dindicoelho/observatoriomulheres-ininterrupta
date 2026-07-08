@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-06-06:34:pun0:sim0",
+  "signature": "votacao:PLP 41/2026:2026-07-07:470-1",
   "render": {
-    "headline": "Câmara avança 34 projetos sobre direitos das mulheres em um mês",
-    "o_que_propoe": "Um panorama de proposições em tramitação mostra movimentação concentrada em medidas protetivas: 30 projetos com ajustes incrementais (ampliação de direitos ou proteções existentes) e 4 com mudanças estruturais (criação de novos mecanismos ou políticas). Nenhum projeto punitivo entrou nesse lote.",
-    "onde_esta": "Levantamento dos últimos 30 dias, a partir de 6 de junho de 2026, captura proposições em diferentes estágios de tramitação na Câmara dos Deputados.",
-    "o_que_se_decide": "O ritmo reflete prioridade legislativa: todas as 34 proposições buscam proteger ou ampliar direitos de mulheres, sinalizando se haverá consenso para aprovação ou se embates ideológicos travam o avanço desses projetos.",
-    "link_label": "Ver panorama completo"
+    "headline": "Câmara aprova por 470×1 sistema nacional para combater violência contra mulheres",
+    "o_que_propoe": "O projeto cria um sistema unificado e financiado para coordenar políticas de proteção contra feminicídio e violência de gênero no Brasil. Estabelece obrigações legais para o governo implementar ações de prevenção e garantia da vida de meninas e mulheres.",
+    "onde_esta": "Aprovado no plenário em 7 de julho de 2026. Aguarda despacho do Presidente da Câmara para seguir para sanção presidencial.",
+    "o_que_se_decide": "A votação definiu se o Brasil teria ou não um marco legal estruturado para enfrentar a violência de gênero com recursos e diretrizes coordenadas em nível nacional.",
+    "link_label": "Ver votação"
   },
-  "generated_at": "2026-07-06",
-  "tier": "panorama"
+  "generated_at": "2026-07-08",
+  "tier": "votacao"
 }
