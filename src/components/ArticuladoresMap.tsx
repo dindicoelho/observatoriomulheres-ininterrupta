@@ -101,7 +101,16 @@ type Articulador = {
   coerencia_participacoes: number;
   coerencia_score: number | null;
   score_articulador: number;
+  pls_descontadas?: number;
+  surto_qtd?: number;
+  surto_data?: string | null;
 };
+
+function formatarDataSurto(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const [a, m, d] = iso.split("-");
+  return d && m && a ? `${d}/${m}/${a}` : iso;
+}
 
 type UFData = {
   total_deps: number;
@@ -771,7 +780,11 @@ export default function ArticuladoresMap() {
             uma compensação editorial explícita pela sub-representação
             feminina na Câmara (só 17% da composição). Quem retrocede
             direitos da mulher não recebe o multiplicador desenhado
-            para ampliar voz às mulheres da pauta. Considera apenas
+            para ampliar voz às mulheres da pauta.{" "}
+            <strong>Cap anti-mutirão:</strong> no máximo 5 PLs protocoladas
+            no mesmo dia contam pro score — protocolo em massa (&ldquo;fábrica
+            de PL&rdquo;) não infla o mapa; 10+ num só dia recebem selo de
+            alerta. Considera apenas
             deputados em <strong>exercício na atual legislatura</strong>.
             Quando o TSE publicar a lista oficial de candidatos a 2026,
             a seção será filtrada automaticamente para mostrar só quem
@@ -980,6 +993,14 @@ export default function ArticuladoresMap() {
                             <p className="font-mono-data text-[10px] text-[var(--color-text-tertiary)]">
                               {d.partido} · {d.uf}
                             </p>
+                            {(d.surto_qtd ?? 0) >= 10 && (
+                              <p
+                                className="mt-1 inline-block rounded bg-amber-500/20 px-1.5 py-0.5 font-mono-data text-[9px] font-bold uppercase tracking-wider text-amber-800"
+                                title={`Protocolou ${d.surto_qtd} PLs num único dia (${formatarDataSurto(d.surto_data)}). Protocolo em massa — acima de 5/dia não conta pro score${(d.pls_descontadas ?? 0) > 0 ? ` (${d.pls_descontadas} descontadas)` : ""}.`}
+                              >
+                                ⚠ {d.surto_qtd} PLs em 1 dia
+                              </p>
+                            )}
                             <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono-data text-[10px]">
                               <span className="text-[var(--color-text-secondary)]">
                                 <strong className="text-[var(--color-text)]">

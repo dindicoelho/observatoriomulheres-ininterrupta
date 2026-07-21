@@ -25,12 +25,78 @@ direitos da mulher não recebe o multiplicador desenhado para
 ampliar voz às mulheres da pauta.
 """
 
-from typing import Mapping
+from collections import defaultdict
+from typing import Mapping, Sequence
+
+
+# Cap anti-mutirão: no máximo BURST_DAY_CAP PLs de um mesmo autor no mesmo
+# dia contam pra produção que pontua. Protocolar dezenas de PLs num único
+# dia ("fábrica de PL") é position-taking, não N iniciativas legislativas.
+# O frontend (RankingDeputados.tsx) replica o mesmo cap.
+BURST_DAY_CAP = 5
+
+# A partir de quantas PLs no mesmo dia sinalizamos "protocolo em massa"
+# (selo de alerta). Maior que o cap: o cap corrige o score já a partir de
+# 6/dia, mas só marcamos publicamente casos flagrantes (10+).
+SURTO_FLAG_MIN = 10
 
 
 def _g(d: Mapping, k: str, default: int = 0) -> int:
     v = d.get(k, default)
     return v if v is not None else default
+
+
+def producao_efetiva(pls: Sequence[Mapping]) -> dict:
+    """Contagem de produção que efetivamente pontua: só PLs não-regressivas
+    (regressivas são penalizadas à parte) e no máx BURST_DAY_CAP por dia."""
+    por_dia: dict[str, list] = defaultdict(list)
+    for p in pls or []:
+        if p.get("stance") == "regressivo":
+            continue
+        dia = (p.get("data") or "")[:10]
+        por_dia[dia].append(p)
+    est = inc = sim = desc = 0
+    for pls_dia in por_dia.values():
+        desc += max(0, len(pls_dia) - BURST_DAY_CAP)
+        for p in pls_dia[:BURST_DAY_CAP]:
+            cat = p.get("categoria")
+            if cat == "estrutural":
+                est += 1
+            elif cat == "simbólica":
+                sim += 1
+            else:
+                inc += 1
+    return {"estruturais": est, "incrementais": inc, "simbolicas": sim, "descontadas": desc}
+
+
+def maior_surto(pls: Sequence[Mapping]) -> dict:
+    """Maior nº de PLs protocoladas num único dia + a data (pra sinalizar
+    'protocolo em massa'). Considera todas as PLs, inclusive regressivas."""
+    por_dia: dict[str, int] = defaultdict(int)
+    for p in pls or []:
+        dia = (p.get("data") or "")[:10]
+        if dia:
+            por_dia[dia] += 1
+    if not por_dia:
+        return {"qtd": 0, "data": None}
+    dia, qtd = max(por_dia.items(), key=lambda kv: kv[1])
+    return {"qtd": qtd, "data": dia}
+
+
+def com_cap(d: Mapping) -> Mapping:
+    """Cópia de d com estruturais/incrementais/simbolicas substituídos pela
+    produção efetiva (cap anti-mutirão). Fichas sem 'pls' (testes sintéticos)
+    passam inalteradas."""
+    pls = d.get("pls")
+    if not pls:
+        return d
+    ef = producao_efetiva(pls)
+    return {
+        **d,
+        "estruturais": ef["estruturais"],
+        "incrementais": ef["incrementais"],
+        "simbolicas": ef["simbolicas"],
+    }
 
 
 def base_score(d: Mapping) -> float:

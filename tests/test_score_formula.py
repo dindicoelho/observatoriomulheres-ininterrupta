@@ -11,11 +11,18 @@ import pytest
 
 from score import (
     base_score,
+    com_cap,
     ficha_limpa,
+    maior_surto,
+    producao_efetiva,
     score_mapa,
     score_ranking,
     sem_retrocesso,
 )
+
+
+def pl(dia, categoria="incremental", stance="protetivo"):
+    return {"data": dia, "categoria": categoria, "stance": stance}
 
 
 def deputada(**kwargs):
@@ -62,6 +69,62 @@ class TestBaseScore:
         votante = deputada(incrementais=20, votos_regressivos=1)
         punitivista = deputada(incrementais=20, punitivistas=1)
         assert base_score(votante) < base_score(punitivista)
+
+
+class TestCapAntiMutirao:
+    def test_ate_5_no_mesmo_dia_contam(self):
+        pls = [pl("2026-07-17") for _ in range(5)]
+        ef = producao_efetiva(pls)
+        assert ef["incrementais"] == 5
+        assert ef["descontadas"] == 0
+
+    def test_excedente_do_dia_nao_conta(self):
+        # 60 PLs no mesmo dia → só 5 contam, 55 descontadas
+        pls = [pl("2026-07-17") for _ in range(60)]
+        ef = producao_efetiva(pls)
+        assert ef["incrementais"] == 5
+        assert ef["descontadas"] == 55
+
+    def test_dias_diferentes_nao_somam_no_cap(self):
+        # 5 num dia + 5 noutro = 10, nenhum descontado
+        pls = [pl("2026-07-17") for _ in range(5)] + [pl("2026-07-18") for _ in range(5)]
+        ef = producao_efetiva(pls)
+        assert ef["incrementais"] == 10
+        assert ef["descontadas"] == 0
+
+    def test_regressiva_nao_entra_na_producao(self):
+        pls = [pl("2026-07-17", stance="regressivo") for _ in range(3)]
+        ef = producao_efetiva(pls)
+        assert ef["incrementais"] == 0
+
+    def test_categorias_preservadas_no_cap(self):
+        pls = (
+            [pl("2026-07-17", "estrutural")] * 3
+            + [pl("2026-07-17", "incremental")] * 3
+        )  # 6 no dia → cap 5
+        ef = producao_efetiva(pls)
+        assert ef["estruturais"] + ef["incrementais"] == 5
+        assert ef["descontadas"] == 1
+
+    def test_com_cap_derruba_mutirao_no_score(self):
+        # 60 incrementais num dia vs 60 espalhados
+        mutirao = deputada(pls=[pl("2026-07-17") for _ in range(60)])
+        espalhado = deputada(
+            pls=[pl(f"2026-{(i % 12) + 1:02d}-{(i % 28) + 1:02d}") for i in range(60)]
+        )
+        assert score_ranking(com_cap(mutirao)) < score_ranking(com_cap(espalhado))
+        # mutirão: 5 incrementais efetivas × 1,5 ficha limpa = 7,5
+        assert score_ranking(com_cap(mutirao)) == 7.5
+
+    def test_com_cap_sem_pls_passa_inalterado(self):
+        d = deputada(estruturais=3, incrementais=2)
+        assert com_cap(d) is d
+
+    def test_maior_surto_pega_o_pico(self):
+        pls = [pl("2026-07-17") for _ in range(60)] + [pl("2026-01-05") for _ in range(2)]
+        s = maior_surto(pls)
+        assert s["qtd"] == 60
+        assert s["data"] == "2026-07-17"
 
 
 class TestFichaLimpa:

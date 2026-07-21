@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from collections import defaultdict
 
-from score import score_mapa
+from score import score_mapa, com_cap, producao_efetiva, maior_surto, SURTO_FLAG_MIN
 
 DATA_DIR = Path(__file__).parent.parent / "src" / "data"
 
@@ -35,10 +35,14 @@ def main():
         if (d.get("situacao") or "").lower() != "exercício":
             continue
         sexo = d.get("sexo") or coer_idx.get(d["id"], {}).get("sexo")
-        score = score_mapa(d, sexo=sexo)
+        # Cap anti-mutirão: pontua pela produção efetiva (máx 5 PLs/dia),
+        # pra protocolo em massa não inflar o mapa por estado.
+        score = score_mapa(com_cap(d), sexo=sexo)
         if score <= 0:
             continue
 
+        ef = producao_efetiva(d.get("pls", []))
+        surto = maior_surto(d.get("pls", []))
         c = coer_idx.get(d["id"], {})
         por_uf[uf].append(
             {
@@ -53,6 +57,13 @@ def main():
                 "estruturais": d["estruturais"],
                 "incrementais": d["incrementais"],
                 "simbolicas": d["simbolicas"],
+                # produção efetiva após o cap + sinal de protocolo em massa
+                "estruturais_ef": ef["estruturais"],
+                "incrementais_ef": ef["incrementais"],
+                "simbolicas_ef": ef["simbolicas"],
+                "pls_descontadas": ef["descontadas"],
+                "surto_qtd": surto["qtd"] if surto["qtd"] >= SURTO_FLAG_MIN else 0,
+                "surto_data": surto["data"] if surto["qtd"] >= SURTO_FLAG_MIN else None,
                 "punitivistas": d.get("punitivistas", 0),
                 "regressivos": d.get("regressivos", 0),
                 "votos_regressivos": d.get("votos_regressivos", 0),

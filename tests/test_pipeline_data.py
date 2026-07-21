@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from score import score_mapa, score_ranking
+from score import com_cap, score_mapa, score_ranking
 
 ROOT = Path(__file__).parent.parent
 DATA = ROOT / "src" / "data"
@@ -28,9 +28,10 @@ def buscar(deps, nome_parcial):
 
 
 def posicao_ranking(deps, nome_parcial):
-    """Retorna a posição 1-indexed no ranking principal (filtra total>=3)."""
+    """Retorna a posição 1-indexed no ranking principal (filtra total>=3).
+    Usa a produção efetiva (cap anti-mutirão), igual ao frontend."""
     elegiveis = [d for d in deps if d["total"] >= 3]
-    elegiveis.sort(key=score_ranking, reverse=True)
+    elegiveis.sort(key=lambda d: score_ranking(com_cap(d)), reverse=True)
     alvo = buscar(elegiveis, nome_parcial)
     return elegiveis.index(alvo) + 1
 
@@ -118,6 +119,38 @@ def test_caso6_amom_mandel_sem_penalidade_de_voto(deps):
     d = buscar(deps, "Amom Mandel")
     # Ausência não conta como voto SIM
     assert d.get("votos_regressivos", 0) == 0, "Ausência não pode contar como voto regressivo"
+
+
+# ---------------------------------------------------------------------------
+# Caso 9: cap anti-mutirão — protocolo em massa não infla ranking nem mapa
+# ---------------------------------------------------------------------------
+
+def test_caso9_amom_cap_derruba_do_topo(deps, articuladores):
+    """Amom protocolou 60 PLs sobre o tema num único dia (17/07/2026). O cap
+    tem que (a) reduzir o score dele e (b) tirá-lo do topo do ranking."""
+    d = buscar(deps, "Amom Mandel")
+    assert score_ranking(com_cap(d)) < score_ranking(d), (
+        "o cap deveria reduzir o score do Amom (protocolo em massa)"
+    )
+    pos = posicao_ranking(deps, "Amom Mandel")
+    assert pos > 20, f"Amom deveria sair do top 20 após o cap (#{pos})"
+
+
+def test_caso9_mapa_por_estado_usa_cap(articuladores, deps):
+    """O score_articulador do mapa reflete o cap: pra quem tem protocolo em
+    massa, o score gravado bate com o score capado, não com o cru."""
+    dep_idx = {d["id"]: d for d in deps}
+    for uf, info in articuladores["ufs"].items():
+        for t in info.get("top3", []):
+            d = dep_idx.get(t["id"])
+            if not d:
+                continue
+            sexo = t.get("sexo") or d.get("sexo")
+            esperado = score_mapa(com_cap(d), sexo=sexo)
+            assert abs(t["score_articulador"] - esperado) < 0.001, (
+                f"{t['nome']} ({uf}): score_articulador={t['score_articulador']} "
+                f"≠ score capado={esperado}"
+            )
 
 
 # ---------------------------------------------------------------------------
