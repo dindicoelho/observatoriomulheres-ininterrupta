@@ -155,6 +155,37 @@ const CATEGORY_LABELS_PLURAL: Record<string, string> = {
   estrutural: "Estruturais",
 };
 
+// ── Detecção de "protocolo em massa" ──────────────────────────────
+// Protocolar dezenas de PLs no mesmo dia ("fábrica de PL") infla a
+// produção sem trabalho legislativo real — é position-taking (Mayhew).
+// Aqui apenas SINALIZAMOS o padrão de forma genérica: qualquer deputado
+// que faça o mesmo recebe o mesmo alerta. Nada é hardcoded a ninguém.
+const SURTO_FLAG_MIN = 10; // nº de PLs no mesmo dia a partir do qual sinalizamos
+
+function maiorSurto(pls: PL[]): { qtd: number; data: string | null } {
+  const porDia = new Map<string, number>();
+  for (const p of pls) {
+    const dia = (p.data || "").slice(0, 10);
+    if (!dia) continue;
+    porDia.set(dia, (porDia.get(dia) ?? 0) + 1);
+  }
+  let qtd = 0;
+  let data: string | null = null;
+  for (const [dia, n] of porDia) {
+    if (n > qtd) {
+      qtd = n;
+      data = dia;
+    }
+  }
+  return { qtd, data };
+}
+
+function formatarData(iso: string | null): string {
+  if (!iso) return "";
+  const [a, m, d] = iso.split("-");
+  return d && m && a ? `${d}/${m}/${a}` : iso;
+}
+
 function DeputadoModal({
   deputado,
   onClose,
@@ -307,6 +338,28 @@ function DeputadoModal({
             </svg>
           </button>
         </div>
+
+        {/* ⚠ Protocolo em massa — sinalização editorial */}
+        {(() => {
+          const s = maiorSurto(deputado.pls);
+          if (s.qtd < SURTO_FLAG_MIN) return null;
+          return (
+            <div className="border-b border-amber-200 bg-amber-50 px-6 py-4">
+              <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-amber-700">
+                [ ⚠ Movimento sob análise editorial ]
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-amber-900">
+                Este parlamentar protocolou{" "}
+                <strong>{s.qtd} proposições sobre o tema num único dia</strong>{" "}
+                ({formatarData(s.data)}). Protocolar dezenas de PLs de uma vez
+                — o chamado &ldquo;fábrica de PL&rdquo; — infla a produção sem
+                trabalho legislativo correspondente. O total exibido é real,
+                mas o peso disso na posição do ranking está{" "}
+                <strong>em revisão metodológica</strong>.
+              </p>
+            </div>
+          );
+        })()}
 
         {/* Coerência nas votações de mérito */}
         {(() => {
@@ -886,6 +939,18 @@ export default function RankingDeputados() {
                             {d.situacao}
                           </span>
                         )}
+                        {(() => {
+                          const s = maiorSurto(d.pls);
+                          if (s.qtd < SURTO_FLAG_MIN) return null;
+                          return (
+                            <span
+                              className="rounded bg-amber-500/20 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-amber-800"
+                              title={`Protocolou ${s.qtd} PLs num único dia (${formatarData(s.data)}). Protocolo em massa ("fábrica de PL") — peso no ranking sob análise editorial.`}
+                            >
+                              ⚠ {s.qtd} PLs em 1 dia · em análise
+                            </span>
+                          );
+                        })()}
                       </div>
 
                       <div
@@ -995,6 +1060,7 @@ export default function RankingDeputados() {
             Fonte: API de Dados Abertos da Câmara dos Deputados ·
             Legislatura 2023-2026 · Deputados com 3+ PLs ·
             Score: [(estruturais × 3) + (incrementais × 1) + (simbólicas × 1) − (punitivistas × 2) − (regressivas × 7) − (votos regressivos × 5)] × 1,5 se ficha 100% protetiva ·
+            ⚠ Protocolos em massa (10+ PLs no mesmo dia) são sinalizados e estão sob análise metodológica ·
             Atualização automática diária.
           </p>
         </div>
