@@ -186,6 +186,46 @@ function formatarData(iso: string | null): string {
   return d && m && a ? `${d}/${m}/${a}` : iso;
 }
 
+// Cap anti-mutirão: no máximo BURST_DAY_CAP PLs de um mesmo dia contam pro
+// score. Ninguém concebe/redige/fundamenta dezenas de projetos distintos
+// num único dia — além do cap, o protocolo é um ato de batch (position-
+// taking), não N iniciativas legislativas independentes.
+const BURST_DAY_CAP = 5;
+
+// Produção que efetivamente pontua. Espelha classify_stance.py (só PLs
+// não-regressivas contam como produção pró-mulher) e aplica o cap por dia.
+function producaoEfetiva(pls: PL[]): {
+  estruturais: number;
+  incrementais: number;
+  simbolicas: number;
+  descontadas: number;
+} {
+  const porDia = new Map<string, PL[]>();
+  for (const p of pls) {
+    if (p.stance === "regressivo") continue; // penalizadas à parte, não são produção
+    const dia = (p.data || "").slice(0, 10);
+    const arr = porDia.get(dia) ?? [];
+    arr.push(p);
+    porDia.set(dia, arr);
+  }
+  let estruturais = 0;
+  let incrementais = 0;
+  let simbolicas = 0;
+  let descontadas = 0;
+  for (const plsDia of porDia.values()) {
+    descontadas += Math.max(0, plsDia.length - BURST_DAY_CAP);
+    for (const p of plsDia.slice(0, BURST_DAY_CAP)) {
+      if (p.categoria === "estrutural") estruturais++;
+      else if (p.categoria === "simbólica") simbolicas++;
+      else incrementais++;
+    }
+  }
+  return { estruturais, incrementais, simbolicas, descontadas };
+}
+
+// Pré-computa a produção efetiva de cada deputado uma vez (DATA é estático).
+const EFETIVA = new Map(DATA.deputados.map((d) => [d.id, producaoEfetiva(d.pls)]));
+
 function DeputadoModal({
   deputado,
   onClose,
@@ -339,23 +379,27 @@ function DeputadoModal({
           </button>
         </div>
 
-        {/* ⚠ Protocolo em massa — sinalização editorial */}
+        {/* ⚠ Protocolo em massa — desconto no ranking */}
         {(() => {
           const s = maiorSurto(deputado.pls);
           if (s.qtd < SURTO_FLAG_MIN) return null;
+          const desc = producaoEfetiva(deputado.pls).descontadas;
           return (
             <div className="border-b border-amber-200 bg-amber-50 px-6 py-4">
               <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-amber-700">
-                [ ⚠ Movimento sob análise editorial ]
+                [ ⚠ Protocolo em massa — não infla o ranking ]
               </p>
               <p className="mt-2 text-sm leading-relaxed text-amber-900">
                 Este parlamentar protocolou{" "}
                 <strong>{s.qtd} proposições sobre o tema num único dia</strong>{" "}
                 ({formatarData(s.data)}). Protocolar dezenas de PLs de uma vez
                 — o chamado &ldquo;fábrica de PL&rdquo; — infla a produção sem
-                trabalho legislativo correspondente. O total exibido é real,
-                mas o peso disso na posição do ranking está{" "}
-                <strong>em revisão metodológica</strong>.
+                trabalho legislativo correspondente. Por isso, acima de{" "}
+                <strong>{BURST_DAY_CAP} PLs protocoladas no mesmo dia</strong> o
+                excedente não pontua no ranking: <strong>{desc} proposições
+                dele não contam</strong>. O total exibido continua sendo o
+                número real — o ranking apenas deixa de premiar o volume
+                despejado de uma vez.
               </p>
             </div>
           );
@@ -680,8 +724,15 @@ export default function RankingDeputados() {
   const filtered = DATA.deputados.filter((d) => d.total >= minPls);
 
   // Score: (estr×3 + incr + simb - punit×2 - regr×7 - votos_regr×5) × ficha_limpa
+  // A produção (estr/incr/simb) é a EFETIVA: aplica o cap anti-mutirão de
+  // BURST_DAY_CAP PLs/dia, pra protocolo em massa não inflar o ranking.
   const scoreOf = (d: Deputado) => {
-    const base = d.estruturais * 3 + d.incrementais + d.simbolicas
+    const ef = EFETIVA.get(d.id) ?? {
+      estruturais: d.estruturais,
+      incrementais: d.incrementais,
+      simbolicas: d.simbolicas,
+    };
+    const base = ef.estruturais * 3 + ef.incrementais + ef.simbolicas
       - (d.punitivistas ?? 0) * 2
       - (d.regressivos ?? 0) * 7
       - (d.votos_regressivos ?? 0) * 5;
@@ -942,12 +993,13 @@ export default function RankingDeputados() {
                         {(() => {
                           const s = maiorSurto(d.pls);
                           if (s.qtd < SURTO_FLAG_MIN) return null;
+                          const desc = EFETIVA.get(d.id)?.descontadas ?? 0;
                           return (
                             <span
                               className="rounded bg-amber-500/20 px-2 py-0.5 font-mono-data text-[10px] font-bold uppercase tracking-wider text-amber-800"
-                              title={`Protocolou ${s.qtd} PLs num único dia (${formatarData(s.data)}). Protocolo em massa ("fábrica de PL") — peso no ranking sob análise editorial.`}
+                              title={`Protocolou ${s.qtd} PLs num único dia (${formatarData(s.data)}). Protocolo em massa ("fábrica de PL"): acima de ${BURST_DAY_CAP}/dia não conta pro ranking — ${desc} proposições não pontuam.`}
                             >
-                              ⚠ {s.qtd} PLs em 1 dia · em análise
+                              ⚠ {s.qtd} PLs em 1 dia
                             </span>
                           );
                         })()}
@@ -1060,7 +1112,7 @@ export default function RankingDeputados() {
             Fonte: API de Dados Abertos da Câmara dos Deputados ·
             Legislatura 2023-2026 · Deputados com 3+ PLs ·
             Score: [(estruturais × 3) + (incrementais × 1) + (simbólicas × 1) − (punitivistas × 2) − (regressivas × 7) − (votos regressivos × 5)] × 1,5 se ficha 100% protetiva ·
-            ⚠ Protocolos em massa (10+ PLs no mesmo dia) são sinalizados e estão sob análise metodológica ·
+            ⚠ Anti-mutirão: acima de 5 PLs protocoladas no mesmo dia o excedente não pontua (protocolo em massa ≠ trabalho legislativo); 10+/dia recebem selo ·
             Atualização automática diária.
           </p>
         </div>
