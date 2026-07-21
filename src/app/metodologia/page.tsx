@@ -550,6 +550,22 @@ export default function MetodologiaPage() {
                 contrário
               </p>
               <p className="text-base md:text-lg">
+                <strong>Cap anti-mutirão.</strong> As contagens de PLs
+                que alimentam o <strong>ranking top 20</strong> são
+                limitadas a <strong>5 proposições por autor por dia</strong>.
+                Protocolar dezenas de PLs sobre o tema num único dia — o
+                chamado &ldquo;fábrica de PL&rdquo; — infla a produção sem
+                trabalho legislativo correspondente: é{" "}
+                <em>position-taking</em> (marcar posição), não iniciativa
+                legislativa de verdade. Acima de 5 no mesmo dia, o
+                excedente não pontua. O <strong>total real</strong> de
+                proposições continua exibido no perfil de cada deputado — a
+                régua não esconde o que foi protocolado, só deixa de premiar
+                o volume despejado de uma vez. É genérica: vale pra qualquer
+                parlamentar, e quem protocola 10+ PLs num só dia recebe um
+                selo de alerta no ranking.
+              </p>
+              <p className="text-base md:text-lg">
                 Deputados com <strong>ficha 100% protetiva</strong>{" "}
                 (zero punitivistas, zero regressivas, zero votos
                 regressivos) recebem bônus <strong>×1,5</strong> no
