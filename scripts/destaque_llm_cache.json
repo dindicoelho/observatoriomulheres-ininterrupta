@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-07-23:34:pun1:sim0",
+  "signature": "panorama:2026-07-24:34:pun1:sim0",
   "render": {
     "headline": "Câmara avança com 34 projetos sobre direitos das mulheres em um mês",
-    "o_que_propoe": "Um panorama de proposições em tramitação entre 23 de julho e 22 de agosto de 2026 mostra 34 projetos em debate na Câmara dos Deputados relacionados a direitos das mulheres. A maioria (33) tem foco protetivo—ampliar direitos, acesso a serviços e segurança. Outras 26 trazem mudanças incrementais em políticas existentes, enquanto 8 propõem reformas estruturais.",
-    "onde_esta": "Período de análise: 23 de julho a 22 de agosto de 2026. Os projetos estão em diferentes fases da tramitação—desde apresentação até votação em comissões especializadas.",
-    "o_que_se_decide": "O ritmo mostra se o Congresso está priorizando agendas de proteção e igualdade de gênero ou deixando-as para trás. Projetos incrementais (ajustes) predominam sobre estruturais (reformas profundas), indicando avanço cauteloso em vez de mudanças radicais.",
-    "link_label": "Ver projetos"
+    "o_que_propoe": "Um panorama dos últimos 30 dias mostra 34 proposições em tramitação na Câmara relacionadas a direitos das mulheres. A maioria (26) são incrementais — ajustes em leis existentes. Oito são estruturais, redesenhando políticas. Uma é punitivista.",
+    "onde_esta": "Dados referem-se ao período de 24 de julho de 2026. Os projetos estão em diferentes fases: alguns em comissões, outros em votação, alguns já aprovados.",
+    "o_que_se_decide": "O ritmo mostra que a agenda de proteção às mulheres segue em movimento no Congresso, com ênfase em melhorias pontuais (26 de 34) sobre mudanças radicais. Apenas 1 aposta em aumento de pena.",
+    "link_label": "Ver panorama completo"
   },
-  "generated_at": "2026-08-22",
+  "generated_at": "2026-08-23",
   "tier": "panorama"
 }
