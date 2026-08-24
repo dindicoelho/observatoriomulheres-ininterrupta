@@ -4,6 +4,11 @@ Gera articuladores_uf.json a partir de autoria.json.
 
 Score = (estruturais × 2) + (incrementais × 1)
 Top 3 por UF entre deputados em exercício.
+
+Emite duas listas por UF: `top3` (todos em exercício) e `top3_candidatos`
+(só quem pediu registro à reeleição em 2026, segundo candidatos_2026.json).
+O ranking do score é o mesmo nas duas — a segunda é a primeira filtrada
+antes do corte em 3. Depende de fetch_candidatos_tse.py ter rodado antes.
 Mantém campos de coerência por compatibilidade (zerados — seção já não usa).
 """
 
@@ -19,6 +24,13 @@ DATA_DIR = Path(__file__).parent.parent / "src" / "data"
 def main():
     autoria = json.loads((DATA_DIR / "autoria.json").read_text(encoding="utf-8"))
     deps = autoria["deputados"]
+
+    # Candidatos à reeleição em 2026. Vazio antes do TSE publicar.
+    try:
+        cand = json.loads((DATA_DIR / "candidatos_2026.json").read_text(encoding="utf-8"))
+        candidatos = set(cand.get("candidatos_ids") or [])
+    except FileNotFoundError:
+        candidatos = set()
 
     # Tentar carregar coerência por id (se existir)
     try:
@@ -99,10 +111,13 @@ def main():
     for uf, lst in por_uf.items():
         camara = comp_uf.get(uf, {"F": 0, "M": 0, "total": 0})
         atuantes = len(lst)
+        lst_cand = [x for x in lst if x["id"] in candidatos]
         ufs_out[uf] = {
             "total_deps": camara["total"],  # total da bancada, não só quem pontuou
             "deputados_atuantes": atuantes,
+            "atuantes_candidatos": len(lst_cand),
             "top3": lst[:3],
+            "top3_candidatos": lst_cand[:3],
             "camara_F": camara["F"],
             "camara_M": camara["M"],
             "camara_total": camara["total"],
@@ -115,7 +130,9 @@ def main():
             ufs_out[uf] = {
                 "total_deps": camara["total"],
                 "deputados_atuantes": 0,
+                "atuantes_candidatos": 0,
                 "top3": [],
+                "top3_candidatos": [],
                 "camara_F": camara["F"],
                 "camara_M": camara["M"],
                 "camara_total": camara["total"],

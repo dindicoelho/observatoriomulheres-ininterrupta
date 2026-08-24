@@ -608,10 +608,17 @@ export default function MetodologiaPage() {
               </p>
               <p className="text-base md:text-lg">
                 Considera apenas deputados em{" "}
-                <strong>exercício na atual legislatura</strong>. Quando
-                o TSE publicar a lista oficial de candidatos a 2026, a
-                seção será filtrada automaticamente para mostrar só quem
-                efetivamente se candidatou à reeleição.
+                <strong>exercício na atual legislatura</strong>. Desde
+                agosto de 2026 o ranking cruza esses nomes com os{" "}
+                <strong>pedidos de registro de candidatura publicados
+                pelo TSE</strong>, pelo CPF de cada deputado: quem pediu
+                registro à reeleição recebe o selo 2026, e quem
+                concorre a outro cargo aparece com o cargo pretendido.
+                O cruzamento é por CPF porque nome de urna gera
+                homônimo — na base de 2026, André Ferreira e Anderson
+                Ferreira dividem UF e partido. Os registros ainda estão
+                em julgamento na Justiça Eleitoral: o selo indica{" "}
+                <strong>pedido</strong>, não candidatura deferida.
               </p>
             </div>
 
@@ -969,10 +976,10 @@ export default function MetodologiaPage() {
             <ol className="ml-6 list-decimal space-y-1.5 text-base text-[var(--color-text-secondary)] md:text-lg">
               <li>Busca todas as proposições 2023-2026 na API da Câmara</li>
               <li>Filtra por ~90 palavras-chave em 11 categorias (violência, saúde reprodutiva, trabalho, identidade, igualdade, grupos específicos, etc.)</li>
+              <li>Cruza os deputados com os pedidos de registro de candidatura de 2026 no TSE (join por CPF)</li>
               <li>Classifica por forma (regex) e postura (regex)</li>
               <li>Agrega por UF, gênero, partido, destino</li>
               <li>Busca autor e relator de cada votação</li>
-              <li>Tenta buscar candidatos 2026 no TSE (ativa quando publicar)</li>
               <li>Se dados mudaram, commita e pusha</li>
               <li>Vercel rebuilda o site automaticamente</li>
             </ol>

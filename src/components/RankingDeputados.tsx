@@ -714,14 +714,37 @@ function GlossarioPLs() {
 const CANDIDATOS = new Set(
   (candidatosData as { candidatos_ids: number[] }).candidatos_ids
 );
+// Deputado que pediu registro pra um cargo diferente do que ocupa —
+// não é reeleição, mas também interessa: sai da Câmara se ganhar.
+const OUTROS_CARGOS = new Map<number, string>(
+  Object.entries(
+    (candidatosData as { outros_cargos?: Record<string, string> }).outros_cargos ?? {}
+  ).map(([id, cargo]) => [Number(id), cargo])
+);
 const TSE_DISPONIVEL = CANDIDATOS.size > 0;
+
+const CARGO_CURTO: Record<string, string> = {
+  SENADOR: "Senado",
+  GOVERNADOR: "Governo",
+  "VICE-GOVERNADOR": "Vice-gov.",
+  PRESIDENTE: "Presidência",
+  "VICE-PRESIDENTE": "Vice-pres.",
+  "DEPUTADO ESTADUAL": "Estadual",
+  "DEPUTADO DISTRITAL": "Distrital",
+  "1º SUPLENTE": "Supl. Senado",
+  "2º SUPLENTE": "Supl. Senado",
+};
+const cargoCurto = (cargo: string) => CARGO_CURTO[cargo] ?? cargo.toLowerCase();
 
 export default function RankingDeputados() {
   const [sortBy, setSortBy] = useState<"total" | "estruturais" | "pct_estrutural">("total");
   const [selected, setSelected] = useState<Deputado | null>(null);
+  const [soCandidatos, setSoCandidatos] = useState(false);
   const minPls = 3;
 
-  const filtered = DATA.deputados.filter((d) => d.total >= minPls);
+  const filtered = DATA.deputados.filter(
+    (d) => d.total >= minPls && (!soCandidatos || CANDIDATOS.has(d.id))
+  );
 
   // Score: (estr×3 + incr + simb - punit×2 - regr×7 - votos_regr×5) × ficha_limpa
   // A produção (estr/incr/simb) é a EFETIVA: aplica o cap anti-mutirão de
@@ -903,7 +926,14 @@ export default function RankingDeputados() {
                           letterSpacing: "-0.03em",
                         }}
                       >
-                        <Counter to={top20F} duration={1500} /><span className="text-white/40">/20</span>
+                        {/* key: o Counter só anima uma vez por montagem — sem
+                            remontar, o número congela quando o filtro muda */}
+                        <Counter
+                          key={soCandidatos ? "reeleicao" : "todos"}
+                          to={top20F}
+                          duration={1500}
+                        />
+                        <span className="text-white/40">/20</span>
                       </p>
                       <p className="text-base leading-snug text-white/90">
                         do top 20 em produção legislativa são mulheres
@@ -935,14 +965,26 @@ export default function RankingDeputados() {
 
           {/* Controls */}
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            {/* Legenda candidatos 2026 */}
             {TSE_DISPONIVEL && (
-              <span className="ml-auto flex items-center gap-1.5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                <span className="rounded-full bg-[var(--color-blue)] px-1.5 py-0.5 text-[8px] font-bold text-white">
-                  2026
+              <>
+                <button
+                  onClick={() => setSoCandidatos((v) => !v)}
+                  aria-pressed={soCandidatos}
+                  className={`rounded-full border px-3 py-1.5 font-mono-data text-[10px] uppercase tracking-wider transition-colors ${
+                    soCandidatos
+                      ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white"
+                      : "border-gray-200 text-[var(--color-text-secondary)] hover:border-[var(--color-blue)]/50"
+                  }`}
+                >
+                  Só quem pediu reeleição
+                </button>
+                <span className="ml-auto flex items-center gap-1.5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text-tertiary)]">
+                  <span className="rounded-full bg-[var(--color-blue)] px-1.5 py-0.5 text-[8px] font-bold text-white">
+                    2026
+                  </span>
+                  = pediu registro à reeleição no TSE
                 </span>
-                = candidato à reeleição
-              </span>
+              </>
             )}
           </div>
 
@@ -981,8 +1023,19 @@ export default function RankingDeputados() {
                           {d.partido}·{d.uf}
                         </span>
                         {TSE_DISPONIVEL && CANDIDATOS.has(d.id) && (
-                          <span className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
+                          <span
+                            className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white"
+                            title="Pediu registro de candidatura à reeleição em 2026 (registro ainda em julgamento no TSE)"
+                          >
                             2026
+                          </span>
+                        )}
+                        {TSE_DISPONIVEL && OUTROS_CARGOS.has(d.id) && (
+                          <span
+                            className="rounded-full border border-[var(--color-blue)]/40 px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-[var(--color-blue)]"
+                            title={`Não pediu reeleição: concorre a ${OUTROS_CARGOS.get(d.id)?.toLowerCase()} em 2026`}
+                          >
+                            {cargoCurto(OUTROS_CARGOS.get(d.id) as string)} 2026
                           </span>
                         )}
                         {d.situacao !== "Exercício" && (

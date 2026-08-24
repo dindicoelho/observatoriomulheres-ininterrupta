@@ -115,7 +115,10 @@ function formatarDataSurto(iso: string | null | undefined): string {
 type UFData = {
   total_deps: number;
   deputados_atuantes?: number;
+  atuantes_candidatos?: number;
   top3: Articulador[];
+  // mesma ordenação de top3, filtrada por quem pediu registro à reeleição
+  top3_candidatos?: Articulador[];
   camara_F?: number;
   camara_M?: number;
   camara_total?: number;
@@ -168,6 +171,19 @@ const AUTORIA_IDX = new Map(
 const CANDIDATOS_SET = new Set(
   (candidatosData as { candidatos_ids: number[] }).candidatos_ids
 );
+const OUTROS_CARGOS = new Map<number, string>(
+  Object.entries(
+    (candidatosData as { outros_cargos?: Record<string, string> }).outros_cargos ?? {}
+  ).map(([id, cargo]) => [Number(id), cargo])
+);
+const TSE_META = candidatosData as {
+  atualizado?: string | null;
+  geracao_tse?: string;
+  total_candidatos?: number;
+  total_outros_cargos?: number;
+  total_deputados_analisados?: number;
+  registros_julgados?: boolean;
+};
 const TSE_ON = CANDIDATOS_SET.size > 0;
 
 const UF_NAMES: Record<string, string> = {
@@ -200,6 +216,15 @@ export default function ArticuladoresMap() {
     | "simbólica"
   >("all");
   const [layer, setLayer] = useState<MapLayer>("producao");
+  const [soCandidatos, setSoCandidatos] = useState(false);
+
+  // Lista ativa da UF: com o filtro ligado, o mapa inteiro (cor incluída)
+  // passa a enxergar só quem pediu registro à reeleição em 2026.
+  const topDaUf = useCallback(
+    (uf: UFData | undefined): Articulador[] =>
+      soCandidatos ? uf?.top3_candidatos ?? [] : uf?.top3 ?? [],
+    [soCandidatos]
+  );
 
   // Load geojson
   useEffect(() => {
@@ -225,7 +250,7 @@ export default function ArticuladoresMap() {
 
     // Color scales per layer
     const scores = Object.values(DATA.ufs).map(
-      (u) => u.top3[0]?.score_articulador ?? 0
+      (u) => topDaUf(u)[0]?.score_articulador ?? 0
     );
     const maxScore = Math.max(...scores);
     const prodScale = d3
@@ -244,7 +269,7 @@ export default function ArticuladoresMap() {
       if (layer === "producao") {
         const uf = DATA.ufs[sigla];
         if (uf?.zero_mulheres) return "url(#no-women-pattern)";
-        const score = uf?.top3[0]?.score_articulador ?? 0;
+        const score = topDaUf(uf)[0]?.score_articulador ?? 0;
         return score > 0 ? prodScale(score) : "#E6EEFF";
       }
       if (layer === "feminicidio") {
@@ -255,7 +280,7 @@ export default function ArticuladoresMap() {
       const fem = FEMINICIDIO.ufs[sigla];
       const uf = DATA.ufs[sigla];
       const taxa = fem?.taxa ?? 0;
-      const score = uf?.top3[0]?.score_articulador ?? 0;
+      const score = topDaUf(uf)[0]?.score_articulador ?? 0;
       const altaViolencia = taxa > FEMINICIDIO.media_nacional;
       const altaProducao = score > maxScore * 0.3;
       if (altaViolencia && !altaProducao) return "#7F1D1D"; // vermelho escuro
@@ -353,7 +378,7 @@ export default function ArticuladoresMap() {
           return fill === "#7F1D1D" || fill === "#DC2626" ? "#ffffff" : "#0A0A0A";
         }
         const uf = DATA.ufs[sigla];
-        const score = uf?.top3[0]?.score_articulador ?? 0;
+        const score = topDaUf(uf)[0]?.score_articulador ?? 0;
         return score > 20 ? "#ffffff" : "#0A0A0A";
       })
       .style("font-family", "var(--font-mono)")
@@ -361,7 +386,7 @@ export default function ArticuladoresMap() {
       .style("font-weight", "700")
       .style("pointer-events", "none")
       .text((d) => (d.properties as { sigla: string }).sigla);
-  }, [geoData, selectedUf, layer]);
+  }, [geoData, selectedUf, layer, topDaUf]);
 
   useEffect(() => {
     drawMap();
@@ -414,8 +439,16 @@ export default function ArticuladoresMap() {
                     {dep.nome}
                   </h3>
                   {TSE_ON && CANDIDATOS_SET.has(dep.id) && (
-                    <span className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white">
-                      Candidato 2026
+                    <span
+                      className="rounded-full bg-[var(--color-blue)] px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-white"
+                      title="Pediu registro de candidatura à reeleição em 2026 (registro ainda em julgamento no TSE)"
+                    >
+                      Reeleição 2026
+                    </span>
+                  )}
+                  {TSE_ON && OUTROS_CARGOS.has(dep.id) && (
+                    <span className="rounded-full border border-[var(--color-blue)]/40 px-2 py-0.5 font-mono-data text-[8px] font-bold uppercase tracking-wider text-[var(--color-blue)]">
+                      Concorre a {OUTROS_CARGOS.get(dep.id)?.toLowerCase()} em 2026
                     </span>
                   )}
                 </div>
@@ -718,11 +751,11 @@ export default function ArticuladoresMap() {
             </p>
           </div>
 
-          {/* Selo 2 — Aguardando TSE */}
+          {/* Selo 2 — Cruzamento com o TSE */}
           <div className="relative overflow-hidden rounded-2xl border-2 border-dashed border-[var(--color-text)] bg-[var(--color-neon)] p-5 text-[var(--color-text)] shadow-sm">
             <div className="flex items-center justify-between">
               <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-text)]/70">
-                [ Aguardando TSE ]
+                {TSE_ON ? "[ Cruzado com o TSE ]" : "[ Aguardando TSE ]"}
               </p>
               <span className="flex items-center gap-1.5 font-mono-data text-[10px] uppercase tracking-wider text-[var(--color-text)]/70">
                 <span className="relative inline-flex h-2 w-2">
@@ -732,16 +765,41 @@ export default function ArticuladoresMap() {
                 live
               </span>
             </div>
-            <p className="mt-3 text-base font-bold leading-tight text-[var(--color-text)] md:text-lg">
-              Será atualizado automaticamente quando sair a lista
-              oficial de candidatos a 2026.
-            </p>
-            <p className="mt-3 text-xs leading-relaxed text-[var(--color-text)]/80">
-              Hoje listamos todos os deputados em <strong>exercício na
-              atual legislatura</strong>. Quando o TSE publicar quem
-              se candidatou, o ranking refiltra em tempo real e passa
-              a mostrar só quem está concorrendo à reeleição.
-            </p>
+            {TSE_ON ? (
+              <>
+                <p className="mt-3 text-base font-bold leading-tight text-[var(--color-text)] md:text-lg">
+                  {TSE_META.total_candidatos} dos{" "}
+                  {TSE_META.total_deputados_analisados} deputados desta
+                  legislatura pediram registro à reeleição em 2026.
+                </p>
+                <p className="mt-3 text-xs leading-relaxed text-[var(--color-text)]/80">
+                  Outros {TSE_META.total_outros_cargos} disputam cargo
+                  diferente (Senado, governo, assembleia). O cruzamento
+                  é feito pelo <strong>CPF</strong> de cada deputado
+                  contra a base de candidaturas do TSE
+                  {TSE_META.geracao_tse ? ` (geração ${TSE_META.geracao_tse})` : ""}.
+                  Os registros ainda estão{" "}
+                  <strong>
+                    {TSE_META.registros_julgados ? "julgados" : "em julgamento"}
+                  </strong>{" "}
+                  na Justiça Eleitoral: o selo 2026 indica pedido, não
+                  candidatura deferida.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mt-3 text-base font-bold leading-tight text-[var(--color-text)] md:text-lg">
+                  Será atualizado automaticamente quando sair a lista
+                  oficial de candidatos a 2026.
+                </p>
+                <p className="mt-3 text-xs leading-relaxed text-[var(--color-text)]/80">
+                  Hoje listamos todos os deputados em <strong>exercício na
+                  atual legislatura</strong>. Quando o TSE publicar quem
+                  se candidatou, o ranking passa a sinalizar quem está
+                  concorrendo à reeleição.
+                </p>
+              </>
+            )}
           </div>
         </div>
 
@@ -785,10 +843,10 @@ export default function ArticuladoresMap() {
             no mesmo dia contam pro score — protocolo em massa (&ldquo;fábrica
             de PL&rdquo;) não infla o mapa; 10+ num só dia recebem selo de
             alerta. Considera apenas
-            deputados em <strong>exercício na atual legislatura</strong>.
-            Quando o TSE publicar a lista oficial de candidatos a 2026,
-            a seção será filtrada automaticamente para mostrar só quem
-            efetivamente se candidatou à reeleição.
+            deputados em <strong>exercício na atual legislatura</strong>,
+            com selo para quem <strong>pediu registro de candidatura
+            em 2026</strong> — reeleição ou outro cargo — segundo a base
+            de candidaturas do TSE, cruzada por CPF.
           </p>
         </details>
 
@@ -811,6 +869,21 @@ export default function ArticuladoresMap() {
               {opt.label}
             </button>
           ))}
+
+          {TSE_ON && (
+            <button
+              onClick={() => setSoCandidatos((v) => !v)}
+              aria-pressed={soCandidatos}
+              title="Filtra o mapa e o top 3 de cada estado para quem pediu registro de candidatura à reeleição em 2026"
+              className={`ml-auto rounded-full border px-4 py-1.5 font-mono-data text-xs uppercase tracking-wider transition-colors ${
+                soCandidatos
+                  ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white"
+                  : "border-[var(--color-blue)]/30 text-[var(--color-blue)] hover:bg-[var(--color-blue)]/10"
+              }`}
+            >
+              Só quem disputa 2026
+            </button>
+          )}
         </div>
 
         <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1.2fr]">
@@ -919,11 +992,16 @@ export default function ArticuladoresMap() {
             {/* Top 3 panel */}
             <div className="rounded-2xl bg-[var(--color-bg-alt)] p-6">
             <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
-              [ {UF_NAMES[displayUf] || displayUf} · Top 3 articuladores ]
+              [ {UF_NAMES[displayUf] || displayUf} · Top 3 articuladores
+              {soCandidatos ? " que disputam 2026" : ""} ]
             </p>
             <p className="mt-1 text-xs text-[var(--color-text-tertiary)]">
               {displayData
-                ? `${displayData.total_deps} deputados na bancada · ${displayData.deputados_atuantes ?? 0} atuam no tema`
+                ? soCandidatos
+                  ? displayData.deputados_atuantes
+                    ? `${displayData.atuantes_candidatos ?? 0} de ${displayData.deputados_atuantes} que atuam no tema pediram registro à reeleição`
+                    : `${displayData.total_deps} deputados na bancada · ninguém atuou no tema`
+                  : `${displayData.total_deps} deputados na bancada · ${displayData.deputados_atuantes ?? 0} atuam no tema`
                 : "Selecione um estado"}
             </p>
 
@@ -949,9 +1027,19 @@ export default function ArticuladoresMap() {
               </div>
             )}
 
+            {displayData && soCandidatos && topDaUf(displayData).length === 0 && (
+              <div className="mt-6 rounded-lg border-l-4 border-[var(--color-blue)] bg-[var(--color-blue)]/5 p-4">
+                <p className="text-sm leading-relaxed text-[var(--color-text)]">
+                  {displayData.deputados_atuantes
+                    ? `Nenhum dos ${displayData.deputados_atuantes} deputados que atuam na pauta da mulher em ${UF_NAMES[displayUf] || displayUf} pediu registro à reeleição em 2026.`
+                    : `Nenhum deputado de ${UF_NAMES[displayUf] || displayUf} atuou na pauta da mulher nesta legislatura.`}
+                </p>
+              </div>
+            )}
+
             {displayData && (
               <ul className="mt-6 space-y-4">
-                {displayData.top3.map((d, i) => {
+                {topDaUf(displayData).map((d, i) => {
                   const dep = AUTORIA_IDX.get(d.id);
                   const isCandidato = TSE_ON && CANDIDATOS_SET.has(d.id);
                   return (
