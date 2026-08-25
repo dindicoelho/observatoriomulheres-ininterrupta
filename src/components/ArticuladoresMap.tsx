@@ -874,14 +874,14 @@ export default function ArticuladoresMap() {
             <button
               onClick={() => setSoCandidatos((v) => !v)}
               aria-pressed={soCandidatos}
-              title="Filtra o mapa e o top 3 de cada estado para quem pediu registro de candidatura à reeleição em 2026"
+              title="Filtra o mapa e o top 3 de cada estado para quem pediu registro de candidatura à reeleição em 2026. Desligado, mostra o ranking geral da legislatura."
               className={`ml-auto rounded-full border px-4 py-1.5 font-mono-data text-xs uppercase tracking-wider transition-colors ${
                 soCandidatos
                   ? "border-[var(--color-blue)] bg-[var(--color-blue)] text-white"
                   : "border-[var(--color-blue)]/30 text-[var(--color-blue)] hover:bg-[var(--color-blue)]/10"
               }`}
             >
-              Só quem disputa 2026
+              Só quem disputa reeleição
             </button>
           )}
         </div>
@@ -993,7 +993,7 @@ export default function ArticuladoresMap() {
             <div className="rounded-2xl bg-[var(--color-bg-alt)] p-6">
             <p className="font-mono-data text-[10px] uppercase tracking-[0.2em] text-[var(--color-blue)]">
               [ {UF_NAMES[displayUf] || displayUf} · Top 3 articuladores
-              {soCandidatos ? " que disputam 2026" : ""} ]
+              {soCandidatos ? " que disputam reeleição" : ""} ]
             </p>
             <p className="mt-1 text-xs text-[var(--color-text-tertiary)]">
               {displayData
