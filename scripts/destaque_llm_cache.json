@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-08-01:30:pun0:sim0",
+  "signature": "panorama:2026-08-02:31:pun0:sim0",
   "render": {
-    "headline": "Câmara apresenta 30 propostas sobre direitos das mulheres em 30 dias",
-    "o_que_propoe": "Um conjunto de 30 projetos de lei foi apresentado entre agosto e setembro de 2026, sendo 25 de mudanças incrementais (ajustes em leis existentes) e 5 estruturais (novas políticas). Todas têm caráter protetivo, focando em segurança, acesso a direitos e combate à violência.",
-    "onde_esta": "Os projetos estão em diferentes fases de tramitação na Câmara dos Deputados, desde a apresentação inicial até análise em comissões temáticas.",
-    "o_que_se_decide": "O volume revela prioridade legislativa em políticas para mulheres, mas agora depende de quais projetos ganham relator, entram em pauta e conseguem apoio para avançar no plenário.",
-    "link_label": "Ver projetos na Câmara"
+    "headline": "Câmara avança 31 propostas sobre direitos das mulheres em um mês",
+    "o_que_propoe": "O mês de agosto registrou tramitação de 31 projetos ligados a direitos das mulheres na Câmara. A maioria (25) são mudanças incrementais em leis existentes. Seis propostas buscam reformas estruturais, como alterações no funcionamento de instituições ou políticas públicas.",
+    "onde_esta": "Em tramitação na Câmara dos Deputados entre 2 e 31 de agosto de 2026, em diferentes fases e comissões.",
+    "o_que_se_decide": "O volume reflete o ritmo legislativo em torno de políticas protetivas para mulheres. A proporção entre ajustes pontuais (25) e reformas mais amplas (6) mostra se o Congresso privilegia correções de curso ou mudanças estruturais.",
+    "link_label": "Ver na Câmara"
   },
-  "generated_at": "2026-08-31",
+  "generated_at": "2026-09-01",
   "tier": "panorama"
 }
