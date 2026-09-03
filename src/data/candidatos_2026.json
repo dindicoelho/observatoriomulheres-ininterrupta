@@ -378,8 +378,8 @@
     "226179": "VICE-GOVERNADOR",
     "231911": "DEPUTADO ESTADUAL"
   },
-  "atualizado": "2026-09-01",
-  "geracao_tse": "31/08/2026 19:30:31",
+  "atualizado": "2026-09-03",
+  "geracao_tse": "02/09/2026 19:31:21",
   "fonte": "TSE — Portal de Dados Abertos, consulta_cand",
   "url_fonte": "https://cdn.tse.jus.br/estatistica/sead/odsele/consulta_cand/consulta_cand_2026.zip",
   "chave_cruzamento": "CPF (API da Câmara × NR_CPF_CANDIDATO do TSE)",
