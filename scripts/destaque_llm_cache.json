@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-08-14:13:pun0:sim0",
+  "signature": "panorama:2026-08-15:13:pun0:sim0",
   "render": {
-    "headline": "Câmara avança com 13 propostas sobre direitos das mulheres em 30 dias",
-    "o_que_propoe": "Um panorama de projetos em tramitação mostra 13 proposições em discussão nos últimos 30 dias. Delas, 9 são incrementais (aumentam proteção existente), 4 são estruturais (mudam a lei do zero) e todas têm foco protetivo—nenhuma é punitiva pura.",
-    "onde_esta": "Desde 14 de agosto de 2026, essas propostas estão em diferentes fases na Câmara: algumas em comissões, outras em discussão no plenário, sem uma aprovação única que marque o período.",
-    "o_que_se_decide": "O ritmo mostra que a pauta de mulheres segue viva no Congresso, mas pulverizada. A tensão está entre projetos que melhoram regras já existentes (incrementais) e os que criam proteções novas (estruturais)—e se essas ideias vão ganhar prioridade para votação.",
-    "link_label": "Ver panorama na Câmara"
+    "headline": "Câmara avança com 13 projetos sobre direitos das mulheres em um mês",
+    "o_que_propoe": "Nos últimos 30 dias, a Câmara dos Deputados movimentou 13 proposições voltadas para direitos das mulheres. A maioria (9) são mudanças incrementais em leis já existentes; 4 são projetos estruturantes que criam políticas novas. Todos têm foco protetivo.",
+    "onde_esta": "Este é um recorte do período entre 15 de agosto e 15 de setembro de 2026, mostrando o fluxo de tramitação em diferentes fases e comissões.",
+    "o_que_se_decide": "O volume revela o ritmo atual de resposta legislativa a demandas de proteção das mulheres. A predominância de medidas incrementais sobre estruturantes sugere prioridade em fortalecer marcos existentes em vez de criar novas políticas do zero.",
+    "link_label": "Ver projetos"
   },
-  "generated_at": "2026-09-13",
+  "generated_at": "2026-09-14",
   "tier": "panorama"
 }
