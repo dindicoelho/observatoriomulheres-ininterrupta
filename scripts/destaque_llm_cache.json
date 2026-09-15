@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-08-15:13:pun0:sim0",
+  "signature": "panorama:2026-08-16:14:pun0:sim0",
   "render": {
-    "headline": "Câmara avança com 13 projetos sobre direitos das mulheres em um mês",
-    "o_que_propoe": "Nos últimos 30 dias, a Câmara dos Deputados movimentou 13 proposições voltadas para direitos das mulheres. A maioria (9) são mudanças incrementais em leis já existentes; 4 são projetos estruturantes que criam políticas novas. Todos têm foco protetivo.",
-    "onde_esta": "Este é um recorte do período entre 15 de agosto e 15 de setembro de 2026, mostrando o fluxo de tramitação em diferentes fases e comissões.",
-    "o_que_se_decide": "O volume revela o ritmo atual de resposta legislativa a demandas de proteção das mulheres. A predominância de medidas incrementais sobre estruturantes sugere prioridade em fortalecer marcos existentes em vez de criar novas políticas do zero.",
-    "link_label": "Ver projetos"
+    "headline": "Câmara avança com 14 propostas sobre direitos das mulheres em um mês",
+    "o_que_propoe": "Nos últimos 30 dias, a Câmara dos Deputados tem em tramitação 14 projetos ligados a direitos das mulheres. A maioria (10) busca expandir proteções ou serviços já existentes; 4 propõem mudanças estruturais no ordenamento jurídico.",
+    "onde_esta": "Todas as propostas estão em diferentes fases de tramitação na Câmara, desde agosto de 2026. Nenhuma chegou ao plenário para votação final neste período.",
+    "o_que_se_decide": "O ritmo revela priorização do tema em comissões, mas nenhuma avançou para decisão final. A questão é se essas propostas ganham velocidade ou ficam presas em etapas intermediárias.",
+    "link_label": "Ver propostas"
   },
-  "generated_at": "2026-09-14",
+  "generated_at": "2026-09-15",
   "tier": "panorama"
 }
