@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-08-20:13:pun0:sim0",
+  "signature": "panorama:2026-08-21:13:pun0:sim0",
   "render": {
-    "headline": "Câmara avança com 13 propostas sobre direitos das mulheres em 30 dias",
-    "o_que_propoe": "Um panorama de projetos em tramitação mostra movimento concentrado em medidas protetivas: 10 propostas fazem ajustes incrementais em leis existentes (como ampliar direitos em políticas públicas), enquanto 3 buscam mudanças estruturais (reformas mais profundas). Nenhuma aposta em apenas punição.",
-    "onde_esta": "Levantamento do período de 20 de agosto de 2026 em diante mostra o ritmo atual de apresentações e votações sobre mulheres na Câmara dos Deputados.",
-    "o_que_se_decide": "A tensão está entre incrementalismo (correções pontuais em direitos) e reformas estruturais (mudanças maiores). O foco em proteção, sem punitivismo puro, sinaliza prioridade em garantir direitos sobre agravamento de penas.",
-    "link_label": "Ver propostas"
+    "headline": "Câmara avança em 13 projetos sobre direitos das mulheres em um mês",
+    "o_que_propoe": "No período de 30 dias até 21 de agosto, 13 proposições sobre direitos das mulheres tramitaram na Câmara dos Deputados. A maioria (10) são medidas incrementais, que ampliam proteções já existentes. Três são estruturais, com mudanças mais profundas. Todas têm caráter protetivo.",
+    "onde_esta": "Em tramitação simultânea em diferentes fases — algumas em comissões, outras em plenário, conforme o estágio de cada projeto.",
+    "o_que_se_decide": "O ritmo revela uma agenda parlamentar concentrada em fortalecer garantias às mulheres. A predominância de medidas incrementais indica que o foco está em aprofundar direitos já reconhecidos, enquanto três projetos buscam mudanças institucionais mais amplas.",
+    "link_label": "Ver projetos na Câmara"
   },
-  "generated_at": "2026-09-19",
+  "generated_at": "2026-09-20",
   "tier": "panorama"
 }
