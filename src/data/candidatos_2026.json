@@ -85,6 +85,7 @@
     175765,
     178829,
     178832,
+    178835,
     178843,
     178857,
     178876,
@@ -378,14 +379,14 @@
     "226179": "VICE-GOVERNADOR",
     "231911": "DEPUTADO ESTADUAL"
   },
-  "atualizado": "2026-10-13",
-  "geracao_tse": "13/10/2026 09:05:05",
+  "atualizado": "2026-10-14",
+  "geracao_tse": "14/10/2026 05:30:44",
   "fonte": "TSE — Portal de Dados Abertos, consulta_cand",
   "url_fonte": "https://cdn.tse.jus.br/estatistica/sead/odsele/consulta_cand/consulta_cand_2026.zip",
   "chave_cruzamento": "CPF (API da Câmara × NR_CPF_CANDIDATO do TSE)",
   "registros_julgados": false,
-  "total_candidatos": 329,
+  "total_candidatos": 330,
   "total_outros_cargos": 46,
-  "total_deputados_analisados": 402,
+  "total_deputados_analisados": 403,
   "sem_candidatura": 27
 }
