@@ -1,12 +1,12 @@
 {
-  "signature": "panorama:2026-10-03:12:pun0:sim0",
+  "signature": "panorama:2026-10-04:14:pun0:sim0",
   "render": {
-    "headline": "Câmara avança com 12 propostas sobre direitos das mulheres em um mês",
-    "o_que_propoe": "Entre outubro e novembro, foram apresentados ou avançaram 12 projetos voltados para proteção de mulheres. A maioria (10) são melhorias incrementais em leis existentes, e 2 trazem mudanças estruturais. Nenhum tem caráter punitivo puro; todos focam em proteção e prevenção.",
-    "onde_esta": "Período de 30 dias iniciado em 3 de outubro de 2026. Os projetos estão em diferentes fases da tramitação na Câmara dos Deputados.",
-    "o_que_se_decide": "A sequência mostra se há consenso legislativo sobre políticas de proteção às mulheres. O volume de propostas incrementais indica ajustes às leis já existentes, enquanto as 2 estruturais sinalizam tentativas de mudar regras do jogo—tudo isso reflete prioridades do plenário neste período.",
-    "link_label": "Acompanhar propostas"
+    "headline": "Câmara avança com 14 propostas sobre direitos das mulheres em 30 dias",
+    "o_que_propoe": "Nos últimos 30 dias, 14 projetos tramitam na Câmara focados em proteção e direitos das mulheres. A maioria (12) são propostas incrementais que reforçam leis existentes; duas são estruturais, redesenhando políticas públicas. Nenhuma delas é meramente simbólica.",
+    "onde_esta": "Panorama de atividade entre 4 de outubro de 2026 e a data atual, com projetos em diferentes fases da tramitação na Câmara dos Deputados.",
+    "o_que_se_decide": "O ritmo revela se a Casa está priorizando proteção às mulheres via aprimoramento do marco legal existente ou via mudanças mais profundas. As duas propostas estruturais indicam onde está a disputa de fundo sobre política pública para mulheres.",
+    "link_label": "Ver propostas"
   },
-  "generated_at": "2026-11-02",
+  "generated_at": "2026-11-03",
   "tier": "panorama"
 }
